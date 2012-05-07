@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'physics.engine' target in the 'physics.engine' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
