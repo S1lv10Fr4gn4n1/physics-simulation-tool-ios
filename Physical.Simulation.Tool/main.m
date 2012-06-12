@@ -2,7 +2,7 @@
 //  main.m
 //  Physical.Simulation.Tool
 //
-//  Created by Silvio Fragnani da Silva on 06/05/12.
+//  Created by Silvio Fragnani da Silva on 11/06/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 

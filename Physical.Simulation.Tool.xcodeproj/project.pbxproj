@@ -1,0 +1,817 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B94B36B215864775004AAB28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B115864775004AAB28 /* UIKit.framework */; };
+		B94B36B415864775004AAB28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B315864775004AAB28 /* Foundation.framework */; };
+		B94B36B615864775004AAB28 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B515864775004AAB28 /* CoreGraphics.framework */; };
+		B94B36BC15864775004AAB28 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B94B36BA15864775004AAB28 /* InfoPlist.strings */; };
+		B94B36BE15864775004AAB28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B94B36BD15864775004AAB28 /* main.m */; };
+		B94B36C215864775004AAB28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B94B36C115864775004AAB28 /* AppDelegate.m */; };
+		B94B370915864914004AAB28 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B94B370815864914004AAB28 /* MainStoryboard_iPad.storyboard */; };
+		B94B371015864A94004AAB28 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B94B370F15864A94004AAB28 /* MainStoryboard_iPhone.storyboard */; };
+		B94B371415864AD7004AAB28 /* MainEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B94B371115864AD7004AAB28 /* MainEngine.cpp */; };
+		B94B371515864AD7004AAB28 /* MainEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = B94B371215864AD7004AAB28 /* MainEngine.h */; };
+		B94B371615864AD7004AAB28 /* PhysicsEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = B94B371315864AD7004AAB28 /* PhysicsEngine.h */; };
+		B94B371C1586BAA3004AAB28 /* physics.engine-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = B94B371B1586BAA3004AAB28 /* physics.engine-Prefix.pch */; };
+		B9B350971586BBB600180CE7 /* LibraryGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350941586BBB600180CE7 /* LibraryGraphic.h */; };
+		B9B350981586BBB600180CE7 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B350951586BBB600180CE7 /* Shader.cpp */; };
+		B9B350991586BBB600180CE7 /* Shader.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350961586BBB600180CE7 /* Shader.h */; };
+		B9B3509F1586BCBF00180CE7 /* albert.icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B3509E1586BCBF00180CE7 /* albert.icon.png */; };
+		B9B350A11586BCED00180CE7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
+		B9B350A31586BCFE00180CE7 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A21586BCFE00180CE7 /* GLKit.framework */; };
+		B9B350A41586BD2100180CE7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
+		B9B350CC1586BEEF00180CE7 /* LibraryCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */; };
+		B9B350CE1586BEF800180CE7 /* LibraryPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */; };
+		B9DD97211586DD4900E6DD9B /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B9B350DC1586C15C00180CE7 /* ViewController.mm */; };
+		B9DD97251586DEA000E6DD9B /* library.graphic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36DF1586481C004AAB28 /* library.graphic.a */; };
+		B9DD97261586DEA700E6DD9B /* physics.engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36D0158647FE004AAB28 /* physics.engine.a */; };
+		B9DD972B1586DF2700E6DD9B /* library.collision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350B11586BE8C00180CE7 /* library.collision.a */; };
+		B9DD972C1586DF2700E6DD9B /* library.physics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350C01586BEB200180CE7 /* library.physics.a */; };
+		B9DD97331586E06600E6DD9B /* MainCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9DD97321586E06600E6DD9B /* MainCollision.h */; };
+		B9DD97351586E07E00E6DD9B /* MainCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9DD97341586E07E00E6DD9B /* MainCollision.cpp */; };
+		B9DD97371586E20800E6DD9B /* MainPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = B9DD97361586E20800E6DD9B /* MainPhysics.h */; };
+		B9DD97391586E21100E6DD9B /* MainPhysics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9DD97381586E21100E6DD9B /* MainPhysics.cpp */; };
+		B9DD97421586E35D00E6DD9B /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B9DD972E1586DF4C00E6DD9B /* Shader.fsh */; };
+		B9DD97431586E35D00E6DD9B /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B9DD972F1586DF4C00E6DD9B /* Shader.vsh */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B9B350D41586C08600180CE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B94B36CF158647FE004AAB28;
+			remoteInfo = physics.engine;
+		};
+		B9B350D61586C08600180CE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B94B36DE1586481C004AAB28;
+			remoteInfo = library.graphic;
+		};
+		B9B350D81586C08E00180CE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9B350B01586BE8C00180CE7;
+			remoteInfo = library.collision;
+		};
+		B9B350DA1586C08E00180CE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9B350BF1586BEB200180CE7;
+			remoteInfo = library.physics;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B94B36AD15864775004AAB28 /* Physical.Tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Physical.Tool.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B94B36B115864775004AAB28 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B94B36B315864775004AAB28 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B94B36B515864775004AAB28 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B94B36B915864775004AAB28 /* Physical.Simulation.Tool-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Physical.Simulation.Tool-Info.plist"; sourceTree = "<group>"; };
+		B94B36BB15864775004AAB28 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B94B36BD15864775004AAB28 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B94B36BF15864775004AAB28 /* Physical.Simulation.Tool-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Physical.Simulation.Tool-Prefix.pch"; sourceTree = "<group>"; };
+		B94B36C015864775004AAB28 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B94B36C115864775004AAB28 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B94B36D0158647FE004AAB28 /* physics.engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = physics.engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B94B36DF1586481C004AAB28 /* library.graphic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = library.graphic.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B94B36E31586481C004AAB28 /* library.graphic-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "library.graphic-Prefix.pch"; sourceTree = "<group>"; };
+		B94B370815864914004AAB28 /* MainStoryboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		B94B370C15864977004AAB28 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		B94B370F15864A94004AAB28 /* MainStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		B94B371115864AD7004AAB28 /* MainEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainEngine.cpp; sourceTree = "<group>"; };
+		B94B371215864AD7004AAB28 /* MainEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainEngine.h; sourceTree = "<group>"; };
+		B94B371315864AD7004AAB28 /* PhysicsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEngine.h; sourceTree = "<group>"; };
+		B94B371B1586BAA3004AAB28 /* physics.engine-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "physics.engine-Prefix.pch"; sourceTree = "<group>"; };
+		B9B350941586BBB600180CE7 /* LibraryGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryGraphic.h; sourceTree = "<group>"; };
+		B9B350951586BBB600180CE7 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
+		B9B350961586BBB600180CE7 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
+		B9B3509E1586BCBF00180CE7 /* albert.icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.png; path = resources/images/albert.icon.png; sourceTree = SOURCE_ROOT; };
+		B9B350A01586BCED00180CE7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		B9B350A21586BCFE00180CE7 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		B9B350B11586BE8C00180CE7 /* library.collision.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = library.collision.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9B350B51586BE8C00180CE7 /* library.collision-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "library.collision-Prefix.pch"; sourceTree = "<group>"; };
+		B9B350C01586BEB200180CE7 /* library.physics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = library.physics.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9B350C41586BEB200180CE7 /* library.physics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "library.physics-Prefix.pch"; sourceTree = "<group>"; };
+		B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryCollision.h; sourceTree = "<group>"; };
+		B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryPhysics.h; sourceTree = "<group>"; };
+		B9B350DC1586C15C00180CE7 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		B9DD972E1586DF4C00E6DD9B /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
+		B9DD972F1586DF4C00E6DD9B /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
+		B9DD97321586E06600E6DD9B /* MainCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainCollision.h; sourceTree = "<group>"; };
+		B9DD97341586E07E00E6DD9B /* MainCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainCollision.cpp; sourceTree = "<group>"; };
+		B9DD97361586E20800E6DD9B /* MainPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainPhysics.h; sourceTree = "<group>"; };
+		B9DD97381586E21100E6DD9B /* MainPhysics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainPhysics.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B94B36AA15864775004AAB28 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DD97261586DEA700E6DD9B /* physics.engine.a in Frameworks */,
+				B9DD97251586DEA000E6DD9B /* library.graphic.a in Frameworks */,
+				B9B350A31586BCFE00180CE7 /* GLKit.framework in Frameworks */,
+				B9B350A11586BCED00180CE7 /* OpenGLES.framework in Frameworks */,
+				B94B36B215864775004AAB28 /* UIKit.framework in Frameworks */,
+				B94B36B415864775004AAB28 /* Foundation.framework in Frameworks */,
+				B94B36B615864775004AAB28 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B94B36CD158647FE004AAB28 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DD972B1586DF2700E6DD9B /* library.collision.a in Frameworks */,
+				B9DD972C1586DF2700E6DD9B /* library.physics.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B94B36DC1586481C004AAB28 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9B350A41586BD2100180CE7 /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9B350AE1586BE8C00180CE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9B350BD1586BEB200180CE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B94B36A215864775004AAB28 = {
+			isa = PBXGroup;
+			children = (
+				B94B36B715864775004AAB28 /* Physical.Simulation.Tool */,
+				B94B36D2158647FE004AAB28 /* physics.engine */,
+				B94B36E11586481C004AAB28 /* library.graphic */,
+				B9B350B31586BE8C00180CE7 /* library.collision */,
+				B9B350C21586BEB200180CE7 /* library.physics */,
+				B94B36B015864775004AAB28 /* Frameworks */,
+				B94B36AE15864775004AAB28 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B94B36AE15864775004AAB28 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B94B36AD15864775004AAB28 /* Physical.Tool.app */,
+				B94B36D0158647FE004AAB28 /* physics.engine.a */,
+				B94B36DF1586481C004AAB28 /* library.graphic.a */,
+				B9B350B11586BE8C00180CE7 /* library.collision.a */,
+				B9B350C01586BEB200180CE7 /* library.physics.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B94B36B015864775004AAB28 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B9B350A21586BCFE00180CE7 /* GLKit.framework */,
+				B9B350A01586BCED00180CE7 /* OpenGLES.framework */,
+				B94B36B115864775004AAB28 /* UIKit.framework */,
+				B94B36B315864775004AAB28 /* Foundation.framework */,
+				B94B36B515864775004AAB28 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B94B36B715864775004AAB28 /* Physical.Simulation.Tool */ = {
+			isa = PBXGroup;
+			children = (
+				B94B370F15864A94004AAB28 /* MainStoryboard_iPhone.storyboard */,
+				B94B370815864914004AAB28 /* MainStoryboard_iPad.storyboard */,
+				B94B36C015864775004AAB28 /* AppDelegate.h */,
+				B94B36C115864775004AAB28 /* AppDelegate.m */,
+				B94B370C15864977004AAB28 /* ViewController.h */,
+				B9B350DC1586C15C00180CE7 /* ViewController.mm */,
+				B9DD972D1586DF4C00E6DD9B /* Shaders */,
+				B94B36B815864775004AAB28 /* Supporting Files */,
+			);
+			path = Physical.Simulation.Tool;
+			sourceTree = "<group>";
+		};
+		B94B36B815864775004AAB28 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B9B3509E1586BCBF00180CE7 /* albert.icon.png */,
+				B94B36B915864775004AAB28 /* Physical.Simulation.Tool-Info.plist */,
+				B94B36BA15864775004AAB28 /* InfoPlist.strings */,
+				B94B36BD15864775004AAB28 /* main.m */,
+				B94B36BF15864775004AAB28 /* Physical.Simulation.Tool-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B94B36D2158647FE004AAB28 /* physics.engine */ = {
+			isa = PBXGroup;
+			children = (
+				B94B371115864AD7004AAB28 /* MainEngine.cpp */,
+				B94B371215864AD7004AAB28 /* MainEngine.h */,
+				B94B371315864AD7004AAB28 /* PhysicsEngine.h */,
+				B94B36D3158647FE004AAB28 /* Supporting Files */,
+			);
+			path = physics.engine;
+			sourceTree = "<group>";
+		};
+		B94B36D3158647FE004AAB28 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B94B371B1586BAA3004AAB28 /* physics.engine-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B94B36E11586481C004AAB28 /* library.graphic */ = {
+			isa = PBXGroup;
+			children = (
+				B9B350941586BBB600180CE7 /* LibraryGraphic.h */,
+				B9B350951586BBB600180CE7 /* Shader.cpp */,
+				B9B350961586BBB600180CE7 /* Shader.h */,
+				B94B36E21586481C004AAB28 /* Supporting Files */,
+			);
+			path = library.graphic;
+			sourceTree = "<group>";
+		};
+		B94B36E21586481C004AAB28 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B94B36E31586481C004AAB28 /* library.graphic-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B9B350B31586BE8C00180CE7 /* library.collision */ = {
+			isa = PBXGroup;
+			children = (
+				B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */,
+				B9DD97321586E06600E6DD9B /* MainCollision.h */,
+				B9DD97341586E07E00E6DD9B /* MainCollision.cpp */,
+				B9B350B41586BE8C00180CE7 /* Supporting Files */,
+			);
+			path = library.collision;
+			sourceTree = "<group>";
+		};
+		B9B350B41586BE8C00180CE7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B9B350B51586BE8C00180CE7 /* library.collision-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B9B350C21586BEB200180CE7 /* library.physics */ = {
+			isa = PBXGroup;
+			children = (
+				B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */,
+				B9DD97361586E20800E6DD9B /* MainPhysics.h */,
+				B9DD97381586E21100E6DD9B /* MainPhysics.cpp */,
+				B9B350C31586BEB200180CE7 /* Supporting Files */,
+			);
+			path = library.physics;
+			sourceTree = "<group>";
+		};
+		B9B350C31586BEB200180CE7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B9B350C41586BEB200180CE7 /* library.physics-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B9DD972D1586DF4C00E6DD9B /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B9DD972E1586DF4C00E6DD9B /* Shader.fsh */,
+				B9DD972F1586DF4C00E6DD9B /* Shader.vsh */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		B94B36CE158647FE004AAB28 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B94B371515864AD7004AAB28 /* MainEngine.h in Headers */,
+				B94B371615864AD7004AAB28 /* PhysicsEngine.h in Headers */,
+				B94B371C1586BAA3004AAB28 /* physics.engine-Prefix.pch in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B94B36DD1586481C004AAB28 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9B350971586BBB600180CE7 /* LibraryGraphic.h in Headers */,
+				B9B350991586BBB600180CE7 /* Shader.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9B350AF1586BE8C00180CE7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9B350CC1586BEEF00180CE7 /* LibraryCollision.h in Headers */,
+				B9DD97331586E06600E6DD9B /* MainCollision.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9B350BE1586BEB200180CE7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9B350CE1586BEF800180CE7 /* LibraryPhysics.h in Headers */,
+				B9DD97371586E20800E6DD9B /* MainPhysics.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		B94B36AC15864775004AAB28 /* Physical.Simulation.Tool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B94B36C515864775004AAB28 /* Build configuration list for PBXNativeTarget "Physical.Simulation.Tool" */;
+			buildPhases = (
+				B94B36A915864775004AAB28 /* Sources */,
+				B94B36AA15864775004AAB28 /* Frameworks */,
+				B94B36AB15864775004AAB28 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B9B350D51586C08600180CE7 /* PBXTargetDependency */,
+				B9B350D71586C08600180CE7 /* PBXTargetDependency */,
+			);
+			name = Physical.Simulation.Tool;
+			productName = Physical.Simulation.Tool;
+			productReference = B94B36AD15864775004AAB28 /* Physical.Tool.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B94B36CF158647FE004AAB28 /* physics.engine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B94B36D8158647FE004AAB28 /* Build configuration list for PBXNativeTarget "physics.engine" */;
+			buildPhases = (
+				B94B36CC158647FE004AAB28 /* Sources */,
+				B94B36CD158647FE004AAB28 /* Frameworks */,
+				B94B36CE158647FE004AAB28 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B9B350D91586C08E00180CE7 /* PBXTargetDependency */,
+				B9B350DB1586C08E00180CE7 /* PBXTargetDependency */,
+			);
+			name = physics.engine;
+			productName = physics.engine;
+			productReference = B94B36D0158647FE004AAB28 /* physics.engine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B94B36DE1586481C004AAB28 /* library.graphic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B94B36E71586481C004AAB28 /* Build configuration list for PBXNativeTarget "library.graphic" */;
+			buildPhases = (
+				B94B36DB1586481C004AAB28 /* Sources */,
+				B94B36DC1586481C004AAB28 /* Frameworks */,
+				B94B36DD1586481C004AAB28 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = library.graphic;
+			productName = library.graphic;
+			productReference = B94B36DF1586481C004AAB28 /* library.graphic.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B9B350B01586BE8C00180CE7 /* library.collision */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9B350B91586BE8C00180CE7 /* Build configuration list for PBXNativeTarget "library.collision" */;
+			buildPhases = (
+				B9B350AD1586BE8C00180CE7 /* Sources */,
+				B9B350AE1586BE8C00180CE7 /* Frameworks */,
+				B9B350AF1586BE8C00180CE7 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = library.collision;
+			productName = library.collision;
+			productReference = B9B350B11586BE8C00180CE7 /* library.collision.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B9B350BF1586BEB200180CE7 /* library.physics */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9B350C81586BEB200180CE7 /* Build configuration list for PBXNativeTarget "library.physics" */;
+			buildPhases = (
+				B9B350BC1586BEB200180CE7 /* Sources */,
+				B9B350BD1586BEB200180CE7 /* Frameworks */,
+				B9B350BE1586BEB200180CE7 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = library.physics;
+			productName = library.physics;
+			productReference = B9B350C01586BEB200180CE7 /* library.physics.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B94B36A415864775004AAB28 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = B94B36A715864775004AAB28 /* Build configuration list for PBXProject "Physical.Simulation.Tool" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B94B36A215864775004AAB28;
+			productRefGroup = B94B36AE15864775004AAB28 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B94B36AC15864775004AAB28 /* Physical.Simulation.Tool */,
+				B94B36CF158647FE004AAB28 /* physics.engine */,
+				B94B36DE1586481C004AAB28 /* library.graphic */,
+				B9B350B01586BE8C00180CE7 /* library.collision */,
+				B9B350BF1586BEB200180CE7 /* library.physics */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B94B36AB15864775004AAB28 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DD97421586E35D00E6DD9B /* Shader.fsh in Resources */,
+				B9DD97431586E35D00E6DD9B /* Shader.vsh in Resources */,
+				B94B36BC15864775004AAB28 /* InfoPlist.strings in Resources */,
+				B94B370915864914004AAB28 /* MainStoryboard_iPad.storyboard in Resources */,
+				B94B371015864A94004AAB28 /* MainStoryboard_iPhone.storyboard in Resources */,
+				B9B3509F1586BCBF00180CE7 /* albert.icon.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B94B36A915864775004AAB28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B94B36BE15864775004AAB28 /* main.m in Sources */,
+				B94B36C215864775004AAB28 /* AppDelegate.m in Sources */,
+				B9DD97211586DD4900E6DD9B /* ViewController.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B94B36CC158647FE004AAB28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B94B371415864AD7004AAB28 /* MainEngine.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B94B36DB1586481C004AAB28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9B350981586BBB600180CE7 /* Shader.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9B350AD1586BE8C00180CE7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DD97351586E07E00E6DD9B /* MainCollision.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9B350BC1586BEB200180CE7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9DD97391586E21100E6DD9B /* MainPhysics.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B9B350D51586C08600180CE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B94B36CF158647FE004AAB28 /* physics.engine */;
+			targetProxy = B9B350D41586C08600180CE7 /* PBXContainerItemProxy */;
+		};
+		B9B350D71586C08600180CE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B94B36DE1586481C004AAB28 /* library.graphic */;
+			targetProxy = B9B350D61586C08600180CE7 /* PBXContainerItemProxy */;
+		};
+		B9B350D91586C08E00180CE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9B350B01586BE8C00180CE7 /* library.collision */;
+			targetProxy = B9B350D81586C08E00180CE7 /* PBXContainerItemProxy */;
+		};
+		B9B350DB1586C08E00180CE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9B350BF1586BEB200180CE7 /* library.physics */;
+			targetProxy = B9B350DA1586C08E00180CE7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B94B36BA15864775004AAB28 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B94B36BB15864775004AAB28 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B94B36C315864775004AAB28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B94B36C415864775004AAB28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B94B36C615864775004AAB28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Physical.Simulation.Tool/Physical.Simulation.Tool-Prefix.pch";
+				INFOPLIST_FILE = "Physical.Simulation.Tool/Physical.Simulation.Tool-Info.plist";
+				PRODUCT_NAME = Physical.Tool;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B94B36C715864775004AAB28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Physical.Simulation.Tool/Physical.Simulation.Tool-Prefix.pch";
+				INFOPLIST_FILE = "Physical.Simulation.Tool/Physical.Simulation.Tool-Info.plist";
+				PRODUCT_NAME = Physical.Tool;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		B94B36D9158647FE004AAB28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/physics_engine.dst;
+				EXECUTABLE_PREFIX = "";
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "physics.engine/physics.engine-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B94B36DA158647FE004AAB28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/physics_engine.dst;
+				EXECUTABLE_PREFIX = "";
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "physics.engine/physics.engine-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		B94B36E81586481C004AAB28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/library_graphic.dst;
+				EXECUTABLE_PREFIX = "";
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "library.graphic/library.graphic-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B94B36E91586481C004AAB28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/library_graphic.dst;
+				EXECUTABLE_PREFIX = "";
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "library.graphic/library.graphic-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		B9B350BA1586BE8C00180CE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/library_collision.dst;
+				EXECUTABLE_PREFIX = "";
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "library.collision/library.collision-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B9B350BB1586BE8C00180CE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/library_collision.dst;
+				EXECUTABLE_PREFIX = "";
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "library.collision/library.collision-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		B9B350C91586BEB200180CE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/library_physics.dst;
+				EXECUTABLE_PREFIX = "";
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "library.physics/library.physics-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B9B350CA1586BEB200180CE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/library_physics.dst;
+				EXECUTABLE_PREFIX = "";
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "library.physics/library.physics-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B94B36A715864775004AAB28 /* Build configuration list for PBXProject "Physical.Simulation.Tool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B94B36C315864775004AAB28 /* Debug */,
+				B94B36C415864775004AAB28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B94B36C515864775004AAB28 /* Build configuration list for PBXNativeTarget "Physical.Simulation.Tool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B94B36C615864775004AAB28 /* Debug */,
+				B94B36C715864775004AAB28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B94B36D8158647FE004AAB28 /* Build configuration list for PBXNativeTarget "physics.engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B94B36D9158647FE004AAB28 /* Debug */,
+				B94B36DA158647FE004AAB28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B94B36E71586481C004AAB28 /* Build configuration list for PBXNativeTarget "library.graphic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B94B36E81586481C004AAB28 /* Debug */,
+				B94B36E91586481C004AAB28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B9B350B91586BE8C00180CE7 /* Build configuration list for PBXNativeTarget "library.collision" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9B350BA1586BE8C00180CE7 /* Debug */,
+				B9B350BB1586BE8C00180CE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B9B350C81586BEB200180CE7 /* Build configuration list for PBXNativeTarget "library.physics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9B350C91586BEB200180CE7 /* Debug */,
+				B9B350CA1586BEB200180CE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B94B36A415864775004AAB28 /* Project object */;
+}
