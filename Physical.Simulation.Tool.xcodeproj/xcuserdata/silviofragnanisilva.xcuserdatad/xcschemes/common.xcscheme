@@ -13,9 +13,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B94B36AC15864775004AAB28"
-               BuildableName = "Physical.Tool.app"
-               BlueprintName = "Physical.Simulation.Tool"
+               BlueprintIdentifier = "B9D1F856158E923F000337BB"
+               BuildableName = "libcommon.a"
+               BlueprintName = "common.feature"
                ReferencedContainer = "container:Physical.Simulation.Tool.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,15 +28,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B94B36AC15864775004AAB28"
-            BuildableName = "Physical.Tool.app"
-            BlueprintName = "Physical.Simulation.Tool"
-            ReferencedContainer = "container:Physical.Simulation.Tool.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -46,17 +37,7 @@
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
-      enablesOpenGLESFrameCapture = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B94B36AC15864775004AAB28"
-            BuildableName = "Physical.Tool.app"
-            BlueprintName = "Physical.Simulation.Tool"
-            ReferencedContainer = "container:Physical.Simulation.Tool.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -66,15 +47,6 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B94B36AC15864775004AAB28"
-            BuildableName = "Physical.Tool.app"
-            BlueprintName = "Physical.Simulation.Tool"
-            ReferencedContainer = "container:Physical.Simulation.Tool.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

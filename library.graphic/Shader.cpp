@@ -1,6 +1,6 @@
 //
 //  Shader.cpp
-//  Physics.Tool
+//  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani da Silva on 10/06/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
@@ -10,7 +10,7 @@
 
 using namespace std;
 
-Shader::Shader(const char* _vertShaderSource, const char* _fragShaderSource, const char* _geomShaderSource)
+Shader::Shader(const char * _vertShaderSource, const char * _fragShaderSource, const char * _geomShaderSource)
 {
     vertShaderSource = _vertShaderSource;
     fragShaderSource = _fragShaderSource;
@@ -25,21 +25,19 @@ Shader::~Shader()
 #pragma mark -  OpenGL ES 2 shader compilation
 bool Shader::loadShaders()
 {
-    GLuint vertShader, fragShader; //, geomShader;
+    GLuint vertShader, fragShader; //geomShader;
     string vertShaderPathname, fragShaderPathname;
     
     // Create shader program.
     program = glCreateProgram();
     
     // Create and compile vertex shader.
-//    vertShaderPathname = loadFile(fileShader + ".vsh");
     if (!compileShader(&vertShader, GL_VERTEX_SHADER, vertShaderSource)) {
         cout << "Failed to compile vertex shader" << endl;
         return false;
     }
     
     // Create and compile fragment shader.
-//    fragShaderPathname = loadFile(fileShader + ".fsh");
     if (!compileShader(&fragShader, GL_FRAGMENT_SHADER, fragShaderSource)) {
         cout << "Failed to compile fragment shader" << endl;
         return false;
@@ -58,8 +56,8 @@ bool Shader::loadShaders()
     
     // Bind attribute locations.
     // This needs to be done prior to linking.
-    //    glBindAttribLocation(_program, ATTRIB_VERTEX, "position"); TODO
-    //    glBindAttribLocation(_program, ATTRIB_NORMAL, "normal");
+    glBindAttribLocation(program, ATTRIB_VERTEX, "position");
+    glBindAttribLocation(program, ATTRIB_COLOR, "color");
     
     // Link program.
     if (!linkProgram(program)) {
@@ -99,7 +97,7 @@ bool Shader::loadShaders()
     return false;
 }
 
-bool Shader::compileShader(GLuint *shader, GLenum type, const char *file)
+bool Shader::compileShader(GLuint * shader, GLenum type, const char * file)
 {
     GLint status;
     const GLchar *source;
@@ -179,14 +177,14 @@ bool Shader::validateProgram(GLuint prog)
     return true;
 }
 
-string Shader::loadFile(string pathFile) 
+string Shader::loadFile(string _pathFile) 
 {
     string result;
     
 	ifstream infile;
     
-    char* str = new char[pathFile.length()];
-    strcpy(str, pathFile.c_str());
+    char* str = new char[_pathFile.length()];
+    strcpy(str, _pathFile.c_str());
     
 	infile.open(str);
     

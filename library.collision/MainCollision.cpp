@@ -11,10 +11,10 @@
 
 MainCollision::MainCollision() 
 {
-    
+    /// TODO - implementation
 }
 
 MainCollision::~MainCollision()
 {
-    
+    /// TODO - implementation
 }

@@ -6,4 +6,15 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#include <iostream>
+#include "MainPhysics.h"
+
+
+MainPhysics::MainPhysics()
+{
+    /// TODO - implementation
+}
+
+MainPhysics::~MainPhysics()
+{
+    /// TODO - implementation   
+}

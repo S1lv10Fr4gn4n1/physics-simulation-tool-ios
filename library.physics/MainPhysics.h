@@ -9,6 +9,11 @@
 #ifndef MAINPHYSICS_H
 #define MAINPHYSICS_H
 
-
+class MainPhysics {
+private:
+public:
+    MainPhysics();
+    ~MainPhysics();
+};
 
 #endif

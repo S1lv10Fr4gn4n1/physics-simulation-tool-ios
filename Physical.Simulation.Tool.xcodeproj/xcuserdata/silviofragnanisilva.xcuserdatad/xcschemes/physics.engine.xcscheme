@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B94B36CF158647FE004AAB28"
-               BuildableName = "libphysics.engine.a"
+               BuildableName = "physics.engine.a"
                BlueprintName = "physics.engine"
                ReferencedContainer = "container:Physical.Simulation.Tool.xcodeproj">
             </BuildableReference>

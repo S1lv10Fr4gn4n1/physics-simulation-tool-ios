@@ -19,6 +19,9 @@
 		B94B371515864AD7004AAB28 /* MainEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = B94B371215864AD7004AAB28 /* MainEngine.h */; };
 		B94B371615864AD7004AAB28 /* PhysicsEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = B94B371315864AD7004AAB28 /* PhysicsEngine.h */; };
 		B94B371C1586BAA3004AAB28 /* physics.engine-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = B94B371B1586BAA3004AAB28 /* physics.engine-Prefix.pch */; };
+		B98DACCB158ABCFA00417C21 /* NDC.h in Headers */ = {isa = PBXBuildFile; fileRef = B98DACCA158ABCFA00417C21 /* NDC.h */; };
+		B98DACCE158ABD0A00417C21 /* NDC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B98DACCD158ABD0A00417C21 /* NDC.cpp */; };
+		B98DACE8158ACB7400417C21 /* CommonGraphics.h in Headers */ = {isa = PBXBuildFile; fileRef = B98DACE7158ACB7400417C21 /* CommonGraphics.h */; };
 		B9B350971586BBB600180CE7 /* LibraryGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350941586BBB600180CE7 /* LibraryGraphic.h */; };
 		B9B350981586BBB600180CE7 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B350951586BBB600180CE7 /* Shader.cpp */; };
 		B9B350991586BBB600180CE7 /* Shader.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350961586BBB600180CE7 /* Shader.h */; };
@@ -28,6 +31,19 @@
 		B9B350A41586BD2100180CE7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
 		B9B350CC1586BEEF00180CE7 /* LibraryCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */; };
 		B9B350CE1586BEF800180CE7 /* LibraryPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */; };
+		B9D1F858158E923F000337BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B315864775004AAB28 /* Foundation.framework */; };
+		B9D1F863158E929E000337BB /* CommonStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStruct.h */; };
+		B9D1F864158E929E000337BB /* CommonStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStruct.h */; };
+		B9D1F865158E929E000337BB /* CommonStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStruct.h */; };
+		B9D1F873158EB8B3000337BB /* SObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D1F86F158EB8B3000337BB /* SObject.cpp */; };
+		B9D1F874158EB8B3000337BB /* SObject.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F870158EB8B3000337BB /* SObject.h */; };
+		B9D1F875158EB8B3000337BB /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D1F871158EB8B3000337BB /* World.cpp */; };
+		B9D1F876158EB8B3000337BB /* World.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F872158EB8B3000337BB /* World.h */; };
+		B9D1F879158EB8EA000337BB /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
+		B9D1F87C158EB8F9000337BB /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
+		B9D1F87F158EB907000337BB /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
+		B9DD92BE1586FE400029A4A3 /* MainGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = B9DD92BD1586FE400029A4A3 /* MainGraphic.h */; };
+		B9DD92C11586FE500029A4A3 /* MainGraphic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9DD92C01586FE500029A4A3 /* MainGraphic.cpp */; };
 		B9DD97211586DD4900E6DD9B /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B9B350DC1586C15C00180CE7 /* ViewController.mm */; };
 		B9DD97251586DEA000E6DD9B /* library.graphic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36DF1586481C004AAB28 /* library.graphic.a */; };
 		B9DD97261586DEA700E6DD9B /* physics.engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36D0158647FE004AAB28 /* physics.engine.a */; };
@@ -39,6 +55,7 @@
 		B9DD97391586E21100E6DD9B /* MainPhysics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9DD97381586E21100E6DD9B /* MainPhysics.cpp */; };
 		B9DD97421586E35D00E6DD9B /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B9DD972E1586DF4C00E6DD9B /* Shader.fsh */; };
 		B9DD97431586E35D00E6DD9B /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B9DD972F1586DF4C00E6DD9B /* Shader.vsh */; };
+		B9F9C387158E5D3600B0E4B6 /* button_add.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F9C386158E5D3600B0E4B6 /* button_add.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +87,27 @@
 			remoteGlobalIDString = B9B350BF1586BEB200180CE7;
 			remoteInfo = library.physics;
 		};
+		B9D1F877158EB8E3000337BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9D1F856158E923F000337BB;
+			remoteInfo = common;
+		};
+		B9D1F87A158EB8F0000337BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9D1F856158E923F000337BB;
+			remoteInfo = common;
+		};
+		B9D1F87D158EB900000337BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9D1F856158E923F000337BB;
+			remoteInfo = common;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +131,9 @@
 		B94B371215864AD7004AAB28 /* MainEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainEngine.h; sourceTree = "<group>"; };
 		B94B371315864AD7004AAB28 /* PhysicsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEngine.h; sourceTree = "<group>"; };
 		B94B371B1586BAA3004AAB28 /* physics.engine-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "physics.engine-Prefix.pch"; sourceTree = "<group>"; };
+		B98DACCA158ABCFA00417C21 /* NDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDC.h; sourceTree = "<group>"; };
+		B98DACCD158ABD0A00417C21 /* NDC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NDC.cpp; sourceTree = "<group>"; };
+		B98DACE7158ACB7400417C21 /* CommonGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonGraphics.h; sourceTree = "<group>"; };
 		B9B350941586BBB600180CE7 /* LibraryGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryGraphic.h; sourceTree = "<group>"; };
 		B9B350951586BBB600180CE7 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		B9B350961586BBB600180CE7 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
@@ -106,12 +147,22 @@
 		B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryCollision.h; sourceTree = "<group>"; };
 		B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryPhysics.h; sourceTree = "<group>"; };
 		B9B350DC1586C15C00180CE7 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		B9D1F857158E923F000337BB /* common.feature.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = common.feature.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9D1F85B158E923F000337BB /* common-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "common-Prefix.pch"; sourceTree = "<group>"; };
+		B9D1F862158E929E000337BB /* CommonStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonStruct.h; sourceTree = "<group>"; };
+		B9D1F86F158EB8B3000337BB /* SObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SObject.cpp; sourceTree = "<group>"; };
+		B9D1F870158EB8B3000337BB /* SObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SObject.h; sourceTree = "<group>"; };
+		B9D1F871158EB8B3000337BB /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World.cpp; sourceTree = "<group>"; };
+		B9D1F872158EB8B3000337BB /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = World.h; sourceTree = "<group>"; };
+		B9DD92BD1586FE400029A4A3 /* MainGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainGraphic.h; sourceTree = "<group>"; };
+		B9DD92C01586FE500029A4A3 /* MainGraphic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainGraphic.cpp; sourceTree = "<group>"; };
 		B9DD972E1586DF4C00E6DD9B /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
 		B9DD972F1586DF4C00E6DD9B /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
 		B9DD97321586E06600E6DD9B /* MainCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainCollision.h; sourceTree = "<group>"; };
 		B9DD97341586E07E00E6DD9B /* MainCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainCollision.cpp; sourceTree = "<group>"; };
 		B9DD97361586E20800E6DD9B /* MainPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainPhysics.h; sourceTree = "<group>"; };
 		B9DD97381586E21100E6DD9B /* MainPhysics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainPhysics.cpp; sourceTree = "<group>"; };
+		B9F9C386158E5D3600B0E4B6 /* button_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_add.png; path = resources/images/button_add.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9D1F87F158EB907000337BB /* common.feature.a in Frameworks */,
 				B9B350A41586BD2100180CE7 /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -150,6 +202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9D1F87C158EB8F9000337BB /* common.feature.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +210,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9D1F879158EB8EA000337BB /* common.feature.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9D1F854158E923F000337BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9D1F858158E923F000337BB /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +233,7 @@
 				B94B36E11586481C004AAB28 /* library.graphic */,
 				B9B350B31586BE8C00180CE7 /* library.collision */,
 				B9B350C21586BEB200180CE7 /* library.physics */,
+				B9D1F859158E923F000337BB /* common */,
 				B94B36B015864775004AAB28 /* Frameworks */,
 				B94B36AE15864775004AAB28 /* Products */,
 			);
@@ -184,6 +247,7 @@
 				B94B36DF1586481C004AAB28 /* library.graphic.a */,
 				B9B350B11586BE8C00180CE7 /* library.collision.a */,
 				B9B350C01586BEB200180CE7 /* library.physics.a */,
+				B9D1F857158E923F000337BB /* common.feature.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -191,11 +255,11 @@
 		B94B36B015864775004AAB28 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B94B36B515864775004AAB28 /* CoreGraphics.framework */,
+				B94B36B315864775004AAB28 /* Foundation.framework */,
 				B9B350A21586BCFE00180CE7 /* GLKit.framework */,
 				B9B350A01586BCED00180CE7 /* OpenGLES.framework */,
 				B94B36B115864775004AAB28 /* UIKit.framework */,
-				B94B36B315864775004AAB28 /* Foundation.framework */,
-				B94B36B515864775004AAB28 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -203,12 +267,12 @@
 		B94B36B715864775004AAB28 /* Physical.Simulation.Tool */ = {
 			isa = PBXGroup;
 			children = (
-				B94B370F15864A94004AAB28 /* MainStoryboard_iPhone.storyboard */,
-				B94B370815864914004AAB28 /* MainStoryboard_iPad.storyboard */,
 				B94B36C015864775004AAB28 /* AppDelegate.h */,
 				B94B36C115864775004AAB28 /* AppDelegate.m */,
 				B94B370C15864977004AAB28 /* ViewController.h */,
 				B9B350DC1586C15C00180CE7 /* ViewController.mm */,
+				B94B370F15864A94004AAB28 /* MainStoryboard_iPhone.storyboard */,
+				B94B370815864914004AAB28 /* MainStoryboard_iPad.storyboard */,
 				B9DD972D1586DF4C00E6DD9B /* Shaders */,
 				B94B36B815864775004AAB28 /* Supporting Files */,
 			);
@@ -218,6 +282,7 @@
 		B94B36B815864775004AAB28 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B9F9C386158E5D3600B0E4B6 /* button_add.png */,
 				B9B3509E1586BCBF00180CE7 /* albert.icon.png */,
 				B94B36B915864775004AAB28 /* Physical.Simulation.Tool-Info.plist */,
 				B94B36BA15864775004AAB28 /* InfoPlist.strings */,
@@ -230,9 +295,9 @@
 		B94B36D2158647FE004AAB28 /* physics.engine */ = {
 			isa = PBXGroup;
 			children = (
-				B94B371115864AD7004AAB28 /* MainEngine.cpp */,
-				B94B371215864AD7004AAB28 /* MainEngine.h */,
 				B94B371315864AD7004AAB28 /* PhysicsEngine.h */,
+				B94B371215864AD7004AAB28 /* MainEngine.h */,
+				B94B371115864AD7004AAB28 /* MainEngine.cpp */,
 				B94B36D3158647FE004AAB28 /* Supporting Files */,
 			);
 			path = physics.engine;
@@ -250,8 +315,13 @@
 			isa = PBXGroup;
 			children = (
 				B9B350941586BBB600180CE7 /* LibraryGraphic.h */,
-				B9B350951586BBB600180CE7 /* Shader.cpp */,
+				B98DACE7158ACB7400417C21 /* CommonGraphics.h */,
+				B9DD92BD1586FE400029A4A3 /* MainGraphic.h */,
+				B9DD92C01586FE500029A4A3 /* MainGraphic.cpp */,
 				B9B350961586BBB600180CE7 /* Shader.h */,
+				B9B350951586BBB600180CE7 /* Shader.cpp */,
+				B98DACCA158ABCFA00417C21 /* NDC.h */,
+				B98DACCD158ABD0A00417C21 /* NDC.cpp */,
 				B94B36E21586481C004AAB28 /* Supporting Files */,
 			);
 			path = library.graphic;
@@ -303,6 +373,27 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B9D1F859158E923F000337BB /* common */ = {
+			isa = PBXGroup;
+			children = (
+				B9D1F862158E929E000337BB /* CommonStruct.h */,
+				B9D1F870158EB8B3000337BB /* SObject.h */,
+				B9D1F86F158EB8B3000337BB /* SObject.cpp */,
+				B9D1F872158EB8B3000337BB /* World.h */,
+				B9D1F871158EB8B3000337BB /* World.cpp */,
+				B9D1F85A158E923F000337BB /* Supporting Files */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		B9D1F85A158E923F000337BB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B9D1F85B158E923F000337BB /* common-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		B9DD972D1586DF4C00E6DD9B /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,6 +413,7 @@
 				B94B371515864AD7004AAB28 /* MainEngine.h in Headers */,
 				B94B371615864AD7004AAB28 /* PhysicsEngine.h in Headers */,
 				B94B371C1586BAA3004AAB28 /* physics.engine-Prefix.pch in Headers */,
+				B9D1F863158E929E000337BB /* CommonStruct.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +423,10 @@
 			files = (
 				B9B350971586BBB600180CE7 /* LibraryGraphic.h in Headers */,
 				B9B350991586BBB600180CE7 /* Shader.h in Headers */,
+				B9DD92BE1586FE400029A4A3 /* MainGraphic.h in Headers */,
+				B98DACCB158ABCFA00417C21 /* NDC.h in Headers */,
+				B98DACE8158ACB7400417C21 /* CommonGraphics.h in Headers */,
+				B9D1F864158E929E000337BB /* CommonStruct.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +445,16 @@
 			files = (
 				B9B350CE1586BEF800180CE7 /* LibraryPhysics.h in Headers */,
 				B9DD97371586E20800E6DD9B /* MainPhysics.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9D1F855158E923F000337BB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9D1F865158E929E000337BB /* CommonStruct.h in Headers */,
+				B9D1F874158EB8B3000337BB /* SObject.h in Headers */,
+				B9D1F876158EB8B3000337BB /* World.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +510,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B9D1F87E158EB900000337BB /* PBXTargetDependency */,
 			);
 			name = library.graphic;
 			productName = library.graphic;
@@ -421,6 +528,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B9D1F87B158EB8F0000337BB /* PBXTargetDependency */,
 			);
 			name = library.collision;
 			productName = library.collision;
@@ -438,10 +546,28 @@
 			buildRules = (
 			);
 			dependencies = (
+				B9D1F878158EB8E3000337BB /* PBXTargetDependency */,
 			);
 			name = library.physics;
 			productName = library.physics;
 			productReference = B9B350C01586BEB200180CE7 /* library.physics.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B9D1F856158E923F000337BB /* common.feature */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9D1F85F158E923F000337BB /* Build configuration list for PBXNativeTarget "common.feature" */;
+			buildPhases = (
+				B9D1F853158E923F000337BB /* Sources */,
+				B9D1F854158E923F000337BB /* Frameworks */,
+				B9D1F855158E923F000337BB /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = common.feature;
+			productName = common;
+			productReference = B9D1F857158E923F000337BB /* common.feature.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -469,6 +595,7 @@
 				B94B36DE1586481C004AAB28 /* library.graphic */,
 				B9B350B01586BE8C00180CE7 /* library.collision */,
 				B9B350BF1586BEB200180CE7 /* library.physics */,
+				B9D1F856158E923F000337BB /* common.feature */,
 			);
 		};
 /* End PBXProject section */
@@ -484,6 +611,7 @@
 				B94B370915864914004AAB28 /* MainStoryboard_iPad.storyboard in Resources */,
 				B94B371015864A94004AAB28 /* MainStoryboard_iPhone.storyboard in Resources */,
 				B9B3509F1586BCBF00180CE7 /* albert.icon.png in Resources */,
+				B9F9C387158E5D3600B0E4B6 /* button_add.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +641,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9B350981586BBB600180CE7 /* Shader.cpp in Sources */,
+				B9DD92C11586FE500029A4A3 /* MainGraphic.cpp in Sources */,
+				B98DACCE158ABD0A00417C21 /* NDC.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +659,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9DD97391586E21100E6DD9B /* MainPhysics.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9D1F853158E923F000337BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9D1F873158EB8B3000337BB /* SObject.cpp in Sources */,
+				B9D1F875158EB8B3000337BB /* World.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,6 +693,21 @@
 			isa = PBXTargetDependency;
 			target = B9B350BF1586BEB200180CE7 /* library.physics */;
 			targetProxy = B9B350DA1586C08E00180CE7 /* PBXContainerItemProxy */;
+		};
+		B9D1F878158EB8E3000337BB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9D1F856158E923F000337BB /* common.feature */;
+			targetProxy = B9D1F877158EB8E3000337BB /* PBXContainerItemProxy */;
+		};
+		B9D1F87B158EB8F0000337BB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9D1F856158E923F000337BB /* common.feature */;
+			targetProxy = B9D1F87A158EB8F0000337BB /* PBXContainerItemProxy */;
+		};
+		B9D1F87E158EB900000337BB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9D1F856158E923F000337BB /* common.feature */;
+			targetProxy = B9D1F87D158EB900000337BB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -754,6 +908,32 @@
 			};
 			name = Release;
 		};
+		B9D1F860158E923F000337BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/common.dst;
+				EXECUTABLE_PREFIX = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "common/common-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B9D1F861158E923F000337BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/common.dst;
+				EXECUTABLE_PREFIX = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "common/common-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -807,6 +987,15 @@
 			buildConfigurations = (
 				B9B350C91586BEB200180CE7 /* Debug */,
 				B9B350CA1586BEB200180CE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B9D1F85F158E923F000337BB /* Build configuration list for PBXNativeTarget "common.feature" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9D1F860158E923F000337BB /* Debug */,
+				B9D1F861158E923F000337BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
