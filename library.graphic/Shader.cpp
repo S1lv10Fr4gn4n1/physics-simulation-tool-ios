@@ -8,13 +8,28 @@
 
 #include "Shader.h"
 
+const char * defaultVertexShader = "attribute vec4 position; " 
+                                   "attribute vec4 color; "
+                                   "varying vec4 colorVarying; "
+                                   "void main() { "
+                                   "  gl_Position = position; "
+                                   "  colorVarying = color; "
+                                   "}" ;
+
+const char * defaultFragmentShader = "varying lowp vec4 colorVarying; "
+                                     "void main() { "
+                                     "  gl_FragColor = colorVarying; "
+                                     "} ";
+
+const char * defaultGeometryShader = 0;
+
 using namespace std;
 
 Shader::Shader(const char * _vertShaderSource, const char * _fragShaderSource, const char * _geomShaderSource)
 {
-    vertShaderSource = _vertShaderSource;
-    fragShaderSource = _fragShaderSource;
-    geomShaderSource = _geomShaderSource;
+    vertShaderSource = _vertShaderSource ? _vertShaderSource : defaultVertexShader;  
+    fragShaderSource = _fragShaderSource ? _fragShaderSource : defaultFragmentShader;
+    geomShaderSource = _geomShaderSource ? _geomShaderSource : defaultGeometryShader;
 }
 
 Shader::~Shader()

@@ -1,4 +1,4 @@
-//
+    //
 //  ViewControllerViewController.m
 //  Physical.Simulation.Tool
 //
@@ -114,45 +114,16 @@
 
 - (void)initializeFrame
 {
-//    static const unsigned char squareColors[] = {
-//        255, 255, 255, 255,
-//        255, 255, 255, 255,
-//        255, 255, 255, 255,
-//        255, 255, 255, 255,
-//    };
+    SimulatedObject * simulatedObject = new SimulatedObject();
+    simulatedObject->setMode(GL_LINE_LOOP);
+    simulatedObject->setColor(MakeColor(0, 0, 0, 0, 4));
+    simulatedObject->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
+    simulatedObject->addPointer(MakePointer(-0.65, 0.65, 0.00));
+    simulatedObject->addPointer(MakePointer(-0.15, 0.65, 0.00));
+    simulatedObject->addPointer(MakePointer(-0.15, 0.15, 0.00));
+    simulatedObject->addPointer(MakePointer(-0.65, 0.15, 0.00));
     
-//    const float square[] = {
-//        -0.65,  0.65,
-//        -0.15,  0.65,
-//        -0.15,  0.15,
-//        -0.65,  0.15,
-//        -0.65,  0.65,
-//    };    
-    
-//    const float square1[] = {
-//        -10,  10,
-//         10,  10,
-//         10, -10,
-//        -10, -10,
-//        -10,  10,
-//    };    
-    
-//    const GLfloat spriteVertices[] = {
-//        -0.5f, -0.5f,
-//         0.5f, -0.5f,
-//        -0.5f,  0.5f,
-//         0.5f,  0.5f,
-//    };
-    
-    SObject * sObject = new SObject();
-    sObject->setColor(MakeColor(255, 255, 255));
-    sObject->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
-    sObject->addPointer(MakePointer(-0.65, 0.65, 0));
-    sObject->addPointer(MakePointer(-0.15, 0.65, 0));
-    sObject->addPointer(MakePointer(-0.15, 0.15, 0));
-    sObject->addPointer(MakePointer(-0.65, 0.15, 0));
-    
-    mainEngine->addSObjectInWorld(sObject);
+    mainEngine->addSimulatedObjectInWorld(simulatedObject);
     
 //    // Sets up an array of values to use as the sprite vertices.
 //    const GLfloat spriteVertices[] = {
@@ -183,7 +154,7 @@
 //	glMatrixMode(GL_MODELVIEW);
 //	
 //	// Clears the view with black
-//	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+//	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 //	
 //	// Sets up pointers and enables states needed for using vertex arrays and textures
 //	glVertexPointer(2, GL_FLOAT, 0, spriteVertices);
@@ -285,13 +256,13 @@
 #pragma mark - GLKView and GLKViewController delegate methods
 - (void)update
 {
-    mainEngine->updateInformation();
-    mainGraphic->updateInformation();
+//    mainEngine->updateInformation();
+//    mainGraphic->updateInformation();
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    mainGraphic->draw(mainEngine->getWorld()->getSObjects());
+    mainGraphic->draw(mainEngine->getWorld()->getSimulatedObjects());
 }
 
 @end

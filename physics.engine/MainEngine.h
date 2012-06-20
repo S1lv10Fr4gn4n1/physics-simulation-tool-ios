@@ -22,7 +22,7 @@ public:
     void updateInformation();
     void rotatedScreen(float _width, float _heigth);
     
-    void addSObjectInWorld(SObject * _sObject);
+    void addSimulatedObjectInWorld(SimulatedObject * _simulatedObject);
     
     World * getWorld();
     

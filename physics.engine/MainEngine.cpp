@@ -33,9 +33,9 @@ World * MainEngine::getWorld()
     return world;
 }
 
-void MainEngine::addSObjectInWorld(SObject *_sObject)
+void MainEngine::addSimulatedObjectInWorld(SimulatedObject * _simulatedObject)
 {
-    world->addObject(_sObject);
+    world->addSimulatedObject(_simulatedObject);
 }
 
 void MainEngine::start()

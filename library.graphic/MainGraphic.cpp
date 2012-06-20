@@ -51,26 +51,56 @@ void MainGraphic::rotatedScreen(float _width, float _height)
     ndc->update(_width, _height);
 }
 
-void MainGraphic::MainGraphic::draw(std::vector<SObject *> * _sObjects)
+void MainGraphic::MainGraphic::draw(std::vector<SimulatedObject *> * _simulatedObjects)
 {
+//    static const unsigned char squareColors[] = {
+//        0, 0, 0, 0,
+//        0, 0, 0, 0,
+//        0, 0, 0, 0,
+//        0, 0, 0, 0,
+//    };
+//
+//    const float square[] = {
+//        -0.65,  0.65, 0.00,
+//        -0.15,  0.65, 0.00,
+//        -0.15,  0.15, 0.00,
+//        -0.65,  0.15, 0.00,
+//    };    
+        
+//    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    
+//    // Render the object again with ES2
+//    glUseProgram(shader->getProgram());
+
+//    // define color for square
+//    glVertexAttribPointer(ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, 1, 0, squareColors);
+//    glEnableVertexAttribArray(ATTRIB_COLOR);
+//    
+//    // Update attribute values.
+//    glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, 0, 0, square);
+//    glEnableVertexAttribArray(ATTRIB_VERTEX);
+//    
+//    glDrawArrays(GL_LINE_LOOP, 0, 4);
+    
+    
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     // Render the object again with ES2
     glUseProgram(shader->getProgram());
     
-    SObject * sObject = NULL; 
-    for (int i=0; i<_sObjects->size(); i++) {
-        sObject = _sObjects->at(i);
+    for (int i=0; i<_simulatedObjects->size(); i++) {
+        simulatedObjectDrawn = _simulatedObjects->at(i);
         
         // define color for square
-        glVertexAttribPointer(ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, 1, 0, sObject->getColor());
+        glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, simulatedObjectDrawn->getColor()->color);
         glEnableVertexAttribArray(ATTRIB_COLOR);
         
         // Update attribute values.
-        glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, 0, 0, sObject->getPointers()->ps);
+        glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, simulatedObjectDrawn->getPointers()->pointers);
         glEnableVertexAttribArray(ATTRIB_VERTEX);
         
-        glDrawArrays(GL_TRIANGLE_FAN, 0, sObject->getPointers()->count);
+        glDrawArrays(simulatedObjectDrawn->getMode(), 0, simulatedObjectDrawn->getPointers()->count);
     }
 }

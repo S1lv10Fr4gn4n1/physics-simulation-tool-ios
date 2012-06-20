@@ -9,7 +9,8 @@
 #ifndef COMMONSTRUCT_H
 #define COMMONSTRUCT_H
 
-
+#define CHANNEL_COLOR 4
+#define COUNT_COORD 3
 
 /// Struct Pointer
 struct Pointer {
@@ -19,39 +20,51 @@ struct Pointer {
 };
 typedef Pointer Pointer;
 
-struct Pointers {
-    float * ps;
-    int count;
-};
-
-static inline Pointer MakePointer(float _x, float _y, float _z) 
+static inline Pointer * MakePointer(float _x, float _y, float _z) 
 {
-    Pointer pointer;
-    pointer.x = _x;
-    pointer.y = _y;
-    pointer.z = _z;
+    Pointer * pointer = new Pointer();
+    pointer->x = _x;
+    pointer->y = _y;
+    pointer->z = _z;
     
     return pointer;
 }
 
-static inline Pointers * MakePointers(Pointers * _pointers, Pointer _point) 
+/// Struct Pointers
+struct Pointers {
+    float * pointers;
+    unsigned int count;
+};
+
+static inline Pointers * MakePointers(Pointers * _pointers, Pointer * _point) 
 {
     if (!_pointers) {
         _pointers = new Pointers();
-        _pointers->ps = new float();
+        _pointers->pointers = new float();
         _pointers->count = 0; 
-    } else if (!_pointers->ps) {
-        _pointers->ps = new float();
+    } else if (!_pointers->pointers) {
+        _pointers->pointers = new float();
         _pointers->count = 0; 
-    } else {
-        _pointers->count++;
     }
     
-    *(_pointers->ps+_pointers->count+0) = _point.x;
-    *(_pointers->ps+_pointers->count+1) = _point.y;
-    *(_pointers->ps+_pointers->count+2) = _point.z;
+    char index=_pointers->count*COUNT_COORD;
+    *(_pointers->pointers+index+0) = _point->x;
+    *(_pointers->pointers+index+1) = _point->y;
+    *(_pointers->pointers+index+2) = _point->z;
+    
+    _pointers->count++;
     
     return _pointers;
+}
+
+static inline Pointer * CpyPointer(Pointer * _pointer)
+{
+    Pointer * p = new Pointer();
+    p->x = _pointer->x;
+    p->y = _pointer->y;
+    p->z = _pointer->z;
+    
+    return p;
 }
 
 
@@ -79,17 +92,24 @@ static inline PhysicalFeature * MakePhysicalFeature(float _mass, float _volume, 
 
 /// Struct Color
 struct Color {
-    unsigned char * c;
+    unsigned char * color;
 };
 typedef Color Color;
 
-static inline Color * MakeColor(unsigned char _r, unsigned char _g, unsigned char _b)
+static inline Color * MakeColor(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a, unsigned char _vertexes)
 {
     Color * color = new Color();
-    color->c = new unsigned char(3);
-    *(color->c+0) = _r;
-    *(color->c+1) = _g;
-    *(color->c+2) = _b;
+    color->color = new unsigned char(16);
+    
+    char index=0;
+    
+    for (int i=0; i<_vertexes ; i++) {
+        index=i*CHANNEL_COLOR;
+        *(color->color+index+0) = _r;
+        *(color->color+index+1) = _g;
+        *(color->color+index+2) = _b;
+        *(color->color+index+3) = _a;
+    }
     
     return color;
 }

@@ -12,37 +12,37 @@ using namespace std;
 
 World::World()
 {
-    sObjects = new vector<SObject *>();
+    simulatedObjects = new vector<SimulatedObject *>();
 }
 
 World::~World()
 {
-    if (sObjects && sObjects->size()>0) {
-        for (int i=0; 0 < sObjects->size(); i++) {
-            delete sObjects->at(i);
+    if (simulatedObjects && simulatedObjects->size()>0) {
+        for (int i=0; 0 < simulatedObjects->size(); i++) {
+            delete simulatedObjects->at(i);
         }
     }
     
-    delete sObjects;
+    delete simulatedObjects;
 }
 
-void World::addObject(SObject * _sObject)
+void World::addSimulatedObject(SimulatedObject * _simulatedObject)
 {
-    sObjects->push_back(_sObject);
+    simulatedObjects->push_back(_simulatedObject);
 }
 
-void World::deleteObject(SObject * _sObject)
+void World::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
-    for (int i=0; 0 < sObjects->size(); i++) {
-        if (sObjects->at(i) == _sObject) {
-            sObjects->erase(sObjects->begin()+i);
+    for (int i=0; 0 < simulatedObjects->size(); i++) {
+        if (simulatedObjects->at(i) == _simulatedObject) {
+            simulatedObjects->erase(simulatedObjects->begin()+i);
             return;
         }
     }
 }
 
-std::vector<SObject *> * World::getSObjects()
+std::vector<SimulatedObject *> * World::getSimulatedObjects()
 {
-    return sObjects;
+    return simulatedObjects;
 }
 

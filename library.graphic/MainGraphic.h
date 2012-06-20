@@ -13,11 +13,12 @@
 
 #include "Shader.h"
 #include "NDC.h"
-#include "SObject.h"
+#include "SimulatedObject.h"
 
 class MainGraphic {
     Shader * shader;
     NDC * ndc;
+    SimulatedObject * simulatedObjectDrawn; 
 public:
     MainGraphic();
     ~MainGraphic();
@@ -33,7 +34,7 @@ public:
     
     void loadImage();
     
-    void draw(std::vector<SObject *> * _sObjects);
+    void draw(std::vector<SimulatedObject *> * _simulatedObjects);
 };
 
 #endif

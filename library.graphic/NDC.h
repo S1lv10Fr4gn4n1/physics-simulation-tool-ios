@@ -12,10 +12,10 @@
 #include "CommonGraphics.h"
 
 class NDC {
-    Pointer maxWindow;
-    Pointer minWindow;
-    Pointer maxOrtho;
-    Pointer minOrtho;
+    Pointer * maxWindow;
+    Pointer * minWindow;
+    Pointer * maxOrtho;
+    Pointer * minOrtho;
 public:
     NDC();
     ~NDC();

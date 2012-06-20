@@ -35,8 +35,8 @@
 		B9D1F863158E929E000337BB /* CommonStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStruct.h */; };
 		B9D1F864158E929E000337BB /* CommonStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStruct.h */; };
 		B9D1F865158E929E000337BB /* CommonStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStruct.h */; };
-		B9D1F873158EB8B3000337BB /* SObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D1F86F158EB8B3000337BB /* SObject.cpp */; };
-		B9D1F874158EB8B3000337BB /* SObject.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F870158EB8B3000337BB /* SObject.h */; };
+		B9D1F873158EB8B3000337BB /* SimulatedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */; };
+		B9D1F874158EB8B3000337BB /* SimulatedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F870158EB8B3000337BB /* SimulatedObject.h */; };
 		B9D1F875158EB8B3000337BB /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D1F871158EB8B3000337BB /* World.cpp */; };
 		B9D1F876158EB8B3000337BB /* World.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F872158EB8B3000337BB /* World.h */; };
 		B9D1F879158EB8EA000337BB /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
@@ -150,8 +150,8 @@
 		B9D1F857158E923F000337BB /* common.feature.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = common.feature.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9D1F85B158E923F000337BB /* common-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "common-Prefix.pch"; sourceTree = "<group>"; };
 		B9D1F862158E929E000337BB /* CommonStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonStruct.h; sourceTree = "<group>"; };
-		B9D1F86F158EB8B3000337BB /* SObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SObject.cpp; sourceTree = "<group>"; };
-		B9D1F870158EB8B3000337BB /* SObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SObject.h; sourceTree = "<group>"; };
+		B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimulatedObject.cpp; sourceTree = "<group>"; };
+		B9D1F870158EB8B3000337BB /* SimulatedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatedObject.h; sourceTree = "<group>"; };
 		B9D1F871158EB8B3000337BB /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World.cpp; sourceTree = "<group>"; };
 		B9D1F872158EB8B3000337BB /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = World.h; sourceTree = "<group>"; };
 		B9DD92BD1586FE400029A4A3 /* MainGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainGraphic.h; sourceTree = "<group>"; };
@@ -377,8 +377,8 @@
 			isa = PBXGroup;
 			children = (
 				B9D1F862158E929E000337BB /* CommonStruct.h */,
-				B9D1F870158EB8B3000337BB /* SObject.h */,
-				B9D1F86F158EB8B3000337BB /* SObject.cpp */,
+				B9D1F870158EB8B3000337BB /* SimulatedObject.h */,
+				B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */,
 				B9D1F872158EB8B3000337BB /* World.h */,
 				B9D1F871158EB8B3000337BB /* World.cpp */,
 				B9D1F85A158E923F000337BB /* Supporting Files */,
@@ -453,7 +453,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9D1F865158E929E000337BB /* CommonStruct.h in Headers */,
-				B9D1F874158EB8B3000337BB /* SObject.h in Headers */,
+				B9D1F874158EB8B3000337BB /* SimulatedObject.h in Headers */,
 				B9D1F876158EB8B3000337BB /* World.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -666,7 +666,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9D1F873158EB8B3000337BB /* SObject.cpp in Sources */,
+				B9D1F873158EB8B3000337BB /* SimulatedObject.cpp in Sources */,
 				B9D1F875158EB8B3000337BB /* World.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

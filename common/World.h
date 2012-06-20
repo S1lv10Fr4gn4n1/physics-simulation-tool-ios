@@ -10,21 +10,21 @@
 #define WORLD_H
 
 #include <vector>
-#include "SObject.h"
+#include "SimulatedObject.h"
 
 class World {
 private:
-    std::vector<SObject *> * sObjects;
+    std::vector<SimulatedObject *> * simulatedObjects;
 protected:
     
 public:
     World();
     ~World();
     
-    void addObject(SObject * _sObject);
-    void deleteObject(SObject * _sObject);
+    void addSimulatedObject(SimulatedObject * _simulatedObject);
+    void deleteSimulatedObject(SimulatedObject * _simulatedObject);
     
-    std::vector<SObject *> * getSObjects();
+    std::vector<SimulatedObject *> * getSimulatedObjects();
 };
 
 
