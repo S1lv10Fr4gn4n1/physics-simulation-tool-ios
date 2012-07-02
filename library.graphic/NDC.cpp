@@ -44,8 +44,8 @@ void NDC::calcNDCCoordinates(float * _x, float * _y)
 
 void NDC::update(float _width, float _height)
 {
-//    maxWindow = MakePointer( 1,  1,  0), 
-//    minWindow = MakePointer(-1, -1,  0), 
-//    maxOrtho  = MakePointer(_width, _height, 0), 
-//    minOrtho  = MakePointer( 0,  0,  0);
+    maxOrtho  = MakePointer( 1,  1,  0), 
+    minOrtho  = MakePointer(-1, -1,  0), 
+    maxWindow = MakePointer(_width, _height, 0), 
+    minWindow = MakePointer( 0,  0,  0);
 }

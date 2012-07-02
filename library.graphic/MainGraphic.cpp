@@ -41,17 +41,12 @@ NDC * MainGraphic::getNdc()
     return ndc;
 }
 
-void MainGraphic::updateInformation()
-{
-    ///TODO
-}
-
 void MainGraphic::rotatedScreen(float _width, float _height)
 {
     ndc->update(_width, _height);
 }
 
-void MainGraphic::MainGraphic::draw(std::vector<SimulatedObject *> * _simulatedObjects)
+void MainGraphic::MainGraphic::draw(World * _world)
 {
 //    static const unsigned char squareColors[] = {
 //        0, 0, 0, 0,
@@ -83,15 +78,14 @@ void MainGraphic::MainGraphic::draw(std::vector<SimulatedObject *> * _simulatedO
 //    
 //    glDrawArrays(GL_LINE_LOOP, 0, 4);
     
-    
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     // Render the object again with ES2
     glUseProgram(shader->getProgram());
     
-    for (int i=0; i<_simulatedObjects->size(); i++) {
-        simulatedObjectDrawn = _simulatedObjects->at(i);
+    for (int i=0; i< _world->getSimulatedObjects()->size(); i++) {
+        simulatedObjectDrawn = _world->getSimulatedObjects()->at(i);
         
         // define color for square
         glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, simulatedObjectDrawn->getColor()->color);

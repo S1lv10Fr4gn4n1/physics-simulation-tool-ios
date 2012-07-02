@@ -1,5 +1,5 @@
-    //
-//  ViewControllerViewController.m
+//
+//  ViewController.m
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani da Silva on 11/06/12.
@@ -8,10 +8,11 @@
 
 #import "ViewController.h"
 
-
 @interface ViewController () {
     MainEngine * mainEngine;
     MainGraphic * mainGraphic;
+    EditorInforSimulation * editor;
+    ViewInforSimulation * infor;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -75,11 +76,7 @@
     mainEngine->rotatedScreen(self.view.bounds.size.width, self.view.bounds.size.height);
     mainGraphic->rotatedScreen(self.view.bounds.size.width, self.view.bounds.size.height);
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-    } else {
-        return YES;
-    }
+    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 - (void)setupGL
@@ -97,8 +94,6 @@
 {
     [EAGLContext setCurrentContext:self.context];
     
-    /// TODO - implementation 
-    
     self.effect = nil;
     
     delete mainGraphic;
@@ -110,97 +105,6 @@
     [self initializeLibraryGraphic];
     [self initializeLibraryEngine];
     [self initializeFrame];
-}
-
-- (void)initializeFrame
-{
-    SimulatedObject * simulatedObject = new SimulatedObject();
-    simulatedObject->setMode(GL_LINE_LOOP);
-    simulatedObject->setColor(MakeColor(0, 0, 0, 0, 4));
-    simulatedObject->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
-    simulatedObject->addPointer(MakePointer(-0.65, 0.65, 0.00));
-    simulatedObject->addPointer(MakePointer(-0.15, 0.65, 0.00));
-    simulatedObject->addPointer(MakePointer(-0.15, 0.15, 0.00));
-    simulatedObject->addPointer(MakePointer(-0.65, 0.15, 0.00));
-    
-    mainEngine->addSimulatedObjectInWorld(simulatedObject);
-    
-//    // Sets up an array of values to use as the sprite vertices.
-//    const GLfloat spriteVertices[] = {
-//        -0.5f, -0.5f,
-//        0.5f, -0.5f,
-//        -0.5f,  0.5f,
-//        0.5f,  0.5f,
-//    };
-//    
-//    // Sets up an array of values for the texture coordinates.
-//    const GLshort spriteTexcoords[] = {
-//        0, 0,
-//        1, 0,
-//        0, 1,
-//        1, 1,
-//    };
-//    
-//    CGImageRef spriteImage;
-//	CGContextRef spriteContext;
-//	GLubyte *spriteData;
-//	size_t	width, height;
-//    
-//	// Sets up matrices and transforms for OpenGL ES
-//	glViewport(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
-//	glMatrixMode(GL_PROJECTION);
-//	glLoadIdentity();
-//	glOrthof(-1.0f, 1.0f, -1.5f, 1.5f, -1.0f, 1.0f);
-//	glMatrixMode(GL_MODELVIEW);
-//	
-//	// Clears the view with black
-//	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-//	
-//	// Sets up pointers and enables states needed for using vertex arrays and textures
-//	glVertexPointer(2, GL_FLOAT, 0, spriteVertices);
-//	glEnableClientState(GL_VERTEX_ARRAY);
-//	glTexCoordPointer(2, GL_SHORT, 0, spriteTexcoords);
-//	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-//	
-//	// Creates a Core Graphics image from an image file
-//	spriteImage = [UIImage imageNamed:@"Sprite.png"].CGImage;
-//	// Get the width and height of the image
-//	width = CGImageGetWidth(spriteImage);
-//	height = CGImageGetHeight(spriteImage);
-//	// Texture dimensions must be a power of 2. If you write an application that allows users to supply an image,
-//	// you'll want to add code that checks the dimensions and takes appropriate action if they are not a power of 2.
-//    
-//	if(spriteImage) {
-//		// Allocated memory needed for the bitmap context
-//		spriteData = (GLubyte *) calloc(width * height * 4, sizeof(GLubyte));
-//		// Uses the bitmap creation function provided by the Core Graphics framework. 
-//		spriteContext = CGBitmapContextCreate(spriteData, width, height, 8, width * 4, CGImageGetColorSpace(spriteImage), kCGImageAlphaPremultipliedLast);
-//		// After you create the context, you can draw the sprite image to the context.
-//		CGContextDrawImage(spriteContext, CGRectMake(0.0, 0.0, (CGFloat)width, (CGFloat)height), spriteImage);
-//		// You don't need the context at this point, so you need to release it to avoid memory leaks.
-//		CGContextRelease(spriteContext);
-//		
-//        /* OpenGL name for the sprite texture */
-//        GLuint spriteTexture;
-//        
-//		// Use OpenGL ES to generate a name for the texture.
-//		glGenTextures(1, &spriteTexture);
-//		// Bind the texture name. 
-//		glBindTexture(GL_TEXTURE_2D, spriteTexture);
-//		// Set the texture parameters to use a minifying filter and a linear filer (weighted average)
-//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//		// Specify a 2D texture image, providing the a pointer to the image data in memory
-//		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
-//		// Release the image data
-//		free(spriteData);
-//		
-//		// Enable use of the texture
-//		glEnable(GL_TEXTURE_2D);
-//		// Set a blending function to use
-//		glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-//		// Enable blending
-//		glEnable(GL_BLEND);
-//	}
 }
 
 - (void)initializeLibraryGraphic
@@ -224,45 +128,62 @@
     mainEngine->start();
 }
 
+- (void)initializeFrame
+{
+    SimulatedObject * buttonStartEditor = new SimulatedObject();
+    buttonStartEditor->setMode(GL_TRIANGLE_FAN);
+    buttonStartEditor->setColor(MakeColor(0, 0, 0, 0, 4));
+    buttonStartEditor->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
+    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.843750, 0.0));
+    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.843750, 0.0));
+    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.947917, 0.0));
+    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.947917, 0.0));
+    
+    mainEngine->addSimulatedObjectInWorld(buttonStartEditor);
+    
+    editor = [[EditorInforSimulation alloc]init];
+    infor = [[ViewInforSimulation alloc]init];
+}
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    CGPoint cgPoint = [[touches anyObject] locationInView: self.view]; 
-//    Pointer * pointer = MakePointer(cgPoint.x, cgPoint.y, 0);
-//    NSLog(@"Began -> x: %f, y: %f, count touches: %u", pointer->x, pointer->y, [touches count]);
-//    NSLog(@"width: %f, height %f", self.view.bounds.size.width, self.view.bounds.size.height);
+    // TODO for implementing
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    CGPoint cgPoint = [[touches anyObject] locationInView: self.view]; 
-//    Pointer pointer = MakePointer(cgPoint.x, cgPoint.y, 0);
-//    NSLog(@"Cancelled -> x: %f, y: %f", pointer.x, pointer.y);
+    // TODO for implementing
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    CGPoint cgPoint = [[touches anyObject] locationInView: self.view]; 
-//    Pointer pointer = MakePointer(cgPoint.x, cgPoint.y, 0);
-//    NSLog(@"Ended -> x: %f, y: %f", pointer.x, pointer.y);
+    CGPoint cgPoint = [[touches anyObject] locationInView: self.view]; 
+    Pointer * pointer = MakePointer(cgPoint.x, cgPoint.y, 0);
+    
+    mainGraphic->getNdc()->calcNDCCoordinates(&pointer->x, &pointer->y);
+    
+    SimulatedObject * simulatedObject = new SimulatedObject();
+    simulatedObject->setMode(GL_POINTS);
+    simulatedObject->setColor(MakeColor(0, 0, 0, 0, 4));
+    simulatedObject->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
+    simulatedObject->addPointer(pointer);
+    mainEngine->addSimulatedObjectInWorld(simulatedObject);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    CGPoint cgPoint = [[touches anyObject] locationInView: self.view]; 
-//    Pointer pointer = MakePointer(cgPoint.x, cgPoint.y, 0);
-//    NSLog(@"Moved -> x: %f, y: %f", pointer.x, pointer.y);
+    // TODO for implementing
 }
 
 #pragma mark - GLKView and GLKViewController delegate methods
 - (void)update
 {
-//    mainEngine->updateInformation();
-//    mainGraphic->updateInformation();
+    mainEngine->updateInformation();
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    mainGraphic->draw(mainEngine->getWorld()->getSimulatedObjects());
+    mainGraphic->draw(mainEngine->getWorld());
 }
 
 @end

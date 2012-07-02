@@ -13,7 +13,7 @@
 
 #include "Shader.h"
 #include "NDC.h"
-#include "SimulatedObject.h"
+#include "Commons.h"
 
 class MainGraphic {
     Shader * shader;
@@ -26,7 +26,6 @@ public:
     void initializeShader(const char* _vertShaderSource, const char* _fragShaderSource, const char* _geomShaderSource);
     void initializeNDC(float _width, float _height);
     
-    void updateInformation();
     void rotatedScreen(float _width, float _heigth);
     
     Shader * getShader();
@@ -34,7 +33,7 @@ public:
     
     void loadImage();
     
-    void draw(std::vector<SimulatedObject *> * _simulatedObjects);
+    void draw(World * _world);
 };
 
 #endif

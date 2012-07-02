@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B9066CE81592237D0031264F /* Commons.h in Headers */ = {isa = PBXBuildFile; fileRef = B9066CE6159223650031264F /* Commons.h */; };
 		B94B36B215864775004AAB28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B115864775004AAB28 /* UIKit.framework */; };
 		B94B36B415864775004AAB28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B315864775004AAB28 /* Foundation.framework */; };
 		B94B36B615864775004AAB28 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B515864775004AAB28 /* CoreGraphics.framework */; };
@@ -25,12 +26,17 @@
 		B9B350971586BBB600180CE7 /* LibraryGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350941586BBB600180CE7 /* LibraryGraphic.h */; };
 		B9B350981586BBB600180CE7 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B350951586BBB600180CE7 /* Shader.cpp */; };
 		B9B350991586BBB600180CE7 /* Shader.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350961586BBB600180CE7 /* Shader.h */; };
-		B9B3509F1586BCBF00180CE7 /* albert.icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B3509E1586BCBF00180CE7 /* albert.icon.png */; };
 		B9B350A11586BCED00180CE7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
 		B9B350A31586BCFE00180CE7 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A21586BCFE00180CE7 /* GLKit.framework */; };
 		B9B350A41586BD2100180CE7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
 		B9B350CC1586BEEF00180CE7 /* LibraryCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */; };
 		B9B350CE1586BEF800180CE7 /* LibraryPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */; };
+		B9BF437F15A14BD900C8FDB2 /* ViewInforSimulation.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BF437E15A14BD800C8FDB2 /* ViewInforSimulation.m */; };
+		B9BF438215A14BF500C8FDB2 /* EditorInforSimulation.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BF438115A14BF500C8FDB2 /* EditorInforSimulation.m */; };
+		B9C5325C159950040098C0A6 /* albert.icon.57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C53258159950040098C0A6 /* albert.icon.57x57.png */; };
+		B9C5325D159950040098C0A6 /* albert.icon.72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C53259159950040098C0A6 /* albert.icon.72x72.png */; };
+		B9C5325E159950040098C0A6 /* albert.icon.114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C5325A159950040098C0A6 /* albert.icon.114x114.png */; };
+		B9C5325F159950040098C0A6 /* albert.icon.144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C5325B159950040098C0A6 /* albert.icon.144x144.png */; };
 		B9D1F858158E923F000337BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B315864775004AAB28 /* Foundation.framework */; };
 		B9D1F863158E929E000337BB /* CommonStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStruct.h */; };
 		B9D1F864158E929E000337BB /* CommonStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStruct.h */; };
@@ -111,6 +117,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B9066CE6159223650031264F /* Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commons.h; sourceTree = "<group>"; };
 		B94B36AD15864775004AAB28 /* Physical.Tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Physical.Tool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B94B36B115864775004AAB28 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B94B36B315864775004AAB28 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -137,7 +144,6 @@
 		B9B350941586BBB600180CE7 /* LibraryGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryGraphic.h; sourceTree = "<group>"; };
 		B9B350951586BBB600180CE7 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		B9B350961586BBB600180CE7 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
-		B9B3509E1586BCBF00180CE7 /* albert.icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.png; path = resources/images/albert.icon.png; sourceTree = SOURCE_ROOT; };
 		B9B350A01586BCED00180CE7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		B9B350A21586BCFE00180CE7 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B9B350B11586BE8C00180CE7 /* library.collision.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = library.collision.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +153,14 @@
 		B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryCollision.h; sourceTree = "<group>"; };
 		B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryPhysics.h; sourceTree = "<group>"; };
 		B9B350DC1586C15C00180CE7 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		B9BF437D15A14BD800C8FDB2 /* ViewInforSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewInforSimulation.h; sourceTree = "<group>"; };
+		B9BF437E15A14BD800C8FDB2 /* ViewInforSimulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewInforSimulation.m; sourceTree = "<group>"; };
+		B9BF438015A14BF500C8FDB2 /* EditorInforSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorInforSimulation.h; sourceTree = "<group>"; };
+		B9BF438115A14BF500C8FDB2 /* EditorInforSimulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorInforSimulation.m; sourceTree = "<group>"; };
+		B9C53258159950040098C0A6 /* albert.icon.57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.57x57.png; path = resources/images/albert.icon.57x57.png; sourceTree = SOURCE_ROOT; };
+		B9C53259159950040098C0A6 /* albert.icon.72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.72x72.png; path = resources/images/albert.icon.72x72.png; sourceTree = SOURCE_ROOT; };
+		B9C5325A159950040098C0A6 /* albert.icon.114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.114x114.png; path = resources/images/albert.icon.114x114.png; sourceTree = SOURCE_ROOT; };
+		B9C5325B159950040098C0A6 /* albert.icon.144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.144x144.png; path = resources/images/albert.icon.144x144.png; sourceTree = SOURCE_ROOT; };
 		B9D1F857158E923F000337BB /* common.feature.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = common.feature.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9D1F85B158E923F000337BB /* common-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "common-Prefix.pch"; sourceTree = "<group>"; };
 		B9D1F862158E929E000337BB /* CommonStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonStruct.h; sourceTree = "<group>"; };
@@ -271,6 +285,10 @@
 				B94B36C115864775004AAB28 /* AppDelegate.m */,
 				B94B370C15864977004AAB28 /* ViewController.h */,
 				B9B350DC1586C15C00180CE7 /* ViewController.mm */,
+				B9BF437D15A14BD800C8FDB2 /* ViewInforSimulation.h */,
+				B9BF437E15A14BD800C8FDB2 /* ViewInforSimulation.m */,
+				B9BF438015A14BF500C8FDB2 /* EditorInforSimulation.h */,
+				B9BF438115A14BF500C8FDB2 /* EditorInforSimulation.m */,
 				B94B370F15864A94004AAB28 /* MainStoryboard_iPhone.storyboard */,
 				B94B370815864914004AAB28 /* MainStoryboard_iPad.storyboard */,
 				B9DD972D1586DF4C00E6DD9B /* Shaders */,
@@ -282,8 +300,7 @@
 		B94B36B815864775004AAB28 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				B9F9C386158E5D3600B0E4B6 /* button_add.png */,
-				B9B3509E1586BCBF00180CE7 /* albert.icon.png */,
+				B9C5324A1599461D0098C0A6 /* image */,
 				B94B36B915864775004AAB28 /* Physical.Simulation.Tool-Info.plist */,
 				B94B36BA15864775004AAB28 /* InfoPlist.strings */,
 				B94B36BD15864775004AAB28 /* main.m */,
@@ -373,9 +390,22 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B9C5324A1599461D0098C0A6 /* image */ = {
+			isa = PBXGroup;
+			children = (
+				B9C53258159950040098C0A6 /* albert.icon.57x57.png */,
+				B9C53259159950040098C0A6 /* albert.icon.72x72.png */,
+				B9C5325A159950040098C0A6 /* albert.icon.114x114.png */,
+				B9C5325B159950040098C0A6 /* albert.icon.144x144.png */,
+				B9F9C386158E5D3600B0E4B6 /* button_add.png */,
+			);
+			name = image;
+			sourceTree = "<group>";
+		};
 		B9D1F859158E923F000337BB /* common */ = {
 			isa = PBXGroup;
 			children = (
+				B9066CE6159223650031264F /* Commons.h */,
 				B9D1F862158E929E000337BB /* CommonStruct.h */,
 				B9D1F870158EB8B3000337BB /* SimulatedObject.h */,
 				B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */,
@@ -455,6 +485,7 @@
 				B9D1F865158E929E000337BB /* CommonStruct.h in Headers */,
 				B9D1F874158EB8B3000337BB /* SimulatedObject.h in Headers */,
 				B9D1F876158EB8B3000337BB /* World.h in Headers */,
+				B9066CE81592237D0031264F /* Commons.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,8 +641,11 @@
 				B94B36BC15864775004AAB28 /* InfoPlist.strings in Resources */,
 				B94B370915864914004AAB28 /* MainStoryboard_iPad.storyboard in Resources */,
 				B94B371015864A94004AAB28 /* MainStoryboard_iPhone.storyboard in Resources */,
-				B9B3509F1586BCBF00180CE7 /* albert.icon.png in Resources */,
 				B9F9C387158E5D3600B0E4B6 /* button_add.png in Resources */,
+				B9C5325C159950040098C0A6 /* albert.icon.57x57.png in Resources */,
+				B9C5325D159950040098C0A6 /* albert.icon.72x72.png in Resources */,
+				B9C5325E159950040098C0A6 /* albert.icon.114x114.png in Resources */,
+				B9C5325F159950040098C0A6 /* albert.icon.144x144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,6 +659,8 @@
 				B94B36BE15864775004AAB28 /* main.m in Sources */,
 				B94B36C215864775004AAB28 /* AppDelegate.m in Sources */,
 				B9DD97211586DD4900E6DD9B /* ViewController.mm in Sources */,
+				B9BF437F15A14BD900C8FDB2 /* ViewInforSimulation.m in Sources */,
+				B9BF438215A14BF500C8FDB2 /* EditorInforSimulation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

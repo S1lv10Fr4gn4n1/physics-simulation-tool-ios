@@ -1,5 +1,5 @@
 //
-//  ViewControllerViewController.h
+//  ViewController.h
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani da Silva on 11/06/12.
@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
+
+#import "EditorInforSimulation.h"
+#import "ViewInforSimulation.h"
 
 #include "LibraryGraphic.h"
 #include "PhysicsEngine.h"

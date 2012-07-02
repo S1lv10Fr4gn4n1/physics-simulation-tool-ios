@@ -14,7 +14,7 @@ MainEngine::MainEngine()
 }
 
 MainEngine::~MainEngine()
-{
+{ 
     delete world;
 }
 

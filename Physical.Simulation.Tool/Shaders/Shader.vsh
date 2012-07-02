@@ -29,5 +29,6 @@ void main()
 //    
 //    gl_Position = modelViewProjectionMatrix * position;
     gl_Position = position;
+    gl_PointSize = 3.0; // for tests
     colorVarying = color;
 }
