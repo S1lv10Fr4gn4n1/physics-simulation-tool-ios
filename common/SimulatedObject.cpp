@@ -17,6 +17,10 @@ SimulatedObject::SimulatedObject()
     
     physicalFeature = MakePhysicalFeature(0, 0, 0, 0, 0); /// TODO - revise default
     color = MakeColor(0, 0, 0, 0, 4);
+
+    bbox = new BBox();
+    bbox->max->x = bbox->max->y = bbox->max->z = -1000000;
+	bbox->min->x = bbox->min->y = bbox->min->z =  1000000;	
 }
 
 SimulatedObject::~SimulatedObject()
@@ -28,6 +32,52 @@ SimulatedObject::~SimulatedObject()
     delete pointers;
     delete physicalFeature;
     delete color;
+}
+
+void SimulatedObject::loadBbox()
+{
+    Pointer * pointer = NULL;
+    
+    for(int i=0; i < pointersAux->size(); i++) {
+		pointer = pointersAux->at(i);
+		
+		//point = [value transformPoint: point];
+		
+		//definindo o maior X
+		if (pointer->x > bbox->max->x) {
+			bbox->max->x = pointer->x;
+		}
+		
+		//definindo o menor X
+		if (pointer->x < bbox->min->x) {
+			bbox->min->x = pointer->x;
+		}
+		
+		//definindo o maior Y
+		if (pointer->y > bbox->max->y) {
+			bbox->max->y = pointer->y;
+		}
+		
+		//definindo o menor Y
+		if (pointer->y < bbox->min->y) {
+			bbox->min->y = pointer->y;
+		}
+        
+		//definindo o maior Z
+		if (pointer->z > bbox->max->z) {
+			bbox->max->z = pointer->z;
+		}
+		
+		//definindo o menor Z
+		if (pointer->z < bbox->min->z) {
+			bbox->min->z = pointer->z;
+		}
+	}
+}
+
+void SimulatedObject::start()
+{
+    loadBbox();
 }
 
 void SimulatedObject::addPointer(Pointer * _pointer)
@@ -64,6 +114,11 @@ Pointers * SimulatedObject::getPointers()
     return pointers;
 }
 
+std::vector<Pointer *> * SimulatedObject::getPointersAux()
+{
+    return pointersAux;
+}
+
 Color * SimulatedObject::getColor()
 {
     return color;
@@ -94,3 +149,12 @@ unsigned int SimulatedObject::getMode()
     return mode;
 }
 
+BBox * SimulatedObject::getBBox()
+{
+    return bbox;
+}
+
+void SimulatedObject::setBBox(BBox * _bbox)
+{
+    bbox = _bbox;
+}

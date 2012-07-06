@@ -11,8 +11,8 @@
 @interface ViewController () {
     MainEngine * mainEngine;
     MainGraphic * mainGraphic;
-    EditorInforSimulation * editor;
-    ViewInforSimulation * infor;
+    //EditorInforSimulation * editor;
+    //ViewInforSimulation * infor;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -130,19 +130,19 @@
 
 - (void)initializeFrame
 {
-    SimulatedObject * buttonStartEditor = new SimulatedObject();
-    buttonStartEditor->setMode(GL_TRIANGLE_FAN);
-    buttonStartEditor->setColor(MakeColor(0, 0, 0, 0, 4));
-    buttonStartEditor->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
-    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.843750, 0.0));
-    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.843750, 0.0));
-    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.947917, 0.0));
-    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.947917, 0.0));
+//    SimulatedObject * buttonStartEditor = new SimulatedObject();
+//    buttonStartEditor->setMode(GL_TRIANGLE_FAN);
+//    buttonStartEditor->setColor(MakeColor(0, 0, 0, 0, 4));
+//    buttonStartEditor->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
+//    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.843750, 0.0));
+//    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.843750, 0.0));
+//    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.947917, 0.0));
+//    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.947917, 0.0));
+//    
+//    mainEngine->addSimulatedObjectInWorld(buttonStartEditor);
     
-    mainEngine->addSimulatedObjectInWorld(buttonStartEditor);
-    
-    editor = [[EditorInforSimulation alloc]init];
-    infor = [[ViewInforSimulation alloc]init];
+    //editor = [[EditorInforSimulation alloc]init];
+    //infor = [[ViewInforSimulation alloc]init];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -157,17 +157,11 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    CGPoint cgPoint = [[touches anyObject] locationInView: self.view]; 
-    Pointer * pointer = MakePointer(cgPoint.x, cgPoint.y, 0);
-    
-    mainGraphic->getNdc()->calcNDCCoordinates(&pointer->x, &pointer->y);
-    
-    SimulatedObject * simulatedObject = new SimulatedObject();
-    simulatedObject->setMode(GL_POINTS);
-    simulatedObject->setColor(MakeColor(0, 0, 0, 0, 4));
-    simulatedObject->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
-    simulatedObject->addPointer(pointer);
-    mainEngine->addSimulatedObjectInWorld(simulatedObject);
+//    CGPoint cgPoint = [[touches anyObject] locationInView: self.view]; 
+//    Pointer * pointer = MakePointer(cgPoint.x, cgPoint.y, 0);
+//    mainGraphic->getNdc()->calcNDCCoordinates(&pointer->x, &pointer->y);
+//
+//    SimulatedObject * s = mainEngine->selectedSimulatedObject(pointer);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event

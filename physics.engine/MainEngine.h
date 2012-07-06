@@ -10,6 +10,7 @@
 #define MAINENGINE_H
 
 #include "Commons.h"
+#include "Selection.h"
 
 class MainEngine {
 private:
@@ -18,15 +19,18 @@ protected:
 public:
     MainEngine();
     ~MainEngine();
+
+    void start();
     
     void updateInformation();
+  
     void rotatedScreen(float _width, float _heigth);
     
     void addSimulatedObjectInWorld(SimulatedObject * _simulatedObject);
     
-    World * getWorld();
+    SimulatedObject * selectedSimulatedObject(Pointer * _pointer);
     
-    void start();
+    World * getWorld();    
 };
 
 #endif

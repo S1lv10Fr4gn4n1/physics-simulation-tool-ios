@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
-#import "EditorInforSimulation.h"
+//#import "EditorInforSimulation.h"
 #import "ViewInforSimulation.h"
 
 #include "LibraryGraphic.h"

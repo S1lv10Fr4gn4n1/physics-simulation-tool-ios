@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B9066CE81592237D0031264F /* Commons.h in Headers */ = {isa = PBXBuildFile; fileRef = B9066CE6159223650031264F /* Commons.h */; };
+		B93ACE9515A3AC7100CED06E /* Selection.h in Headers */ = {isa = PBXBuildFile; fileRef = B93ACE9415A3AC7100CED06E /* Selection.h */; };
+		B93ACE9815A3AC8000CED06E /* Selection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B93ACE9715A3AC8000CED06E /* Selection.cpp */; };
 		B94B36B215864775004AAB28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B115864775004AAB28 /* UIKit.framework */; };
 		B94B36B415864775004AAB28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B315864775004AAB28 /* Foundation.framework */; };
 		B94B36B615864775004AAB28 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B515864775004AAB28 /* CoreGraphics.framework */; };
@@ -118,6 +120,8 @@
 
 /* Begin PBXFileReference section */
 		B9066CE6159223650031264F /* Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commons.h; sourceTree = "<group>"; };
+		B93ACE9415A3AC7100CED06E /* Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Selection.h; sourceTree = "<group>"; };
+		B93ACE9715A3AC8000CED06E /* Selection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Selection.cpp; sourceTree = "<group>"; };
 		B94B36AD15864775004AAB28 /* Physical.Tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Physical.Tool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B94B36B115864775004AAB28 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B94B36B315864775004AAB28 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -315,6 +319,8 @@
 				B94B371315864AD7004AAB28 /* PhysicsEngine.h */,
 				B94B371215864AD7004AAB28 /* MainEngine.h */,
 				B94B371115864AD7004AAB28 /* MainEngine.cpp */,
+				B93ACE9415A3AC7100CED06E /* Selection.h */,
+				B93ACE9715A3AC8000CED06E /* Selection.cpp */,
 				B94B36D3158647FE004AAB28 /* Supporting Files */,
 			);
 			path = physics.engine;
@@ -444,6 +450,7 @@
 				B94B371615864AD7004AAB28 /* PhysicsEngine.h in Headers */,
 				B94B371C1586BAA3004AAB28 /* physics.engine-Prefix.pch in Headers */,
 				B9D1F863158E929E000337BB /* CommonStruct.h in Headers */,
+				B93ACE9515A3AC7100CED06E /* Selection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,6 +676,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B94B371415864AD7004AAB28 /* MainEngine.cpp in Sources */,
+				B93ACE9815A3AC8000CED06E /* Selection.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

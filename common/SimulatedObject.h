@@ -19,15 +19,23 @@ private:
     PhysicalFeature * physicalFeature;
     Color * color;
     unsigned int mode; // GLenum
+    std::vector<SimulatedObject *> * joinsSimulatedObject; // TO-BE
+    BBox * bbox;
+    
+    void loadBbox();
 protected:
     
 public:
     SimulatedObject();
     ~SimulatedObject();
     
+    void start();
+    
     void addPointer(Pointer * _pointer);
     void deletePointer(Pointer * _pointer);
     Pointers * getPointers();
+    
+    std::vector<Pointer *> * getPointersAux();
 
     Color * getColor();
     void setColor(Color * _color);
@@ -37,6 +45,9 @@ public:
     
     void setMode(unsigned int _mode);
     unsigned int getMode();
+    
+    BBox * getBBox();
+    void setBBox(BBox * _bbox);
 };
 
 #endif

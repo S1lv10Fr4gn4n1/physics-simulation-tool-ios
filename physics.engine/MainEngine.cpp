@@ -18,6 +18,11 @@ MainEngine::~MainEngine()
     delete world;
 }
 
+void MainEngine::start()
+{
+    /// TODO - implementation
+}
+
 void MainEngine::updateInformation()
 {
     /// TODO - implementation
@@ -35,11 +40,14 @@ World * MainEngine::getWorld()
 
 void MainEngine::addSimulatedObjectInWorld(SimulatedObject * _simulatedObject)
 {
+    _simulatedObject->start();
+    
     world->addSimulatedObject(_simulatedObject);
 }
 
-void MainEngine::start()
+SimulatedObject * MainEngine::selectedSimulatedObject(Pointer * _pointer)
 {
-    /// TODO - implementation
+    return Selection::selectSimulatedObject(world, _pointer);
 }
+
 

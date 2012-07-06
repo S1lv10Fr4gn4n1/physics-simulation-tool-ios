@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ViewInforSimulation : NSObject
+@interface ViewInforSimulation : UIViewController
+
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end

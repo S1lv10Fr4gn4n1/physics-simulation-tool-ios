@@ -9,5 +9,16 @@
 #import "ViewInforSimulation.h"
 
 @implementation ViewInforSimulation
+@synthesize scrollView;
 
+- (void)viewDidLoad
+{
+    [scrollView setScrollEnabled:YES];
+}
+
+- (void)viewDidUnload 
+{
+    [self setScrollView:nil];
+    [super viewDidUnload];
+}
 @end

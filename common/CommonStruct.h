@@ -114,4 +114,17 @@ static inline Color * MakeColor(unsigned char _r, unsigned char _g, unsigned cha
     return color;
 }
 
+struct BBox {
+    Pointer * min;
+    Pointer * max;
+    
+    BBox() {
+        min = new Pointer();
+        max = new Pointer();
+    }
+    
+};
+typedef BBox BBox;
+
+
 #endif
