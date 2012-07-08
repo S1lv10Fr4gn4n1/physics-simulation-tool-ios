@@ -9,16 +9,25 @@
 #import "ViewInforSimulation.h"
 
 @implementation ViewInforSimulation
+
 @synthesize scrollView;
+@synthesize view1;
+@synthesize labelConfiguration;
 
 - (void)viewDidLoad
 {
-    [scrollView setScrollEnabled:YES];
+    [scrollView addSubview: view1];
+	[scrollView setContentSize: CGSizeMake(800, 600)];
+    
+    labelConfiguration.text = NSLocalizedString(@"configuration", @"");
 }
 
 - (void)viewDidUnload 
 {
     [self setScrollView:nil];
+    [self setView:nil];
+    
+    [self setLabelConfiguration:nil];
     [super viewDidUnload];
 }
 @end

@@ -10,6 +10,10 @@
 
 @interface ViewInforSimulation : UIViewController
 
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIScrollView * scrollView;
+
+@property (strong, nonatomic) IBOutlet UIView * view1;
+
+@property (strong, nonatomic) IBOutlet UILabel *labelConfiguration;
 
 @end

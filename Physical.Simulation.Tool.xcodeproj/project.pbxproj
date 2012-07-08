@@ -50,6 +50,8 @@
 		B9D1F879158EB8EA000337BB /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
 		B9D1F87C158EB8F9000337BB /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
 		B9D1F87F158EB907000337BB /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
+		B9D88AD415A8EA0600162199 /* square.png in Resources */ = {isa = PBXBuildFile; fileRef = B9D88AD315A8EA0600162199 /* square.png */; };
+		B9D88AD615A8EA4E00162199 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = B9D88AD515A8EA4E00162199 /* circle.png */; };
 		B9DD92BE1586FE400029A4A3 /* MainGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = B9DD92BD1586FE400029A4A3 /* MainGraphic.h */; };
 		B9DD92C11586FE500029A4A3 /* MainGraphic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9DD92C01586FE500029A4A3 /* MainGraphic.cpp */; };
 		B9DD97211586DD4900E6DD9B /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B9B350DC1586C15C00180CE7 /* ViewController.mm */; };
@@ -63,7 +65,6 @@
 		B9DD97391586E21100E6DD9B /* MainPhysics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9DD97381586E21100E6DD9B /* MainPhysics.cpp */; };
 		B9DD97421586E35D00E6DD9B /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B9DD972E1586DF4C00E6DD9B /* Shader.fsh */; };
 		B9DD97431586E35D00E6DD9B /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B9DD972F1586DF4C00E6DD9B /* Shader.vsh */; };
-		B9F9C387158E5D3600B0E4B6 /* button_add.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F9C386158E5D3600B0E4B6 /* button_add.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +173,9 @@
 		B9D1F870158EB8B3000337BB /* SimulatedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatedObject.h; sourceTree = "<group>"; };
 		B9D1F871158EB8B3000337BB /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World.cpp; sourceTree = "<group>"; };
 		B9D1F872158EB8B3000337BB /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = World.h; sourceTree = "<group>"; };
+		B9D88AD315A8EA0600162199 /* square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = square.png; path = resources/images/square.png; sourceTree = SOURCE_ROOT; };
+		B9D88AD515A8EA4E00162199 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = circle.png; path = resources/images/circle.png; sourceTree = SOURCE_ROOT; };
+		B9D88AD815A8EAA900162199 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B9DD92BD1586FE400029A4A3 /* MainGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainGraphic.h; sourceTree = "<group>"; };
 		B9DD92C01586FE500029A4A3 /* MainGraphic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainGraphic.cpp; sourceTree = "<group>"; };
 		B9DD972E1586DF4C00E6DD9B /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
@@ -180,7 +184,6 @@
 		B9DD97341586E07E00E6DD9B /* MainCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainCollision.cpp; sourceTree = "<group>"; };
 		B9DD97361586E20800E6DD9B /* MainPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainPhysics.h; sourceTree = "<group>"; };
 		B9DD97381586E21100E6DD9B /* MainPhysics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainPhysics.cpp; sourceTree = "<group>"; };
-		B9F9C386158E5D3600B0E4B6 /* button_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_add.png; path = resources/images/button_add.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -399,11 +402,12 @@
 		B9C5324A1599461D0098C0A6 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				B9D88AD515A8EA4E00162199 /* circle.png */,
+				B9D88AD315A8EA0600162199 /* square.png */,
 				B9C53258159950040098C0A6 /* albert.icon.57x57.png */,
 				B9C53259159950040098C0A6 /* albert.icon.72x72.png */,
 				B9C5325A159950040098C0A6 /* albert.icon.114x114.png */,
 				B9C5325B159950040098C0A6 /* albert.icon.144x144.png */,
-				B9F9C386158E5D3600B0E4B6 /* button_add.png */,
 			);
 			name = image;
 			sourceTree = "<group>";
@@ -622,6 +626,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				pt,
+				"pt-BR",
 			);
 			mainGroup = B94B36A215864775004AAB28;
 			productRefGroup = B94B36AE15864775004AAB28 /* Products */;
@@ -648,11 +654,12 @@
 				B94B36BC15864775004AAB28 /* InfoPlist.strings in Resources */,
 				B94B370915864914004AAB28 /* MainStoryboard_iPad.storyboard in Resources */,
 				B94B371015864A94004AAB28 /* MainStoryboard_iPhone.storyboard in Resources */,
-				B9F9C387158E5D3600B0E4B6 /* button_add.png in Resources */,
 				B9C5325C159950040098C0A6 /* albert.icon.57x57.png in Resources */,
 				B9C5325D159950040098C0A6 /* albert.icon.72x72.png in Resources */,
 				B9C5325E159950040098C0A6 /* albert.icon.114x114.png in Resources */,
 				B9C5325F159950040098C0A6 /* albert.icon.144x144.png in Resources */,
+				B9D88AD415A8EA0600162199 /* square.png in Resources */,
+				B9D88AD615A8EA4E00162199 /* circle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -760,6 +767,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				B94B36BB15864775004AAB28 /* en */,
+				B9D88AD815A8EAA900162199 /* pt-BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
