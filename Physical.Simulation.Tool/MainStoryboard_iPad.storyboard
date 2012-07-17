@@ -86,6 +86,9 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="actionCircle:" destination="e8d-nP-3Fj" eventType="touchUpInside" id="gbo-am-o5k"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fMg-2K-LQg">
                                 <rect key="frame" x="178" y="141" width="150" height="150"/>
@@ -98,6 +101,9 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="actionSquare:" destination="e8d-nP-3Fj" eventType="touchUpInside" id="6ls-4n-b2q"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1Qr-zb-Xgj">
                                 <rect key="frame" x="864" y="642" width="140" height="37"/>
@@ -138,7 +144,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="487" y="-259"/>
+            <point key="canvasLocation" x="481" y="-259"/>
         </scene>
         <!--GLKit View Controller-->
         <scene sceneID="6hq-83-yij">
@@ -193,6 +199,8 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
         <class className="ObjectsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ObjectsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="actionCircle:"/>
+                <relationship kind="action" name="actionSquare:"/>
                 <relationship kind="action" name="actionStartSimulation:"/>
             </relationships>
         </class>
@@ -212,6 +220,6 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Gij-PE-Lom"/>
+        <segue reference="FqV-DL-JXh"/>
     </inferredMetricsTieBreakers>
 </document>

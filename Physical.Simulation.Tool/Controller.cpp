@@ -12,7 +12,8 @@ Controller * Controller::controller;
 
 Controller::Controller()
 {
-    // TODO - do something
+    mainEngine = nil;
+    mainGraphic = nil;
 }
 
 Controller::~Controller()
@@ -39,7 +40,6 @@ void Controller::initializeSimulator()
 {
     initializeLibraryGraphic();
     initializeLibraryEngine();
-    initializeFrame();
 }
 
 void Controller::initializeLibraryGraphic()
@@ -62,20 +62,6 @@ void Controller::initializeLibraryEngine()
     mainEngine = new MainEngine();
     mainEngine->updateInformation();
     mainEngine->start();
-}
-
-void Controller::initializeFrame()
-{
-    SimulatedObject * buttonStartEditor = new SimulatedObject();
-    buttonStartEditor->setMode(GL_TRIANGLE_FAN);
-    buttonStartEditor->setColor(MakeColor(0, 0, 0, 0, 4));
-    buttonStartEditor->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
-    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.843750, 0.0));
-    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.843750, 0.0));
-    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.947917, 0.0));
-    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.947917, 0.0));
-    
-    mainEngine->addSimulatedObjectInWorld(buttonStartEditor);
 }
 
 void Controller::resizeScreen(float _width, float _height)
@@ -104,6 +90,23 @@ void Controller::startSimulation()
     mainEngine->start();
 }
 
+bool Controller::isRunning()
+{
+    if (!mainEngine) {
+        return false;
+    }
+    return mainEngine->isRunning();
+}
+
+bool Controller::isInitialized()
+{
+    if (mainEngine && mainGraphic) {
+        return true;
+    }
+    
+    return false;
+}
+
 void Controller::addSimulatedObjectInWorld(SimulatedObject * _simulatedObject)
 {
     mainEngine->addSimulatedObjectInWorld(_simulatedObject);
@@ -117,4 +120,18 @@ void Controller::calcNDCCoordinates(float * _x, float * _y)
 SimulatedObject * Controller::selectedSimulatedObject(Pointer * _pointer)
 {
     return mainEngine->selectedSimulatedObject(_pointer);
+}
+
+void Controller::setObject(TypeObjec object)
+{
+//    SimulatedObject * buttonStartEditor = new SimulatedObject();
+//    buttonStartEditor->setMode(GL_TRIANGLE_FAN);
+//    buttonStartEditor->setColor(MakeColor(0, 0, 0, 0, 4));
+//    buttonStartEditor->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
+//    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.843750, 0.0));
+//    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.843750, 0.0));
+//    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.947917, 0.0));
+//    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.947917, 0.0));
+//    
+//    mainEngine->addSimulatedObjectInWorld(buttonStartEditor);
 }

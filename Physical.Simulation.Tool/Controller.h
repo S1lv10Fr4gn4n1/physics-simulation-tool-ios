@@ -18,7 +18,6 @@ private:
     MainEngine * mainEngine;
     MainGraphic * mainGraphic;
     
-    void initializeFrame();
     void initializeLibraryGraphic();
     void initializeLibraryEngine();
 
@@ -36,9 +35,14 @@ public:
     void draw();
     void stopSimulation();
     void startSimulation();
+    bool isRunning();
+    bool isInitialized();
     
     void addSimulatedObjectInWorld(SimulatedObject * _simulatedObject);
+    void setObject(TypeObjec object);
+    
     void calcNDCCoordinates(float * _x, float * _y);
+    
     SimulatedObject * selectedSimulatedObject(Pointer * _pointer);
     
     static Controller * getInstance();

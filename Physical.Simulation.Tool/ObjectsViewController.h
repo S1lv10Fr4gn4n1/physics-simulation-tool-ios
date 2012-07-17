@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#include "Controller.h"
+
 @interface ObjectsViewController : UIViewController
 
 - (IBAction)actionStartSimulation:(id)sender;
+
+- (IBAction)actionCircle:(id)sender;
+
+- (IBAction)actionSquare:(id)sender;
 
 @end

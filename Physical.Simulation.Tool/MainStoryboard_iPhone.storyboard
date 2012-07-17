@@ -1,31 +1,182 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2bM-te-h8W">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="iav-wR-sWE">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
     <scenes>
-        <!--GLKit View Controller-->
-        <scene sceneID="evD-wW-n1R">
+        <!--Presentation View Controller - Apresentação-->
+        <scene sceneID="III-nw-DFA">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JkT-Wj-Ne6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <glkViewController autoresizesArchivedViewToFullSize="NO" preferredFramesPerSecond="40" id="2bM-te-h8W" customClass="ViewController" sceneMemberID="viewController">
-                    <glkView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ACc-A8-AI1">
-                        <rect key="frame" x="0.0" y="20" width="480" height="300"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4GD-es-ku7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="jsY-hq-ERG" customClass="PresentationViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ep7-oj-oKn">
+                        <rect key="frame" x="0.0" y="20" width="480" height="251"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="aCS-Hx-J8L">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">FERRAMENTA GRÁFICA PARA CRIAÇÃO DE SIMULAÇÕES NA ÁREA
+DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Physical.Simulation.Tool" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Xqg-Xm-zRm">
+                                <rect key="frame" x="0.0" y="42" width="480" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Academico: Silvio Fragnani da Silva" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="F53-Ge-V2d">
+                                <rect key="frame" x="20" y="71" width="200" height="15"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Orientador: Dalton Solano dos Reis" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="kNS-hO-wUc">
+                                <rect key="frame" x="20" y="84" width="200" height="15"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="albert.icon.png" id="uLg-IG-KFO">
+                                <rect key="frame" x="160" y="99" width="160" height="160"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Apresentação" id="qgH-Dj-iFn"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="290" y="47"/>
+        </scene>
+        <!--Objects View Controller - Objetos-->
+        <scene sceneID="wH2-5a-x7l">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yLo-pU-kkn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="uSd-lM-Vxj" customClass="ObjectsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="u70-44-5Na">
+                        <rect key="frame" x="0.0" y="20" width="480" height="251"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="t3k-CM-h9b">
+                                <rect key="frame" x="340" y="201" width="120" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <state key="normal" title="Start Simulation">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="actionStartSimulation:" destination="uSd-lM-Vxj" eventType="touchUpInside" id="hdI-md-flw"/>
+                                    <segue destination="Hfi-vz-0iw" kind="modal" modalTransitionStyle="crossDissolve" id="sxq-bj-5gO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0bG-WY-OfY">
+                                <rect key="frame" x="232" y="201" width="100" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <state key="normal" title="Spy">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Hfi-vz-0iw" kind="modal" modalTransitionStyle="partialCurl" id="58y-a1-TmT"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Objetos" id="6Ss-fj-2X1"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="290" y="492"/>
+        </scene>
+        <!--GLKit View Controller-->
+        <scene sceneID="amR-zL-nKj">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xTY-GX-Q0M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <glkViewController autoresizesArchivedViewToFullSize="NO" wantsFullScreenLayout="YES" preferredFramesPerSecond="30" id="Hfi-vz-0iw" customClass="SimulationViewController" sceneMemberID="viewController">
+                    <glkView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="jvm-HC-RE3">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <connections>
-                            <outlet property="delegate" destination="2bM-te-h8W" id="t3w-SO-ESw"/>
+                            <outlet property="delegate" destination="Hfi-vz-0iw" id="OAJ-Go-bB9"/>
                         </connections>
                     </glkView>
+                    <navigationItem key="navigationItem" id="bsi-yO-OWV"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </glkViewController>
             </objects>
+            <point key="canvasLocation" x="918" y="492"/>
+        </scene>
+        <!--Tab View Controller-->
+        <scene sceneID="b7P-Mn-PsJ">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kSV-ze-pDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tabBarController id="iav-wR-sWE" customClass="TabViewController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <tabBar key="tabBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="pb0-jl-5dl">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="jsY-hq-ERG" kind="relationship" relationship="viewControllers" id="RIt-an-xLo"/>
+                        <segue destination="uSd-lM-Vxj" kind="relationship" relationship="viewControllers" id="QNU-mw-Qp1"/>
+                    </connections>
+                </tabBarController>
+            </objects>
+            <point key="canvasLocation" x="-396" y="269"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="albert.icon.png" width="512" height="512"/>
+    </resources>
+    <classes>
+        <class className="ObjectsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ObjectsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="actionStartSimulation:"/>
+            </relationships>
+        </class>
+        <class className="PresentationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PresentationViewController.h"/>
+        </class>
+        <class className="SimulationViewController" superclassName="GLKViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SimulationViewController.h"/>
+        </class>
+        <class className="TabViewController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TabViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="sxq-bj-5gO"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -9,30 +9,29 @@
 #import "SimulationViewController.h"
 
 @interface SimulationViewController ()
-@property (strong, nonatomic) EAGLContext * context;
-@property (strong, nonatomic) GLKBaseEffect * effect;
 - (void)setupGL;
 - (void)tearDownGL;
 - (void)initializeGestureRecognizer:(UIView *)view;
 @end
 
+static EAGLContext * context;
 
 @implementation SimulationViewController
-@synthesize context = _context;
-@synthesize effect = _effect;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    
-    if (!self.context) {
-        NSLog(@"Failed to create ES context");
+
+    if (!context) {
+        context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+        
+        if (!context) {
+            NSLog(@"Failed to create ES context");
+        }
     }
     
     GLKView *view = (GLKView *)self.view;
-    view.context = self.context;
+    view.context = context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
 
     [self initializeGestureRecognizer: view];
@@ -46,11 +45,11 @@
     
     [self tearDownGL];
     
-    if ([EAGLContext currentContext] == self.context) {
+    if ([EAGLContext currentContext] == context) {
         [EAGLContext setCurrentContext:nil];
     }
     
-	self.context = nil;
+	context = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,22 +74,16 @@
 
 - (void)setupGL
 {
-    [EAGLContext setCurrentContext:self.context];
+    [EAGLContext setCurrentContext:context];
     
-    Controller::getInstance()->initializeSimulator();
-    
-//    self.effect = [[GLKBaseEffect alloc] init];
-//    self.effect.light0.enabled = GL_TRUE;
-//    self.effect.light0.diffuseColor = GLKVector4Make(1.0f, 0.4f, 0.4f, 1.0f);
-//    
-//    glEnable(GL_DEPTH_TEST);
+    if (!Controller::getInstance()->isInitialized()) {
+        Controller::getInstance()->initializeSimulator();    
+    }
 }
 
 - (void)tearDownGL
 {
-    [EAGLContext setCurrentContext:self.context];
-    
-    self.effect = nil;
+    [EAGLContext setCurrentContext:context];
     
     Controller::getInstance()->freeObjects();
 }
@@ -124,12 +117,12 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"touchesBegan");
+//    NSLog(@"touchesBegan");
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"touchesCancelled");
+//    NSLog(@"touchesCancelled");
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -145,50 +138,50 @@
     o->start();
     Controller::getInstance()->addSimulatedObjectInWorld(o);
     
-    SimulatedObject * s = Controller::getInstance()->selectedSimulatedObject(pointer);
-    if (s) {
+    SimulatedObject * object = Controller::getInstance()->selectedSimulatedObject(pointer);
+    if (object) {
         NSLog(@"SimulatedObject selected");
     }
-    printf("x: %f, y: %f\n", cgPoint.x, cgPoint.y);
+//    printf("x: %f, y: %f\n", cgPoint.x, cgPoint.y);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"touchesMoved");
+//    NSLog(@"touchesMoved");
 }
 
 - (IBAction)longPressDetected:(UIGestureRecognizer *)sender {
-    NSLog(@"Long Press");
+//    NSLog(@"Long Press");
 }
 
 - (IBAction)swipeRightDetected:(UIGestureRecognizer *)sender {
-    NSLog(@"Right Swipe");
+//    NSLog(@"Right Swipe");
 }
 
 - (IBAction)swipeLeftDetected:(UIGestureRecognizer *)sender {
-    NSLog(@"Left Swipe");
+//    NSLog(@"Left Swipe");
 }
 
 - (IBAction)doubleTapTwoFingerDetected:(UIGestureRecognizer *)sender {
     Controller::getInstance()->stopSimulation();
     
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 
-- (IBAction)pinchDetected:(UIGestureRecognizer *)sender {
-    
-    CGFloat scale = [(UIPinchGestureRecognizer *)sender scale];
-    CGFloat velocity = [(UIPinchGestureRecognizer *)sender velocity];
-    
-    NSLog(@"%@",[[NSString alloc] initWithFormat: @"Pinch - scale = %f, velocity = %f", scale, velocity]);
+- (IBAction)pinchDetected:(UIGestureRecognizer *)sender {    
+//    CGFloat scale = [(UIPinchGestureRecognizer *)sender scale];
+//    CGFloat velocity = [(UIPinchGestureRecognizer *)sender velocity];
+//    
+//    NSLog(@"%@",[[NSString alloc] initWithFormat: @"Pinch - scale = %f, velocity = %f", scale, velocity]);
 }
 
 - (IBAction)rotationDetected:(UIGestureRecognizer *)sender {
-    CGFloat radians = [(UIRotationGestureRecognizer *)sender rotation];
-    CGFloat velocity = [(UIRotationGestureRecognizer *)sender velocity];
-    
-    NSLog(@"%@",[[NSString alloc] initWithFormat: @"Rotation - Radians = %f, velocity = %f",radians, velocity]);
+//    CGFloat radians = [(UIRotationGestureRecognizer *)sender rotation];
+//    CGFloat velocity = [(UIRotationGestureRecognizer *)sender velocity];
+//    
+//    NSLog(@"%@",[[NSString alloc] initWithFormat: @"Rotation - Radians = %f, velocity = %f",radians, velocity]);
 }
 
 #pragma mark - GLKView and GLKViewController delegate methods

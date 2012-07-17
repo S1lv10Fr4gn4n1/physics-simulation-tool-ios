@@ -31,4 +31,14 @@
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
 }
+
+- (IBAction)actionCircle:(id)sender
+{
+    Controller::getInstance()->setObject(CIRCLE);
+}
+
+- (IBAction)actionSquare:(id)sender
+{
+    Controller::getInstance()->setObject(SQUARE);
+}
 @end
