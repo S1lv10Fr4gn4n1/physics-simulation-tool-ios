@@ -11,7 +11,6 @@
 
 
 #include <iostream>
-#include <fstream>
 #include <string>
 
 #include "CommonGraphics.h"
@@ -21,9 +20,7 @@ private:
     GLuint program;
     const char * vertShaderSource;
     const char * fragShaderSource;
-    const char * geomShaderSource;
-    
-    std::string loadFile(std::string _pathFile);
+    const char * geomShaderSource;    
 public:
     Shader(const char * _vertShaderSource, const char * _fragShaderSource, const char * _geomShaderSource);
     ~Shader();

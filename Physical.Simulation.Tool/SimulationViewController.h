@@ -9,12 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
-//#import "EditorInforSimulation.h"
-#import "ViewInforSimulation.h"
+#include "Controller.h"
 
-#include "LibraryGraphic.h"
-#include "PhysicsEngine.h"
-
-@interface ViewController : GLKViewController
+@interface SimulationViewController : GLKViewController
 
 @end

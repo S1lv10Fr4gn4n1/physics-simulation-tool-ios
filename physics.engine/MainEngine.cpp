@@ -20,11 +20,25 @@ MainEngine::~MainEngine()
 
 void MainEngine::start()
 {
+    running = true;
     /// TODO - implementation
+}
+
+void MainEngine::stop()
+{
+    running = false;
+}
+
+bool MainEngine::isRunning()
+{
+    return running;
 }
 
 void MainEngine::updateInformation()
 {
+    if (!running) {
+        return;
+    }
     /// TODO - implementation
 }
 

@@ -9,6 +9,7 @@
 #ifndef COMMONS_H
 #define COMMONS_H
 
+#include "Utils.h"
 #include "CommonStruct.h"
 #include "SimulatedObject.h"
 #include "World.h"

@@ -87,6 +87,7 @@ void MainGraphic::MainGraphic::draw(World * _world)
     for (int i=0; i< _world->getSimulatedObjects()->size(); i++) {
         simulatedObjectDrawn = _world->getSimulatedObjects()->at(i);
         
+        printf("index: %u\n", i);
         // define color for square
         glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, simulatedObjectDrawn->getColor()->color);
         glEnableVertexAttribArray(ATTRIB_COLOR);

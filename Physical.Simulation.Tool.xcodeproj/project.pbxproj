@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		B9066CE81592237D0031264F /* Commons.h in Headers */ = {isa = PBXBuildFile; fileRef = B9066CE6159223650031264F /* Commons.h */; };
+		B913AEA415B1F35C0050B8DB /* PresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B913AEA315B1F35C0050B8DB /* PresentationViewController.m */; };
+		B913AEA715B1F36C0050B8DB /* ObjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B913AEA615B1F36C0050B8DB /* ObjectsViewController.m */; };
+		B913AEAA15B1F5190050B8DB /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913AEA915B1F5180050B8DB /* Controller.cpp */; };
+		B913AEB115B1F78D0050B8DB /* TabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B913AEB015B1F78D0050B8DB /* TabViewController.m */; };
+		B913AEB415B211830050B8DB /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913AEB315B211830050B8DB /* Utils.cpp */; };
 		B93ACE9515A3AC7100CED06E /* Selection.h in Headers */ = {isa = PBXBuildFile; fileRef = B93ACE9415A3AC7100CED06E /* Selection.h */; };
 		B93ACE9815A3AC8000CED06E /* Selection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B93ACE9715A3AC8000CED06E /* Selection.cpp */; };
 		B94B36B215864775004AAB28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B115864775004AAB28 /* UIKit.framework */; };
@@ -33,8 +38,6 @@
 		B9B350A41586BD2100180CE7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
 		B9B350CC1586BEEF00180CE7 /* LibraryCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */; };
 		B9B350CE1586BEF800180CE7 /* LibraryPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */; };
-		B9BF437F15A14BD900C8FDB2 /* ViewInforSimulation.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BF437E15A14BD800C8FDB2 /* ViewInforSimulation.m */; };
-		B9BF438215A14BF500C8FDB2 /* EditorInforSimulation.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BF438115A14BF500C8FDB2 /* EditorInforSimulation.m */; };
 		B9C5325C159950040098C0A6 /* albert.icon.57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C53258159950040098C0A6 /* albert.icon.57x57.png */; };
 		B9C5325D159950040098C0A6 /* albert.icon.72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C53259159950040098C0A6 /* albert.icon.72x72.png */; };
 		B9C5325E159950040098C0A6 /* albert.icon.114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C5325A159950040098C0A6 /* albert.icon.114x114.png */; };
@@ -54,7 +57,7 @@
 		B9D88AD615A8EA4E00162199 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = B9D88AD515A8EA4E00162199 /* circle.png */; };
 		B9DD92BE1586FE400029A4A3 /* MainGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = B9DD92BD1586FE400029A4A3 /* MainGraphic.h */; };
 		B9DD92C11586FE500029A4A3 /* MainGraphic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9DD92C01586FE500029A4A3 /* MainGraphic.cpp */; };
-		B9DD97211586DD4900E6DD9B /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B9B350DC1586C15C00180CE7 /* ViewController.mm */; };
+		B9DD97211586DD4900E6DD9B /* SimulationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B9B350DC1586C15C00180CE7 /* SimulationViewController.mm */; };
 		B9DD97251586DEA000E6DD9B /* library.graphic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36DF1586481C004AAB28 /* library.graphic.a */; };
 		B9DD97261586DEA700E6DD9B /* physics.engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36D0158647FE004AAB28 /* physics.engine.a */; };
 		B9DD972B1586DF2700E6DD9B /* library.collision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350B11586BE8C00180CE7 /* library.collision.a */; };
@@ -65,6 +68,8 @@
 		B9DD97391586E21100E6DD9B /* MainPhysics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9DD97381586E21100E6DD9B /* MainPhysics.cpp */; };
 		B9DD97421586E35D00E6DD9B /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B9DD972E1586DF4C00E6DD9B /* Shader.fsh */; };
 		B9DD97431586E35D00E6DD9B /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B9DD972F1586DF4C00E6DD9B /* Shader.vsh */; };
+		B9F565A815B24AF300FA5EAF /* e=mc.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F565A515B24AF300FA5EAF /* e=mc.png */; };
+		B9F565AD15B24BA900FA5EAF /* albert.icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F565AC15B24BA900FA5EAF /* albert.icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +126,16 @@
 
 /* Begin PBXFileReference section */
 		B9066CE6159223650031264F /* Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commons.h; sourceTree = "<group>"; };
+		B913AEA215B1F35C0050B8DB /* PresentationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationViewController.h; sourceTree = "<group>"; };
+		B913AEA315B1F35C0050B8DB /* PresentationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentationViewController.m; sourceTree = "<group>"; };
+		B913AEA515B1F36C0050B8DB /* ObjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectsViewController.h; sourceTree = "<group>"; };
+		B913AEA615B1F36C0050B8DB /* ObjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectsViewController.m; sourceTree = "<group>"; };
+		B913AEA815B1F50F0050B8DB /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
+		B913AEA915B1F5180050B8DB /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Controller.cpp; sourceTree = "<group>"; };
+		B913AEAF15B1F78D0050B8DB /* TabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabViewController.h; sourceTree = "<group>"; };
+		B913AEB015B1F78D0050B8DB /* TabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabViewController.m; sourceTree = "<group>"; };
+		B913AEB215B2117D0050B8DB /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		B913AEB315B211830050B8DB /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		B93ACE9415A3AC7100CED06E /* Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Selection.h; sourceTree = "<group>"; };
 		B93ACE9715A3AC8000CED06E /* Selection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Selection.cpp; sourceTree = "<group>"; };
 		B94B36AD15864775004AAB28 /* Physical.Tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Physical.Tool.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,7 +152,7 @@
 		B94B36DF1586481C004AAB28 /* library.graphic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = library.graphic.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B94B36E31586481C004AAB28 /* library.graphic-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "library.graphic-Prefix.pch"; sourceTree = "<group>"; };
 		B94B370815864914004AAB28 /* MainStoryboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		B94B370C15864977004AAB28 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		B94B370C15864977004AAB28 /* SimulationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulationViewController.h; sourceTree = "<group>"; };
 		B94B370F15864A94004AAB28 /* MainStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		B94B371115864AD7004AAB28 /* MainEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainEngine.cpp; sourceTree = "<group>"; };
 		B94B371215864AD7004AAB28 /* MainEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainEngine.h; sourceTree = "<group>"; };
@@ -157,11 +172,7 @@
 		B9B350C41586BEB200180CE7 /* library.physics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "library.physics-Prefix.pch"; sourceTree = "<group>"; };
 		B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryCollision.h; sourceTree = "<group>"; };
 		B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryPhysics.h; sourceTree = "<group>"; };
-		B9B350DC1586C15C00180CE7 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
-		B9BF437D15A14BD800C8FDB2 /* ViewInforSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewInforSimulation.h; sourceTree = "<group>"; };
-		B9BF437E15A14BD800C8FDB2 /* ViewInforSimulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewInforSimulation.m; sourceTree = "<group>"; };
-		B9BF438015A14BF500C8FDB2 /* EditorInforSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorInforSimulation.h; sourceTree = "<group>"; };
-		B9BF438115A14BF500C8FDB2 /* EditorInforSimulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorInforSimulation.m; sourceTree = "<group>"; };
+		B9B350DC1586C15C00180CE7 /* SimulationViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimulationViewController.mm; sourceTree = "<group>"; };
 		B9C53258159950040098C0A6 /* albert.icon.57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.57x57.png; path = resources/images/albert.icon.57x57.png; sourceTree = SOURCE_ROOT; };
 		B9C53259159950040098C0A6 /* albert.icon.72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.72x72.png; path = resources/images/albert.icon.72x72.png; sourceTree = SOURCE_ROOT; };
 		B9C5325A159950040098C0A6 /* albert.icon.114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.114x114.png; path = resources/images/albert.icon.114x114.png; sourceTree = SOURCE_ROOT; };
@@ -175,7 +186,6 @@
 		B9D1F872158EB8B3000337BB /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = World.h; sourceTree = "<group>"; };
 		B9D88AD315A8EA0600162199 /* square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = square.png; path = resources/images/square.png; sourceTree = SOURCE_ROOT; };
 		B9D88AD515A8EA4E00162199 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = circle.png; path = resources/images/circle.png; sourceTree = SOURCE_ROOT; };
-		B9D88AD815A8EAA900162199 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B9DD92BD1586FE400029A4A3 /* MainGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainGraphic.h; sourceTree = "<group>"; };
 		B9DD92C01586FE500029A4A3 /* MainGraphic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainGraphic.cpp; sourceTree = "<group>"; };
 		B9DD972E1586DF4C00E6DD9B /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
@@ -184,6 +194,8 @@
 		B9DD97341586E07E00E6DD9B /* MainCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainCollision.cpp; sourceTree = "<group>"; };
 		B9DD97361586E20800E6DD9B /* MainPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainPhysics.h; sourceTree = "<group>"; };
 		B9DD97381586E21100E6DD9B /* MainPhysics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainPhysics.cpp; sourceTree = "<group>"; };
+		B9F565A515B24AF300FA5EAF /* e=mc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "e=mc.png"; path = "resources/images/e=mc.png"; sourceTree = SOURCE_ROOT; };
+		B9F565AC15B24BA900FA5EAF /* albert.icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.png; path = resources/images/albert.icon.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,12 +302,16 @@
 			children = (
 				B94B36C015864775004AAB28 /* AppDelegate.h */,
 				B94B36C115864775004AAB28 /* AppDelegate.m */,
-				B94B370C15864977004AAB28 /* ViewController.h */,
-				B9B350DC1586C15C00180CE7 /* ViewController.mm */,
-				B9BF437D15A14BD800C8FDB2 /* ViewInforSimulation.h */,
-				B9BF437E15A14BD800C8FDB2 /* ViewInforSimulation.m */,
-				B9BF438015A14BF500C8FDB2 /* EditorInforSimulation.h */,
-				B9BF438115A14BF500C8FDB2 /* EditorInforSimulation.m */,
+				B913AEA815B1F50F0050B8DB /* Controller.h */,
+				B913AEA915B1F5180050B8DB /* Controller.cpp */,
+				B94B370C15864977004AAB28 /* SimulationViewController.h */,
+				B9B350DC1586C15C00180CE7 /* SimulationViewController.mm */,
+				B913AEA215B1F35C0050B8DB /* PresentationViewController.h */,
+				B913AEA315B1F35C0050B8DB /* PresentationViewController.m */,
+				B913AEA515B1F36C0050B8DB /* ObjectsViewController.h */,
+				B913AEA615B1F36C0050B8DB /* ObjectsViewController.m */,
+				B913AEAF15B1F78D0050B8DB /* TabViewController.h */,
+				B913AEB015B1F78D0050B8DB /* TabViewController.m */,
 				B94B370F15864A94004AAB28 /* MainStoryboard_iPhone.storyboard */,
 				B94B370815864914004AAB28 /* MainStoryboard_iPad.storyboard */,
 				B9DD972D1586DF4C00E6DD9B /* Shaders */,
@@ -402,6 +418,8 @@
 		B9C5324A1599461D0098C0A6 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				B9F565AC15B24BA900FA5EAF /* albert.icon.png */,
+				B9F565A515B24AF300FA5EAF /* e=mc.png */,
 				B9D88AD515A8EA4E00162199 /* circle.png */,
 				B9D88AD315A8EA0600162199 /* square.png */,
 				B9C53258159950040098C0A6 /* albert.icon.57x57.png */,
@@ -417,6 +435,8 @@
 			children = (
 				B9066CE6159223650031264F /* Commons.h */,
 				B9D1F862158E929E000337BB /* CommonStruct.h */,
+				B913AEB215B2117D0050B8DB /* Utils.h */,
+				B913AEB315B211830050B8DB /* Utils.cpp */,
 				B9D1F870158EB8B3000337BB /* SimulatedObject.h */,
 				B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */,
 				B9D1F872158EB8B3000337BB /* World.h */,
@@ -660,6 +680,8 @@
 				B9C5325F159950040098C0A6 /* albert.icon.144x144.png in Resources */,
 				B9D88AD415A8EA0600162199 /* square.png in Resources */,
 				B9D88AD615A8EA4E00162199 /* circle.png in Resources */,
+				B9F565A815B24AF300FA5EAF /* e=mc.png in Resources */,
+				B9F565AD15B24BA900FA5EAF /* albert.icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,9 +694,12 @@
 			files = (
 				B94B36BE15864775004AAB28 /* main.m in Sources */,
 				B94B36C215864775004AAB28 /* AppDelegate.m in Sources */,
-				B9DD97211586DD4900E6DD9B /* ViewController.mm in Sources */,
-				B9BF437F15A14BD900C8FDB2 /* ViewInforSimulation.m in Sources */,
-				B9BF438215A14BF500C8FDB2 /* EditorInforSimulation.m in Sources */,
+				B9DD97211586DD4900E6DD9B /* SimulationViewController.mm in Sources */,
+				B913AEA415B1F35C0050B8DB /* PresentationViewController.m in Sources */,
+				B913AEA715B1F36C0050B8DB /* ObjectsViewController.m in Sources */,
+				B913AEAA15B1F5190050B8DB /* Controller.cpp in Sources */,
+				B913AEB115B1F78D0050B8DB /* TabViewController.m in Sources */,
+				B913AEB415B211830050B8DB /* Utils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -767,7 +792,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				B94B36BB15864775004AAB28 /* en */,
-				B9D88AD815A8EAA900162199 /* pt-BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -827,11 +851,15 @@
 		B94B36C615864775004AAB28 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Physical.Simulation.Tool/Physical.Simulation.Tool-Prefix.pch";
 				INFOPLIST_FILE = "Physical.Simulation.Tool/Physical.Simulation.Tool-Info.plist";
 				PRODUCT_NAME = Physical.Tool;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -839,11 +867,15 @@
 		B94B36C715864775004AAB28 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Physical.Simulation.Tool/Physical.Simulation.Tool-Prefix.pch";
 				INFOPLIST_FILE = "Physical.Simulation.Tool/Physical.Simulation.Tool-Info.plist";
 				PRODUCT_NAME = Physical.Tool;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

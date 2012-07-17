@@ -15,12 +15,15 @@
 class MainEngine {
 private:
     World * world;
+    bool running;
 protected:
 public:
     MainEngine();
     ~MainEngine();
 
     void start();
+    void stop();
+    bool isRunning();
     
     void updateInformation();
   
