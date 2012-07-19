@@ -18,15 +18,13 @@ private:
     MainEngine * mainEngine;
     MainGraphic * mainGraphic;
     
-    void initializeLibraryGraphic();
-    void initializeLibraryEngine();
-
     static Controller * controller;
 public:
     Controller();
     ~Controller();
     
-    void initializeSimulator();
+    void initializeContextOpenGLES();
+    void initializeEngine();
 
     void freeObjects();
     void resizeScreen(float _width, float _height);
@@ -39,7 +37,7 @@ public:
     bool isInitialized();
     
     void addSimulatedObjectInWorld(SimulatedObject * _simulatedObject);
-    void setObject(TypeObjec object);
+    void createSimulatedObject(TypeObject typeObject);
     
     void calcNDCCoordinates(float * _x, float * _y);
     

@@ -77,7 +77,8 @@ static EAGLContext * context;
     [EAGLContext setCurrentContext:context];
     
     if (!Controller::getInstance()->isInitialized()) {
-        Controller::getInstance()->initializeSimulator();    
+        Controller::getInstance()->initializeEngine();
+        Controller::getInstance()->initializeContextOpenGLES();
     }
 }
 
@@ -127,6 +128,7 @@ static EAGLContext * context;
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    // TODO revise
     CGPoint cgPoint = [[touches anyObject] locationInView: self.view]; 
     Pointer * pointer = MakePointer(cgPoint.x, cgPoint.y, 0);
     Controller::getInstance()->calcNDCCoordinates(&pointer->x, &pointer->y);
@@ -135,7 +137,7 @@ static EAGLContext * context;
     o->setMode(GL_POINTS);
     o->setColor(MakeColor(255, 255, 255, 255, 4));
     o->addPointer(pointer);
-    o->start();
+    o->initialize();
     Controller::getInstance()->addSimulatedObjectInWorld(o);
     
     SimulatedObject * object = Controller::getInstance()->selectedSimulatedObject(pointer);

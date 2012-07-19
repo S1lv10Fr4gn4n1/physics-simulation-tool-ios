@@ -18,4 +18,6 @@
 
 - (IBAction)actionSquare:(id)sender;
 
+- (IBAction)actionTriangle:(id)sender;
+
 @end

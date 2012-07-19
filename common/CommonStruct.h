@@ -12,6 +12,14 @@
 #define CHANNEL_COLOR 4
 #define COUNT_COORD 3
 
+/// Enumations
+enum TypeObject {
+    CIRCLE,
+    SQUARE,
+    TRIANGLE
+};
+
+
 /// Struct Pointer
 struct Pointer {
     float x;

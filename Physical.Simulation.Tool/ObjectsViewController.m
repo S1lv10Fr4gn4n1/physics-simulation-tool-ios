@@ -34,11 +34,16 @@
 
 - (IBAction)actionCircle:(id)sender
 {
-    Controller::getInstance()->setObject(CIRCLE);
+    Controller::getInstance()->createSimulatedObject(CIRCLE);
 }
 
 - (IBAction)actionSquare:(id)sender
 {
-    Controller::getInstance()->setObject(SQUARE);
+    Controller::getInstance()->createSimulatedObject(SQUARE);
+}
+
+- (IBAction)actionTriangle:(id)sender 
+{
+    Controller::getInstance()->createSimulatedObject(TRIANGLE);
 }
 @end

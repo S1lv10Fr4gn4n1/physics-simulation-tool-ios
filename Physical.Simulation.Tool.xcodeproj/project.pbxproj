@@ -38,6 +38,9 @@
 		B9B350A41586BD2100180CE7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
 		B9B350CC1586BEEF00180CE7 /* LibraryCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */; };
 		B9B350CE1586BEF800180CE7 /* LibraryPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */; };
+		B9B7913415B789BA00E08A55 /* presentation.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B7913215B789BA00E08A55 /* presentation.png */; };
+		B9B7913515B789BA00E08A55 /* puzzle.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B7913315B789BA00E08A55 /* puzzle.png */; };
+		B9B7913715B78C9200E08A55 /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B7913615B78C9200E08A55 /* triangle.png */; };
 		B9C5325C159950040098C0A6 /* albert.icon.57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C53258159950040098C0A6 /* albert.icon.57x57.png */; };
 		B9C5325D159950040098C0A6 /* albert.icon.72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C53259159950040098C0A6 /* albert.icon.72x72.png */; };
 		B9C5325E159950040098C0A6 /* albert.icon.114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C5325A159950040098C0A6 /* albert.icon.114x114.png */; };
@@ -173,6 +176,9 @@
 		B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryCollision.h; sourceTree = "<group>"; };
 		B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryPhysics.h; sourceTree = "<group>"; };
 		B9B350DC1586C15C00180CE7 /* SimulationViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimulationViewController.mm; sourceTree = "<group>"; };
+		B9B7913215B789BA00E08A55 /* presentation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = presentation.png; path = resources/images/presentation.png; sourceTree = SOURCE_ROOT; };
+		B9B7913315B789BA00E08A55 /* puzzle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = puzzle.png; path = resources/images/puzzle.png; sourceTree = SOURCE_ROOT; };
+		B9B7913615B78C9200E08A55 /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = triangle.png; path = resources/images/triangle.png; sourceTree = SOURCE_ROOT; };
 		B9C53258159950040098C0A6 /* albert.icon.57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.57x57.png; path = resources/images/albert.icon.57x57.png; sourceTree = SOURCE_ROOT; };
 		B9C53259159950040098C0A6 /* albert.icon.72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.72x72.png; path = resources/images/albert.icon.72x72.png; sourceTree = SOURCE_ROOT; };
 		B9C5325A159950040098C0A6 /* albert.icon.114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.114x114.png; path = resources/images/albert.icon.114x114.png; sourceTree = SOURCE_ROOT; };
@@ -418,6 +424,9 @@
 		B9C5324A1599461D0098C0A6 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				B9B7913615B78C9200E08A55 /* triangle.png */,
+				B9B7913215B789BA00E08A55 /* presentation.png */,
+				B9B7913315B789BA00E08A55 /* puzzle.png */,
 				B9F565AC15B24BA900FA5EAF /* albert.icon.png */,
 				B9F565A515B24AF300FA5EAF /* e=mc.png */,
 				B9D88AD515A8EA4E00162199 /* circle.png */,
@@ -682,6 +691,9 @@
 				B9D88AD615A8EA4E00162199 /* circle.png in Resources */,
 				B9F565A815B24AF300FA5EAF /* e=mc.png in Resources */,
 				B9F565AD15B24BA900FA5EAF /* albert.icon.png in Resources */,
+				B9B7913415B789BA00E08A55 /* presentation.png in Resources */,
+				B9B7913515B789BA00E08A55 /* puzzle.png in Resources */,
+				B9B7913715B78C9200E08A55 /* triangle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

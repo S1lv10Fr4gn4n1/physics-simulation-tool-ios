@@ -29,10 +29,11 @@ public:
     SimulatedObject();
     ~SimulatedObject();
     
-    void start();
+    void initialize();
     
     void addPointer(Pointer * _pointer);
     void deletePointer(Pointer * _pointer);
+    void addAllPointers(std::vector<Pointer *> * _pointers);
     Pointers * getPointers();
     
     std::vector<Pointer *> * getPointersAux();

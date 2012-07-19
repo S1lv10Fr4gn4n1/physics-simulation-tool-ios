@@ -11,11 +11,14 @@
 
 #include "Commons.h"
 #include "Selection.h"
+#include <vector>
 
 class MainEngine {
 private:
     World * world;
     bool running;
+    
+    std::vector<Pointer *> * makePointersToObject(TypeObject typeObject);
 protected:
 public:
     MainEngine();
@@ -30,6 +33,7 @@ public:
     void rotatedScreen(float _width, float _heigth);
     
     void addSimulatedObjectInWorld(SimulatedObject * _simulatedObject);
+    void createSimulatedObject(TypeObject typeObject);
     
     SimulatedObject * selectedSimulatedObject(Pointer * _pointer);
     

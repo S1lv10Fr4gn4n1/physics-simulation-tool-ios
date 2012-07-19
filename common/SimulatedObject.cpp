@@ -75,7 +75,7 @@ void SimulatedObject::loadBbox()
 	}
 }
 
-void SimulatedObject::start()
+void SimulatedObject::initialize()
 {
     loadBbox();
 }
@@ -106,6 +106,14 @@ void SimulatedObject::deletePointer(Pointer * _pointer)
     pointers = new Pointers();
     for (int i=0; i<pointersAux->size(); i++) {
         pointers = MakePointers(pointers, pointersAux->at(i));
+    }
+}
+
+void SimulatedObject::addAllPointers(std::vector<Pointer *> * _pointers)
+{
+    for (int i=0; i<_pointers->size(); i++) {
+        pointers = MakePointers(pointers, _pointers->at(i));
+        pointersAux->push_back(CpyPointer(_pointers->at(i)));
     }
 }
 

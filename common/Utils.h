@@ -13,12 +13,6 @@
 #include <string>
 #include <fstream>
 
-enum TypeObjec {
-    CIRCLE,
-    SQUARE
-};
-
-
 std::string loadFile(std::string _pathFile);
 
 #endif

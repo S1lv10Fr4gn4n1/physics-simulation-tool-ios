@@ -18,13 +18,14 @@ Controller::Controller()
 
 Controller::~Controller()
 {
-    // TODO - do something 
+    freeObjects();
 }
 
 Controller * Controller::getInstance()
 {
     if (!controller) {
         controller = new Controller();
+        controller->initializeEngine();
     }
     
     return controller;
@@ -34,16 +35,17 @@ void Controller::freeObjects()
 {
     delete mainGraphic;
     delete mainEngine;
+
+    mainEngine = nil;
+    mainGraphic = nil;
 }
 
-void Controller::initializeSimulator()
+void Controller::initializeContextOpenGLES()
 {
-    initializeLibraryGraphic();
-    initializeLibraryEngine();
-}
-
-void Controller::initializeLibraryGraphic()
-{
+    if (mainGraphic) {
+        return;
+    }
+    
     //TODO revise, no objects 'no C++ ansi'
     NSString * vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"vsh"];
     NSString * fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"fsh"];
@@ -57,8 +59,12 @@ void Controller::initializeLibraryGraphic()
     mainGraphic->initializeNDC(1024, 768); //TODO - revise
 }
 
-void Controller::initializeLibraryEngine()
+void Controller::initializeEngine()
 {
+    if (mainEngine) {
+        return;
+    }
+    
     mainEngine = new MainEngine();
     mainEngine->updateInformation();
     mainEngine->start();
@@ -100,7 +106,7 @@ bool Controller::isRunning()
 
 bool Controller::isInitialized()
 {
-    if (mainEngine && mainGraphic) {
+    if (mainEngine && mainGraphic && mainEngine->isRunning()) {
         return true;
     }
     
@@ -122,16 +128,7 @@ SimulatedObject * Controller::selectedSimulatedObject(Pointer * _pointer)
     return mainEngine->selectedSimulatedObject(_pointer);
 }
 
-void Controller::setObject(TypeObjec object)
+void Controller::createSimulatedObject(TypeObject typeObject)
 {
-//    SimulatedObject * buttonStartEditor = new SimulatedObject();
-//    buttonStartEditor->setMode(GL_TRIANGLE_FAN);
-//    buttonStartEditor->setColor(MakeColor(0, 0, 0, 0, 4));
-//    buttonStartEditor->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
-//    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.843750, 0.0));
-//    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.843750, 0.0));
-//    buttonStartEditor->addPointer(MakePointer(-0.882812, -0.947917, 0.0));
-//    buttonStartEditor->addPointer(MakePointer(-0.960938, -0.947917, 0.0));
-//    
-//    mainEngine->addSimulatedObjectInWorld(buttonStartEditor);
+    mainEngine->createSimulatedObject(typeObject);
 }
