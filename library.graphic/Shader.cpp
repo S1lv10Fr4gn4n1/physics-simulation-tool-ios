@@ -27,14 +27,14 @@ using namespace std;
 
 Shader::Shader(const char * _vertShaderSource, const char * _fragShaderSource, const char * _geomShaderSource)
 {
-    vertShaderSource = _vertShaderSource ? _vertShaderSource : defaultVertexShader;  
-    fragShaderSource = _fragShaderSource ? _fragShaderSource : defaultFragmentShader;
-    geomShaderSource = _geomShaderSource ? _geomShaderSource : defaultGeometryShader;
+    this->vertShaderSource = _vertShaderSource ? _vertShaderSource : defaultVertexShader;  
+    this->fragShaderSource = _fragShaderSource ? _fragShaderSource : defaultFragmentShader;
+    this->geomShaderSource = _geomShaderSource ? _geomShaderSource : defaultGeometryShader;
 }
 
 Shader::~Shader()
 {
-    glDeleteProgram(program);
+    glDeleteProgram(this->program);
 }
 
 #pragma mark -  OpenGL ES 2 shader compilation
@@ -44,16 +44,16 @@ bool Shader::loadShaders()
     string vertShaderPathname, fragShaderPathname;
     
     // Create shader program.
-    program = glCreateProgram();
+    this->program = glCreateProgram();
     
     // Create and compile vertex shader.
-    if (!compileShader(&vertShader, GL_VERTEX_SHADER, vertShaderSource)) {
+    if (!this->compileShader(&vertShader, GL_VERTEX_SHADER, this->vertShaderSource)) {
         cout << "Failed to compile vertex shader" << endl;
         return false;
     }
     
     // Create and compile fragment shader.
-    if (!compileShader(&fragShader, GL_FRAGMENT_SHADER, fragShaderSource)) {
+    if (!this->compileShader(&fragShader, GL_FRAGMENT_SHADER, this->fragShaderSource)) {
         cout << "Failed to compile fragment shader" << endl;
         return false;
     }
@@ -64,19 +64,19 @@ bool Shader::loadShaders()
 //    }
     
     // Attach vertex shader to program.
-    glAttachShader(program, vertShader);
+    glAttachShader(this->program, vertShader);
     
     // Attach fragment shader to program.
-    glAttachShader(program, fragShader);
+    glAttachShader(this->program, fragShader);
     
     // Bind attribute locations.
     // This needs to be done prior to linking.
-    glBindAttribLocation(program, ATTRIB_VERTEX, "position");
-    glBindAttribLocation(program, ATTRIB_COLOR, "color");
+    glBindAttribLocation(this->program, ATTRIB_VERTEX, "position");
+    glBindAttribLocation(this->program, ATTRIB_COLOR, "color");
     
     // Link program.
-    if (!linkProgram(program)) {
-        cout << "Failed to link program: " << program << endl;;
+    if (!this->linkProgram(this->program)) {
+        cout << "Failed to link program: " << this->program << endl;;
         
         if (vertShader) {
             glDeleteShader(vertShader);
@@ -86,26 +86,23 @@ bool Shader::loadShaders()
             glDeleteShader(fragShader);
             fragShader = 0;
         }
-        if (program) {
-            glDeleteProgram(program);
-            program = 0;
+        if (this->program) {
+            glDeleteProgram(this->program);
+            this->program = 0;
         }
         
         return false;
     }
     
-    //    TODO
-    // Get uniform locations.
-    //    uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(_program, "modelViewProjectionMatrix");
-    //    uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, "normalMatrix");
+    //glBindAttribLocation(this->program, UNIFORM_MODELVIEWPROJECTION_MATRIX, "modelViewProjectionMatrix");
     
     // Release vertex and fragment shaders.
     if (vertShader) {
-        glDetachShader(program, vertShader);
+        glDetachShader(this->program, vertShader);
         glDeleteShader(vertShader);
     }
     if (fragShader) {
-        glDetachShader(program, fragShader);
+        glDetachShader(this->program, fragShader);
         glDeleteShader(fragShader);
     }
     
@@ -194,5 +191,5 @@ bool Shader::validateProgram(GLuint prog)
 
 GLuint Shader::getProgram()
 {
-    return program;
+    return this->program;
 }

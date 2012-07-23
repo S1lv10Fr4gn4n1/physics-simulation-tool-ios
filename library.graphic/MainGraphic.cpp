@@ -10,40 +10,28 @@
 
 MainGraphic::MainGraphic()
 {
-    /// TODO - implementation
+    this->shader = 0;
+    this->simulatedObjectDrawn = 0;
 }
 
 MainGraphic::~MainGraphic()
 {
-    delete ndc;
-    delete shader;
+    delete this->shader;
+    delete this->simulatedObjectDrawn;
+
+    this->shader = 0;
+    this->simulatedObjectDrawn = 0;
 }
 
 void MainGraphic::initializeShader(const char* _vertShaderSource, const char* _fragShaderSource, const char* _geomShaderSource)
 {
-    shader = new Shader(_vertShaderSource, _fragShaderSource, _geomShaderSource);
-    shader->loadShaders();
-}
-
-void MainGraphic::initializeNDC(float _width, float _height)
-{
-    ndc = new NDC();
-    ndc->update(_width, _height);
+    this->shader = new Shader(_vertShaderSource, _fragShaderSource, _geomShaderSource);
+    this->shader->loadShaders();
 }
 
 Shader * MainGraphic::getShader()
 {
-    return shader;
-}
-
-NDC * MainGraphic::getNdc()
-{
-    return ndc;
-}
-
-void MainGraphic::rotatedScreen(float _width, float _height)
-{
-    ndc->update(_width, _height);
+    return this->shader;
 }
 
 void MainGraphic::MainGraphic::draw(World * _world)
@@ -52,19 +40,46 @@ void MainGraphic::MainGraphic::draw(World * _world)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     // Render the object again with ES2
-    glUseProgram(shader->getProgram());
+    glUseProgram(this->shader->getProgram());
     
     for (int i=0; i< _world->getSimulatedObjects()->size(); i++) {
-        simulatedObjectDrawn = _world->getSimulatedObjects()->at(i);
+        this->simulatedObjectDrawn = _world->getSimulatedObjects()->at(i);
         
-        // define color for square
-        glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, simulatedObjectDrawn->getColor()->color);
+        // define color for simulated
+        glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, this->simulatedObjectDrawn->getColor()->color);
         glEnableVertexAttribArray(ATTRIB_COLOR);
         
         // Update attribute values.
-        glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, simulatedObjectDrawn->getPointers()->pointers);
+        glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getPointers()->pointers);
         glEnableVertexAttribArray(ATTRIB_VERTEX);
         
-        glDrawArrays(simulatedObjectDrawn->getMode(), 0, simulatedObjectDrawn->getPointers()->count);
+        //glUniformMatrix4fv(UNIFORM_MODELVIEWPROJECTION_MATRIX, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation());
+        
+        glDrawArrays(this->simulatedObjectDrawn->getMode(), 0, this->simulatedObjectDrawn->getPointers()->count);
+        
+        if (this->simulatedObjectDrawn->isSelected()) {                
+            // define color for points
+            glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, this->simulatedObjectDrawn->getColor()->color);
+            glEnableVertexAttribArray(ATTRIB_COLOR);
+            
+            // Update attribute values.
+            glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getPointers()->pointers);
+            glEnableVertexAttribArray(ATTRIB_VERTEX);
+            
+            glDrawArrays(GL_POINTS, 0, this->simulatedObjectDrawn->getPointers()->count);
+        }
+        
+        if (this->simulatedObjectDrawn->isShowBBox()) {
+            //TODO implement bbox
+//            // define color for points
+//            glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, this->simulatedObjectDrawn->getColor()->color);
+//            glEnableVertexAttribArray(ATTRIB_COLOR);
+//            
+//            // Update attribute values.
+//            glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getPointers()->pointers);
+//            glEnableVertexAttribArray(ATTRIB_VERTEX);
+//            
+//            glDrawArrays(GL_POINTS, 0, this->simulatedObjectDrawn->getPointers()->count);
+        }
     }
 }

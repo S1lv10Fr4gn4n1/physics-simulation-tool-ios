@@ -31,9 +31,7 @@
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    if ([viewController isKindOfClass: [SimulationViewController class]]) {
-        // do something
-    }
+    //TODO 
 }
 
 @end

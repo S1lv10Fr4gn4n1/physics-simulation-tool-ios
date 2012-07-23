@@ -9,10 +9,8 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-
 #include <iostream>
 #include <string>
-
 #include "CommonGraphics.h"
 
 class Shader {
@@ -24,6 +22,7 @@ private:
 public:
     Shader(const char * _vertShaderSource, const char * _fragShaderSource, const char * _geomShaderSource);
     ~Shader();
+    
     bool loadShaders();
     bool compileShader(GLuint * shader, GLenum type, const char * file);
     bool linkProgram(GLuint prog);

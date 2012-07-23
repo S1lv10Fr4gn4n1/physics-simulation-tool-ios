@@ -14,7 +14,7 @@ varying vec4 colorVarying;
 //
 //varying lowp vec4 colorVarying;
 //
-//uniform mat4 modelViewProjectionMatrix;
+uniform mat4 modelViewProjectionMatrix;
 //uniform mat3 normalMatrix;
 
 void main()
@@ -29,6 +29,6 @@ void main()
 //    
 //    gl_Position = modelViewProjectionMatrix * position;
     gl_Position = position;
-    gl_PointSize = 3.0; // for tests
+    gl_PointSize = 5.0; 
     colorVarying = color;
 }

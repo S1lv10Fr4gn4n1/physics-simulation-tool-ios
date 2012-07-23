@@ -11,6 +11,7 @@
 
 #include "Commons.h"
 #include "Selection.h"
+#include "NDC.h"
 #include <vector>
 
 class MainEngine {
@@ -18,7 +19,7 @@ private:
     World * world;
     bool running;
     
-    std::vector<Pointer *> * makePointersToObject(TypeObject typeObject);
+    NDC * ndc;
 protected:
 public:
     MainEngine();
@@ -29,14 +30,12 @@ public:
     bool isRunning();
     
     void updateInformation();
-  
     void rotatedScreen(float _width, float _heigth);
-    
     void addSimulatedObjectInWorld(SimulatedObject * _simulatedObject);
-    void createSimulatedObject(TypeObject typeObject);
-    
+    void deleteAllSimulatedObjects();
+    void deleteSimulatedObject(SimulatedObject * _simulatedObject);
+    void calcNDCCoordinates(float * _x, float * _y);
     SimulatedObject * selectedSimulatedObject(Pointer * _pointer);
-    
     World * getWorld();    
 };
 

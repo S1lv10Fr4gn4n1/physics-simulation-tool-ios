@@ -16,9 +16,13 @@
 enum TypeObject {
     CIRCLE,
     SQUARE,
-    TRIANGLE
+    TRIANGLE,
+    POLYGON_OPEN,
+    POLYGON_CLOSE,
+    SPRINGS,
+    STRING,
+    ENGINE,
 };
-
 
 /// Struct Pointer
 struct Pointer {
@@ -134,5 +138,15 @@ struct BBox {
 };
 typedef BBox BBox;
 
+
+static inline float * MakeMatrixIdentity()
+{
+    float * matrix = new float[16];
+    for (int i=0; i< sizeof(matrix); i++) {
+        *(matrix+i) = 0;
+    }
+    
+    return matrix;
+}
 
 #endif

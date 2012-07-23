@@ -67,7 +67,9 @@ static EAGLContext * context;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    Controller::getInstance()->resizeScreen(self.view.bounds.size.width, self.view.bounds.size.height);
+    if (!self.view) {
+        Controller::getInstance()->resizeScreen(self.view.bounds.size.width, self.view.bounds.size.height);
+    }
     
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
@@ -95,6 +97,11 @@ static EAGLContext * context;
     doubleTapTwoFinger.numberOfTapsRequired = 2;
     doubleTapTwoFinger.numberOfTouchesRequired = 2;
     [view addGestureRecognizer:doubleTapTwoFinger];
+
+    UITapGestureRecognizer *doubleTapOneFinger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOneFingerDetected:)];
+    doubleTapOneFinger.numberOfTapsRequired = 2;
+    doubleTapOneFinger.numberOfTouchesRequired = 1;
+    [view addGestureRecognizer:doubleTapOneFinger];
 
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchDetected:)];
     [view addGestureRecognizer:pinchRecognizer];
@@ -128,23 +135,7 @@ static EAGLContext * context;
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // TODO revise
-    CGPoint cgPoint = [[touches anyObject] locationInView: self.view]; 
-    Pointer * pointer = MakePointer(cgPoint.x, cgPoint.y, 0);
-    Controller::getInstance()->calcNDCCoordinates(&pointer->x, &pointer->y);
-    
-    SimulatedObject * o = new SimulatedObject();
-    o->setMode(GL_POINTS);
-    o->setColor(MakeColor(255, 255, 255, 255, 4));
-    o->addPointer(pointer);
-    o->initialize();
-    Controller::getInstance()->addSimulatedObjectInWorld(o);
-    
-    SimulatedObject * object = Controller::getInstance()->selectedSimulatedObject(pointer);
-    if (object) {
-        NSLog(@"SimulatedObject selected");
-    }
-//    printf("x: %f, y: %f\n", cgPoint.x, cgPoint.y);
+//    NSLog(@"touchesEnded");
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -152,19 +143,23 @@ static EAGLContext * context;
 //    NSLog(@"touchesMoved");
 }
 
-- (IBAction)longPressDetected:(UIGestureRecognizer *)sender {
+- (IBAction)longPressDetected:(UIGestureRecognizer *)sender 
+{
 //    NSLog(@"Long Press");
 }
 
-- (IBAction)swipeRightDetected:(UIGestureRecognizer *)sender {
+- (IBAction)swipeRightDetected:(UIGestureRecognizer *)sender
+{
 //    NSLog(@"Right Swipe");
 }
 
-- (IBAction)swipeLeftDetected:(UIGestureRecognizer *)sender {
+- (IBAction)swipeLeftDetected:(UIGestureRecognizer *)sender
+{
 //    NSLog(@"Left Swipe");
 }
 
-- (IBAction)doubleTapTwoFingerDetected:(UIGestureRecognizer *)sender {
+- (IBAction)doubleTapTwoFingerDetected:(UIGestureRecognizer *)sender
+{
     Controller::getInstance()->stopSimulation();
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -172,14 +167,23 @@ static EAGLContext * context;
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 
-- (IBAction)pinchDetected:(UIGestureRecognizer *)sender {    
+- (IBAction)doubleTapOneFingerDetected:(UIGestureRecognizer *)sender
+{
+    CGPoint cgPoint = [sender locationInView:sender.view];
+    
+    Controller::getInstance()->selectedSimulatedObject(MakePointer(cgPoint.x, cgPoint.y, 0));
+}
+
+- (IBAction)pinchDetected:(UIGestureRecognizer *)sender
+{    
 //    CGFloat scale = [(UIPinchGestureRecognizer *)sender scale];
 //    CGFloat velocity = [(UIPinchGestureRecognizer *)sender velocity];
 //    
 //    NSLog(@"%@",[[NSString alloc] initWithFormat: @"Pinch - scale = %f, velocity = %f", scale, velocity]);
 }
 
-- (IBAction)rotationDetected:(UIGestureRecognizer *)sender {
+- (IBAction)rotationDetected:(UIGestureRecognizer *)sender
+{
 //    CGFloat radians = [(UIRotationGestureRecognizer *)sender rotation];
 //    CGFloat velocity = [(UIRotationGestureRecognizer *)sender velocity];
 //    

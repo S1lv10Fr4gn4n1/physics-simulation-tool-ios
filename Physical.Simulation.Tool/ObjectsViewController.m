@@ -46,4 +46,9 @@
 {
     Controller::getInstance()->createSimulatedObject(TRIANGLE);
 }
+
+- (IBAction)actionClearSimulation:(id)sender
+{
+    Controller::getInstance()->clearSimularion();
+}
 @end

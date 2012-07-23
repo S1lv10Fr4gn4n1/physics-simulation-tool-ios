@@ -20,4 +20,6 @@
 
 - (IBAction)actionTriangle:(id)sender;
 
+- (IBAction)actionClearSimulation:(id)sender;
+
 @end

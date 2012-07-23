@@ -8,44 +8,50 @@
 
 #include "NDC.h"
 
-
 NDC::NDC()
 {
-    /// TODO - implementation
+    this->maxWindow = 0;
+    this->minWindow = 0;
+    this->maxOrtho = 0;
+    this->minOrtho = 0;
 }
 
 NDC::~NDC()
 {
-    /// TODO - implementation
-}
+    delete this->maxWindow;
+    delete this->minWindow;
+    delete this->maxOrtho;
+    delete this->minOrtho;
 
-float calcDeltaO(float _maxWindow, float _minWindow)
-{
-    return _maxWindow - _minWindow;
-}
-
-float calcDeltaD(float _maxOrtho, float _minOrtho)
-{
-    return _maxOrtho - _minOrtho;
+    this->maxWindow = 0;
+    this->minWindow = 0;
+    this->maxOrtho = 0;
+    this->minOrtho = 0;
 }
 
 void NDC::calcNDCCoordinates(float * _x, float * _y)
 {
-    /// TODO revise
-    float deltaO, deltaD;
-    
-    deltaO = calcDeltaO(maxWindow->x, minWindow->x);
-    deltaD = calcDeltaD(maxOrtho->x, minOrtho->x);
-    *_x = (*_x * (deltaD / deltaO)) + minOrtho->x;
-    deltaO = calcDeltaO(maxWindow->y, minWindow->y);
-    deltaD = calcDeltaD(maxOrtho->y, minOrtho->y);
-    *_y = ((maxWindow->y - *_y) * (deltaD /deltaO)) + minOrtho->y;
+    float deltaO = (this->maxWindow->x - this->minWindow->x);
+    float deltaD = (this->maxOrtho->x - this->minOrtho->x);
+    *_x = (*_x * (deltaD / deltaO)) + this->minOrtho->x;
+    deltaO = (this->maxWindow->y - this->minWindow->y);
+    deltaD = (this->maxOrtho->y - this->minOrtho->y);
+    *_y = ((this->maxWindow->y - *_y) * (deltaD /deltaO)) + this->minOrtho->y;
 }
 
 void NDC::update(float _width, float _height)
 {
-    maxOrtho  = MakePointer( 1,  1,  0), 
-    minOrtho  = MakePointer(-1, -1,  0), 
-    maxWindow = MakePointer(_width, _height, 0), 
-    minWindow = MakePointer( 0,  0,  0);
+    if (this->maxOrtho == 0) {
+        this->maxOrtho = MakePointer( 1,  1,  0);
+    }
+    
+    if (this->minOrtho == 0) {
+        this->minOrtho = MakePointer(-1, -1,  0);
+    }
+    
+    this->maxWindow = MakePointer(_width, _height, 0);
+    
+    if (this->minWindow == 0) {
+        this->minWindow = MakePointer( 0,  0,  0);
+    }
 }

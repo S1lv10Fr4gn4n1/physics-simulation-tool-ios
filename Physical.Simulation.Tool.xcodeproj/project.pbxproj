@@ -83,13 +83,6 @@
 			remoteGlobalIDString = B94B36CF158647FE004AAB28;
 			remoteInfo = physics.engine;
 		};
-		B9B350D61586C08600180CE7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B94B36A415864775004AAB28 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B94B36DE1586481C004AAB28;
-			remoteInfo = library.graphic;
-		};
 		B9B350D81586C08E00180CE7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B94B36A415864775004AAB28 /* Project object */;
@@ -161,8 +154,8 @@
 		B94B371215864AD7004AAB28 /* MainEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainEngine.h; sourceTree = "<group>"; };
 		B94B371315864AD7004AAB28 /* PhysicsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEngine.h; sourceTree = "<group>"; };
 		B94B371B1586BAA3004AAB28 /* physics.engine-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "physics.engine-Prefix.pch"; sourceTree = "<group>"; };
-		B98DACCA158ABCFA00417C21 /* NDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDC.h; sourceTree = "<group>"; };
-		B98DACCD158ABD0A00417C21 /* NDC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NDC.cpp; sourceTree = "<group>"; };
+		B98DACCA158ABCFA00417C21 /* NDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NDC.h; path = ../library.graphic/NDC.h; sourceTree = "<group>"; };
+		B98DACCD158ABD0A00417C21 /* NDC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NDC.cpp; path = ../library.graphic/NDC.cpp; sourceTree = "<group>"; };
 		B98DACE7158ACB7400417C21 /* CommonGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonGraphics.h; sourceTree = "<group>"; };
 		B9B350941586BBB600180CE7 /* LibraryGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryGraphic.h; sourceTree = "<group>"; };
 		B9B350951586BBB600180CE7 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
@@ -346,6 +339,8 @@
 				B94B371115864AD7004AAB28 /* MainEngine.cpp */,
 				B93ACE9415A3AC7100CED06E /* Selection.h */,
 				B93ACE9715A3AC8000CED06E /* Selection.cpp */,
+				B98DACCA158ABCFA00417C21 /* NDC.h */,
+				B98DACCD158ABD0A00417C21 /* NDC.cpp */,
 				B94B36D3158647FE004AAB28 /* Supporting Files */,
 			);
 			path = physics.engine;
@@ -368,8 +363,6 @@
 				B9DD92C01586FE500029A4A3 /* MainGraphic.cpp */,
 				B9B350961586BBB600180CE7 /* Shader.h */,
 				B9B350951586BBB600180CE7 /* Shader.cpp */,
-				B98DACCA158ABCFA00417C21 /* NDC.h */,
-				B98DACCD158ABD0A00417C21 /* NDC.cpp */,
 				B94B36E21586481C004AAB28 /* Supporting Files */,
 			);
 			path = library.graphic;
@@ -544,7 +537,6 @@
 			);
 			dependencies = (
 				B9B350D51586C08600180CE7 /* PBXTargetDependency */,
-				B9B350D71586C08600180CE7 /* PBXTargetDependency */,
 			);
 			name = Physical.Simulation.Tool;
 			productName = Physical.Simulation.Tool;
@@ -766,11 +758,6 @@
 			isa = PBXTargetDependency;
 			target = B94B36CF158647FE004AAB28 /* physics.engine */;
 			targetProxy = B9B350D41586C08600180CE7 /* PBXContainerItemProxy */;
-		};
-		B9B350D71586C08600180CE7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B94B36DE1586481C004AAB28 /* library.graphic */;
-			targetProxy = B9B350D61586C08600180CE7 /* PBXContainerItemProxy */;
 		};
 		B9B350D91586C08E00180CE7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

@@ -21,6 +21,10 @@ private:
     unsigned int mode; // GLenum
     std::vector<SimulatedObject *> * joinsSimulatedObject; // TO-BE
     BBox * bbox;
+    float * matrixTransformation;
+    
+    bool showBBox;
+    bool selected;
     
     void loadBbox();
 protected:
@@ -49,6 +53,15 @@ public:
     
     BBox * getBBox();
     void setBBox(BBox * _bbox);
+    
+    bool isShowBBox();
+    void setShowBBox(bool _show);
+    
+    bool isSelected();
+    void setSelected(bool _selected);
+    
+    float * getMatrixTransformation();
+    void setMatrixTransformation(float * _matrix);
 };
 
 #endif

@@ -23,9 +23,9 @@ public:
     
     void addSimulatedObject(SimulatedObject * _simulatedObject);
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
+    void deleteAllSimulatedObject();
     
     std::vector<SimulatedObject *> * getSimulatedObjects();
 };
-
 
 #endif

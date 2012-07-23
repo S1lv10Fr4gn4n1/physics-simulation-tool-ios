@@ -19,6 +19,7 @@ private:
     MainGraphic * mainGraphic;
     
     static Controller * controller;
+
 public:
     Controller();
     ~Controller();
@@ -33,15 +34,15 @@ public:
     void draw();
     void stopSimulation();
     void startSimulation();
+    void clearSimularion();
     bool isRunning();
     bool isInitialized();
     
     void addSimulatedObjectInWorld(SimulatedObject * _simulatedObject);
     void createSimulatedObject(TypeObject typeObject);
-    
     void calcNDCCoordinates(float * _x, float * _y);
     
-    SimulatedObject * selectedSimulatedObject(Pointer * _pointer);
+    void selectedSimulatedObject(Pointer * _pointer);
     
     static Controller * getInstance();
 };

@@ -12,157 +12,188 @@ using namespace std;
 
 SimulatedObject::SimulatedObject()
 {
-    pointers = new Pointers();
-    pointersAux = new vector<Pointer *>();
+    this->pointers = new Pointers();
+    this->pointersAux = new vector<Pointer *>();
     
-    physicalFeature = MakePhysicalFeature(0, 0, 0, 0, 0); /// TODO - revise default
-    color = MakeColor(0, 0, 0, 0, 4);
+    this->physicalFeature = MakePhysicalFeature(0, 0, 0, 0, 0);
+    this->color = MakeColor(0, 0, 0, 0, 4);
 
-    bbox = new BBox();
-    bbox->max->x = bbox->max->y = bbox->max->z = -1000000;
-	bbox->min->x = bbox->min->y = bbox->min->z =  1000000;	
+    this->bbox = new BBox();
+    this->bbox->max->x = this->bbox->max->y = this->bbox->max->z = -1000000;
+	this->bbox->min->x = this->bbox->min->y = this->bbox->min->z =  1000000;	
 }
 
 SimulatedObject::~SimulatedObject()
 {
-    if (pointersAux && pointersAux->size() > 0) {
-        delete pointersAux->at(0);
+    if (this->pointersAux && this->pointersAux->size() > 0) {
+        delete this->pointersAux->at(0);
     }
-    delete pointersAux;
-    delete pointers;
-    delete physicalFeature;
-    delete color;
+    delete this->pointersAux;
+    delete this->pointers;
+    delete this->physicalFeature;
+    delete this->color;
 }
 
 void SimulatedObject::loadBbox()
 {
     Pointer * pointer = NULL;
     
-    for(int i=0; i < pointersAux->size(); i++) {
-		pointer = pointersAux->at(i);
-		
-		//point = [value transformPoint: point];
+    for(int i=0; i < this->pointersAux->size(); i++) {
+		pointer = this->pointersAux->at(i);
 		
 		//definindo o maior X
-		if (pointer->x > bbox->max->x) {
-			bbox->max->x = pointer->x;
+		if (pointer->x > this->bbox->max->x) {
+			this->bbox->max->x = pointer->x;
 		}
 		
 		//definindo o menor X
-		if (pointer->x < bbox->min->x) {
-			bbox->min->x = pointer->x;
+		if (pointer->x < this->bbox->min->x) {
+			this->bbox->min->x = pointer->x;
 		}
 		
 		//definindo o maior Y
-		if (pointer->y > bbox->max->y) {
-			bbox->max->y = pointer->y;
+		if (pointer->y > this->bbox->max->y) {
+			this->bbox->max->y = pointer->y;
 		}
 		
 		//definindo o menor Y
-		if (pointer->y < bbox->min->y) {
-			bbox->min->y = pointer->y;
+		if (pointer->y < this->bbox->min->y) {
+			this->bbox->min->y = pointer->y;
 		}
         
 		//definindo o maior Z
-		if (pointer->z > bbox->max->z) {
-			bbox->max->z = pointer->z;
+		if (pointer->z > this->bbox->max->z) {
+			this->bbox->max->z = pointer->z;
 		}
 		
 		//definindo o menor Z
-		if (pointer->z < bbox->min->z) {
-			bbox->min->z = pointer->z;
+		if (pointer->z < this->bbox->min->z) {
+			this->bbox->min->z = pointer->z;
 		}
 	}
 }
 
 void SimulatedObject::initialize()
 {
-    loadBbox();
+    this->loadBbox();
 }
 
 void SimulatedObject::addPointer(Pointer * _pointer)
 {
-    pointers = MakePointers(pointers, _pointer);
-    pointersAux->push_back(CpyPointer(_pointer));
+    this->pointers = MakePointers(this->pointers, _pointer);
+    this->pointersAux->push_back(CpyPointer(_pointer));
 }
 
 void SimulatedObject::deletePointer(Pointer * _pointer)
 {
     Pointer * p;
     
-    for (int i=0; 0<pointersAux->size(); i++) {
-        p = pointersAux->at(i);
+    for (int i=0; 0<this->pointersAux->size(); i++) {
+        p = this->pointersAux->at(i);
         
         if (p->x == _pointer->x &&
             p->y == _pointer->y &&
             p->z == _pointer->z) {
-            pointersAux->erase(pointersAux->begin()+i);
+            this->pointersAux->erase(this->pointersAux->begin()+i);
             
             break;
         }
     }
     
-    pointers = 0;
-    pointers = new Pointers();
-    for (int i=0; i<pointersAux->size(); i++) {
-        pointers = MakePointers(pointers, pointersAux->at(i));
+    this->pointers = 0;
+    this->pointers = new Pointers();
+    for (int i=0; i<this->pointersAux->size(); i++) {
+        this->pointers = MakePointers(this->pointers, this->pointersAux->at(i));
     }
 }
 
 void SimulatedObject::addAllPointers(std::vector<Pointer *> * _pointers)
 {
     for (int i=0; i<_pointers->size(); i++) {
-        pointers = MakePointers(pointers, _pointers->at(i));
-        pointersAux->push_back(CpyPointer(_pointers->at(i)));
+        if (_pointers->at(i) == 0) {
+            continue;
+        }
+        this->pointers = MakePointers(this->pointers, _pointers->at(i));
+        this->pointersAux->push_back(CpyPointer(_pointers->at(i)));
     }
 }
 
 Pointers * SimulatedObject::getPointers()
 {
-    return pointers;
+    return this->pointers;
 }
 
 std::vector<Pointer *> * SimulatedObject::getPointersAux()
 {
-    return pointersAux;
+    return this->pointersAux;
 }
 
 Color * SimulatedObject::getColor()
 {
-    return color;
+    return this->color;
 }
 
 void SimulatedObject::setColor(Color * _color)
 {
-    color = _color;
+    this->color = _color;
 }
 
 PhysicalFeature * SimulatedObject::getPhysicalFeature()
 {
-    return physicalFeature;
+    return this->physicalFeature;
 }
 
 void SimulatedObject::setPhysicalFeature(PhysicalFeature * _physicalFeature)
 {
-    physicalFeature = _physicalFeature;
+    this->physicalFeature = _physicalFeature;
 }
 
 void SimulatedObject::setMode(unsigned int _mode)
 {
-    mode = _mode;
+    this->mode = _mode;
 }
 
 unsigned int SimulatedObject::getMode()
 {
-    return mode;
+    return this->mode;
 }
 
 BBox * SimulatedObject::getBBox()
 {
-    return bbox;
+    return this->bbox;
 }
 
 void SimulatedObject::setBBox(BBox * _bbox)
 {
-    bbox = _bbox;
+    this->bbox = _bbox;
+}
+
+bool SimulatedObject::isShowBBox()
+{
+    return this->showBBox;
+}
+
+void SimulatedObject::setShowBBox(bool _show)
+{
+    this->showBBox = _show;
+}
+
+bool SimulatedObject::isSelected()
+{
+    return this->selected;
+}
+
+void SimulatedObject::setSelected(bool _selected)
+{
+    this->selected = _selected;
+}
+
+float * SimulatedObject::getMatrixTransformation()
+{
+    return this->matrixTransformation;
+}
+
+void SimulatedObject::setMatrixTransformation(float * _matrix)
+{
+    this->matrixTransformation = _matrix;
 }

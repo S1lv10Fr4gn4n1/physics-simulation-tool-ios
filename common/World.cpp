@@ -12,37 +12,46 @@ using namespace std;
 
 World::World()
 {
-    simulatedObjects = new vector<SimulatedObject *>();
+    this->simulatedObjects = new vector<SimulatedObject *>();
 }
 
 World::~World()
 {
-    if (simulatedObjects && simulatedObjects->size()>0) {
-        for (int i=0; 0 < simulatedObjects->size(); i++) {
-            delete simulatedObjects->at(i);
+    if (this->simulatedObjects && this->simulatedObjects->size()>0) {
+        for (int i=0; 0 < this->simulatedObjects->size(); i++) {
+            delete this->simulatedObjects->at(i);
+            this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
         }
     }
     
-    delete simulatedObjects;
+    delete this->simulatedObjects;
 }
 
 void World::addSimulatedObject(SimulatedObject * _simulatedObject)
 {
-    simulatedObjects->push_back(_simulatedObject);
+    this->simulatedObjects->push_back(_simulatedObject);
 }
 
 void World::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
-    for (int i=0; 0 < simulatedObjects->size(); i++) {
-        if (simulatedObjects->at(i) == _simulatedObject) {
-            simulatedObjects->erase(simulatedObjects->begin()+i);
+    for (int i=0; 0 < this->simulatedObjects->size(); i++) {
+        if (this->simulatedObjects->at(i) == _simulatedObject) {
+            this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
             return;
         }
     }
 }
 
+void World::deleteAllSimulatedObject()
+{
+    for (int i=0; 0 < this->simulatedObjects->size(); i++) {
+        this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
+        delete this->simulatedObjects->at(i);
+    }
+}
+
 std::vector<SimulatedObject *> * World::getSimulatedObjects()
 {
-    return simulatedObjects;
+    return this->simulatedObjects;
 }
 

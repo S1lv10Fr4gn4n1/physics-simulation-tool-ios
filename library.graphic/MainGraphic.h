@@ -12,27 +12,18 @@
 #include <vector>
 
 #include "Shader.h"
-#include "NDC.h"
 #include "Commons.h"
 
 class MainGraphic {
     Shader * shader;
-    NDC * ndc;
     SimulatedObject * simulatedObjectDrawn; 
 public:
     MainGraphic();
     ~MainGraphic();
     
     void initializeShader(const char* _vertShaderSource, const char* _fragShaderSource, const char* _geomShaderSource);
-    void initializeNDC(float _width, float _height);
-    
-    void rotatedScreen(float _width, float _heigth);
-    
     Shader * getShader();
-    NDC * getNdc();
-    
     void loadImage();
-    
     void draw(World * _world);
 };
 
