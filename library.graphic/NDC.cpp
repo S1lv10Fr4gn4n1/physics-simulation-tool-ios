@@ -22,11 +22,6 @@ NDC::~NDC()
     delete this->minWindow;
     delete this->maxOrtho;
     delete this->minOrtho;
-
-    this->maxWindow = 0;
-    this->minWindow = 0;
-    this->maxOrtho = 0;
-    this->minOrtho = 0;
 }
 
 void NDC::calcNDCCoordinates(float * _x, float * _y)

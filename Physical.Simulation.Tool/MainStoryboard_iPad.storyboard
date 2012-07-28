@@ -87,7 +87,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="actionCircle:" destination="e8d-nP-3Fj" eventType="touchUpInside" id="gbo-am-o5k"/>
+                                    <action selector="actionCircle:" destination="e8d-nP-3Fj" eventType="touchUpInside" id="Gcn-mb-6mh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fMg-2K-LQg">
@@ -117,7 +117,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="actionStartSimulation:" destination="e8d-nP-3Fj" eventType="touchUpInside" id="aZh-Du-LX0"/>
+                                    <action selector="actionStartSimulation:" destination="e8d-nP-3Fj" eventType="touchUpInside" id="o8Z-W1-jRj"/>
                                     <segue destination="rfh-aL-hFg" kind="modal" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="FqV-DL-JXh"/>
                                 </connections>
                             </button>
@@ -306,6 +306,6 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="FqV-DL-JXh"/>
+        <segue reference="Gij-PE-Lom"/>
     </inferredMetricsTieBreakers>
 </document>

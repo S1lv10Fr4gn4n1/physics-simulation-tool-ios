@@ -35,9 +35,6 @@ void Controller::freeObjects()
 {
     delete this->mainGraphic;
     delete this->mainEngine;
-
-    this->mainEngine = 0;
-    this->mainGraphic = 0;
 }
 
 void Controller::initializeContextOpenGLES()
@@ -148,7 +145,7 @@ void Controller::createSimulatedObject(TypeObject typeObject)
     
     switch (typeObject) {
         case CIRCLE:
-        {            
+        {        
             // calculates the radius
             // takes the first point, which indicates the origin of the circle
             Pointer * p1 = MakePointer( 0.000000, 0.000000, 0.000000);
@@ -171,12 +168,9 @@ void Controller::createSimulatedObject(TypeObject typeObject)
                 x1 = (radius * cos(M_PI * ang / 180.0f));
                 y1 = (radius * sin(M_PI * ang / 180.0f));
                 
-                //this->calcNDCCoordinates(&x1, &y1);
-                
                 object->addPointer(MakePointer(x1 + p1->x, y1 + p1->y, 0.0));
                 ang += 10;
             }
-            
             break;
         }   
             
@@ -185,7 +179,7 @@ void Controller::createSimulatedObject(TypeObject typeObject)
             object->addPointer(MakePointer( -0.039062, -0.052083, 0.000000));
             object->addPointer(MakePointer(  0.039062, -0.052083, 0.000000));
             object->addPointer(MakePointer(  0.039062,  0.052083, 0.000000));
-            object->addPointer(MakePointer( -0.039062,  0.052083, 0.000000));            
+            object->addPointer(MakePointer( -0.039062,  0.052083, 0.000000));         
             break;
         }
             
@@ -193,7 +187,7 @@ void Controller::createSimulatedObject(TypeObject typeObject)
         {
             object->addPointer(MakePointer(  0.000000,  0.052083, 0.000000));
             object->addPointer(MakePointer( -0.039062, -0.052083, 0.000000));
-            object->addPointer(MakePointer(  0.039062, -0.052083, 0.000000));            
+            object->addPointer(MakePointer(  0.039062, -0.052083, 0.000000));
             break;
         }
             

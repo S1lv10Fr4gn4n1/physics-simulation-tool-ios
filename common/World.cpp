@@ -18,9 +18,12 @@ World::World()
 World::~World()
 {
     if (this->simulatedObjects && this->simulatedObjects->size()>0) {
-        for (int i=0; 0 < this->simulatedObjects->size(); i++) {
-            delete this->simulatedObjects->at(i);
+        SimulatedObject * simulatedObject = 0;
+        
+        for (int i=0; i < this->simulatedObjects->size(); i++) {
+            simulatedObject = this->simulatedObjects->at(i);
             this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
+            delete simulatedObject;
         }
     }
     
@@ -34,9 +37,10 @@ void World::addSimulatedObject(SimulatedObject * _simulatedObject)
 
 void World::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
-    for (int i=0; 0 < this->simulatedObjects->size(); i++) {
+    for (int i=0; i < this->simulatedObjects->size(); i++) {
         if (this->simulatedObjects->at(i) == _simulatedObject) {
             this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
+            delete _simulatedObject;
             return;
         }
     }
@@ -44,9 +48,13 @@ void World::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 
 void World::deleteAllSimulatedObject()
 {
-    for (int i=0; 0 < this->simulatedObjects->size(); i++) {
-        this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
-        delete this->simulatedObjects->at(i);
+    if (this->simulatedObjects && this->simulatedObjects->size()>0) {
+        SimulatedObject * simulatedObject = 0;
+        for (int i=0; i < this->simulatedObjects->size(); i++) {
+            simulatedObject = this->simulatedObjects->at(i);
+            this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
+            delete simulatedObject;
+        }
     }
 }
 

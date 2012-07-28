@@ -19,7 +19,7 @@ private:
     PhysicalFeature * physicalFeature;
     Color * color;
     unsigned int mode; // GLenum
-    std::vector<SimulatedObject *> * joinsSimulatedObject; // TO-BE
+    std::vector<SimulatedObject *> * joinsSimulatedObject;
     BBox * bbox;
     float * matrixTransformation;
     

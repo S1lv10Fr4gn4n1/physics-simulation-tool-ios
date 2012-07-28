@@ -31,12 +31,10 @@ bool inSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)
     
     for (int i=0; i<_simulatedObject->getPointersAux()->size(); i++) {
 		p1 = _simulatedObject->getPointersAux()->at(i);
-		//p1 = [[object transform]transformPoint:p1];
 		
 		next = (i + 1) % _simulatedObject->getPointersAux()->size();
 		
 		p2 = _simulatedObject->getPointersAux()->at(next);
-		//p2 = [[object transform]transformPoint:p2];
 		
 		// equacoes parametrica da reta
 		ti = (_pointer->y - p1->y) / (p2->y - p1->y);
@@ -46,9 +44,9 @@ bool inSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)
 			countObjectsRight++;
 		}
     }
-
-    //if there is an odd number of lines crossing the scanline to 
-    //the right of the selected point, so that selecting an object.
+    
+    // if there is an odd number of lines crossing the scanline to 
+    // the right of the selected point, so that selecting an object.
 	if (countObjectsRight % 2 != 0) {
 		return true;
 	}
@@ -58,7 +56,7 @@ bool inSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)
 
 SimulatedObject * Selection::selectSimulatedObject(World * _world, Pointer * _pointer)
 {
-    SimulatedObject * simulatedObject = NULL;
+    SimulatedObject * simulatedObject = 0;
     
     for (int i=0; i<_world->getSimulatedObjects()->size(); i++) {
         simulatedObject = _world->getSimulatedObjects()->at(i);
@@ -68,5 +66,5 @@ SimulatedObject * Selection::selectSimulatedObject(World * _world, Pointer * _po
         }
     }
     
-    return NULL;
+    return 0;
 }

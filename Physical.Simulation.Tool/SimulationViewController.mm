@@ -37,6 +37,19 @@ static EAGLContext * context;
     [self initializeGestureRecognizer: view];
     
     [self setupGL];
+    
+    
+    [NSTimer scheduledTimerWithTimeInterval:3 
+                                     target:self 
+                                   selector:@selector(timeCmd:) 
+                                   userInfo:NULL 
+                                    repeats:YES];
+
+}
+
+- (void)timeCmd:(NSTimer*)theTimer
+{
+    NSLog(@"oi");
 }
 
 - (void)viewDidUnload
@@ -50,6 +63,11 @@ static EAGLContext * context;
     }
     
 	context = nil;
+}
+
+- (void)loadView
+{
+    [super loadView];
 }
 
 - (void)didReceiveMemoryWarning

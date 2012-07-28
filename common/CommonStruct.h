@@ -21,7 +21,7 @@ enum TypeObject {
     POLYGON_CLOSE,
     SPRINGS,
     STRING,
-    ENGINE,
+    ENGINE
 };
 
 /// Struct Pointer
@@ -30,7 +30,6 @@ struct Pointer {
     float y;
     float z;
 };
-typedef Pointer Pointer;
 
 static inline Pointer * MakePointer(float _x, float _y, float _z) 
 {
@@ -48,37 +47,6 @@ struct Pointers {
     unsigned int count;
 };
 
-static inline Pointers * MakePointers(Pointers * _pointers, Pointer * _point) 
-{
-    if (!_pointers) {
-        _pointers = new Pointers();
-        _pointers->pointers = new float();
-        _pointers->count = 0; 
-    } else if (!_pointers->pointers) {
-        _pointers->pointers = new float();
-        _pointers->count = 0; 
-    }
-    
-    char index=_pointers->count*COUNT_COORD;
-    *(_pointers->pointers+index+0) = _point->x;
-    *(_pointers->pointers+index+1) = _point->y;
-    *(_pointers->pointers+index+2) = _point->z;
-    
-    _pointers->count++;
-    
-    return _pointers;
-}
-
-static inline Pointer * CpyPointer(Pointer * _pointer)
-{
-    Pointer * p = new Pointer();
-    p->x = _pointer->x;
-    p->y = _pointer->y;
-    p->z = _pointer->z;
-    
-    return p;
-}
-
 
 /// Struct PhysicalFeature
 struct PhysicalFeature {
@@ -88,7 +56,6 @@ struct PhysicalFeature {
     float acceleration;
     float speed;
 };
-typedef PhysicalFeature PhysicalFeature;
 
 static inline PhysicalFeature * MakePhysicalFeature(float _mass, float _volume, float _density, float _acceleration, float _speed)
 {
@@ -106,7 +73,6 @@ static inline PhysicalFeature * MakePhysicalFeature(float _mass, float _volume, 
 struct Color {
     unsigned char * color;
 };
-typedef Color Color;
 
 static inline Color * MakeColor(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a, unsigned char _vertexes)
 {
@@ -134,10 +100,11 @@ struct BBox {
         min = new Pointer();
         max = new Pointer();
     }
-    
+    ~BBox() {
+        delete min;
+        delete max;
+    }    
 };
-typedef BBox BBox;
-
 
 static inline float * MakeMatrixIdentity()
 {

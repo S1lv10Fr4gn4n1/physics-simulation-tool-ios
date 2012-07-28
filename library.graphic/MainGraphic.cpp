@@ -18,9 +18,6 @@ MainGraphic::~MainGraphic()
 {
     delete this->shader;
     delete this->simulatedObjectDrawn;
-
-    this->shader = 0;
-    this->simulatedObjectDrawn = 0;
 }
 
 void MainGraphic::initializeShader(const char* _vertShaderSource, const char* _fragShaderSource, const char* _geomShaderSource)
@@ -57,6 +54,7 @@ void MainGraphic::MainGraphic::draw(World * _world)
         
         glDrawArrays(this->simulatedObjectDrawn->getMode(), 0, this->simulatedObjectDrawn->getPointers()->count);
         
+                
         if (this->simulatedObjectDrawn->isSelected()) {                
             // define color for points
             glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, this->simulatedObjectDrawn->getColor()->color);

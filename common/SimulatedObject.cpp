@@ -12,6 +12,9 @@ using namespace std;
 
 SimulatedObject::SimulatedObject()
 {
+    this->showBBox = false;
+    this->selected = false;
+    
     this->pointers = new Pointers();
     this->pointersAux = new vector<Pointer *>();
     
@@ -26,17 +29,34 @@ SimulatedObject::SimulatedObject()
 SimulatedObject::~SimulatedObject()
 {
     if (this->pointersAux && this->pointersAux->size() > 0) {
-        delete this->pointersAux->at(0);
+        Pointer * pointer = 0;
+        for (int i=0; i < this->pointersAux->size(); i++) {
+            pointer = this->pointersAux->at(i);
+            this->pointersAux->erase(this->pointersAux->begin()+i);
+            delete pointer;
+        }
     }
+    
+    if (this->joinsSimulatedObject && this->joinsSimulatedObject->size() > 0) {
+        SimulatedObject * simulatedObject = 0;
+        for (int i=0; i < this->joinsSimulatedObject->size(); i++) {
+            simulatedObject = this->joinsSimulatedObject->at(i);
+            this->joinsSimulatedObject->erase(this->joinsSimulatedObject->begin()+i);
+            delete simulatedObject;
+        }
+    }
+        
     delete this->pointersAux;
     delete this->pointers;
     delete this->physicalFeature;
     delete this->color;
+    delete this->bbox;
+    delete this->matrixTransformation;
 }
 
 void SimulatedObject::loadBbox()
 {
-    Pointer * pointer = NULL;
+    Pointer * pointer = 0;
     
     for(int i=0; i < this->pointersAux->size(); i++) {
 		pointer = this->pointersAux->at(i);
@@ -75,36 +95,52 @@ void SimulatedObject::loadBbox()
 
 void SimulatedObject::initialize()
 {
+    // initialize array of float for drawing
+    this->pointers->pointers = new float[this->pointersAux->size()*COUNT_COORD];
+    int index = 0;
+    Pointer * pointer = 0;
+    
+    for (int i=0; i<this->pointersAux->size(); i++) {
+        pointer = this->pointersAux->at(i);
+        index = i*COUNT_COORD;
+        *(this->pointers->pointers+index+0) = pointer->x;
+        *(this->pointers->pointers+index+1) = pointer->y;
+        *(this->pointers->pointers+index+2) = pointer->z;
+    }
+    
+    this->pointers->count = this->pointersAux->size();
+
+    // initialize bbox
     this->loadBbox();
 }
 
 void SimulatedObject::addPointer(Pointer * _pointer)
 {
-    this->pointers = MakePointers(this->pointers, _pointer);
-    this->pointersAux->push_back(CpyPointer(_pointer));
+    this->pointersAux->push_back(_pointer);
 }
 
 void SimulatedObject::deletePointer(Pointer * _pointer)
 {
-    Pointer * p;
+    Pointer * pointer = 0;
     
     for (int i=0; 0<this->pointersAux->size(); i++) {
-        p = this->pointersAux->at(i);
+        pointer = this->pointersAux->at(i);
         
-        if (p->x == _pointer->x &&
-            p->y == _pointer->y &&
-            p->z == _pointer->z) {
+        if (pointer->x == _pointer->x &&
+            pointer->y == _pointer->y &&
+            pointer->z == _pointer->z) {
             this->pointersAux->erase(this->pointersAux->begin()+i);
+            delete pointer;
             
             break;
         }
     }
     
-    this->pointers = 0;
-    this->pointers = new Pointers();
-    for (int i=0; i<this->pointersAux->size(); i++) {
-        this->pointers = MakePointers(this->pointers, this->pointersAux->at(i));
-    }
+//    this->pointers = 0;
+//    this->pointers = new Pointers();
+//    for (int i=0; i<this->pointersAux->size(); i++) {
+//        this->pointers = MakePointers(this->pointers, this->pointersAux->at(i));
+//    }
 }
 
 void SimulatedObject::addAllPointers(std::vector<Pointer *> * _pointers)
@@ -113,8 +149,9 @@ void SimulatedObject::addAllPointers(std::vector<Pointer *> * _pointers)
         if (_pointers->at(i) == 0) {
             continue;
         }
-        this->pointers = MakePointers(this->pointers, _pointers->at(i));
-        this->pointersAux->push_back(CpyPointer(_pointers->at(i)));
+        
+//        this->pointers = MakePointers(this->pointers, _pointers->at(i));
+//        this->pointersAux->push_back(CpyPointer(_pointers->at(i)));
     }
 }
 
