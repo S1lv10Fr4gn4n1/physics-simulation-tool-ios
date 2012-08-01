@@ -39,7 +39,7 @@ static EAGLContext * context;
     [self setupGL];
     
     
-    [NSTimer scheduledTimerWithTimeInterval:3 
+    [NSTimer scheduledTimerWithTimeInterval:1
                                      target:self 
                                    selector:@selector(timeCmd:) 
                                    userInfo:NULL 
@@ -49,7 +49,7 @@ static EAGLContext * context;
 
 - (void)timeCmd:(NSTimer*)theTimer
 {
-    NSLog(@"oi");
+    //Controller::getInstance()->rotationDetected(1, 1);
 }
 
 - (void)viewDidUnload
@@ -158,10 +158,11 @@ static EAGLContext * context;
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    NSLog(@"touchesMoved");
+    CGPoint p = [[touches anyObject] locationInView: self.view];
+    Controller::getInstance()->touchesMoved(MakePointer(p.x, p.y, 0));
 }
 
-- (IBAction)longPressDetected:(UIGestureRecognizer *)sender 
+- (IBAction)longPressDetected:(UIGestureRecognizer *)sender
 {
 //    NSLog(@"Long Press");
 }
@@ -181,31 +182,27 @@ static EAGLContext * context;
     Controller::getInstance()->stopSimulation();
     
     [self dismissViewControllerAnimated:YES completion:nil];
-
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 
 - (IBAction)doubleTapOneFingerDetected:(UIGestureRecognizer *)sender
 {
-    CGPoint cgPoint = [sender locationInView:sender.view];
-    
+    CGPoint cgPoint = [sender locationInView:sender.view];    
     Controller::getInstance()->selectedSimulatedObject(MakePointer(cgPoint.x, cgPoint.y, 0));
 }
 
 - (IBAction)pinchDetected:(UIGestureRecognizer *)sender
-{    
-//    CGFloat scale = [(UIPinchGestureRecognizer *)sender scale];
-//    CGFloat velocity = [(UIPinchGestureRecognizer *)sender velocity];
-//    
-//    NSLog(@"%@",[[NSString alloc] initWithFormat: @"Pinch - scale = %f, velocity = %f", scale, velocity]);
+{
+    CGFloat scale = [(UIPinchGestureRecognizer *)sender scale];
+    CGFloat velocity = [(UIPinchGestureRecognizer *)sender velocity];
+    Controller::getInstance()->pinchDetected(scale, velocity);
 }
 
 - (IBAction)rotationDetected:(UIGestureRecognizer *)sender
 {
-//    CGFloat radians = [(UIRotationGestureRecognizer *)sender rotation];
-//    CGFloat velocity = [(UIRotationGestureRecognizer *)sender velocity];
-//    
-//    NSLog(@"%@",[[NSString alloc] initWithFormat: @"Rotation - Radians = %f, velocity = %f",radians, velocity]);
+    CGFloat radians = [(UIRotationGestureRecognizer *)sender rotation];
+    CGFloat velocity = [(UIRotationGestureRecognizer *)sender velocity];
+    Controller::getInstance()->rotationDetected(radians, velocity);
 }
 
 #pragma mark - GLKView and GLKViewController delegate methods

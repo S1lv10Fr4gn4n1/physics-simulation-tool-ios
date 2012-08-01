@@ -27,6 +27,8 @@ using namespace std;
 
 Shader::Shader(const char * _vertShaderSource, const char * _fragShaderSource, const char * _geomShaderSource)
 {
+    mapGLSLVars = new map<string, GLuint>();
+    
     this->vertShaderSource = _vertShaderSource ? _vertShaderSource : defaultVertexShader;  
     this->fragShaderSource = _fragShaderSource ? _fragShaderSource : defaultFragmentShader;
     this->geomShaderSource = _geomShaderSource ? _geomShaderSource : defaultGeometryShader;
@@ -35,6 +37,9 @@ Shader::Shader(const char * _vertShaderSource, const char * _fragShaderSource, c
 Shader::~Shader()
 {
     glDeleteProgram(this->program);
+    
+    mapGLSLVars->clear();
+    delete mapGLSLVars;
 }
 
 #pragma mark -  OpenGL ES 2 shader compilation
@@ -93,8 +98,8 @@ bool Shader::loadShaders()
         
         return false;
     }
-    
-    //glBindAttribLocation(this->program, UNIFORM_MODELVIEWPROJECTION_MATRIX, "modelViewProjectionMatrix");
+
+    mapGLSLVars->insert(std::pair<string, GLuint>(UNIFORM_MODELVIEWPROJECTION_MATRIX, glGetUniformLocation(this->program, "modelViewProjectionMatrix")));
     
     // Release vertex and fragment shaders.
     if (vertShader) {
@@ -192,4 +197,20 @@ bool Shader::validateProgram(GLuint prog)
 GLuint Shader::getProgram()
 {
     return this->program;
+}
+
+GLuint Shader::getVar(std::string _var)
+{
+    if (!mapGLSLVars) {
+        return -1;
+    }
+
+    map<string, GLuint>::iterator iter;
+    
+    iter = mapGLSLVars->find(_var);
+    if (iter != mapGLSLVars->end()) {
+        return iter->second;
+    }
+    
+    return -1;
 }

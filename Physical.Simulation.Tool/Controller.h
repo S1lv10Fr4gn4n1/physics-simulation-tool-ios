@@ -18,6 +18,8 @@ private:
     MainEngine * mainEngine;
     MainGraphic * mainGraphic;
     
+    SimulatedObject * currentObject;
+    
     static Controller * controller;
 
 public:
@@ -43,6 +45,9 @@ public:
     void calcNDCCoordinates(float * _x, float * _y);
     
     void selectedSimulatedObject(Pointer * _pointer);
+    void touchesMoved(Pointer * _pointer);
+    void pinchDetected(float scale, float velocity);
+    void rotationDetected(float radians, float velocity);
     
     static Controller * getInstance();
 };

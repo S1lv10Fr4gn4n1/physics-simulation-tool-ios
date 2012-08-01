@@ -11,6 +11,7 @@
 
 #include "Utils.h"
 #include "CommonStruct.h"
+#include "Transform.h"
 #include "SimulatedObject.h"
 #include "World.h"
 

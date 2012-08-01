@@ -20,6 +20,9 @@ SimulatedObject::SimulatedObject()
     
     this->physicalFeature = MakePhysicalFeature(0, 0, 0, 0, 0);
     this->color = MakeColor(0, 0, 0, 0, 4);
+    this->matrixTransformation = MatrixMakeIdentity();
+    
+    this->joinsSimulatedObject = 0; //TO-BE
 
     this->bbox = new BBox();
     this->bbox->max->x = this->bbox->max->y = this->bbox->max->z = -1000000;
@@ -54,12 +57,15 @@ SimulatedObject::~SimulatedObject()
     delete this->matrixTransformation;
 }
 
-void SimulatedObject::loadBbox()
+void SimulatedObject::initBBox(float * _matrix)
 {
     Pointer * pointer = 0;
+    Pointer * pointerAux = 0;
     
     for(int i=0; i < this->pointersAux->size(); i++) {
-		pointer = this->pointersAux->at(i);
+		pointerAux = this->pointersAux->at(i);
+        
+        pointer = MatrixTransformPoint(this->matrixTransformation, pointerAux);
 		
 		//definindo o maior X
 		if (pointer->x > this->bbox->max->x) {
@@ -90,28 +96,31 @@ void SimulatedObject::loadBbox()
 		if (pointer->z < this->bbox->min->z) {
 			this->bbox->min->z = pointer->z;
 		}
+        
+        delete pointer;
 	}
+    
+//    this->bbox->pointers = new Pointers();
+//    this->bbox->pointers->p = new float[12];
+//    this->bbox->pointers->count = 4;
+//    *(this->bbox->pointers->p+0) = this->bbox->min->x;
+//    *(this->bbox->pointers->p+1) = this->bbox->max->y;
+//    *(this->bbox->pointers->p+2) = 0.0f;
+//    *(this->bbox->pointers->p+3) = this->bbox->max->x;
+//    *(this->bbox->pointers->p+4) = this->bbox->max->y;
+//    *(this->bbox->pointers->p+5) = 0.0f;
+//    *(this->bbox->pointers->p+6) = this->bbox->max->x;
+//    *(this->bbox->pointers->p+7) = this->bbox->min->y;
+//    *(this->bbox->pointers->p+8) = 0.0f;
+//    *(this->bbox->pointers->p+9) = this->bbox->min->x;
+//    *(this->bbox->pointers->p+10) = this->bbox->min->y;
+//    *(this->bbox->pointers->p+11) = 0.0f;
 }
 
 void SimulatedObject::initialize()
 {
-    // initialize array of float for drawing
-    this->pointers->pointers = new float[this->pointersAux->size()*COUNT_COORD];
-    int index = 0;
-    Pointer * pointer = 0;
-    
-    for (int i=0; i<this->pointersAux->size(); i++) {
-        pointer = this->pointersAux->at(i);
-        index = i*COUNT_COORD;
-        *(this->pointers->pointers+index+0) = pointer->x;
-        *(this->pointers->pointers+index+1) = pointer->y;
-        *(this->pointers->pointers+index+2) = pointer->z;
-    }
-    
-    this->pointers->count = this->pointersAux->size();
-
-    // initialize bbox
-    this->loadBbox();
+    this->makePointers();
+    this->initBBox(this->matrixTransformation);
 }
 
 void SimulatedObject::addPointer(Pointer * _pointer)
@@ -136,23 +145,39 @@ void SimulatedObject::deletePointer(Pointer * _pointer)
         }
     }
     
-//    this->pointers = 0;
-//    this->pointers = new Pointers();
-//    for (int i=0; i<this->pointersAux->size(); i++) {
-//        this->pointers = MakePointers(this->pointers, this->pointersAux->at(i));
-//    }
+    this->makePointers();
+    this->initBBox(this->matrixTransformation);
 }
 
 void SimulatedObject::addAllPointers(std::vector<Pointer *> * _pointers)
 {
-    for (int i=0; i<_pointers->size(); i++) {
-        if (_pointers->at(i) == 0) {
-            continue;
-        }
-        
-//        this->pointers = MakePointers(this->pointers, _pointers->at(i));
-//        this->pointersAux->push_back(CpyPointer(_pointers->at(i)));
+    if (this->pointersAux && this->pointersAux->size()) {
+        this->pointersAux->clear();
     }
+    
+    this->pointersAux = _pointers;
+}
+
+void SimulatedObject::makePointers()
+{
+    // initialize array of float for drawing
+    if (this->pointers->p) {
+        delete [] this->pointers->p;
+    }
+    
+    this->pointers->p = new float[this->pointersAux->size()*COUNT_COORD];
+    int index = 0;
+    Pointer * pointer = 0;
+    
+    for (int i=0; i<this->pointersAux->size(); i++) {
+        pointer = this->pointersAux->at(i);
+        index = i*COUNT_COORD;
+        *(this->pointers->p+index+0) = pointer->x;
+        *(this->pointers->p+index+1) = pointer->y;
+        *(this->pointers->p+index+2) = pointer->z;
+    }
+    
+    this->pointers->count = this->pointersAux->size();
 }
 
 Pointers * SimulatedObject::getPointers()

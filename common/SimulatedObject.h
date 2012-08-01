@@ -11,6 +11,7 @@
 
 #include <vector>
 #include "CommonStruct.h"
+#include "Transform.h"
 
 class SimulatedObject {
 private:
@@ -26,7 +27,7 @@ private:
     bool showBBox;
     bool selected;
     
-    void loadBbox();
+    void makePointers();
 protected:
     
 public:
@@ -34,6 +35,7 @@ public:
     ~SimulatedObject();
     
     void initialize();
+    void initBBox(float * _matrix);
     
     void addPointer(Pointer * _pointer);
     void deletePointer(Pointer * _pointer);

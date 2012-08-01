@@ -9,15 +9,21 @@
 #include "Selection.h"
 
 bool inBBox(SimulatedObject * _simulatedObject, Pointer * _pointer)
-{   
+{
+    _simulatedObject->initBBox(_simulatedObject->getMatrixTransformation());
+
+    bool result = false;
+    
     if (_pointer->x < _simulatedObject->getBBox()->max->x &&
         _pointer->x > _simulatedObject->getBBox()->min->x &&
         _pointer->y < _simulatedObject->getBBox()->max->y &&
         _pointer->y > _simulatedObject->getBBox()->min->y) {
-        return true;
+        result = true;
     }
-        
-    return false;
+    
+    _simulatedObject->initBBox(MATRIX_IDENTITY);
+    
+    return result;
 }
 
 bool inSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)
@@ -28,13 +34,17 @@ bool inSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)
 	float xi = 0;
 	Pointer * p1 = 0;
 	Pointer * p2 = 0;
+	Pointer * p1Aux = 0;
+	Pointer * p2Aux = 0;
     
     for (int i=0; i<_simulatedObject->getPointersAux()->size(); i++) {
-		p1 = _simulatedObject->getPointersAux()->at(i);
+		p1Aux = _simulatedObject->getPointersAux()->at(i);
+        p1 = MatrixTransformPoint(_simulatedObject->getMatrixTransformation(), p1Aux);
 		
 		next = (i + 1) % _simulatedObject->getPointersAux()->size();
 		
-		p2 = _simulatedObject->getPointersAux()->at(next);
+		p2Aux = _simulatedObject->getPointersAux()->at(next);
+        p2 = MatrixTransformPoint(_simulatedObject->getMatrixTransformation(), p2Aux);
 		
 		// equacoes parametrica da reta
 		ti = (_pointer->y - p1->y) / (p2->y - p1->y);

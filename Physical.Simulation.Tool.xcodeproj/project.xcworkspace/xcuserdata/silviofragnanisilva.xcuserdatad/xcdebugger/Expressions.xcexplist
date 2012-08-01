@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "MainGraphic::draw(World*):MainGraphic.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MainGraphic::initializeNDC(float, float):MainGraphic.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "_width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SimulatedObject::loadBbox():SimulatedObject.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "-[SimulationViewController shouldAutorotateToInterfaceOrientation:]:SimulationViewController.mm">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

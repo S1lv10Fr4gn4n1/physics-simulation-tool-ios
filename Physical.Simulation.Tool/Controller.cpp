@@ -14,6 +14,7 @@ Controller::Controller()
 {
     this->mainEngine = 0;
     this->mainGraphic = 0;
+    this->currentObject = 0;
 }
 
 Controller::~Controller()
@@ -33,8 +34,17 @@ Controller * Controller::getInstance()
 
 void Controller::freeObjects()
 {
-    delete this->mainGraphic;
-    delete this->mainEngine;
+    if (this->mainGraphic) {
+        delete this->mainGraphic;
+    }
+    
+    if (this->mainEngine) {
+        delete this->mainEngine;
+    }
+    
+    if (this->currentObject) {
+        delete this->currentObject;
+    }
 }
 
 void Controller::initializeContextOpenGLES()
@@ -80,6 +90,7 @@ void Controller::updateInformation()
 void Controller::clearSimularion()
 {
     this->mainEngine->deleteAllSimulatedObjects();
+    currentObject = 0;
 }
 
 void Controller::draw()
@@ -127,25 +138,61 @@ void Controller::calcNDCCoordinates(float * _x, float * _y)
 
 void Controller::selectedSimulatedObject(Pointer * _pointer)
 {
-    Controller::getInstance()->calcNDCCoordinates(&_pointer->x, &_pointer->y);
+    this->calcNDCCoordinates(&_pointer->x, &_pointer->y);
+    this->currentObject = this->mainEngine->selectedSimulatedObject(_pointer);
     
-    SimulatedObject * object = this->mainEngine->selectedSimulatedObject(_pointer);
-    if (object) {
-        object->setSelected(!object->isSelected());
+    if (this->currentObject) {
+        this->currentObject->setSelected(!this->currentObject->isSelected());
+    }
+}
+
+void Controller::touchesMoved(Pointer * _pointer)
+{
+    this->calcNDCCoordinates(&_pointer->x, &_pointer->y);
+    this->currentObject = this->mainEngine->selectedSimulatedObject(_pointer);
+    
+    if (this->currentObject && this->currentObject->isSelected()) {
+        MatrixTranslate(this->currentObject->getMatrixTransformation(), _pointer);
+    }
+}
+
+void Controller::pinchDetected(float scale, float velocity)
+{
+    if (this->currentObject && this->currentObject->isSelected()) {
+        //TODO - implement zoom
+    }
+}
+
+void Controller::rotationDetected(float radians, float velocity)
+{
+    if (this->currentObject /*&& this->currentObject->isSelected()*/) {
+        //TODO - implement rotation object
+        
+        static float i = 0;
+        
+        float teta = (M_PI * i * 10) / 180.0;
+        this->currentObject->setMatrixTransformation(MatrixMakeZRotation(teta));
+
+        i += 0.1;
     }
 }
 
 void Controller::createSimulatedObject(TypeObject typeObject)
-{
+{    
+    if (this->currentObject) {
+        this->currentObject->setSelected(false);
+    }
+    
     SimulatedObject * object = new SimulatedObject();
-    object->setMode(GL_LINE_LOOP);
-    object->setColor(MakeColor(255, 255, 255, 255, 4));
     object->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
-    object->setMatrixTransformation(MakeMatrixIdentity());
+    object->setMatrixTransformation(MatrixMakeIdentity());
+    object->setMode(GL_LINE_LOOP);
     
     switch (typeObject) {
         case CIRCLE:
-        {        
+        {
+            object->setColor(MakeColor(255, 255, 255, 255, 36));
+            
             // calculates the radius
             // takes the first point, which indicates the origin of the circle
             Pointer * p1 = MakePointer( 0.000000, 0.000000, 0.000000);
@@ -171,11 +218,13 @@ void Controller::createSimulatedObject(TypeObject typeObject)
                 object->addPointer(MakePointer(x1 + p1->x, y1 + p1->y, 0.0));
                 ang += 10;
             }
+            
             break;
         }   
             
         case SQUARE:
         {
+            object->setColor(MakeColor(255, 255, 255, 255, 4));
             object->addPointer(MakePointer( -0.039062, -0.052083, 0.000000));
             object->addPointer(MakePointer(  0.039062, -0.052083, 0.000000));
             object->addPointer(MakePointer(  0.039062,  0.052083, 0.000000));
@@ -185,6 +234,7 @@ void Controller::createSimulatedObject(TypeObject typeObject)
             
         case TRIANGLE:
         {
+            object->setColor(MakeColor(255, 255, 255, 255, 3));
             object->addPointer(MakePointer(  0.000000,  0.052083, 0.000000));
             object->addPointer(MakePointer( -0.039062, -0.052083, 0.000000));
             object->addPointer(MakePointer(  0.039062, -0.052083, 0.000000));
@@ -211,4 +261,7 @@ void Controller::createSimulatedObject(TypeObject typeObject)
     }
     
     this->mainEngine->addSimulatedObjectInWorld(object);
+    
+    this->currentObject = object;
+    this->currentObject->setSelected(true);
 }

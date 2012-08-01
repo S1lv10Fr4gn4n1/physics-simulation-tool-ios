@@ -39,8 +39,8 @@ void World::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
     for (int i=0; i < this->simulatedObjects->size(); i++) {
         if (this->simulatedObjects->at(i) == _simulatedObject) {
-            this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
             delete _simulatedObject;
+            this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
             return;
         }
     }
@@ -52,9 +52,9 @@ void World::deleteAllSimulatedObject()
         SimulatedObject * simulatedObject = 0;
         for (int i=0; i < this->simulatedObjects->size(); i++) {
             simulatedObject = this->simulatedObjects->at(i);
-            this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
             delete simulatedObject;
         }
+        this->simulatedObjects->clear();
     }
 }
 

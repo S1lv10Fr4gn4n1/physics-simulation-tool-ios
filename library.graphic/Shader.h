@@ -11,11 +11,13 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 #include "CommonGraphics.h"
 
 class Shader {
 private:
     GLuint program;
+    std::map<std::string, GLuint> * mapGLSLVars;
     const char * vertShaderSource;
     const char * fragShaderSource;
     const char * geomShaderSource;    
@@ -29,6 +31,7 @@ public:
     bool validateProgram(GLuint prog);
     
     GLuint getProgram();
+    GLuint getVar(std::string _var);
 };
 
 #endif

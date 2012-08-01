@@ -9,7 +9,7 @@
 #ifndef COMMONSTRUCT_H
 #define COMMONSTRUCT_H
 
-#define CHANNEL_COLOR 4
+#define CHANNEL_COLOR 3
 #define COUNT_COORD 3
 
 /// Enumations
@@ -29,21 +29,33 @@ struct Pointer {
     float x;
     float y;
     float z;
+    float w;
 };
 
-static inline Pointer * MakePointer(float _x, float _y, float _z) 
+static inline Pointer * MakePointer(float _x, float _y, float _z, float _w)
 {
     Pointer * pointer = new Pointer();
     pointer->x = _x;
     pointer->y = _y;
     pointer->z = _z;
+    pointer->w = _w;
     
     return pointer;
 }
 
+static inline Pointer * MakePointer(float _x, float _y, float _z)
+{
+    return MakePointer(_x, _y, _z, 1.0f);
+}
+
+static inline Pointer * MakePointer(float _x, float _y)
+{
+    return MakePointer(_x, _y, 0.0f, 1.0f);
+}
+
 /// Struct Pointers
 struct Pointers {
-    float * pointers;
+    float * p;
     unsigned int count;
 };
 
@@ -74,19 +86,22 @@ struct Color {
     unsigned char * color;
 };
 
-static inline Color * MakeColor(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a, unsigned char _vertexes)
+static inline Color * MakeColor(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a, int _vertexes)
 {
     Color * color = new Color();
-    color->color = new unsigned char(16);
+    color->color = new unsigned char(_vertexes*CHANNEL_COLOR);
     
-    char index=0;
+    int index=0;
     
     for (int i=0; i<_vertexes ; i++) {
         index=i*CHANNEL_COLOR;
         *(color->color+index+0) = _r;
         *(color->color+index+1) = _g;
         *(color->color+index+2) = _b;
-        *(color->color+index+3) = _a;
+
+        if (CHANNEL_COLOR == 4) {
+            *(color->color+index+3) = _a;
+        }
     }
     
     return color;
@@ -96,24 +111,18 @@ struct BBox {
     Pointer * min;
     Pointer * max;
     
+    Pointers * pointers;
+    
     BBox() {
         min = new Pointer();
         max = new Pointer();
+        pointers = new Pointers();
     }
     ~BBox() {
         delete min;
         delete max;
-    }    
-};
-
-static inline float * MakeMatrixIdentity()
-{
-    float * matrix = new float[16];
-    for (int i=0; i< sizeof(matrix); i++) {
-        *(matrix+i) = 0;
+        delete pointers;
     }
-    
-    return matrix;
-}
+};
 
 #endif
