@@ -49,7 +49,8 @@ static EAGLContext * context;
 
 - (void)timeCmd:(NSTimer*)theTimer
 {
-    //Controller::getInstance()->rotationDetected(1, 1);
+//    Controller::getInstance()->rotationDetected(2, 1);
+//    Controller::getInstance()->pinchDetected(1, 1);
 }
 
 - (void)viewDidUnload
@@ -73,7 +74,6 @@ static EAGLContext * context;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc. that aren't in use.
     
     UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Memory Warning" 
                                                     message:@"Memory Warning" 
@@ -127,55 +127,61 @@ static EAGLContext * context;
     UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(rotationDetected:)];
     [view addGestureRecognizer:rotationRecognizer];
     
-    UISwipeGestureRecognizer *swipeRightRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRightDetected:)];
-    swipeRightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-    [view addGestureRecognizer:swipeRightRecognizer];
-
-    UISwipeGestureRecognizer *swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeLeftDetected:)];
-    swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    [view addGestureRecognizer:swipeLeftRecognizer];
-    
-    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressDetected:)];
-    longPressRecognizer.minimumPressDuration = 2;
-    longPressRecognizer.numberOfTouchesRequired = 1;
-    [view addGestureRecognizer:longPressRecognizer];
+//    UISwipeGestureRecognizer *swipeRightRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRightDetected:)];
+//    swipeRightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+//    [view addGestureRecognizer:swipeRightRecognizer];
+//
+//    UISwipeGestureRecognizer *swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeLeftDetected:)];
+//    swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+//    [view addGestureRecognizer:swipeLeftRecognizer];
+//    
+//    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressDetected:)];
+//    longPressRecognizer.minimumPressDuration = 2;
+//    longPressRecognizer.numberOfTouchesRequired = 1;
+//    [view addGestureRecognizer:longPressRecognizer];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    NSLog(@"touchesBegan");
+    CGPoint p = [[touches anyObject] locationInView: self.view];
+    Controller::getInstance()->touchesBegan(MakePointer(p.x, p.y));
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    NSLog(@"touchesCancelled");
+    CGPoint p = [[touches anyObject] locationInView: self.view];
+    Controller::getInstance()->touchesCancelled(MakePointer(p.x, p.y));
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    NSLog(@"touchesEnded");
+    CGPoint p = [[touches anyObject] locationInView: self.view];
+    Controller::getInstance()->touchesEnded(MakePointer(p.x, p.y));
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint p = [[touches anyObject] locationInView: self.view];
-    Controller::getInstance()->touchesMoved(MakePointer(p.x, p.y, 0));
+    Controller::getInstance()->touchesMoved(MakePointer(p.x, p.y));
 }
 
 - (IBAction)longPressDetected:(UIGestureRecognizer *)sender
 {
-//    NSLog(@"Long Press");
+    CGPoint p = [sender locationInView:sender.view];
+    Controller::getInstance()->longPressDetected(MakePointer(p.x, p.y));
 }
 
-- (IBAction)swipeRightDetected:(UIGestureRecognizer *)sender
-{
-//    NSLog(@"Right Swipe");
-}
-
-- (IBAction)swipeLeftDetected:(UIGestureRecognizer *)sender
-{
-//    NSLog(@"Left Swipe");
-}
+//- (IBAction)swipeRightDetected:(UIGestureRecognizer *)sender
+//{
+//    CGPoint cgPoint = [sender locationInView:sender.view];
+//    Controller::getInstance()->swipeRightDetected(MakePointer(cgPoint.x, cgPoint.y, 0));
+//}
+//
+//- (IBAction)swipeLeftDetected:(UIGestureRecognizer *)sender
+//{
+//    CGPoint cgPoint = [sender locationInView:sender.view];
+//    Controller::getInstance()->swipeLeftDetected(MakePointer(cgPoint.x, cgPoint.y, 0));
+//}
 
 - (IBAction)doubleTapTwoFingerDetected:(UIGestureRecognizer *)sender
 {
@@ -188,7 +194,7 @@ static EAGLContext * context;
 - (IBAction)doubleTapOneFingerDetected:(UIGestureRecognizer *)sender
 {
     CGPoint cgPoint = [sender locationInView:sender.view];    
-    Controller::getInstance()->selectedSimulatedObject(MakePointer(cgPoint.x, cgPoint.y, 0));
+    Controller::getInstance()->doubleTapOneFingerDetected(MakePointer(cgPoint.x, cgPoint.y, 0));
 }
 
 - (IBAction)pinchDetected:(UIGestureRecognizer *)sender

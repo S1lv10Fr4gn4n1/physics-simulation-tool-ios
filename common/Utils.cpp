@@ -34,5 +34,4 @@ string loadFile(string _pathFile)
 	infile.close();
     
     return result;
-    
 }

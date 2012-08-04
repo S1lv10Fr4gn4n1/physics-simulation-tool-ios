@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="iav-wR-sWE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="iav-wR-sWE">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--Presentation View Controller - Apresentação-->
@@ -69,7 +68,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="t3k-CM-h9b">
-                                <rect key="frame" x="340" y="201" width="120" height="30"/>
+                                <rect key="frame" x="359" y="201" width="101" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                 <state key="normal" title="Start Simulation">
@@ -85,7 +84,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0bG-WY-OfY">
-                                <rect key="frame" x="232" y="201" width="100" height="30"/>
+                                <rect key="frame" x="251" y="201" width="100" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                 <state key="normal" title="Spy">
@@ -97,6 +96,73 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                                 </state>
                                 <connections>
                                     <segue destination="Hfi-vz-0iw" kind="modal" modalTransitionStyle="partialCurl" id="58y-a1-TmT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3ot-w5-tcN">
+                                <rect key="frame" x="135" y="201" width="108" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <state key="normal" title="Clear Simulation">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="actionClearSimulation:" destination="uSd-lM-Vxj" eventType="touchUpInside" id="ArE-bt-4vv"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Objetos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="DjO-o7-qhB">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mTU-gX-fvf">
+                                <rect key="frame" x="20" y="40" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="circle.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="actionCircle:" destination="uSd-lM-Vxj" eventType="touchUpInside" id="Ks4-Te-fVj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="EeE-f1-F5i">
+                                <rect key="frame" x="128" y="40" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="square.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="actionSquare:" destination="uSd-lM-Vxj" eventType="touchUpInside" id="D3F-Fk-DpK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="svT-HS-Szs">
+                                <rect key="frame" x="236" y="40" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="triangle.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="actionTriangle:" destination="uSd-lM-Vxj" eventType="touchUpInside" id="HZO-Ax-OIa"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -153,8 +219,11 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
     </scenes>
     <resources>
         <image name="albert.icon.png" width="512" height="512"/>
+        <image name="circle.png" width="512" height="521"/>
         <image name="presentation.png" width="30" height="23"/>
         <image name="puzzle.png" width="28" height="25"/>
+        <image name="square.png" width="512" height="512"/>
+        <image name="triangle.png" width="512" height="512"/>
     </resources>
     <classes>
         <class className="ObjectsViewController" superclassName="UIViewController">
@@ -172,6 +241,15 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
         </class>
         <class className="SimulationViewController" superclassName="GLKViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SimulationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doubleTapOneFingerDetected:" candidateClass="UIGestureRecognizer"/>
+                <relationship kind="action" name="doubleTapTwoFingerDetected:" candidateClass="UIGestureRecognizer"/>
+                <relationship kind="action" name="longPressDetected:" candidateClass="UIGestureRecognizer"/>
+                <relationship kind="action" name="pinchDetected:" candidateClass="UIGestureRecognizer"/>
+                <relationship kind="action" name="rotationDetected:" candidateClass="UIGestureRecognizer"/>
+                <relationship kind="action" name="swipeLeftDetected:" candidateClass="UIGestureRecognizer"/>
+                <relationship kind="action" name="swipeRightDetected:" candidateClass="UIGestureRecognizer"/>
+            </relationships>
         </class>
         <class className="TabViewController" superclassName="UITabBarController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TabViewController.h"/>

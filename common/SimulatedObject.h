@@ -64,6 +64,7 @@ public:
     
     float * getMatrixTransformation();
     void setMatrixTransformation(float * _matrix);
+    
 };
 
 #endif

@@ -46,9 +46,9 @@ void MainEngine::updateInformation()
     /// TODO - implementation
 }
 
-void MainEngine::rotatedScreen(float _width, float _heigth)
+void MainEngine::rotatedScreen(float _width, float _height)
 {
-    this->ndc->update(_width, _heigth);
+    this->ndc->update(_width, _height);
 }
 
 void MainEngine::calcNDCCoordinates(float * _x, float * _y)
@@ -71,6 +71,11 @@ void MainEngine::addSimulatedObjectInWorld(SimulatedObject * _simulatedObject)
 SimulatedObject * MainEngine::selectedSimulatedObject(Pointer * _pointer)
 {
     return Selection::selectSimulatedObject(this->world, _pointer);
+}
+
+SimulatedObject * MainEngine::selectedBBoxSimulatedObject(Pointer * _pointer)
+{
+    return Selection::selectBBoxSimulatedObject(this->world, _pointer);
 }
 
 void MainEngine::deleteAllSimulatedObjects()

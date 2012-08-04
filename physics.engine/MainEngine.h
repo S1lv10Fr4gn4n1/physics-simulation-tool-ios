@@ -30,12 +30,13 @@ public:
     bool isRunning();
     
     void updateInformation();
-    void rotatedScreen(float _width, float _heigth);
+    void rotatedScreen(float _width, float _height);
     void addSimulatedObjectInWorld(SimulatedObject * _simulatedObject);
     void deleteAllSimulatedObjects();
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
     void calcNDCCoordinates(float * _x, float * _y);
     SimulatedObject * selectedSimulatedObject(Pointer * _pointer);
+    SimulatedObject * selectedBBoxSimulatedObject(Pointer * _pointer);
     World * getWorld();    
 };
 

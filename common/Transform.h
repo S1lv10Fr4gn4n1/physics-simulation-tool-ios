@@ -75,8 +75,8 @@ static inline float * MatrixMakeTranslate(float _x, float _y)
 static inline void MatrixScale(float * matrix, float _x, float _y, float _z)
 {
 	// scale (sx, sy, sz) matrix identidade
-	matrix[0]  = _x; //(_x / 100);
-	matrix[5]  = _y; //(_y / 100);
+	matrix[0]  = (_x / 100);
+	matrix[5]  = (_y / 100);
 	matrix[10] = _z;
 	//matrix[15] = _w;
 }
@@ -91,20 +91,6 @@ static inline float * MatrixMakeScale(float _x, float _y)
     float * matrix = MatrixMakeIdentity();
     
     MatrixScale(matrix, _x, _y, 0.0f);
-    
-    return matrix;
-}
-
-static inline float * MatrixRotate(float _x)
-{
-    float * matrix = MatrixMakeIdentity();
-    
-	// totation in Z
-	float teta = (M_PI * _x * 10) / 180.0;
-	matrix[0] =  cosf(teta);
-	matrix[1] =  sinf(teta);
-	matrix[4] = -sinf(teta);
-	matrix[5] =  cosf(teta);
     
     return matrix;
 }

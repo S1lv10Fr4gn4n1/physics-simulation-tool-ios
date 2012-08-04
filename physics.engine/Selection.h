@@ -16,6 +16,7 @@ private:
     
 public:
     static SimulatedObject * selectSimulatedObject(World * _world, Pointer * _pointer);
+    static SimulatedObject * selectBBoxSimulatedObject(World * _world, Pointer * _pointer);
 };
 
 #endif

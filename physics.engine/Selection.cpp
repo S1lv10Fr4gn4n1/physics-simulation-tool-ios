@@ -21,7 +21,7 @@ bool inBBox(SimulatedObject * _simulatedObject, Pointer * _pointer)
         result = true;
     }
     
-    _simulatedObject->initBBox(MATRIX_IDENTITY);
+//    _simulatedObject->initBBox(MATRIX_IDENTITY);
     
     return result;
 }
@@ -53,6 +53,9 @@ bool inSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)
 		if ((ti >= 0.0f && ti <= 1.0f) && xi < _pointer->x) {
 			countObjectsRight++;
 		}
+        
+        delete p1;
+        delete p2;
     }
     
     // if there is an odd number of lines crossing the scanline to 
@@ -78,3 +81,19 @@ SimulatedObject * Selection::selectSimulatedObject(World * _world, Pointer * _po
     
     return 0;
 }
+
+SimulatedObject * Selection::selectBBoxSimulatedObject(World * _world, Pointer * _pointer)
+{
+    SimulatedObject * simulatedObject = 0;
+    
+    for (int i=0; i<_world->getSimulatedObjects()->size(); i++) {
+        simulatedObject = _world->getSimulatedObjects()->at(i);
+        
+        if (inBBox(simulatedObject, _pointer)) {
+            return simulatedObject;
+        }
+    }
+    
+    return 0;
+}
+

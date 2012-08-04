@@ -14,7 +14,8 @@ Controller::Controller()
 {
     this->mainEngine = 0;
     this->mainGraphic = 0;
-    this->currentObject = 0;
+    this->objectEdition = 0;
+    this->objectOffset = 0;
 }
 
 Controller::~Controller()
@@ -42,8 +43,12 @@ void Controller::freeObjects()
         delete this->mainEngine;
     }
     
-    if (this->currentObject) {
-        delete this->currentObject;
+    if (this->objectEdition) {
+        delete this->objectEdition;
+    }
+
+    if (this->objectOffset) {
+        delete this->objectOffset;
     }
 }
 
@@ -90,7 +95,8 @@ void Controller::updateInformation()
 void Controller::clearSimularion()
 {
     this->mainEngine->deleteAllSimulatedObjects();
-    currentObject = 0;
+    this->objectEdition = 0;
+    this->objectOffset = 0;
 }
 
 void Controller::draw()
@@ -126,62 +132,94 @@ bool Controller::isInitialized()
     return false;
 }
 
-void Controller::addSimulatedObjectInWorld(SimulatedObject * _simulatedObject)
+void Controller::touchesBegan(Pointer * _pointer)
 {
-    this->mainEngine->addSimulatedObjectInWorld(_simulatedObject);
+    // TODO
+//    printf("touchesBegan\n");
 }
 
-void Controller::calcNDCCoordinates(float * _x, float * _y)
+void Controller::touchesEnded(Pointer * _pointer)
 {
-    this->mainEngine->calcNDCCoordinates(_x, _y);
+    // TODO
+//    printf("touchesEnded\n");
 }
 
-void Controller::selectedSimulatedObject(Pointer * _pointer)
+void Controller::touchesCancelled(Pointer * _pointer)
 {
-    this->calcNDCCoordinates(&_pointer->x, &_pointer->y);
-    this->currentObject = this->mainEngine->selectedSimulatedObject(_pointer);
-    
-    if (this->currentObject) {
-        this->currentObject->setSelected(!this->currentObject->isSelected());
-    }
+    // TODO
+//    printf("TouchesCancelled\n");
 }
 
 void Controller::touchesMoved(Pointer * _pointer)
 {
-    this->calcNDCCoordinates(&_pointer->x, &_pointer->y);
-    this->currentObject = this->mainEngine->selectedSimulatedObject(_pointer);
-    
-    if (this->currentObject && this->currentObject->isSelected()) {
-        MatrixTranslate(this->currentObject->getMatrixTransformation(), _pointer);
+    printf("touchesMoved\n");
+    this->mainEngine->calcNDCCoordinates(&_pointer->x, &_pointer->y);
+    this->objectOffset = this->mainEngine->selectedSimulatedObject(_pointer);;
+
+    if (this->objectOffset) {
+        if (this->objectEdition) {
+            this->objectEdition->setSelected(false);
+            this->objectEdition = 0;
+        }
+        MatrixTranslate(this->objectOffset->getMatrixTransformation(), _pointer);
     }
 }
 
 void Controller::pinchDetected(float scale, float velocity)
 {
-    if (this->currentObject && this->currentObject->isSelected()) {
-        //TODO - implement zoom
+    printf("pinch-> scale: %f, velocity: %f\n", scale, velocity);
+    if (this->objectEdition && this->objectEdition->isSelected()) {
+        this->objectEdition->setMatrixTransformation(MatrixMultiplay(this->objectEdition->getMatrixTransformation(), MatrixMakeScale(scale*100, scale*100)));
     }
 }
 
 void Controller::rotationDetected(float radians, float velocity)
 {
-    if (this->currentObject /*&& this->currentObject->isSelected()*/) {
-        //TODO - implement rotation object
-        
-        static float i = 0;
-        
-        float teta = (M_PI * i * 10) / 180.0;
-        this->currentObject->setMatrixTransformation(MatrixMakeZRotation(teta));
-
-        i += 0.1;
+    printf("rotation-> radians: %f, velocity: %f\n", radians, velocity);
+    if (this->objectEdition && this->objectEdition->isSelected()) {
+        float teta = (M_PI * radians * 10) / 180.0;
+        this->objectEdition->setMatrixTransformation(MatrixMultiplay(this->objectEdition->getMatrixTransformation(), MatrixMakeZRotation(teta)));
     }
+}
+
+void Controller::doubleTapOneFingerDetected(Pointer * _pointer)
+{
+    printf("doubleTapOnFingerDetected\n");
+    this->mainEngine->calcNDCCoordinates(&_pointer->x, &_pointer->y);
+    this->objectEdition = this->mainEngine->selectedSimulatedObject(_pointer);
+    
+    if (this->objectEdition) {
+        if (this->objectEdition->isSelected()) {
+            this->objectEdition->setSelected(false);
+            this->objectEdition = 0;
+        } else {
+            this->objectEdition->setSelected(true);
+        }
+    }
+}
+
+void Controller::longPressDetected(Pointer * _pointer)
+{
+    // TODO
+//    printf("longPressDetected\n");
+}
+
+void Controller::swipeRightDetected(Pointer * _pointer)
+{
+    // TODO
+//    printf("swipeRightDetected\n");
+}
+void Controller::swipeLeftDetected(Pointer * _pointer)
+{
+    // TODO
+//    printf("swipeLeftDetected\n");
 }
 
 void Controller::createSimulatedObject(TypeObject typeObject)
 {    
-    if (this->currentObject) {
-        this->currentObject->setSelected(false);
-    }
+//    if (this->objectEdition) {
+//        this->objectEdition->setSelected(false);
+//    }
     
     SimulatedObject * object = new SimulatedObject();
     object->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
@@ -262,6 +300,6 @@ void Controller::createSimulatedObject(TypeObject typeObject)
     
     this->mainEngine->addSimulatedObjectInWorld(object);
     
-    this->currentObject = object;
-    this->currentObject->setSelected(true);
+    this->objectEdition = object;
+    this->objectEdition->setSelected(true);
 }

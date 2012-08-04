@@ -18,7 +18,8 @@ private:
     MainEngine * mainEngine;
     MainGraphic * mainGraphic;
     
-    SimulatedObject * currentObject;
+    SimulatedObject * objectEdition;
+    SimulatedObject * objectOffset;
     
     static Controller * controller;
 
@@ -40,14 +41,18 @@ public:
     bool isRunning();
     bool isInitialized();
     
-    void addSimulatedObjectInWorld(SimulatedObject * _simulatedObject);
     void createSimulatedObject(TypeObject typeObject);
-    void calcNDCCoordinates(float * _x, float * _y);
     
-    void selectedSimulatedObject(Pointer * _pointer);
     void touchesMoved(Pointer * _pointer);
+    void touchesBegan(Pointer * _pointer);
+    void touchesEnded(Pointer * _pointer);
+    void touchesCancelled(Pointer * _pointer);
+    void longPressDetected(Pointer * _pointer);
     void pinchDetected(float scale, float velocity);
     void rotationDetected(float radians, float velocity);
+    void doubleTapOneFingerDetected(Pointer * _pointer);
+    void swipeRightDetected(Pointer * _pointer);
+    void swipeLeftDetected(Pointer * _pointer);
     
     static Controller * getInstance();
 };
