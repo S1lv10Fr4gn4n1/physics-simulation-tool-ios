@@ -49,11 +49,64 @@ void MainEngine::updateInformation()
 void MainEngine::rotatedScreen(float _width, float _height)
 {
     this->ndc->update(_width, _height);
+    
+    MatrixOrtho(this->world->getOrthoMatrix(), -this->ndc->getAspect(), this->ndc->getAspect(), -1, 1, -1, 1);
 }
 
-void MainEngine::calcNDCCoordinates(float * _x, float * _y)
+void MainEngine::zoom(float _scale)
 {
-    this->ndc->calcNDCCoordinates(_x, _y);
+    float value = this->ndc->getAspect() * _scale;
+    
+    this->ndc->setLeft(-value);
+    this->ndc->setRight(value);
+    this->ndc->setBottom(-_scale);
+    this->ndc->setTop(_scale);
+
+    MatrixOrtho(this->world->getOrthoMatrix(),
+                this->ndc->getLeft(),
+                this->ndc->getRight(),
+                this->ndc->getBottom(),
+                this->ndc->getTop(),
+                -1,
+                1);
+}
+
+void MainEngine::pan(Pointer * _pointer)
+{
+    // TODO
+    this->ndc->setLeft(-this->ndc->getAspect() + _pointer->x);
+    this->ndc->setRight(this->ndc->getAspect() + _pointer->x);
+    this->ndc->setBottom(-1 + _pointer->y);
+    this->ndc->setTop(1 + _pointer->y);
+    
+    MatrixOrtho(this->world->getOrthoMatrix(),
+                this->ndc->getLeft(),
+                this->ndc->getRight(),
+                this->ndc->getBottom(),
+                this->ndc->getTop(),
+                -1,
+                1);
+}
+
+void MainEngine::centralizedWorld()
+{
+    MatrixOrtho(this->world->getOrthoMatrix(), -this->ndc->getAspect(), this->ndc->getAspect(), -1, 1, -1, 1);
+}
+
+void MainEngine::scaleSimulatedObject(SimulatedObject * _simulatedObject, float _scale)
+{
+    _simulatedObject->setMatrixTransformation(MatrixMultiply(_simulatedObject->getMatrixTransformation(), MatrixMakeScale(_scale, _scale)));
+}
+
+void MainEngine::rotateSimulatedObject(SimulatedObject * _simulatedObject, float _radians)
+{
+    float teta = -(M_PI * _radians) / 180.0;
+    _simulatedObject->setMatrixTransformation(MatrixMultiply(_simulatedObject->getMatrixTransformation(), MatrixMakeZRotation(teta)));
+}
+
+void MainEngine::translateSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)
+{
+    MatrixTranslate(_simulatedObject->getMatrixTransformation(), _pointer);
 }
 
 World * MainEngine::getWorld()
@@ -70,6 +123,7 @@ void MainEngine::addSimulatedObjectInWorld(SimulatedObject * _simulatedObject)
 
 SimulatedObject * MainEngine::selectedSimulatedObject(Pointer * _pointer)
 {
+    this->ndc->calcNDCCoordinates(&_pointer->x, &_pointer->y);
     return Selection::selectSimulatedObject(this->world, _pointer);
 }
 

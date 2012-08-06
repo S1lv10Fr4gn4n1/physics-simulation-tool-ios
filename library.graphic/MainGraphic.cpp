@@ -40,6 +40,7 @@ void MainGraphic::MainGraphic::draw(World * _world)
     glUseProgram(this->shader->getProgram());
     
     GLuint matrixView = this->shader->getVar(UNIFORM_MODELVIEWPROJECTION_MATRIX);
+    GLuint matrixOrtho = this->shader->getVar(UNIFORM_ORTHO_MATRIX);
     
     for (int i=0; i< _world->getSimulatedObjects()->size(); i++) {
         this->simulatedObjectDrawn = _world->getSimulatedObjects()->at(i);
@@ -53,7 +54,8 @@ void MainGraphic::MainGraphic::draw(World * _world)
         glEnableVertexAttribArray(ATTRIB_VERTEX);
         
         glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation());
-        
+        glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
+
         glDrawArrays(this->simulatedObjectDrawn->getMode(), 0, this->simulatedObjectDrawn->getPointers()->count);
         
                 
@@ -67,6 +69,7 @@ void MainGraphic::MainGraphic::draw(World * _world)
             glEnableVertexAttribArray(ATTRIB_VERTEX);
             
             glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation());
+            glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
             
             glDrawArrays(GL_POINTS, 0, this->simulatedObjectDrawn->getPointers()->count);
         }
@@ -81,6 +84,7 @@ void MainGraphic::MainGraphic::draw(World * _world)
             glEnableVertexAttribArray(ATTRIB_VERTEX);
             
             glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation());
+            glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
 
             glDrawArrays(GL_LINE_LOOP, 0, this->simulatedObjectDrawn->getBBox()->pointers->count);
         }

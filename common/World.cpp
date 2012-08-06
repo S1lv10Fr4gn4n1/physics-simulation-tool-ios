@@ -13,6 +13,7 @@ using namespace std;
 World::World()
 {
     this->simulatedObjects = new vector<SimulatedObject *>();
+    this->orthoMatrix = MatrixMakeIdentity();
 }
 
 World::~World()
@@ -28,6 +29,7 @@ World::~World()
     }
     
     delete this->simulatedObjects;
+    delete this->orthoMatrix;
 }
 
 void World::addSimulatedObject(SimulatedObject * _simulatedObject)
@@ -63,3 +65,12 @@ std::vector<SimulatedObject *> * World::getSimulatedObjects()
     return this->simulatedObjects;
 }
 
+void World::setOrthoMatrix(float * _matrix)
+{
+    this->orthoMatrix = _matrix;
+}
+
+float * World::getOrthoMatrix()
+{
+    return this->orthoMatrix;
+}

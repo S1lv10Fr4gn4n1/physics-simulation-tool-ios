@@ -15,6 +15,7 @@
 class World {
 private:
     std::vector<SimulatedObject *> * simulatedObjects;
+    float * orthoMatrix;
 protected:
     
 public:
@@ -24,6 +25,9 @@ public:
     void addSimulatedObject(SimulatedObject * _simulatedObject);
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
     void deleteAllSimulatedObject();
+    
+    void setOrthoMatrix(float * _matrix);
+    float * getOrthoMatrix();
     
     std::vector<SimulatedObject *> * getSimulatedObjects();
 };

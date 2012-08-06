@@ -31,13 +31,24 @@ public:
     
     void updateInformation();
     void rotatedScreen(float _width, float _height);
+    
     void addSimulatedObjectInWorld(SimulatedObject * _simulatedObject);
     void deleteAllSimulatedObjects();
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
-    void calcNDCCoordinates(float * _x, float * _y);
+    
+    // WORLD
+    void zoom(float _scale);
+    void pan(Pointer * _pointer);
+    void centralizedWorld();
+    World * getWorld();
+    
+    // SIMULATED OBJECT
+    void scaleSimulatedObject(SimulatedObject * _simulatedObject, float _scale);
+    void rotateSimulatedObject(SimulatedObject * _simulatedObject, float _radians);
+    void translateSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer);
+    
     SimulatedObject * selectedSimulatedObject(Pointer * _pointer);
     SimulatedObject * selectedBBoxSimulatedObject(Pointer * _pointer);
-    World * getWorld();    
 };
 
 #endif

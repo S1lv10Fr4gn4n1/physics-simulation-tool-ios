@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B9066CE81592237D0031264F /* Commons.h in Headers */ = {isa = PBXBuildFile; fileRef = B9066CE6159223650031264F /* Commons.h */; };
+		B911B9B715CD557F00DCF35B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
 		B913AEA415B1F35C0050B8DB /* PresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B913AEA315B1F35C0050B8DB /* PresentationViewController.m */; };
 		B913AEA715B1F36C0050B8DB /* ObjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B913AEA615B1F36C0050B8DB /* ObjectsViewController.m */; };
 		B913AEAA15B1F5190050B8DB /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913AEA915B1F5180050B8DB /* Controller.cpp */; };
@@ -17,7 +18,6 @@
 		B93ACE9815A3AC8000CED06E /* Selection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B93ACE9715A3AC8000CED06E /* Selection.cpp */; };
 		B94B36B215864775004AAB28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B115864775004AAB28 /* UIKit.framework */; };
 		B94B36B415864775004AAB28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B315864775004AAB28 /* Foundation.framework */; };
-		B94B36B615864775004AAB28 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B515864775004AAB28 /* CoreGraphics.framework */; };
 		B94B36BC15864775004AAB28 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B94B36BA15864775004AAB28 /* InfoPlist.strings */; };
 		B94B36BE15864775004AAB28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B94B36BD15864775004AAB28 /* main.m */; };
 		B94B36C215864775004AAB28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B94B36C115864775004AAB28 /* AppDelegate.m */; };
@@ -36,7 +36,6 @@
 		B9B350991586BBB600180CE7 /* Shader.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350961586BBB600180CE7 /* Shader.h */; };
 		B9B350A11586BCED00180CE7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
 		B9B350A31586BCFE00180CE7 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A21586BCFE00180CE7 /* GLKit.framework */; };
-		B9B350A41586BD2100180CE7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
 		B9B350CC1586BEEF00180CE7 /* LibraryCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */; };
 		B9B350CE1586BEF800180CE7 /* LibraryPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */; };
 		B9B7913415B789BA00E08A55 /* presentation.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B7913215B789BA00E08A55 /* presentation.png */; };
@@ -210,7 +209,6 @@
 				B9B350A11586BCED00180CE7 /* OpenGLES.framework in Frameworks */,
 				B94B36B215864775004AAB28 /* UIKit.framework in Frameworks */,
 				B94B36B415864775004AAB28 /* Foundation.framework in Frameworks */,
-				B94B36B615864775004AAB28 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,8 +225,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B911B9B715CD557F00DCF35B /* OpenGLES.framework in Frameworks */,
 				B9D1F87F158EB907000337BB /* common.feature.a in Frameworks */,
-				B9B350A41586BD2100180CE7 /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

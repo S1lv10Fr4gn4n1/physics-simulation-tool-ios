@@ -37,20 +37,6 @@ static EAGLContext * context;
     [self initializeGestureRecognizer: view];
     
     [self setupGL];
-    
-    
-    [NSTimer scheduledTimerWithTimeInterval:1
-                                     target:self 
-                                   selector:@selector(timeCmd:) 
-                                   userInfo:NULL 
-                                    repeats:YES];
-
-}
-
-- (void)timeCmd:(NSTimer*)theTimer
-{
-//    Controller::getInstance()->rotationDetected(2, 1);
-//    Controller::getInstance()->pinchDetected(1, 1);
 }
 
 - (void)viewDidUnload
@@ -116,6 +102,12 @@ static EAGLContext * context;
     doubleTapTwoFinger.numberOfTouchesRequired = 2;
     [view addGestureRecognizer:doubleTapTwoFinger];
 
+    UITapGestureRecognizer *oneTapThreeFinger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(oneTapThreeFingerDetected:)];
+    oneTapThreeFinger.numberOfTapsRequired = 1;
+    oneTapThreeFinger.numberOfTouchesRequired = 3;
+    
+    [view addGestureRecognizer:oneTapThreeFinger];
+
     UITapGestureRecognizer *doubleTapOneFinger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOneFingerDetected:)];
     doubleTapOneFinger.numberOfTapsRequired = 2;
     doubleTapOneFinger.numberOfTouchesRequired = 1;
@@ -169,6 +161,12 @@ static EAGLContext * context;
 {
     CGPoint p = [sender locationInView:sender.view];
     Controller::getInstance()->longPressDetected(MakePointer(p.x, p.y));
+}
+
+- (IBAction)oneTapThreeFingerDetected:(UIGestureRecognizer *)sender
+{
+    CGPoint p = [sender locationInView:sender.view];
+    Controller::getInstance()->oneTapThreeFingerDetected(MakePointer(p.x, p.y));
 }
 
 //- (IBAction)swipeRightDetected:(UIGestureRecognizer *)sender

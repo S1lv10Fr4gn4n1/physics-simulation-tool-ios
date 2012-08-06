@@ -135,57 +135,54 @@ bool Controller::isInitialized()
 void Controller::touchesBegan(Pointer * _pointer)
 {
     // TODO
-//    printf("touchesBegan\n");
 }
 
 void Controller::touchesEnded(Pointer * _pointer)
 {
     // TODO
-//    printf("touchesEnded\n");
 }
 
 void Controller::touchesCancelled(Pointer * _pointer)
 {
     // TODO
-//    printf("TouchesCancelled\n");
 }
 
 void Controller::touchesMoved(Pointer * _pointer)
 {
-    printf("touchesMoved\n");
-    this->mainEngine->calcNDCCoordinates(&_pointer->x, &_pointer->y);
-    this->objectOffset = this->mainEngine->selectedSimulatedObject(_pointer);;
-
+    this->objectOffset = this->mainEngine->selectedSimulatedObject(_pointer);
+    
     if (this->objectOffset) {
         if (this->objectEdition) {
             this->objectEdition->setSelected(false);
             this->objectEdition = 0;
         }
-        MatrixTranslate(this->objectOffset->getMatrixTransformation(), _pointer);
+        
+        this->mainEngine->translateSimulatedObject(this->objectOffset, _pointer);
+    }
+//    } else {
+//        // move scene
+//        this->mainEngine->pan(_pointer);
+//    }
+}
+
+void Controller::pinchDetected(float _scale, float _velocity)
+{
+    if (this->objectEdition && this->objectEdition->isSelected()) {
+        this->mainEngine->scaleSimulatedObject(this->objectEdition, _scale);
+    } else {
+        this->mainEngine->zoom(_scale);
     }
 }
 
-void Controller::pinchDetected(float scale, float velocity)
+void Controller::rotationDetected(float _radians, float _velocity)
 {
-    printf("pinch-> scale: %f, velocity: %f\n", scale, velocity);
     if (this->objectEdition && this->objectEdition->isSelected()) {
-        this->objectEdition->setMatrixTransformation(MatrixMultiplay(this->objectEdition->getMatrixTransformation(), MatrixMakeScale(scale*100, scale*100)));
-    }
-}
-
-void Controller::rotationDetected(float radians, float velocity)
-{
-    printf("rotation-> radians: %f, velocity: %f\n", radians, velocity);
-    if (this->objectEdition && this->objectEdition->isSelected()) {
-        float teta = (M_PI * radians * 10) / 180.0;
-        this->objectEdition->setMatrixTransformation(MatrixMultiplay(this->objectEdition->getMatrixTransformation(), MatrixMakeZRotation(teta)));
+        this->mainEngine->rotateSimulatedObject(this->objectEdition, _radians);
     }
 }
 
 void Controller::doubleTapOneFingerDetected(Pointer * _pointer)
 {
-    printf("doubleTapOnFingerDetected\n");
-    this->mainEngine->calcNDCCoordinates(&_pointer->x, &_pointer->y);
     this->objectEdition = this->mainEngine->selectedSimulatedObject(_pointer);
     
     if (this->objectEdition) {
@@ -201,25 +198,27 @@ void Controller::doubleTapOneFingerDetected(Pointer * _pointer)
 void Controller::longPressDetected(Pointer * _pointer)
 {
     // TODO
-//    printf("longPressDetected\n");
 }
 
 void Controller::swipeRightDetected(Pointer * _pointer)
 {
     // TODO
-//    printf("swipeRightDetected\n");
 }
 void Controller::swipeLeftDetected(Pointer * _pointer)
 {
     // TODO
-//    printf("swipeLeftDetected\n");
+}
+
+void Controller::oneTapThreeFingerDetected(Pointer * _pointer)
+{
+    //this->mainEngine->centralizedWorld();
 }
 
 void Controller::createSimulatedObject(TypeObject typeObject)
 {    
-//    if (this->objectEdition) {
-//        this->objectEdition->setSelected(false);
-//    }
+    if (this->objectEdition) {
+        this->objectEdition->setSelected(false);
+    }
     
     SimulatedObject * object = new SimulatedObject();
     object->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
@@ -229,12 +228,10 @@ void Controller::createSimulatedObject(TypeObject typeObject)
     switch (typeObject) {
         case CIRCLE:
         {
-            object->setColor(MakeColor(255, 255, 255, 255, 36));
-            
             // calculates the radius
             // takes the first point, which indicates the origin of the circle
-            Pointer * p1 = MakePointer( 0.000000, 0.000000, 0.000000);
-            Pointer * p2 = MakePointer( 0.000000, 0.052083, 0.000000);
+            Pointer * p1 = MakePointer( 0.0, 0.0);
+            Pointer * p2 = MakePointer( 0.0, 0.052083);
             
             float x = p2->x - p1->x;
             float y = p2->y - p1->y;
@@ -262,20 +259,18 @@ void Controller::createSimulatedObject(TypeObject typeObject)
             
         case SQUARE:
         {
-            object->setColor(MakeColor(255, 255, 255, 255, 4));
-            object->addPointer(MakePointer( -0.039062, -0.052083, 0.000000));
-            object->addPointer(MakePointer(  0.039062, -0.052083, 0.000000));
-            object->addPointer(MakePointer(  0.039062,  0.052083, 0.000000));
-            object->addPointer(MakePointer( -0.039062,  0.052083, 0.000000));         
+            object->addPointer(MakePointer( -0.052083, -0.052083));
+            object->addPointer(MakePointer(  0.052083, -0.052083));
+            object->addPointer(MakePointer(  0.052083,  0.052083));
+            object->addPointer(MakePointer( -0.052083,  0.052083));
             break;
         }
             
         case TRIANGLE:
         {
-            object->setColor(MakeColor(255, 255, 255, 255, 3));
-            object->addPointer(MakePointer(  0.000000,  0.052083, 0.000000));
-            object->addPointer(MakePointer( -0.039062, -0.052083, 0.000000));
-            object->addPointer(MakePointer(  0.039062, -0.052083, 0.000000));
+            object->addPointer(MakePointer(  0.000000,  0.052083));
+            object->addPointer(MakePointer( -0.052083, -0.052083));
+            object->addPointer(MakePointer(  0.052083, -0.052083));
             break;
         }
             
@@ -298,8 +293,12 @@ void Controller::createSimulatedObject(TypeObject typeObject)
             break;            
     }
     
-    this->mainEngine->addSimulatedObjectInWorld(object);
+    object->setColor(MakeColor(0, 0, 255, 1, object->getPointersAux()->size()));
+//    int totalPoints = object->getPointersAux()->size() * 4;
+//    Color * color = object->getColor();
+//    for (int i=0; i<totalPoints; i++) {
+//        printf("index: %u, value: %u\n", i, *(color->color+i));
+//    }
     
-    this->objectEdition = object;
-    this->objectEdition->setSelected(true);
+    this->mainEngine->addSimulatedObjectInWorld(object);
 }

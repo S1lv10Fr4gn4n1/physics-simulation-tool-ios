@@ -62,7 +62,7 @@ bool Shader::loadShaders()
         cout << "Failed to compile fragment shader" << endl;
         return false;
     }
-
+// TODO
 //    if (!compileShader(&geomShader, GL_ge, geomShaderSource)) {
 //        cout << "Failed to compile fragment shader" << endl;
 //        return false;
@@ -100,6 +100,7 @@ bool Shader::loadShaders()
     }
 
     mapGLSLVars->insert(std::pair<string, GLuint>(UNIFORM_MODELVIEWPROJECTION_MATRIX, glGetUniformLocation(this->program, "modelViewProjectionMatrix")));
+    mapGLSLVars->insert(std::pair<string, GLuint>(UNIFORM_ORTHO_MATRIX, glGetUniformLocation(this->program, "orthoMatrix")));
     
     // Release vertex and fragment shaders.
     if (vertShader) {

@@ -19,7 +19,8 @@ SimulatedObject::SimulatedObject()
     this->pointersAux = new vector<Pointer *>();
     
     this->physicalFeature = MakePhysicalFeature(0, 0, 0, 0, 0);
-    this->color = MakeColor(0, 0, 0, 0, 4);
+//    TODO
+//    this->color = MakeColor(0, 0, 0, 0, 4);
     this->matrixTransformation = MatrixMakeIdentity();
     
     this->joinsSimulatedObject = 0; //TO-BE
@@ -57,7 +58,7 @@ SimulatedObject::~SimulatedObject()
     delete this->matrixTransformation;
 }
 
-void SimulatedObject::initBBox(float * _matrix)
+void SimulatedObject::initBBox(const float * _matrix)
 {
     Pointer * pointer = 0;
     Pointer * pointerAux = 0;
@@ -97,9 +98,10 @@ void SimulatedObject::initBBox(float * _matrix)
 			this->bbox->min->z = pointer->z;
 		}
         
-        delete pointer;
+        delete pointer; //TODO revise
 	}
     
+//    TODO
 //    this->bbox->pointers = new Pointers();
 //    this->bbox->pointers->p = new float[12];
 //    this->bbox->pointers->count = 4;

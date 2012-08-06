@@ -35,7 +35,7 @@ public:
     ~SimulatedObject();
     
     void initialize();
-    void initBBox(float * _matrix);
+    void initBBox(const float * _matrix);
     
     void addPointer(Pointer * _pointer);
     void deletePointer(Pointer * _pointer);

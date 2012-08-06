@@ -51,6 +51,7 @@ public:
     void pinchDetected(float scale, float velocity);
     void rotationDetected(float radians, float velocity);
     void doubleTapOneFingerDetected(Pointer * _pointer);
+    void oneTapThreeFingerDetected(Pointer * _pointer);
     void swipeRightDetected(Pointer * _pointer);
     void swipeLeftDetected(Pointer * _pointer);
     

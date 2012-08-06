@@ -9,7 +9,7 @@
 #ifndef COMMONSTRUCT_H
 #define COMMONSTRUCT_H
 
-#define CHANNEL_COLOR 3
+#define CHANNEL_COLOR 4
 #define COUNT_COORD 3
 
 /// Enumations
@@ -89,21 +89,16 @@ struct Color {
 static inline Color * MakeColor(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a, int _vertexes)
 {
     Color * color = new Color();
-    color->color = new unsigned char(_vertexes*CHANNEL_COLOR);
+    int total = _vertexes*CHANNEL_COLOR;
+    color->color = new unsigned char(total);
     
-    int index=0;
-    
-    for (int i=0; i<_vertexes ; i++) {
-        index=i*CHANNEL_COLOR;
-        *(color->color+index+0) = _r;
-        *(color->color+index+1) = _g;
-        *(color->color+index+2) = _b;
+    for (int i = 0; i < total; i += 4) {
+		color->color[i]   = _r;
+		color->color[i+1] = _g;
+		color->color[i+2] = _b;
+		color->color[i+3] = _a;
+	}
 
-        if (CHANNEL_COLOR == 4) {
-            *(color->color+index+3) = _a;
-        }
-    }
-    
     return color;
 }
 
