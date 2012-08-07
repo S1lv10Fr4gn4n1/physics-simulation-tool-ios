@@ -3,7 +3,7 @@
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani da Silva on 17/06/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  
 //
 
 #include "World.h"
@@ -13,23 +13,29 @@ using namespace std;
 World::World()
 {
     this->simulatedObjects = new vector<SimulatedObject *>();
-    this->orthoMatrix = MatrixMakeIdentity();
+
+    this->orthoMatrix = new float[16];
+    MatrixTransformIdentity(&this->orthoMatrix);
 }
 
 World::~World()
 {
     if (this->simulatedObjects && this->simulatedObjects->size()>0) {
-        SimulatedObject * simulatedObject = 0;
+        SimulatedObject * simulatedObject = NULL;
         
         for (int i=0; i < this->simulatedObjects->size(); i++) {
             simulatedObject = this->simulatedObjects->at(i);
             this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
             delete simulatedObject;
+            simulatedObject = NULL;
         }
     }
     
     delete this->simulatedObjects;
-    delete this->orthoMatrix;
+    delete [] this->orthoMatrix;
+    
+    this->simulatedObjects = NULL;
+    this->orthoMatrix = NULL;
 }
 
 void World::addSimulatedObject(SimulatedObject * _simulatedObject)
@@ -42,6 +48,7 @@ void World::deleteSimulatedObject(SimulatedObject * _simulatedObject)
     for (int i=0; i < this->simulatedObjects->size(); i++) {
         if (this->simulatedObjects->at(i) == _simulatedObject) {
             delete _simulatedObject;
+            _simulatedObject = NULL;
             this->simulatedObjects->erase(this->simulatedObjects->begin()+i);
             return;
         }
@@ -51,10 +58,11 @@ void World::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 void World::deleteAllSimulatedObject()
 {
     if (this->simulatedObjects && this->simulatedObjects->size()>0) {
-        SimulatedObject * simulatedObject = 0;
+        SimulatedObject * simulatedObject = NULL;
         for (int i=0; i < this->simulatedObjects->size(); i++) {
             simulatedObject = this->simulatedObjects->at(i);
             delete simulatedObject;
+            simulatedObject = NULL;
         }
         this->simulatedObjects->clear();
     }

@@ -3,10 +3,20 @@
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani da Silva on 03/07/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  
 //
 
 #include "Selection.h"
+
+int countObjectsRight = 0;
+unsigned long next = 0;
+float ti = 0;
+float xi = 0;
+Pointer * p1 = NULL;
+Pointer * p2 = NULL;
+Pointer * p1Aux = NULL;
+Pointer * p2Aux = NULL;
+
 
 bool inBBox(SimulatedObject * _simulatedObject, Pointer * _pointer)
 {
@@ -21,22 +31,22 @@ bool inBBox(SimulatedObject * _simulatedObject, Pointer * _pointer)
         result = true;
     }
     
-//    _simulatedObject->initBBox(MATRIX_IDENTITY);
+    //_simulatedObject->initBBox(MATRIX_IDENTITY);
     
     return result;
 }
 
 bool inSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)
-{	    
-	int countObjectsRight = 0;
-	unsigned long next = 0;
-	float ti = 0;
-	float xi = 0;
-	Pointer * p1 = 0;
-	Pointer * p2 = 0;
-	Pointer * p1Aux = 0;
-	Pointer * p2Aux = 0;
-    
+{
+    countObjectsRight = 0;
+	long next = 0;
+	ti = 0;
+	xi = 0;
+	p1 = NULL;
+	p2 = NULL;
+	p1Aux = NULL;
+	p2Aux = NULL;
+
     for (int i=0; i<_simulatedObject->getPointersAux()->size(); i++) {
 		p1Aux = _simulatedObject->getPointersAux()->at(i);
         p1 = MatrixTransformPoint(_simulatedObject->getMatrixTransformation(), p1Aux);
@@ -56,6 +66,8 @@ bool inSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)
         
         delete p1;
         delete p2;
+        p1 = NULL;
+        p2 = NULL;
     }
     
     // if there is an odd number of lines crossing the scanline to 
@@ -69,7 +81,7 @@ bool inSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)
 
 SimulatedObject * Selection::selectSimulatedObject(World * _world, Pointer * _pointer)
 {
-    SimulatedObject * simulatedObject = 0;
+    SimulatedObject * simulatedObject = NULL;
     
     for (int i=0; i<_world->getSimulatedObjects()->size(); i++) {
         simulatedObject = _world->getSimulatedObjects()->at(i);
@@ -79,12 +91,12 @@ SimulatedObject * Selection::selectSimulatedObject(World * _world, Pointer * _po
         }
     }
     
-    return 0;
+    return NULL;
 }
 
 SimulatedObject * Selection::selectBBoxSimulatedObject(World * _world, Pointer * _pointer)
 {
-    SimulatedObject * simulatedObject = 0;
+    SimulatedObject * simulatedObject = NULL;
     
     for (int i=0; i<_world->getSimulatedObjects()->size(); i++) {
         simulatedObject = _world->getSimulatedObjects()->at(i);
@@ -94,6 +106,6 @@ SimulatedObject * Selection::selectBBoxSimulatedObject(World * _world, Pointer *
         }
     }
     
-    return 0;
+    return NULL;
 }
 

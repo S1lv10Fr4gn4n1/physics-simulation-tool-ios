@@ -3,25 +3,29 @@
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani da Silva on 14/06/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  
 //
 
 #include "NDC.h"
 
 NDC::NDC()
 {
-    this->maxWindow = 0;
-    this->minWindow = 0;
-    this->maxOrtho = 0;
-    this->minOrtho = 0;
+    this->maxWindow = NULL;
+    this->minWindow = NULL;
+    this->maxOrtho = NULL;
+    this->minOrtho = NULL;
 }
 
 NDC::~NDC()
 {
-    delete this->maxWindow;
-    delete this->minWindow;
-    delete this->maxOrtho;
-    delete this->minOrtho;
+    delete [] this->maxWindow;
+    delete [] this->minWindow;
+    delete [] this->maxOrtho;
+    delete [] this->minOrtho;
+    this->maxWindow = NULL;
+    this->minWindow = NULL;
+    this->maxOrtho = NULL;
+    this->minOrtho = NULL;
 }
 
 void NDC::calcNDCCoordinates(float * _x, float * _y)
@@ -37,18 +41,18 @@ void NDC::update(float _width, float _height)
     
     this->aspect = fabsf(this->width / this->height);
     
-    if (this->maxOrtho == 0) {
-        this->maxOrtho = MakePointer( 1,  1,  0);
+    if (this->maxOrtho == NULL) {
+        this->maxOrtho = MakePointer(1, 1);
     }
     
-    if (this->minOrtho == 0) {
-        this->minOrtho = MakePointer(-1, -1,  0);
+    if (this->minOrtho == NULL) {
+        this->minOrtho = MakePointer(-1, -1);
     }
     
-    this->maxWindow = MakePointer(this->width, this->height, 0);
+    this->maxWindow = MakePointer(this->width, this->height);
     
-    if (this->minWindow == 0) {
-        this->minWindow = MakePointer( 0,  0,  0);
+    if (this->minWindow == NULL) {
+        this->minWindow = MakePointer(0, 0);
     }
 
     this->setLeft(-this->aspect);

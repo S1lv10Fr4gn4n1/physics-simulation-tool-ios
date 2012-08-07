@@ -21,14 +21,15 @@ static inline float * MatrixMakeIdentity()
     return matrix;
 }
 
-static float * MATRIX_IDENTITY = MatrixMakeIdentity();
+//static float * MatrixIdentity = MatrixMakeIdentity();
 
-static inline void MatrixTransformIdentity(float * matrix) {
+static inline void MatrixTransformIdentity(float ** matrix) {
+    
     for (int i = 0; i < 16; i++) {
-		matrix[i] = 0.0f;
+		*(*matrix+i) = 0.0f;
 	}
 	
-	matrix[0] = matrix[5] = matrix[10] = matrix[15] = 1.0;
+	*(*matrix+0) = *(*matrix+5) = *(*matrix+10) = *(*matrix+15) = 1.0;
 }
 
 static inline float * MatrixMultiply(float * _matrixLeft, float * _matrixRight)
@@ -134,20 +135,19 @@ static inline float * MatrixMakeZRotation(float radians)
     return matrix;
 }
 
-// method responsible for transforming an original point to a point resulting from the transformation
-static inline Pointer * MatrixTransformPoint(float * matrix, const Pointer * _point)
+static inline Pointer * MatrixTransformPoint(const float * matrix, const Pointer * _pointer)
 {
-	float x = matrix[0] * _point->x + matrix[4] * _point->y + matrix[8]  * _point->z + matrix[12] * _point->w;
-	float y = matrix[1] * _point->x + matrix[5] * _point->y + matrix[9]  * _point->z + matrix[13] * _point->w;
-	float z = matrix[2] * _point->x + matrix[6] * _point->y + matrix[10] * _point->z + matrix[14] * _point->w;
-	float w = matrix[3] * _point->x + matrix[7] * _point->y + matrix[11] * _point->z + matrix[15] * _point->w;
-
+	float x = matrix[0] * _pointer->x + matrix[4] * _pointer->y + matrix[8]  * _pointer->z + matrix[12] * _pointer->w;
+	float y = matrix[1] * _pointer->x + matrix[5] * _pointer->y + matrix[9]  * _pointer->z + matrix[13] * _pointer->w;
+	float z = matrix[2] * _pointer->x + matrix[6] * _pointer->y + matrix[10] * _pointer->z + matrix[14] * _pointer->w;
+	float w = matrix[3] * _pointer->x + matrix[7] * _pointer->y + matrix[11] * _pointer->z + matrix[15] * _pointer->w;
+    
 	return MakePointer(x, y, z, w);
 }
 
 static inline void MatrixOrtho(float * matrix, float left, float right, float bottom, float top, float nearZ, float farZ)
 {
-    MatrixTransformIdentity(matrix);
+    MatrixTransformIdentity(&matrix);
     
     float ral = right + left;
     float rsl = right - left;

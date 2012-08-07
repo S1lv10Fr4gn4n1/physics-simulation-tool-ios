@@ -3,7 +3,7 @@
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani da Silva on 17/06/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  
 //
 
 #ifndef COMMONSTRUCT_H
@@ -24,12 +24,49 @@ enum TypeObject {
     ENGINE
 };
 
-/// Struct Pointer
+//class Pointer {
+//public:
+//    float x, y, z, w;
+//    Pointer() {};
+//};
+
 struct Pointer {
     float x;
     float y;
     float z;
     float w;
+};
+
+struct Color {
+    unsigned char r, g, b, a;
+};
+
+struct BBox {
+    Pointer * min;
+    Pointer * max;
+    float * p;
+    
+    BBox() {
+        this->min = new Pointer();
+        this->max = new Pointer();
+        this->p = NULL;
+    }
+    ~BBox() {
+        delete this->min;
+        delete this->max;
+        delete [] this->p;
+        this->min = NULL;
+        this->max = NULL;
+        this->p = NULL;
+    }
+};
+
+struct PhysicalFeature {
+    float mass;
+    float volume;
+    float density;
+    float acceleration;
+    float speed;
 };
 
 static inline Pointer * MakePointer(float _x, float _y, float _z, float _w)
@@ -53,22 +90,6 @@ static inline Pointer * MakePointer(float _x, float _y)
     return MakePointer(_x, _y, 0.0f, 1.0f);
 }
 
-/// Struct Pointers
-struct Pointers {
-    float * p;
-    unsigned int count;
-};
-
-
-/// Struct PhysicalFeature
-struct PhysicalFeature {
-    float mass;
-    float volume;
-    float density;
-    float acceleration;
-    float speed;
-};
-
 static inline PhysicalFeature * MakePhysicalFeature(float _mass, float _volume, float _density, float _acceleration, float _speed)
 {
     PhysicalFeature * pf = new PhysicalFeature();
@@ -81,43 +102,15 @@ static inline PhysicalFeature * MakePhysicalFeature(float _mass, float _volume, 
     return pf;
 }
 
-/// Struct Color
-struct Color {
-    unsigned char * color;
-};
-
-static inline Color * MakeColor(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a, int _vertexes)
+static inline Color * MakeColor(float _r, float _g, float _b, float _a)
 {
     Color * color = new Color();
-    int total = _vertexes*CHANNEL_COLOR;
-    color->color = new unsigned char(total);
+    color->r = _r;
+    color->g = _g;
+    color->b = _b;
+    color->a = _a;
     
-    for (int i = 0; i < total; i += 4) {
-		color->color[i]   = _r;
-		color->color[i+1] = _g;
-		color->color[i+2] = _b;
-		color->color[i+3] = _a;
-	}
-
     return color;
 }
-
-struct BBox {
-    Pointer * min;
-    Pointer * max;
-    
-    Pointers * pointers;
-    
-    BBox() {
-        min = new Pointer();
-        max = new Pointer();
-        pointers = new Pointers();
-    }
-    ~BBox() {
-        delete min;
-        delete max;
-        delete pointers;
-    }
-};
 
 #endif

@@ -3,7 +3,7 @@
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani da Silva on 17/06/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  
 //
 
 #ifndef SIMULATEDOBJECT_H
@@ -15,10 +15,11 @@
 
 class SimulatedObject {
 private:
-    Pointers * pointers;
+    float * pointers;
     std::vector<Pointer *> * pointersAux;
     PhysicalFeature * physicalFeature;
-    Color * color;
+    unsigned char * color;
+    Color * colorAux;
     unsigned int mode; // GLenum
     std::vector<SimulatedObject *> * joinsSimulatedObject;
     BBox * bbox;
@@ -28,6 +29,8 @@ private:
     bool selected;
     
     void makePointers();
+    void makeColor();
+    void makeBBox();
 protected:
     
 public:
@@ -35,17 +38,19 @@ public:
     ~SimulatedObject();
     
     void initialize();
-    void initBBox(const float * _matrix);
+    void initBBox(float * _matrix);
     
     void addPointer(Pointer * _pointer);
     void deletePointer(Pointer * _pointer);
     void addAllPointers(std::vector<Pointer *> * _pointers);
-    Pointers * getPointers();
-    
+    float * getPointers();
+
     std::vector<Pointer *> * getPointersAux();
 
-    Color * getColor();
-    void setColor(Color * _color);
+    unsigned char * getColor();
+    
+    void setColorAux(Color * _color);
+    Color * getColorAux();
     
     PhysicalFeature * getPhysicalFeature();
     void setPhysicalFeature(PhysicalFeature * _physicalFeature);
@@ -64,7 +69,6 @@ public:
     
     float * getMatrixTransformation();
     void setMatrixTransformation(float * _matrix);
-    
 };
 
 #endif

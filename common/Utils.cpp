@@ -3,7 +3,7 @@
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani on 14/07/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  
 //
 
 #include "Utils.h"

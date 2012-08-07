@@ -20,6 +20,8 @@ MainEngine::~MainEngine()
 { 
     delete this->world;
     delete this->ndc;
+    this->world = NULL;
+    this->ndc = NULL;
 }
 
 void MainEngine::start()
@@ -95,13 +97,25 @@ void MainEngine::centralizedWorld()
 
 void MainEngine::scaleSimulatedObject(SimulatedObject * _simulatedObject, float _scale)
 {
-    _simulatedObject->setMatrixTransformation(MatrixMultiply(_simulatedObject->getMatrixTransformation(), MatrixMakeScale(_scale, _scale)));
+    float * matrixScale = MatrixMakeScale(_scale, _scale);
+    float * matrix = MatrixMultiply(_simulatedObject->getMatrixTransformation(), matrixScale);
+    _simulatedObject->setMatrixTransformation(matrix);
+    
+    delete [] matrixScale;
+    matrixScale = NULL;
+    matrix = NULL;
 }
 
 void MainEngine::rotateSimulatedObject(SimulatedObject * _simulatedObject, float _radians)
 {
     float teta = -(M_PI * _radians) / 180.0;
-    _simulatedObject->setMatrixTransformation(MatrixMultiply(_simulatedObject->getMatrixTransformation(), MatrixMakeZRotation(teta)));
+    float * matrixRotation = MatrixMakeZRotation(teta);
+    float * matrix = MatrixMultiply(_simulatedObject->getMatrixTransformation(), matrixRotation);
+    _simulatedObject->setMatrixTransformation(matrix);
+    
+    delete [] matrixRotation;
+    matrixRotation = NULL;
+    matrix = NULL;
 }
 
 void MainEngine::translateSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)

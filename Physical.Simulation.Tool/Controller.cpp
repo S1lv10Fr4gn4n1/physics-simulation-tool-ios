@@ -3,7 +3,7 @@
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani on 14/07/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  
 //
 
 #include "Controller.h"
@@ -12,10 +12,10 @@ Controller * Controller::controller;
 
 Controller::Controller()
 {
-    this->mainEngine = 0;
-    this->mainGraphic = 0;
-    this->objectEdition = 0;
-    this->objectOffset = 0;
+    this->mainEngine = NULL;
+    this->mainGraphic = NULL;
+    this->objectEdition = NULL;
+    this->objectOffset = NULL;
 }
 
 Controller::~Controller()
@@ -37,18 +37,22 @@ void Controller::freeObjects()
 {
     if (this->mainGraphic) {
         delete this->mainGraphic;
+        this->mainGraphic = NULL;
     }
     
     if (this->mainEngine) {
         delete this->mainEngine;
+        this->mainEngine = NULL;
     }
     
     if (this->objectEdition) {
         delete this->objectEdition;
+        this->objectEdition = NULL;
     }
 
     if (this->objectOffset) {
         delete this->objectOffset;
+        this->objectOffset = NULL;
     }
 }
 
@@ -95,8 +99,10 @@ void Controller::updateInformation()
 void Controller::clearSimularion()
 {
     this->mainEngine->deleteAllSimulatedObjects();
-    this->objectEdition = 0;
-    this->objectOffset = 0;
+    this->objectEdition = NULL;
+    this->objectOffset = NULL;
+    this->objectEdition = NULL;
+    this->objectOffset = NULL;
 }
 
 void Controller::draw()
@@ -132,37 +138,40 @@ bool Controller::isInitialized()
     return false;
 }
 
-void Controller::touchesBegan(Pointer * _pointer)
+void Controller::touchesBegan(float _x, float _y)
 {
     // TODO
 }
 
-void Controller::touchesEnded(Pointer * _pointer)
+void Controller::touchesEnded(float _x, float _y)
 {
     // TODO
 }
 
-void Controller::touchesCancelled(Pointer * _pointer)
+void Controller::touchesCancelled(float _x, float _y)
 {
     // TODO
 }
 
-void Controller::touchesMoved(Pointer * _pointer)
+void Controller::touchesMoved(float _x, float _y)
 {
-    this->objectOffset = this->mainEngine->selectedSimulatedObject(_pointer);
+    Pointer * pointer = MakePointer(_x, _y);
+    this->objectOffset = this->mainEngine->selectedSimulatedObject(pointer);
     
     if (this->objectOffset) {
         if (this->objectEdition) {
             this->objectEdition->setSelected(false);
-            this->objectEdition = 0;
+            this->objectEdition = NULL;
         }
         
-        this->mainEngine->translateSimulatedObject(this->objectOffset, _pointer);
+        this->mainEngine->translateSimulatedObject(this->objectOffset, pointer);
     }
 //    } else {
 //        // move scene
 //        this->mainEngine->pan(_pointer);
 //    }
+    delete pointer;
+    pointer = NULL;
 }
 
 void Controller::pinchDetected(float _scale, float _velocity)
@@ -181,35 +190,40 @@ void Controller::rotationDetected(float _radians, float _velocity)
     }
 }
 
-void Controller::doubleTapOneFingerDetected(Pointer * _pointer)
+void Controller::doubleTapOneFingerDetected(float _x, float _y)
 {
-    this->objectEdition = this->mainEngine->selectedSimulatedObject(_pointer);
+    Pointer * pointer = MakePointer(_x, _y);
+    
+    this->objectEdition = this->mainEngine->selectedSimulatedObject(pointer);
     
     if (this->objectEdition) {
         if (this->objectEdition->isSelected()) {
             this->objectEdition->setSelected(false);
-            this->objectEdition = 0;
+            this->objectEdition = NULL;
         } else {
             this->objectEdition->setSelected(true);
         }
     }
+    
+    delete pointer;
+    pointer = NULL;
 }
 
-void Controller::longPressDetected(Pointer * _pointer)
+void Controller::longPressDetected(float _x, float _y)
 {
     // TODO
 }
 
-void Controller::swipeRightDetected(Pointer * _pointer)
+void Controller::swipeRightDetected(float _x, float _y)
 {
     // TODO
 }
-void Controller::swipeLeftDetected(Pointer * _pointer)
+void Controller::swipeLeftDetected(float _x, float _y)
 {
     // TODO
 }
 
-void Controller::oneTapThreeFingerDetected(Pointer * _pointer)
+void Controller::oneTapThreeFingerDetected(float _x, float _y)
 {
     //this->mainEngine->centralizedWorld();
 }
@@ -221,8 +235,8 @@ void Controller::createSimulatedObject(TypeObject typeObject)
     }
     
     SimulatedObject * object = new SimulatedObject();
-    object->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
-    object->setMatrixTransformation(MatrixMakeIdentity());
+// TODO    object->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
+    object->setColorAux(MakeColor(255, 255, 255, 1));
     object->setMode(GL_LINE_LOOP);
     
     switch (typeObject) {
@@ -245,14 +259,17 @@ void Controller::createSimulatedObject(TypeObject typeObject)
             
             /// generates points to create the circle, these points are stored
             /// to be subsequently used in the algorithm scanline
-            int ang = 0;
-            for (int i=0; i<36; i++) {
-                x1 = (radius * cos(M_PI * ang / 180.0f));
-                y1 = (radius * sin(M_PI * ang / 180.0f));
+            for (int i=0; i<360; i++) {
+                x1 = (radius * cos(M_PI * i / 180.0f));
+                y1 = (radius * sin(M_PI * i / 180.0f));
                 
-                object->addPointer(MakePointer(x1 + p1->x, y1 + p1->y, 0.0));
-                ang += 10;
+                object->addPointer(MakePointer(x1 + p1->x, y1 + p1->y));
             }
+            
+            delete p1;
+            delete p2;
+            p1 = NULL;
+            p2 = NULL;
             
             break;
         }   
@@ -292,13 +309,6 @@ void Controller::createSimulatedObject(TypeObject typeObject)
         default:
             break;            
     }
-    
-    object->setColor(MakeColor(0, 0, 255, 1, object->getPointersAux()->size()));
-//    int totalPoints = object->getPointersAux()->size() * 4;
-//    Color * color = object->getColor();
-//    for (int i=0; i<totalPoints; i++) {
-//        printf("index: %u, value: %u\n", i, *(color->color+i));
-//    }
-    
+
     this->mainEngine->addSimulatedObjectInWorld(object);
 }

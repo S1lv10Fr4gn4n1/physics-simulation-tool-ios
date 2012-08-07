@@ -3,7 +3,7 @@
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani on 14/07/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  
 //
 
 #ifndef CONTROLLER_H
@@ -43,17 +43,17 @@ public:
     
     void createSimulatedObject(TypeObject typeObject);
     
-    void touchesMoved(Pointer * _pointer);
-    void touchesBegan(Pointer * _pointer);
-    void touchesEnded(Pointer * _pointer);
-    void touchesCancelled(Pointer * _pointer);
-    void longPressDetected(Pointer * _pointer);
+    void touchesMoved(float _x, float _y);
+    void touchesBegan(float _x, float _y);
+    void touchesEnded(float _x, float _y);
+    void touchesCancelled(float _x, float _y);
+    void longPressDetected(float _x, float _y);
     void pinchDetected(float scale, float velocity);
     void rotationDetected(float radians, float velocity);
-    void doubleTapOneFingerDetected(Pointer * _pointer);
-    void oneTapThreeFingerDetected(Pointer * _pointer);
-    void swipeRightDetected(Pointer * _pointer);
-    void swipeLeftDetected(Pointer * _pointer);
+    void doubleTapOneFingerDetected(float _x, float _y);
+    void oneTapThreeFingerDetected(float _x, float _y);
+    void swipeRightDetected(float _x, float _y);
+    void swipeLeftDetected(float _x, float _y);
     
     static Controller * getInstance();
 };

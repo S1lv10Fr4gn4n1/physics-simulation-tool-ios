@@ -3,7 +3,7 @@
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani da Silva on 11/06/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  
 //
 
 #import "SimulationViewController.h"
@@ -136,37 +136,37 @@ static EAGLContext * context;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint p = [[touches anyObject] locationInView: self.view];
-    Controller::getInstance()->touchesBegan(MakePointer(p.x, p.y));
+    Controller::getInstance()->touchesBegan(p.x, p.y);
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint p = [[touches anyObject] locationInView: self.view];
-    Controller::getInstance()->touchesCancelled(MakePointer(p.x, p.y));
+    Controller::getInstance()->touchesCancelled(p.x, p.y);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint p = [[touches anyObject] locationInView: self.view];
-    Controller::getInstance()->touchesEnded(MakePointer(p.x, p.y));
+    Controller::getInstance()->touchesEnded(p.x, p.y);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint p = [[touches anyObject] locationInView: self.view];
-    Controller::getInstance()->touchesMoved(MakePointer(p.x, p.y));
+    Controller::getInstance()->touchesMoved(p.x, p.y);
 }
 
 - (IBAction)longPressDetected:(UIGestureRecognizer *)sender
 {
     CGPoint p = [sender locationInView:sender.view];
-    Controller::getInstance()->longPressDetected(MakePointer(p.x, p.y));
+    Controller::getInstance()->longPressDetected(p.x, p.y);
 }
 
 - (IBAction)oneTapThreeFingerDetected:(UIGestureRecognizer *)sender
 {
     CGPoint p = [sender locationInView:sender.view];
-    Controller::getInstance()->oneTapThreeFingerDetected(MakePointer(p.x, p.y));
+    Controller::getInstance()->oneTapThreeFingerDetected(p.x, p.y);
 }
 
 //- (IBAction)swipeRightDetected:(UIGestureRecognizer *)sender
@@ -192,7 +192,7 @@ static EAGLContext * context;
 - (IBAction)doubleTapOneFingerDetected:(UIGestureRecognizer *)sender
 {
     CGPoint cgPoint = [sender locationInView:sender.view];    
-    Controller::getInstance()->doubleTapOneFingerDetected(MakePointer(cgPoint.x, cgPoint.y, 0));
+    Controller::getInstance()->doubleTapOneFingerDetected(cgPoint.x, cgPoint.y);
 }
 
 - (IBAction)pinchDetected:(UIGestureRecognizer *)sender

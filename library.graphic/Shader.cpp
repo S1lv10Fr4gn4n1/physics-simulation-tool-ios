@@ -3,7 +3,7 @@
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani da Silva on 10/06/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  
 //
 
 #include "Shader.h"
@@ -27,7 +27,7 @@ using namespace std;
 
 Shader::Shader(const char * _vertShaderSource, const char * _fragShaderSource, const char * _geomShaderSource)
 {
-    mapGLSLVars = new map<string, GLuint>();
+    this->mapGLSLVars = new map<string, GLuint>();
     
     this->vertShaderSource = _vertShaderSource ? _vertShaderSource : defaultVertexShader;  
     this->fragShaderSource = _fragShaderSource ? _fragShaderSource : defaultFragmentShader;
@@ -38,8 +38,9 @@ Shader::~Shader()
 {
     glDeleteProgram(this->program);
     
-    mapGLSLVars->clear();
-    delete mapGLSLVars;
+    this->mapGLSLVars->clear();
+    delete this->mapGLSLVars;
+    this->mapGLSLVars = NULL;
 }
 
 #pragma mark -  OpenGL ES 2 shader compilation
@@ -99,8 +100,8 @@ bool Shader::loadShaders()
         return false;
     }
 
-    mapGLSLVars->insert(std::pair<string, GLuint>(UNIFORM_MODELVIEWPROJECTION_MATRIX, glGetUniformLocation(this->program, "modelViewProjectionMatrix")));
-    mapGLSLVars->insert(std::pair<string, GLuint>(UNIFORM_ORTHO_MATRIX, glGetUniformLocation(this->program, "orthoMatrix")));
+    this->mapGLSLVars->insert(std::pair<string, GLuint>(UNIFORM_MODELVIEWPROJECTION_MATRIX, glGetUniformLocation(this->program, "modelViewProjectionMatrix")));
+    this->mapGLSLVars->insert(std::pair<string, GLuint>(UNIFORM_ORTHO_MATRIX, glGetUniformLocation(this->program, "orthoMatrix")));
     
     // Release vertex and fragment shaders.
     if (vertShader) {
@@ -202,14 +203,14 @@ GLuint Shader::getProgram()
 
 GLuint Shader::getVar(std::string _var)
 {
-    if (!mapGLSLVars) {
+    if (!this->mapGLSLVars) {
         return -1;
     }
 
     map<string, GLuint>::iterator iter;
     
-    iter = mapGLSLVars->find(_var);
-    if (iter != mapGLSLVars->end()) {
+    iter = this->mapGLSLVars->find(_var);
+    if (iter != this->mapGLSLVars->end()) {
         return iter->second;
     }
     
