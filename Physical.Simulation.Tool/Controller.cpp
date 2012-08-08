@@ -10,6 +10,12 @@
 
 Controller * Controller::controller;
 
+float previousRadians = 0.0f;
+float scaleObject = 1.0f;
+float scaleZoom = 1.0f;
+float previousZoom = 0.0f;
+float previousScale = 0.0f;
+
 Controller::Controller()
 {
     this->mainEngine = NULL;
@@ -174,20 +180,52 @@ void Controller::touchesMoved(float _x, float _y)
     pointer = NULL;
 }
 
-void Controller::pinchDetected(float _scale, float _velocity)
+void Controller::pinchDetected(float _scale, float _velocity, bool began)
 {
     if (this->objectEdition && this->objectEdition->isSelected()) {
-        this->mainEngine->scaleSimulatedObject(this->objectEdition, _scale);
+        if (began) {
+            scaleObject = 1.0f;
+            previousScale = 0.0;
+        }
+         
+        if ((_scale - previousScale) < 0.0f) {
+            scaleObject-=0.0005f;
+        } else {
+            scaleObject+=0.0005f;
+        }
+        this->mainEngine->scaleSimulatedObject(this->objectEdition, scaleObject);
+        previousScale = _scale;
     } else {
-        this->mainEngine->zoom(_scale);
+        if ((_scale - previousZoom) < 0.0f) {
+            scaleZoom+=0.03f;
+        } else {
+            scaleZoom-=0.03f;
+        }
+        // limit zoom in
+        if (scaleZoom >= 3.0f){
+            scaleZoom = 3.0f;
+            return;
+        }
+        // limit zoom out
+        if (scaleZoom <= 0.1f) {
+            scaleZoom = 0.1f;
+            return;
+        }
+        this->mainEngine->zoom(scaleZoom);
+        previousZoom = _scale;
     }
 }
 
-void Controller::rotationDetected(float _radians, float _velocity)
+void Controller::rotationDetected(float _radians, float _velocity, bool began)
 {
-    if (this->objectEdition && this->objectEdition->isSelected()) {
-        this->mainEngine->rotateSimulatedObject(this->objectEdition, _radians);
+    if (began) {
+        previousRadians = 0.0f;
     }
+  
+    if (this->objectEdition && this->objectEdition->isSelected()) {
+        this->mainEngine->rotateSimulatedObject(this->objectEdition, previousRadians < _radians ? -0.03 : 0.03);
+    }
+    previousRadians = _radians;
 }
 
 void Controller::doubleTapOneFingerDetected(float _x, float _y)
@@ -225,7 +263,8 @@ void Controller::swipeLeftDetected(float _x, float _y)
 
 void Controller::oneTapThreeFingerDetected(float _x, float _y)
 {
-    //this->mainEngine->centralizedWorld();
+    this->mainEngine->centralizedWorld();
+    scaleZoom = 1.0f;
 }
 
 void Controller::createSimulatedObject(TypeObject typeObject)
@@ -235,80 +274,9 @@ void Controller::createSimulatedObject(TypeObject typeObject)
     }
     
     SimulatedObject * object = new SimulatedObject();
-// TODO    object->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
-    object->setColorAux(MakeColor(255, 255, 255, 1));
-    object->setMode(GL_LINE_LOOP);
+    object->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
+    object->setColorAux(MakeRandonColor());
+    object->setMode(GL_TRIANGLE_FAN);
     
-    switch (typeObject) {
-        case CIRCLE:
-        {
-            // calculates the radius
-            // takes the first point, which indicates the origin of the circle
-            Pointer * p1 = MakePointer( 0.0, 0.0);
-            Pointer * p2 = MakePointer( 0.0, 0.052083);
-            
-            float x = p2->x - p1->x;
-            float y = p2->y - p1->y;
-            
-            /// d²=(x0-x)²+(y0-y)²
-            float d = (x*x) + (y*y);
-            float radius = pow(d, 0.5);
-            
-            float x1;
-            float y1;
-            
-            /// generates points to create the circle, these points are stored
-            /// to be subsequently used in the algorithm scanline
-            for (int i=0; i<360; i++) {
-                x1 = (radius * cos(M_PI * i / 180.0f));
-                y1 = (radius * sin(M_PI * i / 180.0f));
-                
-                object->addPointer(MakePointer(x1 + p1->x, y1 + p1->y));
-            }
-            
-            delete p1;
-            delete p2;
-            p1 = NULL;
-            p2 = NULL;
-            
-            break;
-        }   
-            
-        case SQUARE:
-        {
-            object->addPointer(MakePointer( -0.052083, -0.052083));
-            object->addPointer(MakePointer(  0.052083, -0.052083));
-            object->addPointer(MakePointer(  0.052083,  0.052083));
-            object->addPointer(MakePointer( -0.052083,  0.052083));
-            break;
-        }
-            
-        case TRIANGLE:
-        {
-            object->addPointer(MakePointer(  0.000000,  0.052083));
-            object->addPointer(MakePointer( -0.052083, -0.052083));
-            object->addPointer(MakePointer(  0.052083, -0.052083));
-            break;
-        }
-            
-        case ENGINE:
-            break;
-            
-        case STRING:
-            break;
-        
-        case SPRINGS:
-            break;
-        
-        case POLYGON_OPEN:
-            break;
-        
-        case POLYGON_CLOSE:
-            break;
-            
-        default:
-            break;            
-    }
-
-    this->mainEngine->addSimulatedObjectInWorld(object);
+    this->mainEngine->makeSimulatedObject(object, typeObject);
 }

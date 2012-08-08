@@ -63,7 +63,7 @@ void MainEngine::zoom(float _scale)
     this->ndc->setRight(value);
     this->ndc->setBottom(-_scale);
     this->ndc->setTop(_scale);
-
+    
     MatrixOrtho(this->world->getOrthoMatrix(),
                 this->ndc->getLeft(),
                 this->ndc->getRight(),
@@ -108,8 +108,8 @@ void MainEngine::scaleSimulatedObject(SimulatedObject * _simulatedObject, float 
 
 void MainEngine::rotateSimulatedObject(SimulatedObject * _simulatedObject, float _radians)
 {
-    float teta = -(M_PI * _radians) / 180.0;
-    float * matrixRotation = MatrixMakeZRotation(teta);
+//    float teta = (M_PI * _radians) / 180.0;
+    float * matrixRotation = MatrixMakeZRotation(_radians);
     float * matrix = MatrixMultiply(_simulatedObject->getMatrixTransformation(), matrixRotation);
     _simulatedObject->setMatrixTransformation(matrix);
     
@@ -128,22 +128,10 @@ World * MainEngine::getWorld()
     return this->world;
 }
 
-void MainEngine::addSimulatedObjectInWorld(SimulatedObject * _simulatedObject)
-{
-    _simulatedObject->initialize();    
-    
-    this->world->addSimulatedObject(_simulatedObject);
-}
-
 SimulatedObject * MainEngine::selectedSimulatedObject(Pointer * _pointer)
 {
     this->ndc->calcNDCCoordinates(&_pointer->x, &_pointer->y);
     return Selection::selectSimulatedObject(this->world, _pointer);
-}
-
-SimulatedObject * MainEngine::selectedBBoxSimulatedObject(Pointer * _pointer)
-{
-    return Selection::selectBBoxSimulatedObject(this->world, _pointer);
 }
 
 void MainEngine::deleteAllSimulatedObjects()
@@ -154,4 +142,93 @@ void MainEngine::deleteAllSimulatedObjects()
 void MainEngine::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
     this->world->deleteSimulatedObject(_simulatedObject);
+}
+
+void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObject typeObject)
+{
+    switch (typeObject) {
+        case CIRCLE:
+        {
+            // calculates the radius
+            // takes the first point, which indicates the origin of the circle
+            Pointer * p1 = MakePointer( 0.0, 0.0);
+            Pointer * p2 = MakePointer( 0.0, 0.052083);
+            
+            float x = p2->x - p1->x;
+            float y = p2->y - p1->y;
+            
+            /// d²=(x0-x)²+(y0-y)²
+            float d = (x*x) + (y*y);
+            float radius = pow(d, 0.5);
+            
+            float x1;
+            float y1;
+            
+            /// generates points to create the circle, these points are stored
+            /// to be subsequently used in the algorithm scanline
+            for (int i=0; i<360; i++) {
+                x1 = (radius * cos(M_PI * i / 180.0f));
+                y1 = (radius * sin(M_PI * i / 180.0f));
+                
+                _simulatedObject->addPointer(MakePointer(x1 + p1->x, y1 + p1->y));
+            }
+            
+            delete p1;
+            delete p2;
+            p1 = NULL;
+            p2 = NULL;
+            
+            break;
+        }
+            
+        case SQUARE:
+        {
+            _simulatedObject->addPointer(MakePointer( -0.052083, -0.052083));
+            _simulatedObject->addPointer(MakePointer(  0.052083, -0.052083));
+            _simulatedObject->addPointer(MakePointer(  0.052083,  0.052083));
+            _simulatedObject->addPointer(MakePointer( -0.052083,  0.052083));
+            break;
+        }
+            
+        case TRIANGLE:
+        {
+            _simulatedObject->addPointer(MakePointer(  0.000000,  0.052083));
+            _simulatedObject->addPointer(MakePointer( -0.052083, -0.052083));
+            _simulatedObject->addPointer(MakePointer(  0.052083, -0.052083));
+            break;
+        }
+            
+        case PLAN:
+        {
+            //left: -3.960000, right: 3.960000, bottom: -2.970000, top: 2.970000
+            _simulatedObject->setMode(GL_POINTS);
+            _simulatedObject->setColorAux(MakeColor(255, 0, 0, 1));
+            _simulatedObject->addPointer(MakePointer(-3.960000, -2.970000));
+            _simulatedObject->addPointer(MakePointer(3.960000, -2.970000));
+            _simulatedObject->addPointer(MakePointer(-3.960000, 2.970000));
+            _simulatedObject->addPointer(MakePointer(3.960000, 2.970000));
+            break;
+        }
+            
+        case ENGINE:
+            break;
+            
+        case STRING:
+            break;
+            
+        case SPRINGS:
+            break;
+            
+        case POLYGON_OPEN:
+            break;
+            
+        case POLYGON_CLOSE:
+            break;
+            
+        default:
+            break;
+    }
+    
+    _simulatedObject->initialize();
+    this->world->addSimulatedObject(_simulatedObject);
 }

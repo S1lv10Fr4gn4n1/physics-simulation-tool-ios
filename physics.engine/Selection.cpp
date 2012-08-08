@@ -93,19 +93,3 @@ SimulatedObject * Selection::selectSimulatedObject(World * _world, Pointer * _po
     
     return NULL;
 }
-
-SimulatedObject * Selection::selectBBoxSimulatedObject(World * _world, Pointer * _pointer)
-{
-    SimulatedObject * simulatedObject = NULL;
-    
-    for (int i=0; i<_world->getSimulatedObjects()->size(); i++) {
-        simulatedObject = _world->getSimulatedObjects()->at(i);
-        
-        if (inBBox(simulatedObject, _pointer)) {
-            return simulatedObject;
-        }
-    }
-    
-    return NULL;
-}
-

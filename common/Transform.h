@@ -9,6 +9,8 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
+#include <math.h>
+
 static inline float * MatrixMakeIdentity()
 {
     float * matrix = new float[16];

@@ -48,8 +48,8 @@ public:
     void touchesEnded(float _x, float _y);
     void touchesCancelled(float _x, float _y);
     void longPressDetected(float _x, float _y);
-    void pinchDetected(float scale, float velocity);
-    void rotationDetected(float radians, float velocity);
+    void pinchDetected(float scale, float velocity, bool began);
+    void rotationDetected(float radians, float velocity, bool began);
     void doubleTapOneFingerDetected(float _x, float _y);
     void oneTapThreeFingerDetected(float _x, float _y);
     void swipeRightDetected(float _x, float _y);

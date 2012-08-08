@@ -202,23 +202,23 @@ void SimulatedObject::makeColor()
 
 void SimulatedObject::makeBBox()
 {
-    if (this->bbox->p) {
-        delete [] this->bbox->p;
-        this->bbox->p = NULL;
+    if (this->bbox->ptr) {
+        delete [] this->bbox->ptr;
+        this->bbox->ptr = NULL;
     }
-    this->bbox->p = new float[12];
-    *(this->bbox->p+0) = this->bbox->min->x;
-    *(this->bbox->p+1) = this->bbox->max->y;
-    *(this->bbox->p+2) = 0.0f;
-    *(this->bbox->p+3) = this->bbox->max->x;
-    *(this->bbox->p+4) = this->bbox->max->y;
-    *(this->bbox->p+5) = 0.0f;
-    *(this->bbox->p+6) = this->bbox->max->x;
-    *(this->bbox->p+7) = this->bbox->min->y;
-    *(this->bbox->p+8) = 0.0f;
-    *(this->bbox->p+9) = this->bbox->min->x;
-    *(this->bbox->p+10) = this->bbox->min->y;
-    *(this->bbox->p+11) = 0.0f;
+    this->bbox->ptr = new float[12];
+    *(this->bbox->ptr+0) = this->bbox->min->x;
+    *(this->bbox->ptr+1) = this->bbox->max->y;
+    *(this->bbox->ptr+2) = 0.0f;
+    *(this->bbox->ptr+3) = this->bbox->max->x;
+    *(this->bbox->ptr+4) = this->bbox->max->y;
+    *(this->bbox->ptr+5) = 0.0f;
+    *(this->bbox->ptr+6) = this->bbox->max->x;
+    *(this->bbox->ptr+7) = this->bbox->min->y;
+    *(this->bbox->ptr+8) = 0.0f;
+    *(this->bbox->ptr+9) = this->bbox->min->x;
+    *(this->bbox->ptr+10) = this->bbox->min->y;
+    *(this->bbox->ptr+11) = 0.0f;
 
 }
 

@@ -78,11 +78,11 @@ void MainGraphic::MainGraphic::draw(World * _world)
         
         if (this->simulatedObjectDrawn->isShowBBox()) {
             // define color for points
-            glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, this->simulatedObjectDrawn->getColor());
+            glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, this->simulatedObjectDrawn->getBBox()->color);
             glEnableVertexAttribArray(ATTRIB_COLOR);
 
             // Update attribute values.
-            glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getBBox()->p);
+            glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getBBox()->ptr);
             glEnableVertexAttribArray(ATTRIB_VERTEX);
             
             glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation());

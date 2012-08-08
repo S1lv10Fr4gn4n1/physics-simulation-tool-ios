@@ -51,4 +51,9 @@
 {
     Controller::getInstance()->clearSimularion();
 }
+
+- (IBAction)actionSurfaceScene:(id)sender
+{
+    Controller::getInstance()->createSimulatedObject(PLAN);
+}
 @end

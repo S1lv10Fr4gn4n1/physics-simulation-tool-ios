@@ -22,4 +22,5 @@
 
 - (IBAction)actionClearSimulation:(id)sender;
 
+- (IBAction)actionSurfaceScene:(id)sender;
 @end

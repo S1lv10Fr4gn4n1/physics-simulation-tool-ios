@@ -30,25 +30,24 @@ public:
     bool isRunning();
     
     void updateInformation();
-    void rotatedScreen(float _width, float _height);
-    
-    void addSimulatedObjectInWorld(SimulatedObject * _simulatedObject);
-    void deleteAllSimulatedObjects();
-    void deleteSimulatedObject(SimulatedObject * _simulatedObject);
     
     // WORLD
+    World * getWorld();
     void zoom(float _scale);
     void pan(Pointer * _pointer);
     void centralizedWorld();
-    World * getWorld();
+    void rotatedScreen(float _width, float _height);
     
     // SIMULATED OBJECT
     void scaleSimulatedObject(SimulatedObject * _simulatedObject, float _scale);
     void rotateSimulatedObject(SimulatedObject * _simulatedObject, float _radians);
     void translateSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer);
+
+    void deleteAllSimulatedObjects();
+    void deleteSimulatedObject(SimulatedObject * _simulatedObject);
+    void makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObject typeObject);
     
     SimulatedObject * selectedSimulatedObject(Pointer * _pointer);
-    SimulatedObject * selectedBBoxSimulatedObject(Pointer * _pointer);
 };
 
 #endif

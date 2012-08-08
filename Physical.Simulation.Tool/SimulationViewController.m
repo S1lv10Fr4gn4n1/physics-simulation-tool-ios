@@ -126,11 +126,11 @@ static EAGLContext * context;
 //    UISwipeGestureRecognizer *swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeLeftDetected:)];
 //    swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
 //    [view addGestureRecognizer:swipeLeftRecognizer];
-//    
-//    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressDetected:)];
-//    longPressRecognizer.minimumPressDuration = 2;
-//    longPressRecognizer.numberOfTouchesRequired = 1;
-//    [view addGestureRecognizer:longPressRecognizer];
+    
+    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressDetected:)];
+    longPressRecognizer.minimumPressDuration = 2;
+    longPressRecognizer.numberOfTouchesRequired = 1;
+    [view addGestureRecognizer:longPressRecognizer];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -182,7 +182,7 @@ static EAGLContext * context;
 //}
 
 - (IBAction)doubleTapTwoFingerDetected:(UIGestureRecognizer *)sender
-{
+{        
     Controller::getInstance()->stopSimulation();
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -199,14 +199,22 @@ static EAGLContext * context;
 {
     CGFloat scale = [(UIPinchGestureRecognizer *)sender scale];
     CGFloat velocity = [(UIPinchGestureRecognizer *)sender velocity];
-    Controller::getInstance()->pinchDetected(scale, velocity);
+    
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        Controller::getInstance()->pinchDetected(scale, velocity, true);
+    }
+    Controller::getInstance()->pinchDetected(scale, velocity, false);
 }
 
 - (IBAction)rotationDetected:(UIGestureRecognizer *)sender
 {
     CGFloat radians = [(UIRotationGestureRecognizer *)sender rotation];
     CGFloat velocity = [(UIRotationGestureRecognizer *)sender velocity];
-    Controller::getInstance()->rotationDetected(radians, velocity);
+    
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        Controller::getInstance()->rotationDetected(radians, velocity, true);
+    }
+    Controller::getInstance()->rotationDetected(radians, velocity, false);
 }
 
 #pragma mark - GLKView and GLKViewController delegate methods

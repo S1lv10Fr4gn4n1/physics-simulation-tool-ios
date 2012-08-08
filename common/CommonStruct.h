@@ -12,6 +12,8 @@
 #define CHANNEL_COLOR 4
 #define COUNT_COORD 3
 
+#include <stdlib.h>
+
 /// Enumations
 enum TypeObject {
     CIRCLE,
@@ -21,14 +23,9 @@ enum TypeObject {
     POLYGON_CLOSE,
     SPRINGS,
     STRING,
-    ENGINE
+    ENGINE,
+    PLAN
 };
-
-//class Pointer {
-//public:
-//    float x, y, z, w;
-//    Pointer() {};
-//};
 
 struct Pointer {
     float x;
@@ -41,23 +38,32 @@ struct Color {
     unsigned char r, g, b, a;
 };
 
+static float colorBBox[16] = {
+    255, 255, 255, 1,
+    255, 255, 255, 1,
+    255, 255, 255, 1,
+    255, 255, 255, 1,
+};
+
 struct BBox {
     Pointer * min;
     Pointer * max;
-    float * p;
+    float * ptr;
+    float * color;
     
     BBox() {
         this->min = new Pointer();
         this->max = new Pointer();
-        this->p = NULL;
+        this->ptr = NULL;
+        this->color = colorBBox;
     }
     ~BBox() {
         delete this->min;
         delete this->max;
-        delete [] this->p;
+        delete [] this->ptr;
         this->min = NULL;
         this->max = NULL;
-        this->p = NULL;
+        this->ptr = NULL;
     }
 };
 
@@ -111,6 +117,14 @@ static inline Color * MakeColor(float _r, float _g, float _b, float _a)
     color->a = _a;
     
     return color;
+}
+
+static inline Color * MakeRandonColor()
+{
+    return MakeColor(static_cast<unsigned char>(rand() % 256),
+                     static_cast<unsigned char>(rand() % 256),
+                     static_cast<unsigned char>(rand() % 256),
+                     1);
 }
 
 #endif

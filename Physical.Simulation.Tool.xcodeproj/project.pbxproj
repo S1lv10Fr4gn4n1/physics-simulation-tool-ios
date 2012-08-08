@@ -14,10 +14,14 @@
 		B913AEAA15B1F5190050B8DB /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913AEA915B1F5180050B8DB /* Controller.cpp */; };
 		B913AEB115B1F78D0050B8DB /* TabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B913AEB015B1F78D0050B8DB /* TabViewController.m */; };
 		B913AEB415B211830050B8DB /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913AEB315B211830050B8DB /* Utils.cpp */; };
+		B93704D815D2A9520042B36B /* plane.png in Resources */ = {isa = PBXBuildFile; fileRef = B93704D715D2A9520042B36B /* plane.png */; };
+		B93704EF15D2D6DE0042B36B /* library.graphic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36DF1586481C004AAB28 /* library.graphic.a */; };
+		B93704FF15D2DF310042B36B /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D1F871158EB8B3000337BB /* World.cpp */; };
+		B937050815D2DFE30042B36B /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
+		B937050915D2DFED0042B36B /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
 		B93ACE9515A3AC7100CED06E /* Selection.h in Headers */ = {isa = PBXBuildFile; fileRef = B93ACE9415A3AC7100CED06E /* Selection.h */; };
 		B93ACE9815A3AC8000CED06E /* Selection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B93ACE9715A3AC8000CED06E /* Selection.cpp */; };
 		B94B36B215864775004AAB28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B115864775004AAB28 /* UIKit.framework */; };
-		B94B36B415864775004AAB28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B315864775004AAB28 /* Foundation.framework */; };
 		B94B36BC15864775004AAB28 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B94B36BA15864775004AAB28 /* InfoPlist.strings */; };
 		B94B36BE15864775004AAB28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B94B36BD15864775004AAB28 /* main.m */; };
 		B94B36C215864775004AAB28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B94B36C115864775004AAB28 /* AppDelegate.m */; };
@@ -45,13 +49,11 @@
 		B9C5325D159950040098C0A6 /* albert.icon.72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C53259159950040098C0A6 /* albert.icon.72x72.png */; };
 		B9C5325E159950040098C0A6 /* albert.icon.114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C5325A159950040098C0A6 /* albert.icon.114x114.png */; };
 		B9C5325F159950040098C0A6 /* albert.icon.144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C5325B159950040098C0A6 /* albert.icon.144x144.png */; };
-		B9D1F858158E923F000337BB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B315864775004AAB28 /* Foundation.framework */; };
 		B9D1F863158E929E000337BB /* CommonStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStruct.h */; };
 		B9D1F864158E929E000337BB /* CommonStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStruct.h */; };
 		B9D1F865158E929E000337BB /* CommonStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStruct.h */; };
 		B9D1F873158EB8B3000337BB /* SimulatedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */; };
 		B9D1F874158EB8B3000337BB /* SimulatedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F870158EB8B3000337BB /* SimulatedObject.h */; };
-		B9D1F875158EB8B3000337BB /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D1F871158EB8B3000337BB /* World.cpp */; };
 		B9D1F876158EB8B3000337BB /* World.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F872158EB8B3000337BB /* World.h */; };
 		B9D1F879158EB8EA000337BB /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
 		B9D1F87C158EB8F9000337BB /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
@@ -60,8 +62,7 @@
 		B9D88AD615A8EA4E00162199 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = B9D88AD515A8EA4E00162199 /* circle.png */; };
 		B9DD92BE1586FE400029A4A3 /* MainGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = B9DD92BD1586FE400029A4A3 /* MainGraphic.h */; };
 		B9DD92C11586FE500029A4A3 /* MainGraphic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9DD92C01586FE500029A4A3 /* MainGraphic.cpp */; };
-		B9DD97211586DD4900E6DD9B /* SimulationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B9B350DC1586C15C00180CE7 /* SimulationViewController.mm */; };
-		B9DD97251586DEA000E6DD9B /* library.graphic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36DF1586481C004AAB28 /* library.graphic.a */; };
+		B9DD97211586DD4900E6DD9B /* SimulationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B350DC1586C15C00180CE7 /* SimulationViewController.m */; };
 		B9DD97261586DEA700E6DD9B /* physics.engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36D0158647FE004AAB28 /* physics.engine.a */; };
 		B9DD972B1586DF2700E6DD9B /* library.collision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350B11586BE8C00180CE7 /* library.collision.a */; };
 		B9DD972C1586DF2700E6DD9B /* library.physics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350C01586BEB200180CE7 /* library.physics.a */; };
@@ -76,12 +77,33 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B9B350D41586C08600180CE7 /* PBXContainerItemProxy */ = {
+		B93704E515D2D6C30042B36B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B94B36A415864775004AAB28 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B94B36CF158647FE004AAB28;
 			remoteInfo = physics.engine;
+		};
+		B937050015D2DF7E0042B36B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B94B36DE1586481C004AAB28;
+			remoteInfo = library.graphic;
+		};
+		B937050215D2DF7E0042B36B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9D1F856158E923F000337BB;
+			remoteInfo = common.feature;
+		};
+		B937050615D2DFC70042B36B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9D1F856158E923F000337BB;
+			remoteInfo = common.feature;
 		};
 		B9B350D81586C08E00180CE7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -132,6 +154,7 @@
 		B913AEB015B1F78D0050B8DB /* TabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabViewController.m; sourceTree = "<group>"; };
 		B913AEB215B2117D0050B8DB /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		B913AEB315B211830050B8DB /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		B93704D715D2A9520042B36B /* plane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plane.png; path = resources/images/plane.png; sourceTree = SOURCE_ROOT; };
 		B93ACE9415A3AC7100CED06E /* Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Selection.h; sourceTree = "<group>"; };
 		B93ACE9715A3AC8000CED06E /* Selection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Selection.cpp; sourceTree = "<group>"; };
 		B94B36AD15864775004AAB28 /* Physical.Tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Physical.Tool.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,7 +192,7 @@
 		B9B350C41586BEB200180CE7 /* library.physics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "library.physics-Prefix.pch"; sourceTree = "<group>"; };
 		B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryCollision.h; sourceTree = "<group>"; };
 		B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryPhysics.h; sourceTree = "<group>"; };
-		B9B350DC1586C15C00180CE7 /* SimulationViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimulationViewController.mm; sourceTree = "<group>"; };
+		B9B350DC1586C15C00180CE7 /* SimulationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimulationViewController.m; sourceTree = "<group>"; };
 		B9B7913215B789BA00E08A55 /* presentation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = presentation.png; path = resources/images/presentation.png; sourceTree = SOURCE_ROOT; };
 		B9B7913315B789BA00E08A55 /* puzzle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = puzzle.png; path = resources/images/puzzle.png; sourceTree = SOURCE_ROOT; };
 		B9B7913615B78C9200E08A55 /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = triangle.png; path = resources/images/triangle.png; sourceTree = SOURCE_ROOT; };
@@ -203,12 +226,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B937050915D2DFED0042B36B /* common.feature.a in Frameworks */,
+				B93704EF15D2D6DE0042B36B /* library.graphic.a in Frameworks */,
 				B9DD97261586DEA700E6DD9B /* physics.engine.a in Frameworks */,
-				B9DD97251586DEA000E6DD9B /* library.graphic.a in Frameworks */,
 				B9B350A31586BCFE00180CE7 /* GLKit.framework in Frameworks */,
 				B9B350A11586BCED00180CE7 /* OpenGLES.framework in Frameworks */,
 				B94B36B215864775004AAB28 /* UIKit.framework in Frameworks */,
-				B94B36B415864775004AAB28 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +239,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B937050815D2DFE30042B36B /* common.feature.a in Frameworks */,
 				B9DD972B1586DF2700E6DD9B /* library.collision.a in Frameworks */,
 				B9DD972C1586DF2700E6DD9B /* library.physics.a in Frameworks */,
 			);
@@ -250,7 +274,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9D1F858158E923F000337BB /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +327,7 @@
 				B913AEA815B1F50F0050B8DB /* Controller.h */,
 				B913AEA915B1F5180050B8DB /* Controller.cpp */,
 				B94B370C15864977004AAB28 /* SimulationViewController.h */,
-				B9B350DC1586C15C00180CE7 /* SimulationViewController.mm */,
+				B9B350DC1586C15C00180CE7 /* SimulationViewController.m */,
 				B913AEA215B1F35C0050B8DB /* PresentationViewController.h */,
 				B913AEA315B1F35C0050B8DB /* PresentationViewController.m */,
 				B913AEA515B1F36C0050B8DB /* ObjectsViewController.h */,
@@ -417,6 +440,7 @@
 		B9C5324A1599461D0098C0A6 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				B93704D715D2A9520042B36B /* plane.png */,
 				B9B7913615B78C9200E08A55 /* triangle.png */,
 				B9B7913215B789BA00E08A55 /* presentation.png */,
 				B9B7913315B789BA00E08A55 /* puzzle.png */,
@@ -538,7 +562,9 @@
 			buildRules = (
 			);
 			dependencies = (
-				B9B350D51586C08600180CE7 /* PBXTargetDependency */,
+				B937050115D2DF7E0042B36B /* PBXTargetDependency */,
+				B937050315D2DF7E0042B36B /* PBXTargetDependency */,
+				B93704E615D2D6C30042B36B /* PBXTargetDependency */,
 			);
 			name = Physical.Simulation.Tool;
 			productName = Physical.Simulation.Tool;
@@ -556,6 +582,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B937050715D2DFC70042B36B /* PBXTargetDependency */,
 				B9B350D91586C08E00180CE7 /* PBXTargetDependency */,
 				B9B350DB1586C08E00180CE7 /* PBXTargetDependency */,
 			);
@@ -688,6 +715,7 @@
 				B9B7913415B789BA00E08A55 /* presentation.png in Resources */,
 				B9B7913515B789BA00E08A55 /* puzzle.png in Resources */,
 				B9B7913715B78C9200E08A55 /* triangle.png in Resources */,
+				B93704D815D2A9520042B36B /* plane.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,7 +728,7 @@
 			files = (
 				B94B36BE15864775004AAB28 /* main.m in Sources */,
 				B94B36C215864775004AAB28 /* AppDelegate.m in Sources */,
-				B9DD97211586DD4900E6DD9B /* SimulationViewController.mm in Sources */,
+				B9DD97211586DD4900E6DD9B /* SimulationViewController.m in Sources */,
 				B913AEA415B1F35C0050B8DB /* PresentationViewController.m in Sources */,
 				B913AEA715B1F36C0050B8DB /* ObjectsViewController.m in Sources */,
 				B913AEAA15B1F5190050B8DB /* Controller.cpp in Sources */,
@@ -749,17 +777,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9D1F873158EB8B3000337BB /* SimulatedObject.cpp in Sources */,
-				B9D1F875158EB8B3000337BB /* World.cpp in Sources */,
+				B93704FF15D2DF310042B36B /* World.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B9B350D51586C08600180CE7 /* PBXTargetDependency */ = {
+		B93704E615D2D6C30042B36B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B94B36CF158647FE004AAB28 /* physics.engine */;
-			targetProxy = B9B350D41586C08600180CE7 /* PBXContainerItemProxy */;
+			targetProxy = B93704E515D2D6C30042B36B /* PBXContainerItemProxy */;
+		};
+		B937050115D2DF7E0042B36B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B94B36DE1586481C004AAB28 /* library.graphic */;
+			targetProxy = B937050015D2DF7E0042B36B /* PBXContainerItemProxy */;
+		};
+		B937050315D2DF7E0042B36B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9D1F856158E923F000337BB /* common.feature */;
+			targetProxy = B937050215D2DF7E0042B36B /* PBXContainerItemProxy */;
+		};
+		B937050715D2DFC70042B36B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9D1F856158E923F000337BB /* common.feature */;
+			targetProxy = B937050615D2DFC70042B36B /* PBXContainerItemProxy */;
 		};
 		B9B350D91586C08E00180CE7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
