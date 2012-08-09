@@ -20,9 +20,8 @@ private:
     std::map<std::string, GLuint> * mapGLSLVars;
     const char * vertShaderSource;
     const char * fragShaderSource;
-    const char * geomShaderSource;    
 public:
-    Shader(const char * _vertShaderSource, const char * _fragShaderSource, const char * _geomShaderSource);
+    Shader(const char * _vertShaderSource, const char * _fragShaderSource);
     ~Shader();
     
     bool loadShaders();

@@ -38,7 +38,7 @@ struct Color {
     unsigned char r, g, b, a;
 };
 
-static float colorBBox[16] = {
+static const float colorBBox[16] = {
     255, 255, 255, 1,
     255, 255, 255, 1,
     255, 255, 255, 1,
@@ -49,7 +49,7 @@ struct BBox {
     Pointer * min;
     Pointer * max;
     float * ptr;
-    float * color;
+    const float * color;
     
     BBox() {
         this->min = new Pointer();
@@ -94,6 +94,11 @@ static inline Pointer * MakePointer(float _x, float _y, float _z)
 static inline Pointer * MakePointer(float _x, float _y)
 {
     return MakePointer(_x, _y, 0.0f, 1.0f);
+}
+
+static inline Pointer * MakePointer(Pointer * _pointer)
+{
+    return MakePointer(_pointer->x, _pointer->y, _pointer->z, _pointer->w);
 }
 
 static inline PhysicalFeature * MakePhysicalFeature(float _mass, float _volume, float _density, float _acceleration, float _speed)

@@ -10,11 +10,15 @@
 
 Controller * Controller::controller;
 
-float previousRadians = 0.0f;
+// TODO revise: variables for this place is correct?
 float scaleObject = 1.0f;
 float scaleZoom = 1.0f;
+//float scalePanX = 0.0f;
+//float scalePanY = 0.0f;
+float previousRadians = 0.0f;
 float previousZoom = 0.0f;
 float previousScale = 0.0f;
+//Pointer * previousPointer = NULL;
 
 Controller::Controller()
 {
@@ -68,16 +72,14 @@ void Controller::initializeContextOpenGLES()
         return;
     }
     
-    //TODO revise, no objects 'no C++ ansi'
+    // TODO revise, no objects 'no C++ ansi'
     NSString * vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"vsh"];
     NSString * fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"fsh"];
-    NSString * geomShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"gsh"];
     const char * vertShaderSource = [[NSString stringWithContentsOfFile:vertShaderPathname encoding:NSUTF8StringEncoding error:0] UTF8String];
     const char * fragShaderSource = [[NSString stringWithContentsOfFile:fragShaderPathname encoding:NSUTF8StringEncoding error:0] UTF8String];
-    const char * geomShaderSource = [[NSString stringWithContentsOfFile:geomShaderPathname encoding:NSUTF8StringEncoding error:0] UTF8String];
 
     this->mainGraphic = new MainGraphic();
-    this->mainGraphic->initializeShader(vertShaderSource, fragShaderSource, geomShaderSource);
+    this->mainGraphic->initializeShader(vertShaderSource, fragShaderSource);
 }
 
 void Controller::initializeEngine()
@@ -88,7 +90,8 @@ void Controller::initializeEngine()
     
     this->mainEngine = new MainEngine();
     this->mainEngine->updateInformation();
-    this->mainEngine->rotatedScreen(1024, 768);
+//    TODO revise: identify device and inform value correctly of screen dimension
+//    this->mainEngine->rotatedScreen(1024, 768);
     this->mainEngine->start();
 }
 
@@ -146,43 +149,69 @@ bool Controller::isInitialized()
 
 void Controller::touchesBegan(float _x, float _y)
 {
-    // TODO
+    // TODO put your code here
 }
 
 void Controller::touchesEnded(float _x, float _y)
 {
-    // TODO
+    // TODO put your code here
 }
 
 void Controller::touchesCancelled(float _x, float _y)
 {
-    // TODO
+    // TODO put your code here
 }
 
-void Controller::touchesMoved(float _x, float _y)
+void Controller::touchesMoved(float _x, float _y, int countFingers)
 {
     Pointer * pointer = MakePointer(_x, _y);
-    this->objectOffset = this->mainEngine->selectedSimulatedObject(pointer);
-    
-    if (this->objectOffset) {
-        if (this->objectEdition) {
-            this->objectEdition->setSelected(false);
-            this->objectEdition = NULL;
-        }
+
+    // move object
+    if (countFingers == 1) {
+        this->objectOffset = this->mainEngine->selectedSimulatedObject(pointer);
         
-        this->mainEngine->translateSimulatedObject(this->objectOffset, pointer);
+        if (this->objectOffset && !this->objectOffset->isImmovable()) {
+            if (this->objectEdition) {
+                this->objectEdition->setSelected(false);
+                this->objectEdition = NULL;
+            }
+            
+            this->mainEngine->translateSimulatedObject(this->objectOffset, pointer);
+        }
     }
-//    } else {
-//        // move scene
-//        this->mainEngine->pan(_pointer);
+    
+//    TODO revise: pan
+//    move scene
+//    if (countFingers == 2) {
+//        if (previousPointer) {
+//            if (previousPointer->x > pointer->x) {
+//                scalePanX -= 0.009;
+//            } else if (previousPointer->x < pointer->x) {
+//                scalePanX += 0.009;
+//            }
+//
+//            if (previousPointer->y > pointer->y) {
+//                scalePanY += 0.009;
+//            } else if (previousPointer->y < pointer->y) {
+//                scalePanY -= 0.009;
+//            }
+//
+//            this->mainEngine->pan(scalePanX, scalePanY);
+//
+//            delete previousPointer;
+//            previousPointer = NULL;
+//        }
+//        
+//        previousPointer = MakePointer(pointer);
 //    }
+    
     delete pointer;
     pointer = NULL;
 }
 
 void Controller::pinchDetected(float _scale, float _velocity, bool began)
 {
-    if (this->objectEdition && this->objectEdition->isSelected()) {
+    if (this->objectEdition && this->objectEdition->isSelected() && !this->objectEdition->isImmovable()) {
         if (began) {
             scaleObject = 1.0f;
             previousScale = 0.0;
@@ -249,22 +278,31 @@ void Controller::doubleTapOneFingerDetected(float _x, float _y)
 
 void Controller::longPressDetected(float _x, float _y)
 {
-    // TODO
+    Pointer * pointer = MakePointer(_x, _y);
+    
+    this->objectEdition = this->mainEngine->selectedSimulatedObject(pointer);
+
+    if (this->objectEdition) {
+        this->mainEngine->deleteSimulatedObject(this->objectEdition);
+    }
 }
 
 void Controller::swipeRightDetected(float _x, float _y)
 {
-    // TODO
+    // TODO put your code here
 }
 void Controller::swipeLeftDetected(float _x, float _y)
 {
-    // TODO
+    // TODO put your code here
 }
 
 void Controller::oneTapThreeFingerDetected(float _x, float _y)
 {
-    this->mainEngine->centralizedWorld();
+//    delete previousPointer;
+//    previousPointer = NULL;
+    
     scaleZoom = 1.0f;
+    this->mainEngine->zoom(scaleZoom);
 }
 
 void Controller::createSimulatedObject(TypeObject typeObject)

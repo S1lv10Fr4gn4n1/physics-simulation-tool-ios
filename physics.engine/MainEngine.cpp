@@ -45,20 +45,19 @@ void MainEngine::updateInformation()
         return;
     }
 
-    /// TODO - implementation
+    //TODO put your code here
 }
 
 void MainEngine::rotatedScreen(float _width, float _height)
 {
     this->ndc->update(_width, _height);
-    
     MatrixOrtho(this->world->getOrthoMatrix(), -this->ndc->getAspect(), this->ndc->getAspect(), -1, 1, -1, 1);
 }
 
 void MainEngine::zoom(float _scale)
 {
     float value = this->ndc->getAspect() * _scale;
-    
+
     this->ndc->setLeft(-value);
     this->ndc->setRight(value);
     this->ndc->setBottom(-_scale);
@@ -73,13 +72,13 @@ void MainEngine::zoom(float _scale)
                 1);
 }
 
-void MainEngine::pan(Pointer * _pointer)
+void MainEngine::pan(float _scaleX, float _scaleY)
 {
-    // TODO
-    this->ndc->setLeft(-this->ndc->getAspect() + _pointer->x);
-    this->ndc->setRight(this->ndc->getAspect() + _pointer->x);
-    this->ndc->setBottom(-1 + _pointer->y);
-    this->ndc->setTop(1 + _pointer->y);
+    //TODO revise
+    this->ndc->setLeft(-this->ndc->getAspect() - _scaleX);
+    this->ndc->setRight(this->ndc->getAspect() - _scaleX);
+    this->ndc->setBottom(-1 - _scaleY);
+    this->ndc->setTop(1 - _scaleY);
     
     MatrixOrtho(this->world->getOrthoMatrix(),
                 this->ndc->getLeft(),
@@ -88,11 +87,6 @@ void MainEngine::pan(Pointer * _pointer)
                 this->ndc->getTop(),
                 -1,
                 1);
-}
-
-void MainEngine::centralizedWorld()
-{
-    MatrixOrtho(this->world->getOrthoMatrix(), -this->ndc->getAspect(), this->ndc->getAspect(), -1, 1, -1, 1);
 }
 
 void MainEngine::scaleSimulatedObject(SimulatedObject * _simulatedObject, float _scale)
@@ -108,6 +102,7 @@ void MainEngine::scaleSimulatedObject(SimulatedObject * _simulatedObject, float 
 
 void MainEngine::rotateSimulatedObject(SimulatedObject * _simulatedObject, float _radians)
 {
+//    TODO revise: clean is comment?
 //    float teta = (M_PI * _radians) / 180.0;
     float * matrixRotation = MatrixMakeZRotation(_radians);
     float * matrix = MatrixMultiply(_simulatedObject->getMatrixTransformation(), matrixRotation);
@@ -166,11 +161,13 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
             
             /// generates points to create the circle, these points are stored
             /// to be subsequently used in the algorithm scanline
-            for (int i=0; i<360; i++) {
-                x1 = (radius * cos(M_PI * i / 180.0f));
-                y1 = (radius * sin(M_PI * i / 180.0f));
+            int ang = 0;
+            for (int i=0; i<36; i++) {
+                x1 = (radius * cos(M_PI * ang / 180.0f));
+                y1 = (radius * sin(M_PI * ang / 180.0f));
                 
                 _simulatedObject->addPointer(MakePointer(x1 + p1->x, y1 + p1->y));
+                ang+=10;
             }
             
             delete p1;
@@ -200,13 +197,13 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
             
         case PLAN:
         {
-            //left: -3.960000, right: 3.960000, bottom: -2.970000, top: 2.970000
-            _simulatedObject->setMode(GL_POINTS);
-            _simulatedObject->setColorAux(MakeColor(255, 0, 0, 1));
-            _simulatedObject->addPointer(MakePointer(-3.960000, -2.970000));
-            _simulatedObject->addPointer(MakePointer(3.960000, -2.970000));
-            _simulatedObject->addPointer(MakePointer(-3.960000, 2.970000));
-            _simulatedObject->addPointer(MakePointer(3.960000, 2.970000));
+            // TODO this is max screem possible for simulation
+            // left: -3.960000, right: 3.960000, bottom: -2.970000, top: 2.970000
+            _simulatedObject->setImmovable(true);
+            _simulatedObject->addPointer(MakePointer(-5.0f, -7.0f));
+            _simulatedObject->addPointer(MakePointer(-5.0f, -0.9f));
+            _simulatedObject->addPointer(MakePointer( 5.0f, -0.9f));
+            _simulatedObject->addPointer(MakePointer( 5.0f, -7.0f));
             break;
         }
             

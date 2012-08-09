@@ -14,12 +14,14 @@ SimulatedObject::SimulatedObject()
 {
     this->showBBox = false;
     this->selected = false;
+    this->immovable = false;
     
     this->pointersAux = new vector<Pointer *>();
     this->pointers = NULL;
     
     this->colorAux = NULL;
     this->color = NULL;
+    this->colorPoints = NULL;
     
     this->physicalFeature = NULL;
 
@@ -59,6 +61,7 @@ SimulatedObject::~SimulatedObject()
     delete [] this->pointers;
     delete this->physicalFeature;
     delete [] this->color;
+    delete [] this->colorPoints;
     delete this->colorAux;
     delete this->bbox;
     delete this->matrixTransformation;
@@ -67,10 +70,10 @@ SimulatedObject::~SimulatedObject()
     this->pointers = NULL;
     this->physicalFeature = NULL;
     this->color = NULL;
+    this->colorPoints = NULL;
     this->colorAux = NULL;
     this->bbox = NULL;
     this->matrixTransformation = NULL;
-
 }
 
 void SimulatedObject::initBBox(float * _matrix)
@@ -113,7 +116,7 @@ void SimulatedObject::initBBox(float * _matrix)
 			this->bbox->min->z = pointer->z;
 		}
         
-        delete pointer; //TODO revise
+        delete pointer;
         pointer = NULL;
 	}
     
@@ -123,7 +126,8 @@ void SimulatedObject::initBBox(float * _matrix)
 void SimulatedObject::initialize()
 {
     this->makePointers();
-    this->makeColor();
+    this->makeColorObject();
+    this->makeColorPoints();
     this->initBBox(this->matrixTransformation);
 }
 
@@ -184,7 +188,7 @@ void SimulatedObject::makePointers()
     }
 }
 
-void SimulatedObject::makeColor()
+void SimulatedObject::makeColorObject()
 {
     int total = this->pointersAux->size()*CHANNEL_COLOR;
     this->color = new unsigned char[total];
@@ -196,6 +200,22 @@ void SimulatedObject::makeColor()
         
         if (CHANNEL_COLOR == 4) {
             this->color[i+3] = this->colorAux->a;
+        }
+	}
+}
+
+void SimulatedObject::makeColorPoints()
+{
+    int total = this->pointersAux->size()*CHANNEL_COLOR;
+    this->colorPoints = new unsigned char[total];
+    
+    for (int i = 0; i < total; i += CHANNEL_COLOR) {
+		this->colorPoints[i]   = 0;
+		this->colorPoints[i+1] = 0;
+		this->colorPoints[i+2] = 0;
+        
+        if (CHANNEL_COLOR == 4) {
+            this->colorPoints[i+3] = 1;
         }
 	}
 }
@@ -235,6 +255,11 @@ std::vector<Pointer *> * SimulatedObject::getPointersAux()
 unsigned char * SimulatedObject::getColor()
 {
     return this->color;
+}
+
+unsigned char * SimulatedObject::getColorPoints()
+{
+    return this->colorPoints;
 }
 
 void SimulatedObject::setColorAux(Color * _color)
@@ -308,4 +333,14 @@ void SimulatedObject::setMatrixTransformation(float * _matrix)
     this->matrixTransformation = NULL;
     
     this->matrixTransformation = _matrix;
+}
+
+bool SimulatedObject::isImmovable()
+{
+    return this->immovable;
+}
+
+void SimulatedObject::setImmovable(bool _immovable)
+{
+    this->immovable = _immovable;
 }

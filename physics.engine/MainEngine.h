@@ -34,8 +34,7 @@ public:
     // WORLD
     World * getWorld();
     void zoom(float _scale);
-    void pan(Pointer * _pointer);
-    void centralizedWorld();
+    void pan(float _scaleX, float _scaleY);
     void rotatedScreen(float _width, float _height);
     
     // SIMULATED OBJECT

@@ -21,7 +21,7 @@ public:
     MainGraphic();
     ~MainGraphic();
     
-    void initializeShader(const char* _vertShaderSource, const char* _fragShaderSource, const char* _geomShaderSource);
+    void initializeShader(const char* _vertShaderSource, const char* _fragShaderSource);
     Shader * getShader();
     void loadImage();
     void draw(World * _world);

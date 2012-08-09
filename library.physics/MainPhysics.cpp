@@ -11,10 +11,10 @@
 
 MainPhysics::MainPhysics()
 {
-    /// TODO - implementation
+    // TODO put your code here
 }
 
 MainPhysics::~MainPhysics()
 {
-    /// TODO - implementation   
+    // TODO put your code here
 }

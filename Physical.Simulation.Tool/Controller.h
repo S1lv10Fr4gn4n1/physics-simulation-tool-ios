@@ -43,7 +43,7 @@ public:
     
     void createSimulatedObject(TypeObject typeObject);
     
-    void touchesMoved(float _x, float _y);
+    void touchesMoved(float _x, float _y, int countFingers);
     void touchesBegan(float _x, float _y);
     void touchesEnded(float _x, float _y);
     void touchesCancelled(float _x, float _y);

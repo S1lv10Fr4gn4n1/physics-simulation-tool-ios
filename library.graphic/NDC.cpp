@@ -14,14 +14,18 @@ NDC::NDC()
     this->minWindow = NULL;
     this->maxOrtho = NULL;
     this->minOrtho = NULL;
+
+    this->aspect = 0;
+    this->width = 0;
+    this->height = 0;
 }
 
 NDC::~NDC()
 {
-    delete [] this->maxWindow;
-    delete [] this->minWindow;
-    delete [] this->maxOrtho;
-    delete [] this->minOrtho;
+    delete this->maxWindow;
+    delete this->minWindow;
+    delete this->maxOrtho;
+    delete this->minOrtho;
     this->maxWindow = NULL;
     this->minWindow = NULL;
     this->maxOrtho = NULL;
@@ -49,6 +53,9 @@ void NDC::update(float _width, float _height)
         this->minOrtho = MakePointer(-1, -1);
     }
     
+    if (this->maxWindow) {
+        delete this->maxWindow;
+    }
     this->maxWindow = MakePointer(this->width, this->height);
     
     if (this->minWindow == NULL) {

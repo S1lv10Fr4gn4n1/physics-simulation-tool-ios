@@ -21,17 +21,14 @@ const char * defaultFragmentShader = "varying lowp vec4 colorVarying; "
                                      "  gl_FragColor = colorVarying; "
                                      "} ";
 
-const char * defaultGeometryShader = 0;
-
 using namespace std;
 
-Shader::Shader(const char * _vertShaderSource, const char * _fragShaderSource, const char * _geomShaderSource)
+Shader::Shader(const char * _vertShaderSource, const char * _fragShaderSource)
 {
     this->mapGLSLVars = new map<string, GLuint>();
     
     this->vertShaderSource = _vertShaderSource ? _vertShaderSource : defaultVertexShader;  
     this->fragShaderSource = _fragShaderSource ? _fragShaderSource : defaultFragmentShader;
-    this->geomShaderSource = _geomShaderSource ? _geomShaderSource : defaultGeometryShader;
 }
 
 Shader::~Shader()
@@ -63,11 +60,6 @@ bool Shader::loadShaders()
         cout << "Failed to compile fragment shader" << endl;
         return false;
     }
-// TODO
-//    if (!compileShader(&geomShader, GL_ge, geomShaderSource)) {
-//        cout << "Failed to compile fragment shader" << endl;
-//        return false;
-//    }
     
     // Attach vertex shader to program.
     glAttachShader(this->program, vertShader);

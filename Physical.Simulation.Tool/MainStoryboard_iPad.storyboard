@@ -242,14 +242,10 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="700"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" editable="NO" id="kgw-Ag-zye">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" editable="NO" text="TODO fazer um doc aqui de todas as funcionalidades touches e outras informações uteis" id="kgw-Ag-zye">
                                 <rect key="frame" x="20" y="20" width="560" height="660"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <string key="text">Dicas
-
-- 2 taps com 2 dedos para voltar para seleção de objetos;
-- 2 taps com 1 dedo sobre um objeto da simulação para edição das configurações do objeto.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                             </textView>

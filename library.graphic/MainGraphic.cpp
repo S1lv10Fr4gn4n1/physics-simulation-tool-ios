@@ -22,9 +22,9 @@ MainGraphic::~MainGraphic()
     this->simulatedObjectDrawn = NULL;
 }
 
-void MainGraphic::initializeShader(const char* _vertShaderSource, const char* _fragShaderSource, const char* _geomShaderSource)
+void MainGraphic::initializeShader(const char* _vertShaderSource, const char* _fragShaderSource)
 {
-    this->shader = new Shader(_vertShaderSource, _fragShaderSource, _geomShaderSource);
+    this->shader = new Shader(_vertShaderSource, _fragShaderSource);
     this->shader->loadShaders();
 }
 
@@ -63,7 +63,7 @@ void MainGraphic::MainGraphic::draw(World * _world)
                 
         if (this->simulatedObjectDrawn->isSelected()) {
             // define color for points
-            glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, this->simulatedObjectDrawn->getColor());
+            glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, this->simulatedObjectDrawn->getColorPoints());
             glEnableVertexAttribArray(ATTRIB_COLOR);
             
             // Update attribute values.

@@ -15,7 +15,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [self setDelegate:self];
+    //[self setDelegate:self];
 }
 
 - (void)viewDidUnload
@@ -27,11 +27,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
-
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-    //TODO 
 }
 
 @end

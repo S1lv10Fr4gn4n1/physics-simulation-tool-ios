@@ -70,8 +70,8 @@ static EAGLContext * context;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    if (!self.view) {
+{   
+    if (self.view) {
         Controller::getInstance()->resizeScreen(self.view.bounds.size.width, self.view.bounds.size.height);
     }
     
@@ -105,7 +105,6 @@ static EAGLContext * context;
     UITapGestureRecognizer *oneTapThreeFinger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(oneTapThreeFingerDetected:)];
     oneTapThreeFinger.numberOfTapsRequired = 1;
     oneTapThreeFinger.numberOfTouchesRequired = 3;
-    
     [view addGestureRecognizer:oneTapThreeFinger];
 
     UITapGestureRecognizer *doubleTapOneFinger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOneFingerDetected:)];
@@ -118,14 +117,6 @@ static EAGLContext * context;
     
     UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(rotationDetected:)];
     [view addGestureRecognizer:rotationRecognizer];
-    
-//    UISwipeGestureRecognizer *swipeRightRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRightDetected:)];
-//    swipeRightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-//    [view addGestureRecognizer:swipeRightRecognizer];
-//
-//    UISwipeGestureRecognizer *swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeLeftDetected:)];
-//    swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-//    [view addGestureRecognizer:swipeLeftRecognizer];
     
     UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressDetected:)];
     longPressRecognizer.minimumPressDuration = 2;
@@ -154,7 +145,7 @@ static EAGLContext * context;
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint p = [[touches anyObject] locationInView: self.view];
-    Controller::getInstance()->touchesMoved(p.x, p.y);
+    Controller::getInstance()->touchesMoved(p.x, p.y, [[touches allObjects] count]);
 }
 
 - (IBAction)longPressDetected:(UIGestureRecognizer *)sender

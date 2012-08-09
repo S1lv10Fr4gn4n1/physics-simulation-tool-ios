@@ -19,6 +19,7 @@ private:
     std::vector<Pointer *> * pointersAux;
     PhysicalFeature * physicalFeature;
     unsigned char * color;
+    unsigned char * colorPoints;
     Color * colorAux;
     unsigned int mode; // GLenum
     std::vector<SimulatedObject *> * joinsSimulatedObject;
@@ -27,9 +28,11 @@ private:
     
     bool showBBox;
     bool selected;
+    bool immovable;
     
     void makePointers();
-    void makeColor();
+    void makeColorObject();
+    void makeColorPoints();
     void makeBBox();
 protected:
     
@@ -48,6 +51,7 @@ public:
     std::vector<Pointer *> * getPointersAux();
 
     unsigned char * getColor();
+    unsigned char * getColorPoints();
     
     void setColorAux(Color * _color);
     Color * getColorAux();
@@ -69,6 +73,9 @@ public:
     
     float * getMatrixTransformation();
     void setMatrixTransformation(float * _matrix);
+    
+    bool isImmovable();
+    void setImmovable(bool _immovable);
 };
 
 #endif
