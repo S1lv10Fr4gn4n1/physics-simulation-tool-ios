@@ -11,6 +11,7 @@
 
 #include <vector>
 #include "SimulatedObject.h"
+#include "Transform.h"
 
 class World {
 private:

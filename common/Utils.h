@@ -15,4 +15,10 @@
 
 std::string loadFile(std::string _pathFile);
 
+// get number rand
+template <class type>
+type getRand(type _value) {
+	return (type)rand()/(type)RAND_MAX * _value;
+}
+
 #endif

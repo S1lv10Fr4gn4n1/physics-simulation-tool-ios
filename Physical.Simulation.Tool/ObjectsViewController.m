@@ -18,7 +18,6 @@
 - (void)startSimulation:(NSTimer*)theTimer
 {
     Controller::getInstance()->startSimulation();
-    NSLog(@"Start Simulation ...");
 }
 
 - (void)viewDidUnload
@@ -36,12 +35,21 @@
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
 
-    // start simulation after 3 seconds
-    [NSTimer scheduledTimerWithTimeInterval:3
+    // start simulation after 2 seconds
+    [NSTimer scheduledTimerWithTimeInterval:2
                                      target:self
                                    selector:@selector(startSimulation:)
                                    userInfo:NULL
                                     repeats:NO];
+    
+    // TODO for Tests
+//    Controller::getInstance()->createSimulatedObject(PLAN);
+//    
+//    for (int i=0; i< 1000; i++) {
+//        Controller::getInstance()->createSimulatedObject(SQUARE);
+//        Controller::getInstance()->createSimulatedObject(CIRCLE);
+//        Controller::getInstance()->createSimulatedObject(TRIANGLE);
+//    }
 
 }
 

@@ -14,5 +14,8 @@
 #include "Transform.h"
 #include "SimulatedObject.h"
 #include "World.h"
+#include "Precision.h"
+#include "Vector3.h"
+#include "PhysicalFeature.h"
 
 #endif

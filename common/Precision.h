@@ -10,7 +10,9 @@
 #define PRECISION_H
 
 typedef float real;
+
 #define real_pow powf
 #define real_sqrt sqrtf
+#define real_fabsf fabsf
 
 #endif

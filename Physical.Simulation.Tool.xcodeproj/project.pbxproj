@@ -44,6 +44,8 @@
 		B9B350A31586BCFE00180CE7 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A21586BCFE00180CE7 /* GLKit.framework */; };
 		B9B350CC1586BEEF00180CE7 /* LibraryCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */; };
 		B9B350CE1586BEF800180CE7 /* LibraryPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */; };
+		B9B3C23C15DACB5A006122E0 /* PhysicalFeature.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B3C23B15DACB5A006122E0 /* PhysicalFeature.h */; };
+		B9B3C23F15DACB67006122E0 /* PhysicalFeature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B3C23E15DACB66006122E0 /* PhysicalFeature.cpp */; };
 		B9B7913415B789BA00E08A55 /* presentation.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B7913215B789BA00E08A55 /* presentation.png */; };
 		B9B7913515B789BA00E08A55 /* puzzle.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B7913315B789BA00E08A55 /* puzzle.png */; };
 		B9B7913715B78C9200E08A55 /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B7913615B78C9200E08A55 /* triangle.png */; };
@@ -194,6 +196,8 @@
 		B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryCollision.h; sourceTree = "<group>"; };
 		B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryPhysics.h; sourceTree = "<group>"; };
 		B9B350DC1586C15C00180CE7 /* SimulationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimulationViewController.m; sourceTree = "<group>"; };
+		B9B3C23B15DACB5A006122E0 /* PhysicalFeature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicalFeature.h; sourceTree = "<group>"; };
+		B9B3C23E15DACB66006122E0 /* PhysicalFeature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicalFeature.cpp; sourceTree = "<group>"; };
 		B9B7913215B789BA00E08A55 /* presentation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = presentation.png; path = resources/images/presentation.png; sourceTree = SOURCE_ROOT; };
 		B9B7913315B789BA00E08A55 /* puzzle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = puzzle.png; path = resources/images/puzzle.png; sourceTree = SOURCE_ROOT; };
 		B9B7913615B78C9200E08A55 /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = triangle.png; path = resources/images/triangle.png; sourceTree = SOURCE_ROOT; };
@@ -425,15 +429,17 @@
 			children = (
 				B9066CE6159223650031264F /* Commons.h */,
 				B9D1F862158E929E000337BB /* CommonStruct.h */,
+				B9311CBE15D9694700307F68 /* Precision.h */,
 				B9311CB915D9681A00307F68 /* Vector3.h */,
 				B9311CBC15D9682B00307F68 /* Vector3.cpp */,
-				B9311CBE15D9694700307F68 /* Precision.h */,
-				B913AEB215B2117D0050B8DB /* Utils.h */,
-				B913AEB315B211830050B8DB /* Utils.cpp */,
+				B9B3C23B15DACB5A006122E0 /* PhysicalFeature.h */,
+				B9B3C23E15DACB66006122E0 /* PhysicalFeature.cpp */,
 				B9D1F870158EB8B3000337BB /* SimulatedObject.h */,
 				B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */,
 				B9D1F872158EB8B3000337BB /* World.h */,
 				B9D1F871158EB8B3000337BB /* World.cpp */,
+				B913AEB215B2117D0050B8DB /* Utils.h */,
+				B913AEB315B211830050B8DB /* Utils.cpp */,
 				B97E83D715C5D61300D1FE72 /* Transform.h */,
 			);
 			path = common;
@@ -504,6 +510,7 @@
 				B97E83D815C5D61300D1FE72 /* Transform.h in Headers */,
 				B9311CBA15D9681A00307F68 /* Vector3.h in Headers */,
 				B9311CBF15D9694700307F68 /* Precision.h in Headers */,
+				B9B3C23C15DACB5A006122E0 /* PhysicalFeature.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,6 +745,7 @@
 				B9D1F873158EB8B3000337BB /* SimulatedObject.cpp in Sources */,
 				B93704FF15D2DF310042B36B /* World.cpp in Sources */,
 				B9311CBD15D9682B00307F68 /* Vector3.cpp in Sources */,
+				B9B3C23F15DACB67006122E0 /* PhysicalFeature.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

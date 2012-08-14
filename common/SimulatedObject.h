@@ -10,6 +10,8 @@
 #define SIMULATEDOBJECT_H
 
 #include <vector>
+#include "Vector3.h"
+#include "PhysicalFeature.h"
 #include "CommonStruct.h"
 #include "Transform.h"
 

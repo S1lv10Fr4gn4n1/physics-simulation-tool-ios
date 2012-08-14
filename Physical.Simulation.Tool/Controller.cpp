@@ -240,7 +240,7 @@ void Controller::pinchDetected(real _scale, real _velocity, bool _began)
         previousZoom = _scale;
     }
     
-    this->objectEdition = NULL;
+//    this->objectEdition = NULL;
 }
 
 void Controller::rotationDetected(real _radians, real _velocity, bool _began)
@@ -254,7 +254,7 @@ void Controller::rotationDetected(real _radians, real _velocity, bool _began)
     }
     previousRadians = _radians;
     
-    this->objectEdition = NULL;
+//    this->objectEdition = NULL;
 }
 
 void Controller::doubleTapOneFingerDetected(real _x, real _y)
@@ -275,7 +275,7 @@ void Controller::doubleTapOneFingerDetected(real _x, real _y)
     delete vector;
     vector = NULL;
     
-    this->objectEdition = NULL;
+//    this->objectEdition = NULL;
 }
 
 void Controller::longPressDetected(real _x, real _y)
@@ -316,20 +316,34 @@ void Controller::createSimulatedObject(TypeObject _typeObject)
     }
     
     SimulatedObject * object = new SimulatedObject();
-    Vector3 * acceleration = MakeVector3(0.0f, -20.0f, 0.0f);
-    Vector3 * position = MakeVector3(0.0f, 0.0f, 0.0f);
-    Vector3 * velocity = MakeVector3(0.0f, -35.0f, 0.0f); // 35 m/s
-    Vector3 * forceAccum = MakeVector3(0.0f, 10.0f, 0.0f);
-    real mass = 20.0f;       // 2 kg
+    // gravitational force (-10 m/s2)
+    Vector3 * acceleration = MakeVector3(0.0f, -10.0f); //- 10 m/s2
+    Vector3 * position = MakeVector3(0.0f, 0.0f);
+    Vector3 * velocity = MakeVector3(getRand(3.0f), 0.0f);
+    Vector3 * forceAccum = MakeVector3(0.0f, 0.0f);
+    real mass = 1.0f;        // 2 kg
     real volume = 1.0f;      // TODO
     real density = 1.0f;     // TODO
-    real damping = 0.01f;    // TODO
-    object->setPhysicalFeature(MakePhysicalFeature(mass, volume, density, damping,
-                                                   acceleration, position, velocity, forceAccum));
+    real damping = 0.9f;     // TODO revise: change for drag forces
+    
+    PhysicalFeature * physicalFeature = PhysicalFeature::MakePhysicalFeature(mass, volume, density,
+                                                                             damping, acceleration,
+                                                                             position, velocity, forceAccum);
+    object->setPhysicalFeature(physicalFeature);
     object->setColorAux(MakeRandonColor());
     object->setMode(GL_TRIANGLE_FAN);
     
     this->mainEngine->makeSimulatedObject(object, _typeObject);
+
+    // TODO for Tests
+//    float x = rand() % 3;
+//    x =  x == 2 ? x : -x;
+//
+//    float y = rand() % 2;
+//    y =  y == 2 ? y : -y;
+//    Vector3 *v = MakeVector3(getRand(x), getRand(y));
+//    this->mainEngine->translateSimulatedObject(object, v);
+//    this->mainEngine->updatePositionSimulatedObject(object, v);
 }
 
 void Controller::clearSimularion()

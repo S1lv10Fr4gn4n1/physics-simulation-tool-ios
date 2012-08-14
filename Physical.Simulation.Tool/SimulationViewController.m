@@ -33,7 +33,7 @@ static EAGLContext * context;
     GLKView *view = (GLKView *)self.view;
     view.context = context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-
+    
     [self initializeGestureRecognizer: view];
     
     [self setupGL];
@@ -212,7 +212,7 @@ static EAGLContext * context;
 - (void)update
 {
     Controller::getInstance()->updateInformation(self.timeSinceLastDraw);
-//    NSLog(@"frame: %u, fps: %u", self.framesDisplayed, self.framesPerSecond);
+//    NSLog(@"frame: %u, fps: %u, lastDraw: %f", self.framesDisplayed, self.framesPerSecond, self.timeSinceLastDraw);
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect

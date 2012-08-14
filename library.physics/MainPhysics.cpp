@@ -34,14 +34,14 @@ void MainPhysics::updateFeatures(SimulatedObject * _simulatedObject, real _durat
     // update linear position.
     physicalFeature->position->addScaledVector(physicalFeature->velocity, _duration);
     
-    // Work out the acceleration from the force.
+    // work out the acceleration from the force.
     Vector3 * resultingAcc = physicalFeature->acceleration;
     resultingAcc->addScaledVector(physicalFeature->forceAccum, physicalFeature->inverseMass);
     
-    // Update linear velocity from the acceleration.
+    // update linear velocity from the acceleration.
     physicalFeature->velocity->addScaledVector(resultingAcc, _duration);
     
-    // Impose drag.
+    // impose drag.
     physicalFeature->velocity->multiplyVectorForValue(real_pow(physicalFeature->damping, _duration));
 
     physicalFeature = NULL;

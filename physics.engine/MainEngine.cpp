@@ -67,7 +67,6 @@ void MainEngine::updateInformation(real _duration)
     }
     
     SimulatedObject * object = NULL;
-    _duration = _duration * 0.001f;
     
     for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
         object = this->world->getSimulatedObjects()->at(i);
@@ -82,7 +81,13 @@ void MainEngine::updateInformation(real _duration)
 
         // mainEngine(this) translate object
         this->translateSimulatedObject(object, object->getPhysicalFeature()->position);
-        printf("position-> x: %f, y: %f, z: %f \n", object->getPhysicalFeature()->position->x, object->getPhysicalFeature()->position->y, object->getPhysicalFeature()->position->z);
+        
+        // TODO revise
+        // remove objects that left the scene
+        if (real_fabsf(object->getPhysicalFeature()->position->x) >= 4.0f ||
+            real_fabsf(object->getPhysicalFeature()->position->y) >= 3.0f) {
+            this->deleteSimulatedObject(object);
+        }
     }
     
     object = NULL;
