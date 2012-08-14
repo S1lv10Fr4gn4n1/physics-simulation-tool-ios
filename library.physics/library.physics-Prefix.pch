@@ -1,8 +1,0 @@
-//
-// Prefix header for all source files of the 'library.physics' target in the 'library.physics' project
-//
-
-// TODO revise
-//#ifdef __OBJC__
-//    #import <Foundation/Foundation.h>
-//#endif

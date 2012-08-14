@@ -33,7 +33,6 @@
 		B94B371415864AD7004AAB28 /* MainEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B94B371115864AD7004AAB28 /* MainEngine.cpp */; };
 		B94B371515864AD7004AAB28 /* MainEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = B94B371215864AD7004AAB28 /* MainEngine.h */; };
 		B94B371615864AD7004AAB28 /* PhysicsEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = B94B371315864AD7004AAB28 /* PhysicsEngine.h */; };
-		B94B371C1586BAA3004AAB28 /* physics.engine-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = B94B371B1586BAA3004AAB28 /* physics.engine-Prefix.pch */; };
 		B97E83D815C5D61300D1FE72 /* Transform.h in Headers */ = {isa = PBXBuildFile; fileRef = B97E83D715C5D61300D1FE72 /* Transform.h */; };
 		B98DACCB158ABCFA00417C21 /* NDC.h in Headers */ = {isa = PBXBuildFile; fileRef = B98DACCA158ABCFA00417C21 /* NDC.h */; };
 		B98DACCE158ABD0A00417C21 /* NDC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B98DACCD158ABD0A00417C21 /* NDC.cpp */; };
@@ -175,14 +174,12 @@
 		B94B36C115864775004AAB28 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B94B36D0158647FE004AAB28 /* physics.engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = physics.engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B94B36DF1586481C004AAB28 /* library.graphic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = library.graphic.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B94B36E31586481C004AAB28 /* library.graphic-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "library.graphic-Prefix.pch"; sourceTree = "<group>"; };
 		B94B370815864914004AAB28 /* MainStoryboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		B94B370C15864977004AAB28 /* SimulationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulationViewController.h; sourceTree = "<group>"; };
 		B94B370F15864A94004AAB28 /* MainStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		B94B371115864AD7004AAB28 /* MainEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainEngine.cpp; sourceTree = "<group>"; };
 		B94B371215864AD7004AAB28 /* MainEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainEngine.h; sourceTree = "<group>"; };
 		B94B371315864AD7004AAB28 /* PhysicsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEngine.h; sourceTree = "<group>"; };
-		B94B371B1586BAA3004AAB28 /* physics.engine-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "physics.engine-Prefix.pch"; sourceTree = "<group>"; };
 		B97E83D715C5D61300D1FE72 /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Transform.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B98DACCA158ABCFA00417C21 /* NDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NDC.h; path = ../library.graphic/NDC.h; sourceTree = "<group>"; };
 		B98DACCD158ABD0A00417C21 /* NDC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NDC.cpp; path = ../library.graphic/NDC.cpp; sourceTree = "<group>"; };
@@ -193,9 +190,7 @@
 		B9B350A01586BCED00180CE7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		B9B350A21586BCFE00180CE7 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B9B350B11586BE8C00180CE7 /* library.collision.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = library.collision.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9B350B51586BE8C00180CE7 /* library.collision-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "library.collision-Prefix.pch"; sourceTree = "<group>"; };
 		B9B350C01586BEB200180CE7 /* library.physics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = library.physics.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9B350C41586BEB200180CE7 /* library.physics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "library.physics-Prefix.pch"; sourceTree = "<group>"; };
 		B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryCollision.h; sourceTree = "<group>"; };
 		B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryPhysics.h; sourceTree = "<group>"; };
 		B9B350DC1586C15C00180CE7 /* SimulationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimulationViewController.m; sourceTree = "<group>"; };
@@ -207,7 +202,6 @@
 		B9C5325A159950040098C0A6 /* albert.icon.114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.114x114.png; path = resources/images/albert.icon.114x114.png; sourceTree = SOURCE_ROOT; };
 		B9C5325B159950040098C0A6 /* albert.icon.144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.144x144.png; path = resources/images/albert.icon.144x144.png; sourceTree = SOURCE_ROOT; };
 		B9D1F857158E923F000337BB /* common.feature.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = common.feature.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9D1F85B158E923F000337BB /* common-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "common-Prefix.pch"; sourceTree = "<group>"; };
 		B9D1F862158E929E000337BB /* CommonStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonStruct.h; sourceTree = "<group>"; };
 		B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = SimulatedObject.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B9D1F870158EB8B3000337BB /* SimulatedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatedObject.h; sourceTree = "<group>"; };
@@ -370,17 +364,8 @@
 				B93ACE9715A3AC8000CED06E /* Selection.cpp */,
 				B98DACCA158ABCFA00417C21 /* NDC.h */,
 				B98DACCD158ABD0A00417C21 /* NDC.cpp */,
-				B94B36D3158647FE004AAB28 /* Supporting Files */,
 			);
 			path = physics.engine;
-			sourceTree = "<group>";
-		};
-		B94B36D3158647FE004AAB28 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B94B371B1586BAA3004AAB28 /* physics.engine-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B94B36E11586481C004AAB28 /* library.graphic */ = {
@@ -392,17 +377,8 @@
 				B9DD92C01586FE500029A4A3 /* MainGraphic.cpp */,
 				B9B350961586BBB600180CE7 /* Shader.h */,
 				B9B350951586BBB600180CE7 /* Shader.cpp */,
-				B94B36E21586481C004AAB28 /* Supporting Files */,
 			);
 			path = library.graphic;
-			sourceTree = "<group>";
-		};
-		B94B36E21586481C004AAB28 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B94B36E31586481C004AAB28 /* library.graphic-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B9B350B31586BE8C00180CE7 /* library.collision */ = {
@@ -411,17 +387,8 @@
 				B9B350CB1586BEEF00180CE7 /* LibraryCollision.h */,
 				B9DD97321586E06600E6DD9B /* MainCollision.h */,
 				B9DD97341586E07E00E6DD9B /* MainCollision.cpp */,
-				B9B350B41586BE8C00180CE7 /* Supporting Files */,
 			);
 			path = library.collision;
-			sourceTree = "<group>";
-		};
-		B9B350B41586BE8C00180CE7 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B9B350B51586BE8C00180CE7 /* library.collision-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B9B350C21586BEB200180CE7 /* library.physics */ = {
@@ -430,17 +397,8 @@
 				B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */,
 				B9DD97361586E20800E6DD9B /* MainPhysics.h */,
 				B9DD97381586E21100E6DD9B /* MainPhysics.cpp */,
-				B9B350C31586BEB200180CE7 /* Supporting Files */,
 			);
 			path = library.physics;
-			sourceTree = "<group>";
-		};
-		B9B350C31586BEB200180CE7 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B9B350C41586BEB200180CE7 /* library.physics-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B9C5324A1599461D0098C0A6 /* image */ = {
@@ -477,17 +435,8 @@
 				B9D1F872158EB8B3000337BB /* World.h */,
 				B9D1F871158EB8B3000337BB /* World.cpp */,
 				B97E83D715C5D61300D1FE72 /* Transform.h */,
-				B9D1F85A158E923F000337BB /* Supporting Files */,
 			);
 			path = common;
-			sourceTree = "<group>";
-		};
-		B9D1F85A158E923F000337BB /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B9D1F85B158E923F000337BB /* common-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B9DD972D1586DF4C00E6DD9B /* Shaders */ = {
@@ -508,7 +457,6 @@
 			files = (
 				B94B371515864AD7004AAB28 /* MainEngine.h in Headers */,
 				B94B371615864AD7004AAB28 /* PhysicsEngine.h in Headers */,
-				B94B371C1586BAA3004AAB28 /* physics.engine-Prefix.pch in Headers */,
 				B9D1F863158E929E000337BB /* CommonStruct.h in Headers */,
 				B93ACE9515A3AC7100CED06E /* Selection.h in Headers */,
 			);
@@ -945,7 +893,7 @@
 				EXECUTABLE_PREFIX = "";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "physics.engine/physics.engine-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -959,7 +907,7 @@
 				EXECUTABLE_PREFIX = "";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "physics.engine/physics.engine-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -973,7 +921,6 @@
 				EXECUTABLE_PREFIX = "";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "library.graphic/library.graphic-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -987,7 +934,6 @@
 				EXECUTABLE_PREFIX = "";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "library.graphic/library.graphic-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1001,7 +947,6 @@
 				EXECUTABLE_PREFIX = "";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "library.collision/library.collision-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1015,7 +960,6 @@
 				EXECUTABLE_PREFIX = "";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "library.collision/library.collision-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1029,7 +973,6 @@
 				EXECUTABLE_PREFIX = "";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "library.physics/library.physics-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1043,7 +986,6 @@
 				EXECUTABLE_PREFIX = "";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "library.physics/library.physics-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1056,7 +998,6 @@
 				DSTROOT = /tmp/common.dst;
 				EXECUTABLE_PREFIX = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "common/common-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1069,7 +1010,6 @@
 				DSTROOT = /tmp/common.dst;
 				EXECUTABLE_PREFIX = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "common/common-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
