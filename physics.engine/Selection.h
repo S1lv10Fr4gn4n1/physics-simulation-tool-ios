@@ -15,7 +15,7 @@ class Selection {
 private:
     
 public:
-    static SimulatedObject * selectSimulatedObject(World * _world, Pointer * _pointer);
+    static SimulatedObject * selectSimulatedObject(World * _world, Vector3 * _vector);
 };
 
 #endif

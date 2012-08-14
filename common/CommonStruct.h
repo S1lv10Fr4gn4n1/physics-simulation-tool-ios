@@ -13,6 +13,7 @@
 #define COUNT_COORD 3
 
 #include <stdlib.h>
+#include "Vector3.h"
 
 /// Enumations
 enum TypeObject {
@@ -24,21 +25,15 @@ enum TypeObject {
     SPRINGS,
     STRING,
     ENGINE,
-    PLAN
-};
-
-struct Pointer {
-    float x;
-    float y;
-    float z;
-    float w;
+    PLAN,
+    TEST
 };
 
 struct Color {
     unsigned char r, g, b, a;
 };
 
-static const float colorBBox[16] = {
+static const real colorBBox[16] = {
     255, 255, 255, 1,
     255, 255, 255, 1,
     255, 255, 255, 1,
@@ -46,14 +41,14 @@ static const float colorBBox[16] = {
 };
 
 struct BBox {
-    Pointer * min;
-    Pointer * max;
-    float * ptr;
-    const float * color;
+    Vector3 * min;
+    Vector3 * max;
+    real * ptr;
+    const real * color;
     
     BBox() {
-        this->min = new Pointer();
-        this->max = new Pointer();
+        this->min = new Vector3();
+        this->max = new Vector3();
         this->ptr = NULL;
         this->color = colorBBox;
     }
@@ -68,52 +63,85 @@ struct BBox {
 };
 
 struct PhysicalFeature {
-    float mass;
-    float volume;
-    float density;
-    float acceleration;
-    float speed;
+    real mass;
+    real volume;
+    real density;
+    real inverseMass;
+    real damping;
+    Vector3 * position;
+    Vector3 * acceleration;
+    Vector3 * velocity;
+    Vector3 * forceAccum;
+
+    PhysicalFeature() {
+        this->position = new Vector3();
+        this->acceleration = new Vector3();
+        this->velocity = new Vector3();
+        this->forceAccum = new Vector3();
+        this->mass = 0;
+        this->volume = 0;
+        this->density = 0;
+        this->inverseMass = 0;
+        this->damping = 0;
+        
+    }
+    
+    ~PhysicalFeature() {
+        delete this->position;
+        delete this->acceleration;
+        delete this->velocity;
+        delete this->forceAccum;
+        this->position = NULL;
+        this->acceleration = NULL;
+        this->velocity = NULL;
+        this->forceAccum = NULL;
+    }
 };
 
-static inline Pointer * MakePointer(float _x, float _y, float _z, float _w)
+static inline Vector3 * MakeVector3(real _x, real _y, real _z)
 {
-    Pointer * pointer = new Pointer();
-    pointer->x = _x;
-    pointer->y = _y;
-    pointer->z = _z;
-    pointer->w = _w;
+    Vector3 * vector = new Vector3();
+    vector->x = _x;
+    vector->y = _y;
+    vector->z = _z;
     
-    return pointer;
+    return vector;
 }
 
-static inline Pointer * MakePointer(float _x, float _y, float _z)
+static inline Vector3 * MakeVector3(real _x, real _y)
 {
-    return MakePointer(_x, _y, _z, 1.0f);
+    return MakeVector3(_x, _y, 0.0f);
 }
 
-static inline Pointer * MakePointer(float _x, float _y)
+static inline Vector3 * MakeVector3(Vector3 * _vector)
 {
-    return MakePointer(_x, _y, 0.0f, 1.0f);
+    return MakeVector3(_vector->x, _vector->y, _vector->z);
 }
 
-static inline Pointer * MakePointer(Pointer * _pointer)
-{
-    return MakePointer(_pointer->x, _pointer->y, _pointer->z, _pointer->w);
-}
-
-static inline PhysicalFeature * MakePhysicalFeature(float _mass, float _volume, float _density, float _acceleration, float _speed)
+static inline PhysicalFeature * MakePhysicalFeature(real _mass,
+                                                    real _volume,
+                                                    real _density,
+                                                    real _damping,
+                                                    Vector3 * _acceleration,
+                                                    Vector3 * _position,
+                                                    Vector3 * _velocity,
+                                                    Vector3 * _forceAccum)
 {
     PhysicalFeature * pf = new PhysicalFeature();
     pf->mass = _mass;
     pf->volume = _volume;
     pf->density = _density;
+    pf->inverseMass = ((real)1.0)/_mass;
+    pf->damping = _damping;
     pf->acceleration = _acceleration;
-    pf->speed = _speed;
+    pf->velocity = _velocity;
+    pf->position = _position;
+    pf->forceAccum = _forceAccum;
     
     return pf;
 }
 
-static inline Color * MakeColor(float _r, float _g, float _b, float _a)
+static inline Color * MakeColor(real _r, real _g, real _b, real _a)
 {
     Color * color = new Color();
     color->r = _r;

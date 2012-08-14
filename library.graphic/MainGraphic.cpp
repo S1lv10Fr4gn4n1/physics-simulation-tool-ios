@@ -16,8 +16,13 @@ MainGraphic::MainGraphic()
 
 MainGraphic::~MainGraphic()
 {
-    delete this->shader;
-    delete this->simulatedObjectDrawn;
+    if (this->shader) {
+        delete this->shader;
+    }
+    if (this->simulatedObjectDrawn) {
+        delete this->simulatedObjectDrawn;
+    }
+
     this->shader = NULL;
     this->simulatedObjectDrawn = NULL;
 }
@@ -52,28 +57,28 @@ void MainGraphic::MainGraphic::draw(World * _world)
         glEnableVertexAttribArray(ATTRIB_COLOR);
         
         // Update attribute values.
-        glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getPointers());
+        glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getVectors());
         glEnableVertexAttribArray(ATTRIB_VERTEX);
         
         glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation());
         glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
 
-        glDrawArrays(this->simulatedObjectDrawn->getMode(), 0, this->simulatedObjectDrawn->getPointersAux()->size());
+        glDrawArrays(this->simulatedObjectDrawn->getMode(), 0, this->simulatedObjectDrawn->getVectorsAux()->size());
         
                 
         if (this->simulatedObjectDrawn->isSelected()) {
             // define color for points
-            glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, this->simulatedObjectDrawn->getColorPoints());
+            glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, this->simulatedObjectDrawn->getColorVectors());
             glEnableVertexAttribArray(ATTRIB_COLOR);
             
             // Update attribute values.
-            glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getPointers());
+            glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getVectors());
             glEnableVertexAttribArray(ATTRIB_VERTEX);
             
             glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation());
             glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
             
-            glDrawArrays(GL_POINTS, 0, this->simulatedObjectDrawn->getPointersAux()->size());
+            glDrawArrays(GL_POINTS, 0, this->simulatedObjectDrawn->getVectorsAux()->size());
         }
         
         if (this->simulatedObjectDrawn->isShowBBox()) {

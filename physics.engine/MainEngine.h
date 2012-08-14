@@ -10,6 +10,8 @@
 #define MAINENGINE_H
 
 #include "Commons.h"
+#include "LibraryCollision.h"
+#include "LibraryPhysics.h"
 #include "Selection.h"
 #include "NDC.h"
 #include <vector>
@@ -17,6 +19,10 @@
 class MainEngine {
 private:
     World * world;
+    
+    MainPhysics * mainPhysics;
+    MainCollision * mainCollision;
+    
     bool running;
     
     NDC * ndc;
@@ -29,24 +35,26 @@ public:
     void stop();
     bool isRunning();
     
-    void updateInformation();
+    void updateInformation(real _duration);
     
     // WORLD
     World * getWorld();
-    void zoom(float _scale);
-    void pan(float _scaleX, float _scaleY);
-    void rotatedScreen(float _width, float _height);
+    void zoom(real _scale);
+    void pan(real _scaleX, real _scaleY);
+    void rotatedScreen(real _width, real _height);
     
     // SIMULATED OBJECT
-    void scaleSimulatedObject(SimulatedObject * _simulatedObject, float _scale);
-    void rotateSimulatedObject(SimulatedObject * _simulatedObject, float _radians);
-    void translateSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer);
+    void scaleSimulatedObject(SimulatedObject * _simulatedObject, real _scale);
+    void rotateSimulatedObject(SimulatedObject * _simulatedObject, real _radians);
+    void translateSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector);
 
+    void updatePositionSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector);
+    
     void deleteAllSimulatedObjects();
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
     void makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObject typeObject);
     
-    SimulatedObject * selectedSimulatedObject(Pointer * _pointer);
+    SimulatedObject * selectedSimulatedObject(Vector3 * _vector);
 };
 
 #endif

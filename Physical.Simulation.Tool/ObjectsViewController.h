@@ -14,6 +14,8 @@
 
 - (IBAction)actionStartSimulation:(id)sender;
 
+- (IBAction)actionEditSimulation:(id)sender;
+
 - (IBAction)actionCircle:(id)sender;
 
 - (IBAction)actionSquare:(id)sender;

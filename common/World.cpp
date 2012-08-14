@@ -14,7 +14,7 @@ World::World()
 {
     this->simulatedObjects = new vector<SimulatedObject *>();
 
-    this->orthoMatrix = new float[16];
+    this->orthoMatrix = new real[16];
     MatrixTransformIdentity(&this->orthoMatrix);
 }
 
@@ -29,10 +29,13 @@ World::~World()
             delete simulatedObject;
             simulatedObject = NULL;
         }
+        
+        delete this->simulatedObjects;
     }
     
-    delete this->simulatedObjects;
-    delete [] this->orthoMatrix;
+    if (this->orthoMatrix) {
+        delete [] this->orthoMatrix;
+    }
     
     this->simulatedObjects = NULL;
     this->orthoMatrix = NULL;
@@ -73,12 +76,12 @@ std::vector<SimulatedObject *> * World::getSimulatedObjects()
     return this->simulatedObjects;
 }
 
-void World::setOrthoMatrix(float * _matrix)
+void World::setOrthoMatrix(real * _matrix)
 {
     this->orthoMatrix = _matrix;
 }
 
-float * World::getOrthoMatrix()
+real * World::getOrthoMatrix()
 {
     return this->orthoMatrix;
 }

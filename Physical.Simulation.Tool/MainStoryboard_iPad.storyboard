@@ -124,7 +124,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                                 <rect key="frame" x="716" y="642" width="140" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Spy">
+                                <state key="normal" title="Edit Simulation">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -132,7 +132,8 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="rfh-aL-hFg" kind="modal" modalTransitionStyle="partialCurl" id="Gij-PE-Lom"/>
+                                    <action selector="actionEditSimulation:" destination="e8d-nP-3Fj" eventType="touchUpInside" id="U8E-af-jeI"/>
+                                    <segue destination="rfh-aL-hFg" kind="modal" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="pJJ-C1-tnJ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0vo-GU-c9z">
@@ -296,6 +297,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
             <relationships>
                 <relationship kind="action" name="actionCircle:"/>
                 <relationship kind="action" name="actionClearSimulation:"/>
+                <relationship kind="action" name="actionEditSimulation:"/>
                 <relationship kind="action" name="actionSquare:"/>
                 <relationship kind="action" name="actionStartSimulation:"/>
                 <relationship kind="action" name="actionSurfaceScene:"/>
@@ -308,11 +310,8 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
         <class className="SimulationViewController" superclassName="GLKViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SimulationViewController.h"/>
             <relationships>
-                <relationship kind="action" name="doubleTapOneFingerDetected:" candidateClass="UIGestureRecognizer"/>
                 <relationship kind="action" name="doubleTapTwoFingerDetected:" candidateClass="UIGestureRecognizer"/>
-                <relationship kind="action" name="longPressDetected:" candidateClass="UIGestureRecognizer"/>
                 <relationship kind="action" name="oneTapThreeFingerDetected:" candidateClass="UIGestureRecognizer"/>
-                <relationship kind="action" name="pinchDetected:" candidateClass="UIGestureRecognizer"/>
                 <relationship kind="action" name="rotationDetected:" candidateClass="UIGestureRecognizer"/>
             </relationships>
         </class>
@@ -326,6 +325,6 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Gij-PE-Lom"/>
+        <segue reference="pJJ-C1-tnJ"/>
     </inferredMetricsTieBreakers>
 </document>

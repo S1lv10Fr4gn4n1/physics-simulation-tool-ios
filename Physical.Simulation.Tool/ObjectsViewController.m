@@ -13,7 +13,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+}
+
+- (void)startSimulation:(NSTimer*)theTimer
+{
+    Controller::getInstance()->startSimulation();
+    NSLog(@"Start Simulation ...");
 }
 
 - (void)viewDidUnload
@@ -30,6 +35,20 @@
 - (IBAction)actionStartSimulation:(id)sender 
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+
+    // start simulation after 3 seconds
+    [NSTimer scheduledTimerWithTimeInterval:3
+                                     target:self
+                                   selector:@selector(startSimulation:)
+                                   userInfo:NULL
+                                    repeats:NO];
+
+}
+
+- (IBAction)actionEditSimulation:(id)sender
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    Controller::getInstance()->editSimulation();
 }
 
 - (IBAction)actionCircle:(id)sender

@@ -22,23 +22,32 @@ NDC::NDC()
 
 NDC::~NDC()
 {
-    delete this->maxWindow;
-    delete this->minWindow;
-    delete this->maxOrtho;
-    delete this->minOrtho;
+    if (this->maxWindow) {
+        delete this->maxWindow;
+    }
+    if (this->minWindow) {
+        delete this->minWindow;
+    }
+    if (this->maxOrtho) {
+        delete this->maxOrtho;
+    }
+    if (this->minOrtho) {
+        delete this->minOrtho;
+    }
+
     this->maxWindow = NULL;
     this->minWindow = NULL;
     this->maxOrtho = NULL;
     this->minOrtho = NULL;
 }
 
-void NDC::calcNDCCoordinates(float * _x, float * _y)
+void NDC::calcNDCCoordinates(real * _x, real * _y)
 {
     *_x = *_x * ((this->getRight() - this->getLeft()) / this->width) + this->getLeft();
     *_y = *_y * ((this->getBottom() - this->getTop()) / this->height) + this->getTop();    
 }
 
-void NDC::update(float _width, float _height)
+void NDC::update(real _width, real _height)
 {
     this->width = _width;
     this->height = _height;
@@ -46,67 +55,67 @@ void NDC::update(float _width, float _height)
     this->aspect = fabsf(this->width / this->height);
     
     if (this->maxOrtho == NULL) {
-        this->maxOrtho = MakePointer(1, 1);
+        this->maxOrtho = MakeVector3(1, 1);
     }
     
     if (this->minOrtho == NULL) {
-        this->minOrtho = MakePointer(-1, -1);
+        this->minOrtho = MakeVector3(-1, -1);
     }
     
     if (this->maxWindow) {
         delete this->maxWindow;
     }
-    this->maxWindow = MakePointer(this->width, this->height);
+    this->maxWindow = MakeVector3(this->width, this->height);
     
     if (this->minWindow == NULL) {
-        this->minWindow = MakePointer(0, 0);
+        this->minWindow = MakeVector3(0, 0);
     }
 
     this->setLeft(-this->aspect);
     this->setRight(this->aspect);
 }
 
-float NDC::getAspect()
+real NDC::getAspect()
 {
     return this->aspect;
 }
 
-float NDC::getLeft()
+real NDC::getLeft()
 {
     return this->minOrtho->x;
 }
 
-void  NDC::setLeft(float _left)
+void  NDC::setLeft(real _left)
 {
     this->minOrtho->x = _left;
 }
 
-float NDC::getRight()
+real NDC::getRight()
 {
     return this->maxOrtho->x;
 }
 
-void NDC::setRight(float _right)
+void NDC::setRight(real _right)
 {
     this->maxOrtho->x = _right;
 }
 
-float NDC::getTop()
+real NDC::getTop()
 {
     return this->maxOrtho->y;
 }
 
-void NDC::setTop(float _top)
+void NDC::setTop(real _top)
 {
     this->maxOrtho->y = _top;
 }
 
-float NDC::getBottom()
+real NDC::getBottom()
 {
     return this->minOrtho->y;
 }
 
-void NDC::setBottom(float _bottom)
+void NDC::setBottom(real _bottom)
 {
     this->minOrtho->y = _bottom;
 }

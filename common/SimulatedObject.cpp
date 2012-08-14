@@ -16,16 +16,16 @@ SimulatedObject::SimulatedObject()
     this->selected = false;
     this->immovable = false;
     
-    this->pointersAux = new vector<Pointer *>();
-    this->pointers = NULL;
+    this->vectorsAux = new vector<Vector3 *>();
+    this->vectors = NULL;
     
     this->colorAux = NULL;
     this->color = NULL;
-    this->colorPoints = NULL;
+    this->colorVectors = NULL;
     
     this->physicalFeature = NULL;
 
-    this->matrixTransformation = new float[16];
+    this->matrixTransformation = new real[16];
     MatrixTransformIdentity(&this->matrixTransformation);
     
     this->joinsSimulatedObject = NULL;
@@ -37,14 +37,14 @@ SimulatedObject::SimulatedObject()
 
 SimulatedObject::~SimulatedObject()
 {
-    if (this->pointersAux && this->pointersAux->size() > 0) {
-        Pointer * pointer = NULL;
-        for (int i=0; i < this->pointersAux->size(); i++) {
-            pointer = this->pointersAux->at(i);
-            delete pointer;
-            pointer = NULL;
+    if (this->vectorsAux && this->vectorsAux->size() > 0) {
+        Vector3 * vector = NULL;
+        for (int i=0; i < this->vectorsAux->size(); i++) {
+            vector = this->vectorsAux->at(i);
+            delete vector;
+            vector = NULL;
         }
-        this->pointersAux->clear();
+        this->vectorsAux->clear();
     }
     
     if (this->joinsSimulatedObject && this->joinsSimulatedObject->size() > 0) {
@@ -56,68 +56,85 @@ SimulatedObject::~SimulatedObject()
         }
         this->joinsSimulatedObject->clear();
     }
-        
-    delete this->pointersAux;
-    delete [] this->pointers;
-    delete this->physicalFeature;
-    delete [] this->color;
-    delete [] this->colorPoints;
-    delete this->colorAux;
-    delete this->bbox;
-    delete this->matrixTransformation;
     
-    this->pointersAux = NULL;
-    this->pointers = NULL;
+    if (this->vectorsAux) {
+        delete this->vectorsAux;
+    }
+    if (this->vectors) {
+        delete [] this->vectors;
+    }
+    if (this->physicalFeature) {
+        delete this->physicalFeature;
+    }
+    if (this->color) {
+        delete [] this->color;
+    }
+    if (this->colorVectors) {
+        delete [] this->colorVectors;
+    }
+    if (this->colorAux) {
+        delete this->colorAux;
+    }
+    if (this->bbox) {
+        delete this->bbox;
+    }
+    if (this->matrixTransformation) {
+        delete this->matrixTransformation;
+    }
+    
+    this->vectorsAux = NULL;
+    this->vectors = NULL;
     this->physicalFeature = NULL;
     this->color = NULL;
-    this->colorPoints = NULL;
+    this->colorVectors = NULL;
     this->colorAux = NULL;
     this->bbox = NULL;
     this->matrixTransformation = NULL;
+    this->joinsSimulatedObject = NULL;
 }
 
-void SimulatedObject::initBBox(float * _matrix)
+void SimulatedObject::initBBox(real * _matrix)
 {
-    Pointer * pointer = NULL;
-    Pointer * pointerAux = NULL;
+    Vector3 * vector = NULL;
+    Vector3 * vectorAux = NULL;
     
-    for(int i=0; i < this->pointersAux->size(); i++) {
-		pointerAux = this->pointersAux->at(i);
+    for(int i=0; i < this->vectorsAux->size(); i++) {
+		vectorAux = this->vectorsAux->at(i);
         
-        pointer = MatrixTransformPoint(this->matrixTransformation, pointerAux);
+        vector = MatrixTransformPoint(this->matrixTransformation, vectorAux);
 		
 		//definindo o maior X
-		if (pointer->x > this->bbox->max->x) {
-			this->bbox->max->x = pointer->x;
+		if (vector->x > this->bbox->max->x) {
+			this->bbox->max->x = vector->x;
 		}
 		
 		//definindo o menor X
-		if (pointer->x < this->bbox->min->x) {
-			this->bbox->min->x = pointer->x;
+		if (vector->x < this->bbox->min->x) {
+			this->bbox->min->x = vector->x;
 		}
 		
 		//definindo o maior Y
-		if (pointer->y > this->bbox->max->y) {
-			this->bbox->max->y = pointer->y;
+		if (vector->y > this->bbox->max->y) {
+			this->bbox->max->y = vector->y;
 		}
 		
 		//definindo o menor Y
-		if (pointer->y < this->bbox->min->y) {
-			this->bbox->min->y = pointer->y;
+		if (vector->y < this->bbox->min->y) {
+			this->bbox->min->y = vector->y;
 		}
         
 		//definindo o maior Z
-		if (pointer->z > this->bbox->max->z) {
-			this->bbox->max->z = pointer->z;
+		if (vector->z > this->bbox->max->z) {
+			this->bbox->max->z = vector->z;
 		}
 		
 		//definindo o menor Z
-		if (pointer->z < this->bbox->min->z) {
-			this->bbox->min->z = pointer->z;
+		if (vector->z < this->bbox->min->z) {
+			this->bbox->min->z = vector->z;
 		}
         
-        delete pointer;
-        pointer = NULL;
+        delete vector;
+        vector = NULL;
 	}
     
     this->makeBBox();
@@ -125,72 +142,72 @@ void SimulatedObject::initBBox(float * _matrix)
 
 void SimulatedObject::initialize()
 {
-    this->makePointers();
+    this->makeVectors();
     this->makeColorObject();
-    this->makeColorPoints();
+    this->makeColorVectors();
     this->initBBox(this->matrixTransformation);
 }
 
-void SimulatedObject::addPointer(Pointer * _pointer)
+void SimulatedObject::addVector3(Vector3 * Vector3)
 {
-    this->pointersAux->push_back(_pointer);
+    this->vectorsAux->push_back(Vector3);
 }
 
-void SimulatedObject::deletePointer(Pointer * _pointer)
+void SimulatedObject::deleteVector3(Vector3 * _vector)
 {
-    Pointer * pointer = NULL;
+    Vector3 * vector = NULL;
     
-    for (int i=0; 0<this->pointersAux->size(); i++) {
-        pointer = this->pointersAux->at(i);
+    for (int i=0; 0<this->vectorsAux->size(); i++) {
+        vector = this->vectorsAux->at(i);
         
-        if (pointer->x == _pointer->x &&
-            pointer->y == _pointer->y &&
-            pointer->z == _pointer->z) {
-            delete pointer;
-            pointer = NULL;
-            this->pointersAux->erase(this->pointersAux->begin()+i);
+        if (vector->x == _vector->x &&
+            vector->y == _vector->y &&
+            vector->z == _vector->z) {
+            delete vector;
+            vector = NULL;
+            this->vectorsAux->erase(this->vectorsAux->begin()+i);
             
             break;
         }
     }
     
-    this->makePointers();
+    this->makeVectors();
     this->initBBox(this->matrixTransformation);
 }
 
-void SimulatedObject::addAllPointers(std::vector<Pointer *> * _pointers)
+void SimulatedObject::addAllVectors(std::vector<Vector3 *> * _vectors)
 {
-    if (this->pointersAux && this->pointersAux->size()) {
-        this->pointersAux->clear();
+    if (this->vectorsAux && this->vectorsAux->size()) {
+        this->vectorsAux->clear();
     }
     
-    this->pointersAux = _pointers;
+    this->vectorsAux = _vectors;
 }
 
-void SimulatedObject::makePointers()
+void SimulatedObject::makeVectors()
 {
-    // initialize array of float for drawing
-    if (this->pointers) {
-        delete [] this->pointers;
-        this->pointers = NULL;
+    // initialize array of real for drawing
+    if (this->vectors) {
+        delete [] this->vectors;
+        this->vectors = NULL;
     }
     
-    this->pointers = new float[this->pointersAux->size()*COUNT_COORD];
+    this->vectors = new real[this->vectorsAux->size()*COUNT_COORD];
     int index = 0;
-    Pointer * pointer = NULL;
+    Vector3 * vector = NULL;
     
-    for (int i=0; i<this->pointersAux->size(); i++) {
-        pointer = this->pointersAux->at(i);
+    for (int i=0; i<this->vectorsAux->size(); i++) {
+        vector = this->vectorsAux->at(i);
         index = i*COUNT_COORD;
-        *(this->pointers+index+0) = pointer->x;
-        *(this->pointers+index+1) = pointer->y;
-        *(this->pointers+index+2) = pointer->z;
+        *(this->vectors+index+0) = vector->x;
+        *(this->vectors+index+1) = vector->y;
+        *(this->vectors+index+2) = vector->z;
     }
 }
 
 void SimulatedObject::makeColorObject()
 {
-    int total = this->pointersAux->size()*CHANNEL_COLOR;
+    int total = this->vectorsAux->size()*CHANNEL_COLOR;
     this->color = new unsigned char[total];
     
     for (int i = 0; i < total; i += CHANNEL_COLOR) {
@@ -204,18 +221,18 @@ void SimulatedObject::makeColorObject()
 	}
 }
 
-void SimulatedObject::makeColorPoints()
+void SimulatedObject::makeColorVectors()
 {
-    int total = this->pointersAux->size()*CHANNEL_COLOR;
-    this->colorPoints = new unsigned char[total];
+    int total = this->vectorsAux->size()*CHANNEL_COLOR;
+    this->colorVectors = new unsigned char[total];
     
     for (int i = 0; i < total; i += CHANNEL_COLOR) {
-		this->colorPoints[i]   = 0;
-		this->colorPoints[i+1] = 0;
-		this->colorPoints[i+2] = 0;
+		this->colorVectors[i]   = 0;
+		this->colorVectors[i+1] = 0;
+		this->colorVectors[i+2] = 0;
         
         if (CHANNEL_COLOR == 4) {
-            this->colorPoints[i+3] = 1;
+            this->colorVectors[i+3] = 1;
         }
 	}
 }
@@ -226,7 +243,7 @@ void SimulatedObject::makeBBox()
         delete [] this->bbox->ptr;
         this->bbox->ptr = NULL;
     }
-    this->bbox->ptr = new float[12];
+    this->bbox->ptr = new real[12];
     *(this->bbox->ptr+0) = this->bbox->min->x;
     *(this->bbox->ptr+1) = this->bbox->max->y;
     *(this->bbox->ptr+2) = 0.0f;
@@ -239,17 +256,16 @@ void SimulatedObject::makeBBox()
     *(this->bbox->ptr+9) = this->bbox->min->x;
     *(this->bbox->ptr+10) = this->bbox->min->y;
     *(this->bbox->ptr+11) = 0.0f;
-
 }
 
-float * SimulatedObject::getPointers()
+real * SimulatedObject::getVectors()
 {
-    return this->pointers;
+    return this->vectors;
 }
 
-std::vector<Pointer *> * SimulatedObject::getPointersAux()
+std::vector<Vector3 *> * SimulatedObject::getVectorsAux()
 {
-    return this->pointersAux;
+    return this->vectorsAux;
 }
 
 unsigned char * SimulatedObject::getColor()
@@ -257,9 +273,9 @@ unsigned char * SimulatedObject::getColor()
     return this->color;
 }
 
-unsigned char * SimulatedObject::getColorPoints()
+unsigned char * SimulatedObject::getColorVectors()
 {
-    return this->colorPoints;
+    return this->colorVectors;
 }
 
 void SimulatedObject::setColorAux(Color * _color)
@@ -322,12 +338,12 @@ void SimulatedObject::setSelected(bool _selected)
     this->selected = _selected;
 }
 
-float * SimulatedObject::getMatrixTransformation()
+real * SimulatedObject::getMatrixTransformation()
 {
     return this->matrixTransformation;
 }
 
-void SimulatedObject::setMatrixTransformation(float * _matrix)
+void SimulatedObject::setMatrixTransformation(real * _matrix)
 {
     delete this->matrixTransformation;
     this->matrixTransformation = NULL;

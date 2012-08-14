@@ -15,24 +15,24 @@
 
 class SimulatedObject {
 private:
-    float * pointers;
-    std::vector<Pointer *> * pointersAux;
+    real * vectors;
+    std::vector<Vector3 *> * vectorsAux;
     PhysicalFeature * physicalFeature;
     unsigned char * color;
-    unsigned char * colorPoints;
+    unsigned char * colorVectors;
     Color * colorAux;
     unsigned int mode; // GLenum
     std::vector<SimulatedObject *> * joinsSimulatedObject;
     BBox * bbox;
-    float * matrixTransformation;
+    real * matrixTransformation;
     
     bool showBBox;
     bool selected;
     bool immovable;
     
-    void makePointers();
+    void makeVectors();
     void makeColorObject();
-    void makeColorPoints();
+    void makeColorVectors();
     void makeBBox();
 protected:
     
@@ -41,17 +41,17 @@ public:
     ~SimulatedObject();
     
     void initialize();
-    void initBBox(float * _matrix);
+    void initBBox(real * _matrix);
     
-    void addPointer(Pointer * _pointer);
-    void deletePointer(Pointer * _pointer);
-    void addAllPointers(std::vector<Pointer *> * _pointers);
-    float * getPointers();
+    void addVector3(Vector3 * _vector);
+    void deleteVector3(Vector3 * _vector);
+    void addAllVectors(std::vector<Vector3 *> * _vectors);
+    real * getVectors();
 
-    std::vector<Pointer *> * getPointersAux();
+    std::vector<Vector3 *> * getVectorsAux();
 
     unsigned char * getColor();
-    unsigned char * getColorPoints();
+    unsigned char * getColorVectors();
     
     void setColorAux(Color * _color);
     Color * getColorAux();
@@ -71,8 +71,8 @@ public:
     bool isSelected();
     void setSelected(bool _selected);
     
-    float * getMatrixTransformation();
-    void setMatrixTransformation(float * _matrix);
+    real * getMatrixTransformation();
+    void setMatrixTransformation(real * _matrix);
     
     bool isImmovable();
     void setImmovable(bool _immovable);

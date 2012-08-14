@@ -11,14 +11,14 @@
 Controller * Controller::controller;
 
 // TODO revise: variables for this place is correct?
-float scaleObject = 1.0f;
-float scaleZoom = 1.0f;
-//float scalePanX = 0.0f;
-//float scalePanY = 0.0f;
-float previousRadians = 0.0f;
-float previousZoom = 0.0f;
-float previousScale = 0.0f;
-//Pointer * previousPointer = NULL;
+real scaleObject = 1.0f;
+real scaleZoom = 1.0f;
+//real scalePanX = 0.0f;
+//real scalePanY = 0.0f;
+real previousRadians = 0.0f;
+real previousZoom = 0.0f;
+real previousScale = 0.0f;
+//Vector3 * previousVector3 = NULL;
 
 Controller::Controller()
 {
@@ -47,23 +47,24 @@ void Controller::freeObjects()
 {
     if (this->mainGraphic) {
         delete this->mainGraphic;
-        this->mainGraphic = NULL;
     }
     
     if (this->mainEngine) {
         delete this->mainEngine;
-        this->mainEngine = NULL;
     }
     
     if (this->objectEdition) {
         delete this->objectEdition;
-        this->objectEdition = NULL;
     }
 
     if (this->objectOffset) {
         delete this->objectOffset;
-        this->objectOffset = NULL;
     }
+
+    this->mainGraphic = NULL;
+    this->mainEngine = NULL;
+    this->objectEdition = NULL;
+    this->objectOffset = NULL;
 }
 
 void Controller::initializeContextOpenGLES()
@@ -89,29 +90,16 @@ void Controller::initializeEngine()
     }
     
     this->mainEngine = new MainEngine();
-    this->mainEngine->updateInformation();
-//    TODO revise: identify device and inform value correctly of screen dimension
-//    this->mainEngine->rotatedScreen(1024, 768);
-    this->mainEngine->start();
 }
 
-void Controller::resizeScreen(float _width, float _height)
+void Controller::resizeScreen(real _width, real _height)
 {
     this->mainEngine->rotatedScreen(_width, _height);
 }
 
-void Controller::updateInformation()
+void Controller::updateInformation(real _duration)
 {
-    this->mainEngine->updateInformation();
-}
-
-void Controller::clearSimularion()
-{
-    this->mainEngine->deleteAllSimulatedObjects();
-    this->objectEdition = NULL;
-    this->objectOffset = NULL;
-    this->objectEdition = NULL;
-    this->objectOffset = NULL;
+    this->mainEngine->updateInformation(_duration);
 }
 
 void Controller::draw()
@@ -127,6 +115,11 @@ void Controller::stopSimulation()
 void Controller::startSimulation()
 {
     this->mainEngine->start();
+}
+
+void Controller::editSimulation()
+{
+    // TODO put your code here
 }
 
 bool Controller::isRunning()
@@ -147,28 +140,28 @@ bool Controller::isInitialized()
     return false;
 }
 
-void Controller::touchesBegan(float _x, float _y)
+void Controller::touchesBegan(real _x, real _y)
 {
     // TODO put your code here
 }
 
-void Controller::touchesEnded(float _x, float _y)
+void Controller::touchesEnded(real _x, real _y)
 {
     // TODO put your code here
 }
 
-void Controller::touchesCancelled(float _x, float _y)
+void Controller::touchesCancelled(real _x, real _y)
 {
     // TODO put your code here
 }
 
-void Controller::touchesMoved(float _x, float _y, int countFingers)
+void Controller::touchesMoved(real _x, real _y, int _countFingers)
 {
-    Pointer * pointer = MakePointer(_x, _y);
+    Vector3 * vector = MakeVector3(_x, _y);
 
     // move object
-    if (countFingers == 1) {
-        this->objectOffset = this->mainEngine->selectedSimulatedObject(pointer);
+    if (_countFingers == 1) {
+        this->objectOffset = this->mainEngine->selectedSimulatedObject(vector);
         
         if (this->objectOffset && !this->objectOffset->isImmovable()) {
             if (this->objectEdition) {
@@ -176,43 +169,46 @@ void Controller::touchesMoved(float _x, float _y, int countFingers)
                 this->objectEdition = NULL;
             }
             
-            this->mainEngine->translateSimulatedObject(this->objectOffset, pointer);
+            this->mainEngine->translateSimulatedObject(this->objectOffset, vector);
+            this->mainEngine->updatePositionSimulatedObject(this->objectOffset, vector);
         }
+        
+        this->objectOffset = NULL;
     }
     
 //    TODO revise: pan
 //    move scene
 //    if (countFingers == 2) {
-//        if (previousPointer) {
-//            if (previousPointer->x > pointer->x) {
+//        if (previousVector) {
+//            if (previousVector->x > vector->x) {
 //                scalePanX -= 0.009;
-//            } else if (previousPointer->x < pointer->x) {
+//            } else if (previousVector->x < vector->x) {
 //                scalePanX += 0.009;
 //            }
 //
-//            if (previousPointer->y > pointer->y) {
+//            if (previousVector->y > vector->y) {
 //                scalePanY += 0.009;
-//            } else if (previousPointer->y < pointer->y) {
+//            } else if (previousVector->y < vector->y) {
 //                scalePanY -= 0.009;
 //            }
 //
 //            this->mainEngine->pan(scalePanX, scalePanY);
 //
-//            delete previousPointer;
-//            previousPointer = NULL;
+//            delete previousVector;
+//            previousVector = NULL;
 //        }
 //        
-//        previousPointer = MakePointer(pointer);
+//        previousVector = MakeVector3(vector);
 //    }
     
-    delete pointer;
-    pointer = NULL;
+    delete vector;
+    vector = NULL;
 }
 
-void Controller::pinchDetected(float _scale, float _velocity, bool began)
+void Controller::pinchDetected(real _scale, real _velocity, bool _began)
 {
     if (this->objectEdition && this->objectEdition->isSelected() && !this->objectEdition->isImmovable()) {
-        if (began) {
+        if (_began) {
             scaleObject = 1.0f;
             previousScale = 0.0;
         }
@@ -243,11 +239,13 @@ void Controller::pinchDetected(float _scale, float _velocity, bool began)
         this->mainEngine->zoom(scaleZoom);
         previousZoom = _scale;
     }
+    
+    this->objectEdition = NULL;
 }
 
-void Controller::rotationDetected(float _radians, float _velocity, bool began)
+void Controller::rotationDetected(real _radians, real _velocity, bool _began)
 {
-    if (began) {
+    if (_began) {
         previousRadians = 0.0f;
     }
   
@@ -255,13 +253,15 @@ void Controller::rotationDetected(float _radians, float _velocity, bool began)
         this->mainEngine->rotateSimulatedObject(this->objectEdition, previousRadians < _radians ? -0.03 : 0.03);
     }
     previousRadians = _radians;
+    
+    this->objectEdition = NULL;
 }
 
-void Controller::doubleTapOneFingerDetected(float _x, float _y)
+void Controller::doubleTapOneFingerDetected(real _x, real _y)
 {
-    Pointer * pointer = MakePointer(_x, _y);
+    Vector3 * vector = MakeVector3(_x, _y);
     
-    this->objectEdition = this->mainEngine->selectedSimulatedObject(pointer);
+    this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
     
     if (this->objectEdition) {
         if (this->objectEdition->isSelected()) {
@@ -272,49 +272,78 @@ void Controller::doubleTapOneFingerDetected(float _x, float _y)
         }
     }
     
-    delete pointer;
-    pointer = NULL;
+    delete vector;
+    vector = NULL;
+    
+    this->objectEdition = NULL;
 }
 
-void Controller::longPressDetected(float _x, float _y)
+void Controller::longPressDetected(real _x, real _y)
 {
-    Pointer * pointer = MakePointer(_x, _y);
+    Vector3 * vector = MakeVector3(_x, _y);
     
-    this->objectEdition = this->mainEngine->selectedSimulatedObject(pointer);
+    this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
 
     if (this->objectEdition) {
         this->mainEngine->deleteSimulatedObject(this->objectEdition);
     }
+    
+    this->objectEdition = NULL;
 }
 
-void Controller::swipeRightDetected(float _x, float _y)
+void Controller::swipeRightDetected(real _x, real _y)
 {
     // TODO put your code here
 }
-void Controller::swipeLeftDetected(float _x, float _y)
+void Controller::swipeLeftDetected(real _x, real _y)
 {
     // TODO put your code here
 }
 
-void Controller::oneTapThreeFingerDetected(float _x, float _y)
+void Controller::oneTapThreeFingerDetected(real _x, real _y)
 {
-//    delete previousPointer;
-//    previousPointer = NULL;
+//    delete previousVector;
+//    previousVector = NULL;
     
     scaleZoom = 1.0f;
     this->mainEngine->zoom(scaleZoom);
 }
 
-void Controller::createSimulatedObject(TypeObject typeObject)
+void Controller::createSimulatedObject(TypeObject _typeObject)
 {    
     if (this->objectEdition) {
         this->objectEdition->setSelected(false);
     }
     
     SimulatedObject * object = new SimulatedObject();
-    object->setPhysicalFeature(MakePhysicalFeature(1, 1, 1, 1, 1));
+    Vector3 * acceleration = MakeVector3(0.0f, -20.0f, 0.0f);
+    Vector3 * position = MakeVector3(0.0f, 0.0f, 0.0f);
+    Vector3 * velocity = MakeVector3(0.0f, -35.0f, 0.0f); // 35 m/s
+    Vector3 * forceAccum = MakeVector3(0.0f, 10.0f, 0.0f);
+    real mass = 20.0f;       // 2 kg
+    real volume = 1.0f;      // TODO
+    real density = 1.0f;     // TODO
+    real damping = 0.01f;    // TODO
+    object->setPhysicalFeature(MakePhysicalFeature(mass, volume, density, damping,
+                                                   acceleration, position, velocity, forceAccum));
     object->setColorAux(MakeRandonColor());
     object->setMode(GL_TRIANGLE_FAN);
     
-    this->mainEngine->makeSimulatedObject(object, typeObject);
+    this->mainEngine->makeSimulatedObject(object, _typeObject);
+}
+
+void Controller::clearSimularion()
+{
+    this->mainEngine->deleteAllSimulatedObjects();
+    
+    if (this->objectEdition) {
+        delete this->objectEdition;
+    }
+    
+    if (this->objectOffset) {
+        delete this->objectOffset;
+    }
+    
+    this->objectEdition = NULL;
+    this->objectOffset = NULL;
 }

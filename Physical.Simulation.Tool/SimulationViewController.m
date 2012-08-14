@@ -211,7 +211,8 @@ static EAGLContext * context;
 #pragma mark - GLKView and GLKViewController delegate methods
 - (void)update
 {
-    Controller::getInstance()->updateInformation();
+    Controller::getInstance()->updateInformation(self.timeSinceLastDraw);
+//    NSLog(@"frame: %u, fps: %u", self.framesDisplayed, self.framesPerSecond);
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect

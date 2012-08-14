@@ -31,29 +31,30 @@ public:
     void initializeEngine();
 
     void freeObjects();
-    void resizeScreen(float _width, float _height);
+    void resizeScreen(real _width, real _height);
     
-    void updateInformation();
+    void updateInformation(real _duration);
     void draw();
     void stopSimulation();
     void startSimulation();
+    void editSimulation();
     void clearSimularion();
     bool isRunning();
     bool isInitialized();
     
-    void createSimulatedObject(TypeObject typeObject);
+    void createSimulatedObject(TypeObject _typeObject);
     
-    void touchesMoved(float _x, float _y, int countFingers);
-    void touchesBegan(float _x, float _y);
-    void touchesEnded(float _x, float _y);
-    void touchesCancelled(float _x, float _y);
-    void longPressDetected(float _x, float _y);
-    void pinchDetected(float scale, float velocity, bool began);
-    void rotationDetected(float radians, float velocity, bool began);
-    void doubleTapOneFingerDetected(float _x, float _y);
-    void oneTapThreeFingerDetected(float _x, float _y);
-    void swipeRightDetected(float _x, float _y);
-    void swipeLeftDetected(float _x, float _y);
+    void touchesMoved(real _x, real _y, int _countFingers);
+    void touchesBegan(real _x, real _y);
+    void touchesEnded(real _x, real _y);
+    void touchesCancelled(real _x, real _y);
+    void longPressDetected(real _x, real _y);
+    void pinchDetected(real _scale, real _velocity, bool _began);
+    void rotationDetected(real _radians, real _velocity, bool _began);
+    void doubleTapOneFingerDetected(real _x, real _y);
+    void oneTapThreeFingerDetected(real _x, real _y);
+    void swipeRightDetected(real _x, real _y);
+    void swipeLeftDetected(real _x, real _y);
     
     static Controller * getInstance();
 };

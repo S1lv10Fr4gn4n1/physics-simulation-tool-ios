@@ -35,8 +35,11 @@ Shader::~Shader()
 {
     glDeleteProgram(this->program);
     
-    this->mapGLSLVars->clear();
-    delete this->mapGLSLVars;
+    if (this->mapGLSLVars) {
+        this->mapGLSLVars->clear();
+        delete this->mapGLSLVars;
+    }
+
     this->mapGLSLVars = NULL;
 }
 

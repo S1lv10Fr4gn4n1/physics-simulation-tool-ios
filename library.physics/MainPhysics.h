@@ -9,11 +9,15 @@
 #ifndef MAINPHYSICS_H
 #define MAINPHYSICS_H
 
+#include "Commons.h"
+
 class MainPhysics {
 private:
 public:
     MainPhysics();
     ~MainPhysics();
+    
+    void updateFeatures(SimulatedObject * _simulatedObject, real _duration);
 };
 
 #endif

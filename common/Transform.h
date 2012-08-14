@@ -11,9 +11,9 @@
 
 #include <math.h>
 
-static inline float * MatrixMakeIdentity()
+static inline real * MatrixMakeIdentity()
 {
-    float * matrix = new float[16];
+    real * matrix = new real[16];
     for (int i = 0; i < 16; i++) {
 		matrix[i] = 0.0f;
 	}
@@ -23,9 +23,9 @@ static inline float * MatrixMakeIdentity()
     return matrix;
 }
 
-//static float * MatrixIdentity = MatrixMakeIdentity();
+//static real * MatrixIdentity = MatrixMakeIdentity();
 
-static inline void MatrixTransformIdentity(float ** matrix) {
+static inline void MatrixTransformIdentity(real ** matrix) {
     
     for (int i = 0; i < 16; i++) {
 		*(*matrix+i) = 0.0f;
@@ -34,9 +34,9 @@ static inline void MatrixTransformIdentity(float ** matrix) {
 	*(*matrix+0) = *(*matrix+5) = *(*matrix+10) = *(*matrix+15) = 1.0;
 }
 
-static inline float * MatrixMultiply(float * _matrixLeft, float * _matrixRight)
+static inline real * MatrixMultiply(real * _matrixLeft, real * _matrixRight)
 {
-	float * matrixResult = new float[16];
+	real * matrixResult = new real[16];
 	
     for (int i = 0; i < 16; i++) {
         matrixResult[i] = _matrixLeft[i % 4] * _matrixRight[i / 4 * 4] +
@@ -49,7 +49,7 @@ static inline float * MatrixMultiply(float * _matrixLeft, float * _matrixRight)
 	return matrixResult;
 }
 
-static inline void MatrixTranslate(float * matrix, float _x, float _y, float _z)
+static inline void MatrixTranslate(real * matrix, real _x, real _y, real _z)
 {
 	// translate (tx, ty, tz)  matrix identity
 	matrix[12] = _x;
@@ -58,24 +58,24 @@ static inline void MatrixTranslate(float * matrix, float _x, float _y, float _z)
 	//matrix[15] = _w;
 }
 
-static inline void MatrixTranslate(float * matrix, float _x, float _y)
+static inline void MatrixTranslate(real * matrix, real _x, real _y)
 {
     MatrixTranslate(matrix, _x, _y, 0.0f);
 }
 
-static inline void MatrixTranslate(float * matrix, Pointer * _pointer)
+static inline void MatrixTranslate(real * matrix, Vector3 * _vector)
 {
-    MatrixTranslate(matrix, _pointer->x, _pointer->y, _pointer->z);
+    MatrixTranslate(matrix, _vector->x, _vector->y, _vector->z);
 }
 
-static inline float * MatrixMakeTranslate(float _x, float _y)
+static inline real * MatrixMakeTranslate(real _x, real _y)
 {
-    float * matrix = MatrixMakeIdentity();
+    real * matrix = MatrixMakeIdentity();
     MatrixTranslate(matrix, _x, _y);
     return matrix;
 }
 
-static inline void MatrixScale(float * matrix, float _x, float _y, float _z)
+static inline void MatrixScale(real * matrix, real _x, real _y, real _z)
 {
 	// scale (sx, sy, sz) matrix identidade
 	matrix[0]  = _x; //(_x / 100);
@@ -83,24 +83,24 @@ static inline void MatrixScale(float * matrix, float _x, float _y, float _z)
 	matrix[10] = _z;
 }
 
-static inline void MatrixScale(float * matrix, float _x, float _y)
+static inline void MatrixScale(real * matrix, real _x, real _y)
 {
     MatrixScale(matrix, _x, _y, 0.0f);
 }
 
-static inline float * MatrixMakeScale(float _x, float _y)
+static inline real * MatrixMakeScale(real _x, real _y)
 {
-    float * matrix = MatrixMakeIdentity();
+    real * matrix = MatrixMakeIdentity();
     MatrixScale(matrix, _x, _y, 0.0f);
     return matrix;
 }
 
-static inline float * MatrixMakeXRotation(float radians)
+static inline real * MatrixMakeXRotation(real radians)
 {
-    float cos = cosf(radians);
-    float sin = sinf(radians);
+    real cos = cosf(radians);
+    real sin = sinf(radians);
     
-    float * matrix = MatrixMakeIdentity();
+    real * matrix = MatrixMakeIdentity();
     matrix[5] = cos;
     matrix[6] = sin;
     matrix[9] = -sin;
@@ -109,12 +109,12 @@ static inline float * MatrixMakeXRotation(float radians)
     return matrix;
 }
 
-static inline float * MatrixMakeYRotation(float radians)
+static inline real * MatrixMakeYRotation(real radians)
 {
-    float cos = cosf(radians);
-    float sin = sinf(radians);
+    real cos = cosf(radians);
+    real sin = sinf(radians);
     
-    float * matrix = MatrixMakeIdentity();
+    real * matrix = MatrixMakeIdentity();
     matrix[0] = cos;
     matrix[2] = -sin;
     matrix[8] = sin;
@@ -123,12 +123,12 @@ static inline float * MatrixMakeYRotation(float radians)
     return matrix;
 }
 
-static inline float * MatrixMakeZRotation(float radians)
+static inline real * MatrixMakeZRotation(real radians)
 {
-    float cos = cosf(radians);
-    float sin = sinf(radians);
+    real cos = cosf(radians);
+    real sin = sinf(radians);
     
-    float * matrix = MatrixMakeIdentity();
+    real * matrix = MatrixMakeIdentity();
     matrix[0] = cos;
     matrix[1] = sin;
     matrix[4] = -sin;
@@ -137,26 +137,26 @@ static inline float * MatrixMakeZRotation(float radians)
     return matrix;
 }
 
-static inline Pointer * MatrixTransformPoint(const float * matrix, const Pointer * _pointer)
+static inline Vector3 * MatrixTransformPoint(const real * matrix, const Vector3 * _vector)
 {
-	float x = matrix[0] * _pointer->x + matrix[4] * _pointer->y + matrix[8]  * _pointer->z + matrix[12] * _pointer->w;
-	float y = matrix[1] * _pointer->x + matrix[5] * _pointer->y + matrix[9]  * _pointer->z + matrix[13] * _pointer->w;
-	float z = matrix[2] * _pointer->x + matrix[6] * _pointer->y + matrix[10] * _pointer->z + matrix[14] * _pointer->w;
-	float w = matrix[3] * _pointer->x + matrix[7] * _pointer->y + matrix[11] * _pointer->z + matrix[15] * _pointer->w;
+	real x = matrix[0] * _vector->x + matrix[4] * _vector->y + matrix[8]  * _vector->z + matrix[12] * 1;//vector->w;
+	real y = matrix[1] * _vector->x + matrix[5] * _vector->y + matrix[9]  * _vector->z + matrix[13] * 1;//vector->w;
+	real z = matrix[2] * _vector->x + matrix[6] * _vector->y + matrix[10] * _vector->z + matrix[14] * 1;//vector->w;
+	//real w = matrix[3] * vector->x + matrix[7] * vector->y + matrix[11] * vector->z + matrix[15] * vector->w;
     
-	return MakePointer(x, y, z, w);
+	return MakeVector3(x, y, z);
 }
 
-static inline void MatrixOrtho(float * matrix, float left, float right, float bottom, float top, float nearZ, float farZ)
+static inline void MatrixOrtho(real * matrix, real left, real right, real bottom, real top, real nearZ, real farZ)
 {
     MatrixTransformIdentity(&matrix);
     
-    float ral = right + left;
-    float rsl = right - left;
-    float tab = top + bottom;
-    float tsb = top - bottom;
-    float fan = farZ + nearZ;
-    float fsn = farZ - nearZ;
+    real ral = right + left;
+    real rsl = right - left;
+    real tab = top + bottom;
+    real tsb = top - bottom;
+    real fan = farZ + nearZ;
+    real fsn = farZ - nearZ;
     
     matrix[0] = 2.0f / rsl;
     matrix[5] = 2.0f / tsb;
@@ -166,9 +166,9 @@ static inline void MatrixOrtho(float * matrix, float left, float right, float bo
     matrix[14] = -fan / fsn;
 }
 
-static inline float * MatrixMakeOrtho(float left, float right, float bottom, float top, float nearZ, float farZ)
+static inline real * MatrixMakeOrtho(real left, real right, real bottom, real top, real nearZ, real farZ)
 {
-    float * matrix = new float(16);
+    real * matrix = new real(16);
     MatrixOrtho(matrix, left, right, bottom, top, nearZ, farZ);
     return matrix;
 }

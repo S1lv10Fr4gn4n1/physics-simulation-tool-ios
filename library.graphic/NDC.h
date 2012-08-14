@@ -13,31 +13,31 @@
 #include <math.h>
 
 class NDC {
-    Pointer * maxWindow;
-    Pointer * minWindow;
-    Pointer * maxOrtho;
-    Pointer * minOrtho;
+    Vector3 * maxWindow;
+    Vector3 * minWindow;
+    Vector3 * maxOrtho;
+    Vector3 * minOrtho;
     
-    float aspect;
-    float width;
-    float height;
+    real aspect;
+    real width;
+    real height;
 public:
     NDC();
     ~NDC();
     
-    void update(float _width, float _height);
-    void calcNDCCoordinates(float * _x, float * _y);
+    void update(real _width, real _height);
+    void calcNDCCoordinates(real * _x, real * _y);
     
-    float getAspect();
+    real getAspect();
 
-    float getLeft();
-    void setLeft(float _left);
-    float getRight();
-    void setRight(float _right);
-    float getTop();
-    void setTop(float _top);
-    float getBottom();
-    void setBottom(float _bottom);
+    real getLeft();
+    void setLeft(real _left);
+    real getRight();
+    void setRight(real _right);
+    real getTop();
+    void setTop(real _top);
+    real getBottom();
+    void setBottom(real _bottom);
 };
 
 #endif

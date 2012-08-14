@@ -12,16 +12,33 @@ using namespace std;
 
 MainEngine::MainEngine()
 {
+    this->running = false;
+    
     this->world = new World();
+    this->mainPhysics = new MainPhysics();
+    this->mainCollision = new MainCollision();
     this->ndc = new NDC();
 }
 
 MainEngine::~MainEngine()
-{ 
-    delete this->world;
-    delete this->ndc;
+{
+    if (this->world) {
+        delete this->world;
+    }
+    if (this->ndc) {
+        delete this->ndc;
+    }
+    if (this->mainCollision) {
+        delete this->mainCollision;
+    }
+    if (this->mainPhysics) {
+        delete this->mainPhysics;
+    }
+    
     this->world = NULL;
     this->ndc = NULL;
+    this->mainPhysics = NULL;
+    this->mainCollision = NULL;
 }
 
 void MainEngine::start()
@@ -39,24 +56,47 @@ bool MainEngine::isRunning()
     return this->running;
 }
 
-void MainEngine::updateInformation()
+void MainEngine::updateInformation(real _duration)
 {
     if (!this->running) {
         return;
     }
 
-    //TODO put your code here
+    if (_duration <= 0.0) {
+        return;
+    }
+    
+    SimulatedObject * object = NULL;
+    _duration = _duration * 0.001f;
+    
+    for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
+        object = this->world->getSimulatedObjects()->at(i);
+        
+        // TODO revise
+        if (object->isImmovable()) {
+            continue;
+        }
+        
+        // mainPhysics updates the physical features
+        this->mainPhysics->updateFeatures(object, _duration);
+
+        // mainEngine(this) translate object
+        this->translateSimulatedObject(object, object->getPhysicalFeature()->position);
+        printf("position-> x: %f, y: %f, z: %f \n", object->getPhysicalFeature()->position->x, object->getPhysicalFeature()->position->y, object->getPhysicalFeature()->position->z);
+    }
+    
+    object = NULL;
 }
 
-void MainEngine::rotatedScreen(float _width, float _height)
+void MainEngine::rotatedScreen(real _width, real _height)
 {
     this->ndc->update(_width, _height);
     MatrixOrtho(this->world->getOrthoMatrix(), -this->ndc->getAspect(), this->ndc->getAspect(), -1, 1, -1, 1);
 }
 
-void MainEngine::zoom(float _scale)
+void MainEngine::zoom(real _scale)
 {
-    float value = this->ndc->getAspect() * _scale;
+    real value = this->ndc->getAspect() * _scale;
 
     this->ndc->setLeft(-value);
     this->ndc->setRight(value);
@@ -72,7 +112,7 @@ void MainEngine::zoom(float _scale)
                 1);
 }
 
-void MainEngine::pan(float _scaleX, float _scaleY)
+void MainEngine::pan(real _scaleX, real _scaleY)
 {
     //TODO revise
     this->ndc->setLeft(-this->ndc->getAspect() - _scaleX);
@@ -89,10 +129,10 @@ void MainEngine::pan(float _scaleX, float _scaleY)
                 1);
 }
 
-void MainEngine::scaleSimulatedObject(SimulatedObject * _simulatedObject, float _scale)
+void MainEngine::scaleSimulatedObject(SimulatedObject * _simulatedObject, real _scale)
 {
-    float * matrixScale = MatrixMakeScale(_scale, _scale);
-    float * matrix = MatrixMultiply(_simulatedObject->getMatrixTransformation(), matrixScale);
+    real * matrixScale = MatrixMakeScale(_scale, _scale);
+    real * matrix = MatrixMultiply(_simulatedObject->getMatrixTransformation(), matrixScale);
     _simulatedObject->setMatrixTransformation(matrix);
     
     delete [] matrixScale;
@@ -100,12 +140,11 @@ void MainEngine::scaleSimulatedObject(SimulatedObject * _simulatedObject, float 
     matrix = NULL;
 }
 
-void MainEngine::rotateSimulatedObject(SimulatedObject * _simulatedObject, float _radians)
+void MainEngine::rotateSimulatedObject(SimulatedObject * _simulatedObject, real _radians)
 {
-//    TODO revise: clean is comment?
-//    float teta = (M_PI * _radians) / 180.0;
-    float * matrixRotation = MatrixMakeZRotation(_radians);
-    float * matrix = MatrixMultiply(_simulatedObject->getMatrixTransformation(), matrixRotation);
+//    real teta = (M_PI * _radians) / 180.0;
+    real * matrixRotation = MatrixMakeZRotation(_radians);
+    real * matrix = MatrixMultiply(_simulatedObject->getMatrixTransformation(), matrixRotation);
     _simulatedObject->setMatrixTransformation(matrix);
     
     delete [] matrixRotation;
@@ -113,9 +152,17 @@ void MainEngine::rotateSimulatedObject(SimulatedObject * _simulatedObject, float
     matrix = NULL;
 }
 
-void MainEngine::translateSimulatedObject(SimulatedObject * _simulatedObject, Pointer * _pointer)
+void MainEngine::translateSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)
 {
-    MatrixTranslate(_simulatedObject->getMatrixTransformation(), _pointer);
+    MatrixTranslate(_simulatedObject->getMatrixTransformation(), _vector);
+}
+
+void MainEngine::updatePositionSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)
+{
+    Vector3 * position = _simulatedObject->getPhysicalFeature()->position;
+    position->x = _vector->x;
+    position->y = _vector->y;
+    position->z = _vector->z;
 }
 
 World * MainEngine::getWorld()
@@ -123,10 +170,10 @@ World * MainEngine::getWorld()
     return this->world;
 }
 
-SimulatedObject * MainEngine::selectedSimulatedObject(Pointer * _pointer)
+SimulatedObject * MainEngine::selectedSimulatedObject(Vector3 * _vector)
 {
-    this->ndc->calcNDCCoordinates(&_pointer->x, &_pointer->y);
-    return Selection::selectSimulatedObject(this->world, _pointer);
+    this->ndc->calcNDCCoordinates(&_vector->x, &_vector->y);
+    return Selection::selectSimulatedObject(this->world, _vector);
 }
 
 void MainEngine::deleteAllSimulatedObjects()
@@ -146,18 +193,18 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
         {
             // calculates the radius
             // takes the first point, which indicates the origin of the circle
-            Pointer * p1 = MakePointer( 0.0, 0.0);
-            Pointer * p2 = MakePointer( 0.0, 0.052083);
+            Vector3 * v1 = MakeVector3( 0.0, 0.0);
+            Vector3 * v2 = MakeVector3( 0.0, 0.052083);
             
-            float x = p2->x - p1->x;
-            float y = p2->y - p1->y;
+            real x = v2->x - v1->x;
+            real y = v2->y - v1->y;
             
             /// d²=(x0-x)²+(y0-y)²
-            float d = (x*x) + (y*y);
-            float radius = pow(d, 0.5);
+            real d = (x*x) + (y*y);
+            real radius = real_pow(d, 0.5);
             
-            float x1;
-            float y1;
+            real x1;
+            real y1;
             
             /// generates points to create the circle, these points are stored
             /// to be subsequently used in the algorithm scanline
@@ -166,32 +213,32 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
                 x1 = (radius * cos(M_PI * ang / 180.0f));
                 y1 = (radius * sin(M_PI * ang / 180.0f));
                 
-                _simulatedObject->addPointer(MakePointer(x1 + p1->x, y1 + p1->y));
+                _simulatedObject->addVector3(MakeVector3(x1 + v1->x, y1 + v1->y));
                 ang+=10;
             }
             
-            delete p1;
-            delete p2;
-            p1 = NULL;
-            p2 = NULL;
+            delete v1;
+            delete v2;
+            v1 = NULL;
+            v2 = NULL;
             
             break;
         }
             
         case SQUARE:
         {
-            _simulatedObject->addPointer(MakePointer( -0.052083, -0.052083));
-            _simulatedObject->addPointer(MakePointer(  0.052083, -0.052083));
-            _simulatedObject->addPointer(MakePointer(  0.052083,  0.052083));
-            _simulatedObject->addPointer(MakePointer( -0.052083,  0.052083));
+            _simulatedObject->addVector3(MakeVector3( -0.052083, -0.052083));
+            _simulatedObject->addVector3(MakeVector3(  0.052083, -0.052083));
+            _simulatedObject->addVector3(MakeVector3(  0.052083,  0.052083));
+            _simulatedObject->addVector3(MakeVector3( -0.052083,  0.052083));
             break;
         }
             
         case TRIANGLE:
         {
-            _simulatedObject->addPointer(MakePointer(  0.000000,  0.052083));
-            _simulatedObject->addPointer(MakePointer( -0.052083, -0.052083));
-            _simulatedObject->addPointer(MakePointer(  0.052083, -0.052083));
+            _simulatedObject->addVector3(MakeVector3(  0.000000,  0.052083));
+            _simulatedObject->addVector3(MakeVector3( -0.052083, -0.052083));
+            _simulatedObject->addVector3(MakeVector3(  0.052083, -0.052083));
             break;
         }
             
@@ -200,10 +247,10 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
             // TODO this is max screem possible for simulation
             // left: -3.960000, right: 3.960000, bottom: -2.970000, top: 2.970000
             _simulatedObject->setImmovable(true);
-            _simulatedObject->addPointer(MakePointer(-5.0f, -7.0f));
-            _simulatedObject->addPointer(MakePointer(-5.0f, -0.9f));
-            _simulatedObject->addPointer(MakePointer( 5.0f, -0.9f));
-            _simulatedObject->addPointer(MakePointer( 5.0f, -7.0f));
+            _simulatedObject->addVector3(MakeVector3(-5.0f, -7.0f));
+            _simulatedObject->addVector3(MakeVector3(-5.0f, -0.9f));
+            _simulatedObject->addVector3(MakeVector3( 5.0f, -0.9f));
+            _simulatedObject->addVector3(MakeVector3( 5.0f, -7.0f));
             break;
         }
             
@@ -221,7 +268,11 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
             
         case POLYGON_CLOSE:
             break;
-            
+        
+        case TEST:
+            _simulatedObject->addVector3(MakeVector3( 0, 0));
+            break;
+
         default:
             break;
     }
