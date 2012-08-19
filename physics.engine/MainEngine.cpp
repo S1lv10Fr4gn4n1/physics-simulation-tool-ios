@@ -80,12 +80,12 @@ void MainEngine::updateInformation(real _duration)
         this->mainPhysics->updateFeatures(object, _duration);
 
         // mainEngine(this) translate object
-        this->translateSimulatedObject(object, object->getPhysicalFeature()->position);
+        this->translateSimulatedObject(object, object->getPhysicalFeature()->getPosition());
         
         // TODO revise
         // remove objects that left the scene
-        if (real_fabsf(object->getPhysicalFeature()->position->x) >= 4.0f ||
-            real_fabsf(object->getPhysicalFeature()->position->y) >= 3.0f) {
+        if (real_abs(object->getPhysicalFeature()->getPosition()->x) >= 4.0f ||
+            real_abs(object->getPhysicalFeature()->getPosition()->y) >= 3.0f) {
             this->deleteSimulatedObject(object);
         }
     }
@@ -164,7 +164,7 @@ void MainEngine::translateSimulatedObject(SimulatedObject * _simulatedObject, Ve
 
 void MainEngine::updatePositionSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)
 {
-    Vector3 * position = _simulatedObject->getPhysicalFeature()->position;
+    Vector3 * position = _simulatedObject->getPhysicalFeature()->getPosition();
     position->x = _vector->x;
     position->y = _vector->y;
     position->z = _vector->z;
@@ -188,6 +188,8 @@ void MainEngine::deleteAllSimulatedObjects()
 
 void MainEngine::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
+    // remove object of ForceRegistry
+    ForceRegistry::getInstance()->removeObject(_simulatedObject);
     this->world->deleteSimulatedObject(_simulatedObject);
 }
 
@@ -204,15 +206,15 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
             real x = v2->x - v1->x;
             real y = v2->y - v1->y;
             
-            /// d²=(x0-x)²+(y0-y)²
+            // d²=(x0-x)²+(y0-y)²
             real d = (x*x) + (y*y);
             real radius = real_pow(d, 0.5);
             
             real x1;
             real y1;
             
-            /// generates points to create the circle, these points are stored
-            /// to be subsequently used in the algorithm scanline
+            // generates points to create the circle, these points are stored
+            // to be subsequently used in the algorithm scanline
             int ang = 0;
             for (int i=0; i<36; i++) {
                 x1 = (radius * cos(M_PI * ang / 180.0f));

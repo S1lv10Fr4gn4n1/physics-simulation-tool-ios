@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include "Vector3.h"
 
-/// Enumations
+// Enumations
 enum TypeObject {
     CIRCLE,
     SQUARE,

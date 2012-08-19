@@ -42,15 +42,12 @@
                                    userInfo:NULL
                                     repeats:NO];
     
-    // TODO for Tests
-//    Controller::getInstance()->createSimulatedObject(PLAN);
-//    
-//    for (int i=0; i< 1000; i++) {
+//    // TODO for Tests
+//    for (int i=0; i< 500; i++) {
 //        Controller::getInstance()->createSimulatedObject(SQUARE);
 //        Controller::getInstance()->createSimulatedObject(CIRCLE);
 //        Controller::getInstance()->createSimulatedObject(TRIANGLE);
 //    }
-
 }
 
 - (IBAction)actionEditSimulation:(id)sender

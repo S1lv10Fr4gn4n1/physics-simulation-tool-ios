@@ -10,9 +10,8 @@
 #define SIMULATEDOBJECT_H
 
 #include <vector>
-#include "Vector3.h"
 #include "PhysicalFeature.h"
-#include "CommonStruct.h"
+#include "CommonStructs.h"
 #include "Transform.h"
 
 class SimulatedObject {
@@ -24,7 +23,6 @@ private:
     unsigned char * colorVectors;
     Color * colorAux;
     unsigned int mode; // GLenum
-    std::vector<SimulatedObject *> * joinsSimulatedObject;
     BBox * bbox;
     real * matrixTransformation;
     

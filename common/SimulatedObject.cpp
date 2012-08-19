@@ -28,8 +28,6 @@ SimulatedObject::SimulatedObject()
     this->matrixTransformation = new real[16];
     MatrixTransformIdentity(&this->matrixTransformation);
     
-    this->joinsSimulatedObject = NULL;
-
     this->bbox = new BBox();
     this->bbox->max->x = this->bbox->max->y = this->bbox->max->z = -1000000;
 	this->bbox->min->x = this->bbox->min->y = this->bbox->min->z =  1000000;	
@@ -45,16 +43,6 @@ SimulatedObject::~SimulatedObject()
             vector = NULL;
         }
         this->vectorsAux->clear();
-    }
-    
-    if (this->joinsSimulatedObject && this->joinsSimulatedObject->size() > 0) {
-        SimulatedObject * simulatedObject = NULL;
-        for (int i=0; i < this->joinsSimulatedObject->size(); i++) {
-            simulatedObject = this->joinsSimulatedObject->at(i);
-            delete simulatedObject;
-            simulatedObject = NULL;
-        }
-        this->joinsSimulatedObject->clear();
     }
     
     if (this->vectorsAux) {
@@ -90,7 +78,6 @@ SimulatedObject::~SimulatedObject()
     this->colorAux = NULL;
     this->bbox = NULL;
     this->matrixTransformation = NULL;
-    this->joinsSimulatedObject = NULL;
 }
 
 void SimulatedObject::initBBox(real * _matrix)

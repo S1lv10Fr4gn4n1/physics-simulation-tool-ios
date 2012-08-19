@@ -110,6 +110,8 @@ void Controller::draw()
 void Controller::stopSimulation()
 {
     this->mainEngine->stop();
+    scaleZoom = 1.0f;
+    this->mainEngine->zoom(scaleZoom);
 }
 
 void Controller::startSimulation()
@@ -239,8 +241,6 @@ void Controller::pinchDetected(real _scale, real _velocity, bool _began)
         this->mainEngine->zoom(scaleZoom);
         previousZoom = _scale;
     }
-    
-//    this->objectEdition = NULL;
 }
 
 void Controller::rotationDetected(real _radians, real _velocity, bool _began)
@@ -253,8 +253,6 @@ void Controller::rotationDetected(real _radians, real _velocity, bool _began)
         this->mainEngine->rotateSimulatedObject(this->objectEdition, previousRadians < _radians ? -0.03 : 0.03);
     }
     previousRadians = _radians;
-    
-//    this->objectEdition = NULL;
 }
 
 void Controller::doubleTapOneFingerDetected(real _x, real _y)
@@ -273,9 +271,7 @@ void Controller::doubleTapOneFingerDetected(real _x, real _y)
     }
     
     delete vector;
-    vector = NULL;
-    
-//    this->objectEdition = NULL;
+    vector = NULL;    
 }
 
 void Controller::longPressDetected(real _x, real _y)
@@ -316,32 +312,33 @@ void Controller::createSimulatedObject(TypeObject _typeObject)
     }
     
     SimulatedObject * object = new SimulatedObject();
-    // gravitational force (-10 m/s2)
-    Vector3 * acceleration = MakeVector3(0.0f, -10.0f); //- 10 m/s2
-    Vector3 * position = MakeVector3(0.0f, 0.0f);
-    Vector3 * velocity = MakeVector3(getRand(3.0f), 0.0f);
-    Vector3 * forceAccum = MakeVector3(0.0f, 0.0f);
-    real mass = 1.0f;        // 2 kg
-    real volume = 1.0f;      // TODO
-    real density = 1.0f;     // TODO
-    real damping = 0.9f;     // TODO revise: change for drag forces
+    ForceGravity * gravity = ForceGravity::getInstance();
     
-    PhysicalFeature * physicalFeature = PhysicalFeature::MakePhysicalFeature(mass, volume, density,
-                                                                             damping, acceleration,
-                                                                             position, velocity, forceAccum);
+    ForceRegistry::getInstance()->add(object, gravity);
+
+    PhysicalFeature * physicalFeature = new PhysicalFeature();
+    physicalFeature->setAcceleration(MakeVector3(0.0f, 0.0f)); // MakeVector3(0.0f, -10.0f); // -10 m/s2
+    physicalFeature->setPosition(MakeVector3(0.0f, 0.0f));
+    physicalFeature->setVelocicy(MakeVector3(getRand(5.0f), 0.0f));
+    physicalFeature->setMass(2.0f);    // 1 kg
+    physicalFeature->setVolume(0.0f);
+    physicalFeature->setDensity(0.0f);
+    physicalFeature->setDamping(0.9f); // TODO revise: change for drag forces
+    
     object->setPhysicalFeature(physicalFeature);
     object->setColorAux(MakeRandonColor());
     object->setMode(GL_TRIANGLE_FAN);
     
     this->mainEngine->makeSimulatedObject(object, _typeObject);
-
-    // TODO for Tests
-//    float x = rand() % 3;
-//    x =  x == 2 ? x : -x;
+    
+//    // TODO for Tests
+//    float x = getRand(3.0f);
+//    x = fmodf(x, 0.04) <= 0.03 ? x : -x;
 //
-//    float y = rand() % 2;
-//    y =  y == 2 ? y : -y;
-//    Vector3 *v = MakeVector3(getRand(x), getRand(y));
+//    float y = getRand(3.0f);
+//    y = fmodf(y, 0.04) <= 0.03 ? y : -y;
+//
+//    Vector3 *v = MakeVector3(x, y);
 //    this->mainEngine->translateSimulatedObject(object, v);
 //    this->mainEngine->updatePositionSimulatedObject(object, v);
 }

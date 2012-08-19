@@ -28,6 +28,14 @@ Vector3::~Vector3()
     // TODO put your code here
 }
 
+void Vector3::clear()
+{
+    this->x = 0;
+    this->y = 0;
+    this->z = 0;
+    this->pad = 0;
+}
+
 void Vector3::operator+=(const Vector3 * _vector)
 {
     this->x += _vector->x;
@@ -92,13 +100,6 @@ Vector3 * Vector3::operator*(const real _value) const
     return new Vector3(this->x*_value, this->y*_value, this->z*_value);
 }
 
-void Vector3::multiplyVectorForValue(const real _value)
-{
-    this->x *= _value;
-    this->y *= _value;
-    this->z *= _value;
-}
-
 Vector3 * Vector3::vectorProduct(const Vector3 * _vector) const
 {
     return new Vector3(this->y*_vector->z - this->z*_vector->y,
@@ -106,10 +107,10 @@ Vector3 * Vector3::vectorProduct(const Vector3 * _vector) const
                        this->x*_vector->y - this->y*_vector->x);
 }
 
-//void Vector3::operator%=(const Vector3 * _vector)
-//{
-//    this = this->vectorProduct(_vector);
-//}
+void Vector3::operator%=(const Vector3 * _vector)
+{
+    *this = *this->vectorProduct(_vector);
+}
 
 Vector3 * Vector3::operator%(const Vector3 * _vector) const
 {

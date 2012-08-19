@@ -27,22 +27,27 @@ void MainPhysics::updateFeatures(SimulatedObject * _simulatedObject, real _durat
         return;
     }
     
-    if (physicalFeature->inverseMass <= 0.0f) {
+    if (physicalFeature->getInverseMass() <= 0.0f) {
         return;
     }
     
+    // update all forces in all objects
+    ForceRegistry::getInstance()->updateForces(_duration);
+    
     // update linear position.
-    physicalFeature->position->addScaledVector(physicalFeature->velocity, _duration);
+    physicalFeature->getPosition()->addScaledVector(physicalFeature->getVelocity(), _duration);
     
     // work out the acceleration from the force.
-    Vector3 * resultingAcc = physicalFeature->acceleration;
-    resultingAcc->addScaledVector(physicalFeature->forceAccum, physicalFeature->inverseMass);
+    Vector3 * resultingAcc = physicalFeature->getAcceleration();
+    resultingAcc->addScaledVector(physicalFeature->getForceAccum(), physicalFeature->getInverseMass());
     
     // update linear velocity from the acceleration.
-    physicalFeature->velocity->addScaledVector(resultingAcc, _duration);
+    physicalFeature->getVelocity()->addScaledVector(resultingAcc, _duration);
     
     // impose drag.
-    physicalFeature->velocity->multiplyVectorForValue(real_pow(physicalFeature->damping, _duration));
-
+    *physicalFeature->getVelocity() *= real_pow(physicalFeature->getDamping(), _duration);
+    
+    physicalFeature->clearAccumulator();
+    
     physicalFeature = NULL;
 }
