@@ -26,7 +26,7 @@ enum TypeObject {
     STRING,
     ENGINE,
     PLAN,
-    TEST
+    PARTICLE
 };
 
 struct Color {

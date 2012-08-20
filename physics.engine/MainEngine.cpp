@@ -67,25 +67,23 @@ void MainEngine::updateInformation(real _duration)
     }
     
     SimulatedObject * object = NULL;
+
+    // update all forces in all objects
+    ForceRegistry::getInstance()->updateForces(_duration);
     
     for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
         object = this->world->getSimulatedObjects()->at(i);
-        
-        // TODO revise
-        if (object->isImmovable()) {
-            continue;
-        }
         
         // mainPhysics updates the physical features
         this->mainPhysics->updateFeatures(object, _duration);
 
         // mainEngine(this) translate object
-        this->translateSimulatedObject(object, object->getPhysicalFeature()->getPosition());
+        this->translateSimulatedObject(object, object->getPosition());
         
         // TODO revise
         // remove objects that left the scene
-        if (real_abs(object->getPhysicalFeature()->getPosition()->x) >= 4.0f ||
-            real_abs(object->getPhysicalFeature()->getPosition()->y) >= 3.0f) {
+        if (real_abs(object->getPosition()->x) >= 4.0f ||
+            real_abs(object->getPosition()->y) >= 3.0f) {
             this->deleteSimulatedObject(object);
         }
     }
@@ -164,7 +162,7 @@ void MainEngine::translateSimulatedObject(SimulatedObject * _simulatedObject, Ve
 
 void MainEngine::updatePositionSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)
 {
-    Vector3 * position = _simulatedObject->getPhysicalFeature()->getPosition();
+    Vector3 * position = _simulatedObject->getPosition();
     position->x = _vector->x;
     position->y = _vector->y;
     position->z = _vector->z;
@@ -200,15 +198,15 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
         {
             // calculates the radius
             // takes the first point, which indicates the origin of the circle
-            Vector3 * v1 = MakeVector3( 0.0, 0.0);
-            Vector3 * v2 = MakeVector3( 0.0, 0.052083);
+            Vector3 * v1 = MakeVector3(0.0f, 0.0f);
+            Vector3 * v2 = MakeVector3(0.0f, 0.052083f);
             
             real x = v2->x - v1->x;
             real y = v2->y - v1->y;
             
             // d²=(x0-x)²+(y0-y)²
             real d = (x*x) + (y*y);
-            real radius = real_pow(d, 0.5);
+            real radius = real_pow(d, 0.5f);
             
             real x1;
             real y1;
@@ -234,18 +232,18 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
             
         case SQUARE:
         {
-            _simulatedObject->addVector3(MakeVector3( -0.052083, -0.052083));
-            _simulatedObject->addVector3(MakeVector3(  0.052083, -0.052083));
-            _simulatedObject->addVector3(MakeVector3(  0.052083,  0.052083));
-            _simulatedObject->addVector3(MakeVector3( -0.052083,  0.052083));
+            _simulatedObject->addVector3(MakeVector3( -0.052083f, -0.052083f));
+            _simulatedObject->addVector3(MakeVector3(  0.052083f, -0.052083f));
+            _simulatedObject->addVector3(MakeVector3(  0.052083f,  0.052083f));
+            _simulatedObject->addVector3(MakeVector3( -0.052083f,  0.052083f));
             break;
         }
             
         case TRIANGLE:
         {
-            _simulatedObject->addVector3(MakeVector3(  0.000000,  0.052083));
-            _simulatedObject->addVector3(MakeVector3( -0.052083, -0.052083));
-            _simulatedObject->addVector3(MakeVector3(  0.052083, -0.052083));
+            _simulatedObject->addVector3(MakeVector3(  0.000000f,  0.052083f));
+            _simulatedObject->addVector3(MakeVector3( -0.052083f, -0.052083f));
+            _simulatedObject->addVector3(MakeVector3(  0.052083f, -0.052083f));
             break;
         }
             
@@ -253,7 +251,7 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
         {
             // TODO this is max screem possible for simulation
             // left: -3.960000, right: 3.960000, bottom: -2.970000, top: 2.970000
-            _simulatedObject->setImmovable(true);
+            _simulatedObject->setMass(0.0f); // immovable
             _simulatedObject->addVector3(MakeVector3(-5.0f, -7.0f));
             _simulatedObject->addVector3(MakeVector3(-5.0f, -0.9f));
             _simulatedObject->addVector3(MakeVector3( 5.0f, -0.9f));
@@ -276,8 +274,8 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
         case POLYGON_CLOSE:
             break;
         
-        case TEST:
-            _simulatedObject->addVector3(MakeVector3( 0, 0));
+        case PARTICLE:
+            _simulatedObject->addVector3(MakeVector3(0.0f, 0.5f));
             break;
 
         default:

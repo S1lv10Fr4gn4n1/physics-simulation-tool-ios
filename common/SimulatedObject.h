@@ -10,15 +10,14 @@
 #define SIMULATEDOBJECT_H
 
 #include <vector>
-#include "PhysicalFeature.h"
 #include "CommonStructs.h"
 #include "Transform.h"
+#include "Particle.h"
 
-class SimulatedObject {
+class SimulatedObject : public Particle {
 private:
     real * vectors;
     std::vector<Vector3 *> * vectorsAux;
-    PhysicalFeature * physicalFeature;
     unsigned char * color;
     unsigned char * colorVectors;
     Color * colorAux;
@@ -28,7 +27,6 @@ private:
     
     bool showBBox;
     bool selected;
-    bool immovable;
     
     void makeVectors();
     void makeColorObject();
@@ -56,9 +54,6 @@ public:
     void setColorAux(Color * _color);
     Color * getColorAux();
     
-    PhysicalFeature * getPhysicalFeature();
-    void setPhysicalFeature(PhysicalFeature * _physicalFeature);
-    
     void setMode(unsigned int _mode);
     unsigned int getMode();
     
@@ -73,9 +68,6 @@ public:
     
     real * getMatrixTransformation();
     void setMatrixTransformation(real * _matrix);
-    
-    bool isImmovable();
-    void setImmovable(bool _immovable);
 };
 
 #endif

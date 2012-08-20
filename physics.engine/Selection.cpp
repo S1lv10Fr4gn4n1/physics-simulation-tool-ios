@@ -10,8 +10,8 @@
 
 int countObjectsRight = 0;
 unsigned long next = 0;
-real ti = 0;
-real xi = 0;
+real ti = 0.0f;
+real xi = 0.0f;
 Vector3 * p1 = NULL;
 Vector3 * p2 = NULL;
 Vector3 * p1Aux = NULL;
@@ -40,8 +40,8 @@ bool inSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)
 {
     countObjectsRight = 0;
 	long next = 0;
-	ti = 0;
-	xi = 0;
+	ti = 0.0f;
+	xi = 0.0f;
 	p1 = NULL;
 	p2 = NULL;
 	p1Aux = NULL;

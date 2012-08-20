@@ -14,7 +14,6 @@ SimulatedObject::SimulatedObject()
 {
     this->showBBox = false;
     this->selected = false;
-    this->immovable = false;
     
     this->vectorsAux = new vector<Vector3 *>();
     this->vectors = NULL;
@@ -23,14 +22,16 @@ SimulatedObject::SimulatedObject()
     this->color = NULL;
     this->colorVectors = NULL;
     
-    this->physicalFeature = NULL;
-
     this->matrixTransformation = new real[16];
     MatrixTransformIdentity(&this->matrixTransformation);
     
     this->bbox = new BBox();
     this->bbox->max->x = this->bbox->max->y = this->bbox->max->z = -1000000;
-	this->bbox->min->x = this->bbox->min->y = this->bbox->min->z =  1000000;	
+	this->bbox->min->x = this->bbox->min->y = this->bbox->min->z =  1000000;
+    
+    // Particle
+    this->setMass(2.0f);
+    this->setDamping(0.9f);
 }
 
 SimulatedObject::~SimulatedObject()
@@ -51,9 +52,6 @@ SimulatedObject::~SimulatedObject()
     if (this->vectors) {
         delete [] this->vectors;
     }
-    if (this->physicalFeature) {
-        delete this->physicalFeature;
-    }
     if (this->color) {
         delete [] this->color;
     }
@@ -72,7 +70,6 @@ SimulatedObject::~SimulatedObject()
     
     this->vectorsAux = NULL;
     this->vectors = NULL;
-    this->physicalFeature = NULL;
     this->color = NULL;
     this->colorVectors = NULL;
     this->colorAux = NULL;
@@ -275,16 +272,6 @@ Color * SimulatedObject::getColorAux()
     return this->colorAux;
 }
 
-PhysicalFeature * SimulatedObject::getPhysicalFeature()
-{
-    return this->physicalFeature;
-}
-
-void SimulatedObject::setPhysicalFeature(PhysicalFeature * _physicalFeature)
-{
-    this->physicalFeature = _physicalFeature;
-}
-
 void SimulatedObject::setMode(unsigned int _mode)
 {
     this->mode = _mode;
@@ -336,14 +323,4 @@ void SimulatedObject::setMatrixTransformation(real * _matrix)
     this->matrixTransformation = NULL;
     
     this->matrixTransformation = _matrix;
-}
-
-bool SimulatedObject::isImmovable()
-{
-    return this->immovable;
-}
-
-void SimulatedObject::setImmovable(bool _immovable)
-{
-    this->immovable = _immovable;
 }

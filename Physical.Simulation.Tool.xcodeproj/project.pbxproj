@@ -17,8 +17,8 @@
 		B9311CBA15D9681A00307F68 /* Vector3.h in Headers */ = {isa = PBXBuildFile; fileRef = B9311CB915D9681A00307F68 /* Vector3.h */; };
 		B9311CBD15D9682B00307F68 /* Vector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9311CBC15D9682B00307F68 /* Vector3.cpp */; };
 		B9311CBF15D9694700307F68 /* Precision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9311CBE15D9694700307F68 /* Precision.h */; };
-		B93151D315E11FEF00B3B3B8 /* PhysicalFeature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B93151D115E11FEF00B3B3B8 /* PhysicalFeature.cpp */; };
-		B93151D415E11FEF00B3B3B8 /* PhysicalFeature.h in Headers */ = {isa = PBXBuildFile; fileRef = B93151D215E11FEF00B3B3B8 /* PhysicalFeature.h */; };
+		B93151D715E14D4400B3B3B8 /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B93151D515E14D4300B3B3B8 /* Particle.cpp */; };
+		B93151D815E14D4400B3B3B8 /* Particle.h in Headers */ = {isa = PBXBuildFile; fileRef = B93151D615E14D4300B3B3B8 /* Particle.h */; };
 		B93704D815D2A9520042B36B /* plane.png in Resources */ = {isa = PBXBuildFile; fileRef = B93704D715D2A9520042B36B /* plane.png */; };
 		B93704EF15D2D6DE0042B36B /* library.graphic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36DF1586481C004AAB28 /* library.graphic.a */; };
 		B93704FF15D2DF310042B36B /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D1F871158EB8B3000337BB /* World.cpp */; };
@@ -163,8 +163,8 @@
 		B9311CB915D9681A00307F68 /* Vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3.h; sourceTree = "<group>"; };
 		B9311CBC15D9682B00307F68 /* Vector3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector3.cpp; sourceTree = "<group>"; };
 		B9311CBE15D9694700307F68 /* Precision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Precision.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B93151D115E11FEF00B3B3B8 /* PhysicalFeature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicalFeature.cpp; sourceTree = "<group>"; };
-		B93151D215E11FEF00B3B3B8 /* PhysicalFeature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicalFeature.h; sourceTree = "<group>"; };
+		B93151D515E14D4300B3B3B8 /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Particle.cpp; sourceTree = "<group>"; };
+		B93151D615E14D4300B3B3B8 /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
 		B93704D715D2A9520042B36B /* plane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plane.png; path = resources/images/plane.png; sourceTree = SOURCE_ROOT; };
 		B93ACE9415A3AC7100CED06E /* Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Selection.h; sourceTree = "<group>"; };
 		B93ACE9715A3AC8000CED06E /* Selection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Selection.cpp; sourceTree = "<group>"; };
@@ -434,10 +434,10 @@
 				B9066CE6159223650031264F /* Commons.h */,
 				B9D1F862158E929E000337BB /* CommonStructs.h */,
 				B9311CBE15D9694700307F68 /* Precision.h */,
-				B93151D115E11FEF00B3B3B8 /* PhysicalFeature.cpp */,
-				B93151D215E11FEF00B3B3B8 /* PhysicalFeature.h */,
 				B9311CB915D9681A00307F68 /* Vector3.h */,
 				B9311CBC15D9682B00307F68 /* Vector3.cpp */,
+				B93151D515E14D4300B3B3B8 /* Particle.cpp */,
+				B93151D615E14D4300B3B3B8 /* Particle.h */,
 				B9D1F870158EB8B3000337BB /* SimulatedObject.h */,
 				B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */,
 				B9D1F872158EB8B3000337BB /* World.h */,
@@ -517,7 +517,7 @@
 				B9311CBA15D9681A00307F68 /* Vector3.h in Headers */,
 				B9311CBF15D9694700307F68 /* Precision.h in Headers */,
 				B9A66A8715DEE81B00EDBF27 /* ForceGenerators.h in Headers */,
-				B93151D415E11FEF00B3B3B8 /* PhysicalFeature.h in Headers */,
+				B93151D815E14D4400B3B3B8 /* Particle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,7 +753,7 @@
 				B93704FF15D2DF310042B36B /* World.cpp in Sources */,
 				B9311CBD15D9682B00307F68 /* Vector3.cpp in Sources */,
 				B9A66A8A15DEE8BD00EDBF27 /* ForceGenerators.cpp in Sources */,
-				B93151D315E11FEF00B3B3B8 /* PhysicalFeature.cpp in Sources */,
+				B93151D715E14D4400B3B3B8 /* Particle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

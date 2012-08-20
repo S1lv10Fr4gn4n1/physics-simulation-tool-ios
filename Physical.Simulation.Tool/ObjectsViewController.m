@@ -35,15 +35,15 @@
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
 
-    // start simulation after 2 seconds
-    [NSTimer scheduledTimerWithTimeInterval:2
+    // start simulation after 1 seconds
+    [NSTimer scheduledTimerWithTimeInterval:1
                                      target:self
                                    selector:@selector(startSimulation:)
                                    userInfo:NULL
                                     repeats:NO];
     
 //    // TODO for Tests
-//    for (int i=0; i< 500; i++) {
+//    for (int i=0; i< 1000; i++) {
 //        Controller::getInstance()->createSimulatedObject(SQUARE);
 //        Controller::getInstance()->createSimulatedObject(CIRCLE);
 //        Controller::getInstance()->createSimulatedObject(TRIANGLE);

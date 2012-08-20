@@ -21,33 +21,31 @@ MainPhysics::~MainPhysics()
 
 void MainPhysics::updateFeatures(SimulatedObject * _simulatedObject, real _duration)
 {
-    PhysicalFeature * physicalFeature = _simulatedObject->getPhysicalFeature();
-    
-    if (!physicalFeature) {
+    if (_simulatedObject->getInverseMass() <= 0.0f) {
         return;
     }
-    
-    if (physicalFeature->getInverseMass() <= 0.0f) {
-        return;
-    }
-    
-    // update all forces in all objects
-    ForceRegistry::getInstance()->updateForces(_duration);
     
     // update linear position.
-    physicalFeature->getPosition()->addScaledVector(physicalFeature->getVelocity(), _duration);
+    _simulatedObject->getPosition()->addScaledVector(_simulatedObject->getVelocity(), _duration);
     
     // work out the acceleration from the force.
-    Vector3 * resultingAcc = physicalFeature->getAcceleration();
-    resultingAcc->addScaledVector(physicalFeature->getForceAccum(), physicalFeature->getInverseMass());
+    Vector3 * resultingAcc = MakeVector3(_simulatedObject->getAcceleration());
+    resultingAcc->addScaledVector(_simulatedObject->getForceAccum(), _simulatedObject->getInverseMass());
     
     // update linear velocity from the acceleration.
-    physicalFeature->getVelocity()->addScaledVector(resultingAcc, _duration);
+    _simulatedObject->getVelocity()->addScaledVector(resultingAcc, _duration);
     
-    // impose drag.
-    *physicalFeature->getVelocity() *= real_pow(physicalFeature->getDamping(), _duration);
+    delete resultingAcc;
+    resultingAcc = NULL;
     
-    physicalFeature->clearAccumulator();
+//    // TODO revise: is needed? damping force is already being applied
+//    // impose drag.
+//    *_simulatedObject->getVelocity() *= real_pow(_simulatedObject->getDamping(), _duration);
     
-    physicalFeature = NULL;
+//    printf("position: %f, velocity: %f, force: %f, accel: %f\n", _simulatedObject->getPosition()->y,
+//                                                                 _simulatedObject->getVelocity()->y,
+//                                                                 _simulatedObject->getForceAccum()->y,
+//                                                                 _simulatedObject->getAcceleration()->y);
+    
+    _simulatedObject->clearAccumulator();
 }

@@ -165,7 +165,7 @@ void Controller::touchesMoved(real _x, real _y, int _countFingers)
     if (_countFingers == 1) {
         this->objectOffset = this->mainEngine->selectedSimulatedObject(vector);
         
-        if (this->objectOffset && !this->objectOffset->isImmovable()) {
+        if (this->objectOffset && this->objectOffset->hasFiniteMass()) {
             if (this->objectEdition) {
                 this->objectEdition->setSelected(false);
                 this->objectEdition = NULL;
@@ -209,7 +209,7 @@ void Controller::touchesMoved(real _x, real _y, int _countFingers)
 
 void Controller::pinchDetected(real _scale, real _velocity, bool _began)
 {
-    if (this->objectEdition && this->objectEdition->isSelected() && !this->objectEdition->isImmovable()) {
+    if (this->objectEdition && this->objectEdition->isSelected() && this->objectEdition->hasFiniteMass()) {
         if (_began) {
             scaleObject = 1.0f;
             previousScale = 0.0;
@@ -312,22 +312,19 @@ void Controller::createSimulatedObject(TypeObject _typeObject)
     }
     
     SimulatedObject * object = new SimulatedObject();
-    ForceGravity * gravity = ForceGravity::getInstance();
-    
-    ForceRegistry::getInstance()->add(object, gravity);
-
-    PhysicalFeature * physicalFeature = new PhysicalFeature();
-    physicalFeature->setAcceleration(MakeVector3(0.0f, 0.0f)); // MakeVector3(0.0f, -10.0f); // -10 m/s2
-    physicalFeature->setPosition(MakeVector3(0.0f, 0.0f));
-    physicalFeature->setVelocicy(MakeVector3(getRand(5.0f), 0.0f));
-    physicalFeature->setMass(2.0f);    // 1 kg
-    physicalFeature->setVolume(0.0f);
-    physicalFeature->setDensity(0.0f);
-    physicalFeature->setDamping(0.9f); // TODO revise: change for drag forces
-    
-    object->setPhysicalFeature(physicalFeature);
     object->setColorAux(MakeRandonColor());
     object->setMode(GL_TRIANGLE_FAN);
+    object->setMass(0.5f);
+//    object->setDamping(0.00001f);
+    
+    ForceRegistry::getInstance()->add(object, new ForceGravity(MakeVector3(0.0f, -9.8f)));
+    ForceRegistry::getInstance()->add(object, new ForceDrag(object->getDamping(), object->getDamping()*object->getDamping()));
+//    ForceBuoyancy * force = new ForceBuoyancy(0.1f, 0.1f, 0.0f);
+//    ForceAnchoredBungee * force = new ForceAnchoredBungee(MakeVector3(0.0f, 0.5f), 6.0f, 0.5f);
+//    ForceAnchoredSpring * force = new ForceAnchoredSpring(MakeVector3(0.0f, 0.5f), 6.0f, 0.5f);
+//    ForceRegistry::getInstance()->add(object, force);
+//    object->setAcceleration(0.0f, -10.0f);
+//    object->setVelocity(1.0f, 0.0f);
     
     this->mainEngine->makeSimulatedObject(object, _typeObject);
     

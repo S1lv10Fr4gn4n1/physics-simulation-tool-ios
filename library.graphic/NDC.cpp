@@ -15,9 +15,9 @@ NDC::NDC()
     this->maxOrtho = NULL;
     this->minOrtho = NULL;
 
-    this->aspect = 0;
-    this->width = 0;
-    this->height = 0;
+    this->aspect = 0.0f;
+    this->width = 0.0f;
+    this->height = 0.0f;
 }
 
 NDC::~NDC()
@@ -55,11 +55,11 @@ void NDC::update(real _width, real _height)
     this->aspect = fabsf(this->width / this->height);
     
     if (this->maxOrtho == NULL) {
-        this->maxOrtho = MakeVector3(1, 1);
+        this->maxOrtho = MakeVector3(1.0f, 1.0f);
     }
     
     if (this->minOrtho == NULL) {
-        this->minOrtho = MakeVector3(-1, -1);
+        this->minOrtho = MakeVector3(-1.0f, -1.0f);
     }
     
     if (this->maxWindow) {
@@ -68,7 +68,7 @@ void NDC::update(real _width, real _height)
     this->maxWindow = MakeVector3(this->width, this->height);
     
     if (this->minWindow == NULL) {
-        this->minWindow = MakeVector3(0, 0);
+        this->minWindow = MakeVector3(0.0f, 0.0f);
     }
 
     this->setLeft(-this->aspect);

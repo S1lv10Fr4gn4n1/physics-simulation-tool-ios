@@ -13,12 +13,9 @@
 
 // interface ForceGenerator
 class ForceGenerator {
-protected:
-    bool singleton;
 public:
     virtual ~ForceGenerator();
     virtual void updateForce(SimulatedObject * _simulatedObject, real _duration) = 0;
-    bool isSingleton();
 };
 
 class ForceRegistry {
@@ -44,16 +41,14 @@ public:
 
 
 // force generator - gravitational force
-// one instance can be used for multiple particles
 class ForceGravity : public ForceGenerator {
 private:
     Vector3 * gravity;
-    static ForceGravity * forceGravity;
 public:
-    ForceGravity(Vector3 * _gravity, bool isSingleton = false);
+    ForceGravity(Vector3 * _gravity);
     ~ForceGravity();
     virtual void updateForce(SimulatedObject * _simulatedObject, real _duration);
-    static ForceGravity * getInstance();
+    void updateGravity(real _value);
 };
 
 

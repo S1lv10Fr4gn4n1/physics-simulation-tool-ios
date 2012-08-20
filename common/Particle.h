@@ -1,43 +1,32 @@
 //
-//  PhysicalFeature.h
+//  Particle.h
 //  Physical.Simulation.Tool
 //
-//  Created by Silvio Fragnani on 14/08/12.
+//  Created by Silvio Fragnani on 19/08/12.
 //
 //
 
-#ifndef PHYSICALFEATURE_H
-#define PHYSICALFEATURE_H
+#ifndef PARTICLE_H
+#define PARTICLE_H
 
 #include <stdlib.h>
-#include "Precision.h"
-#include "Vector3.h"
 #include "CommonStructs.h"
 
-class PhysicalFeature {
+class Particle {
 private:
     real mass;
     real volume;
     real density;
     real inverseMass;
     real damping;
+protected:
     Vector3 * position;
     Vector3 * acceleration;
     Vector3 * velocity;
-    Vector3 * forceAccum;
-protected:
-    
+    Vector3 * forceAccum; 
 public:
-    PhysicalFeature();
-    ~PhysicalFeature();
-    
-    static PhysicalFeature * MakePhysicalFeature(real _mass,
-                                                 real _volume,
-                                                 real _density,
-                                                 real _damping,
-                                                 Vector3 * _acceleration,
-                                                 Vector3 * _position,
-                                                 Vector3 * _velocity);
+    Particle();
+    ~Particle();
     
     void clearAccumulator();
     void addForce(Vector3 * _force);
@@ -54,11 +43,16 @@ public:
     void setDamping(real _damping);
     Vector3 * getPosition();
     void setPosition(Vector3 * _position);
+    void setPosition(real _x, real _y, real _z);
+    void setPosition(real _x, real _y);
     Vector3 * getAcceleration();
     void setAcceleration(Vector3 * _acceleration);
+    void setAcceleration(real _x, real _y, real _z);
+    void setAcceleration(real _x, real _y);
     Vector3 * getVelocity();
-    void setVelocicy(Vector3 * _velocity);
+    void setVelocity(Vector3 * _velocity);
+    void setVelocity(real _x, real _y, real _z);
+    void setVelocity(real _x, real _y);
     Vector3 * getForceAccum();
 };
-
 #endif

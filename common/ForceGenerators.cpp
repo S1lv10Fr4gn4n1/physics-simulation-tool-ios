@@ -15,11 +15,6 @@ ForceGenerator::~ForceGenerator()
     // TODO put your code here
 }
 
-bool ForceGenerator::isSingleton()
-{
-    return this->singleton;
-}
-
 
 // ForceRegistry
 ForceRegistry * ForceRegistry::forceRegistry = NULL;
@@ -33,9 +28,7 @@ ForceRegistry::~ForceRegistry()
     ForceRegistration * forceRegistration = NULL;
     for (int i=0; i < this->registrations->size(); i++) {
         forceRegistration = this->registrations->at(i);
-        if (!forceRegistration->forceGenerator->isSingleton()) {
-            delete forceRegistration;
-        }
+        delete forceRegistration;
     }
     forceRegistration = NULL;
 
@@ -65,14 +58,13 @@ void ForceRegistry::add(SimulatedObject * _simulatedObject, ForceGenerator * _fo
 
 void ForceRegistry::removeObject(SimulatedObject * _simulatedObject)
 {
-    // TODO revise
     ForceRegistration * forceRegistration = NULL;
-    for (int i=0; i < this->registrations->size(); i++) {
+    int total = this->registrations->size();
+    for (int i=total-1; i >= 0 ; i--) {
+        forceRegistration = NULL;
         forceRegistration = this->registrations->at(i);
         if (forceRegistration->simulatedObject == _simulatedObject) {
-            if (!forceRegistration->forceGenerator->isSingleton()) {
-                delete forceRegistration;
-            }
+            delete forceRegistration;
             this->registrations->erase(this->registrations->begin() + i);
         }
     }
@@ -82,7 +74,8 @@ void ForceRegistry::removeObject(SimulatedObject * _simulatedObject)
 void ForceRegistry::removeForceOfObject(SimulatedObject * _simulatedObject, ForceGenerator * _forceGenerator)
 {
     ForceRegistration * forceRegistration = NULL;
-    for (int i=0; i < this->registrations->size(); i++) {
+    int total = this->registrations->size();
+    for (int i=total-1; i >= 0 ; i--) {
         forceRegistration = this->registrations->at(i);
         if (forceRegistration->simulatedObject == _simulatedObject && forceRegistration->forceGenerator == _forceGenerator) {
             delete forceRegistration->forceGenerator;
@@ -108,10 +101,8 @@ ForceRegistry * ForceRegistry::getInstance()
 
 
 // ForceGravity
-ForceGravity * ForceGravity::forceGravity = NULL;
-ForceGravity::ForceGravity(Vector3 * _gravity, bool isSingleton)
+ForceGravity::ForceGravity(Vector3 * _gravity)
 {
-    this->singleton = isSingleton;
     this->gravity = _gravity;
 }
 
@@ -124,26 +115,19 @@ ForceGravity::~ForceGravity()
     this->gravity = NULL;
 }
 
-ForceGravity * ForceGravity::getInstance()
+void ForceGravity::updateGravity(real _value)
 {
-    if (!forceGravity) {
-        forceGravity = new ForceGravity(MakeVector3(0.0f, -9.8f), true);
-    }
-    return forceGravity;
+    this->gravity->x = _value;
 }
 
 void ForceGravity::updateForce(SimulatedObject * _simulatedObject, real _duration)
 {
-    PhysicalFeature * physicalFeacture = _simulatedObject->getPhysicalFeature();
-    
-    if (!physicalFeacture->hasFiniteMass()) {
+    if (!_simulatedObject->hasFiniteMass()) {
         return;
     }
     
     // TODO revise: gravity x mass : acceleration gravity or weight
-    //physicalFeacture->addForce(*this->gravity * physicalFeacture->getMass());
-    physicalFeacture->addForce(this->gravity);
-    physicalFeacture = NULL;
+    _simulatedObject->addForce(*this->gravity * _simulatedObject->getMass());
 }
 
 
@@ -162,7 +146,7 @@ ForceDrag::~ForceDrag()
 
 void ForceDrag::updateForce(SimulatedObject * _simulatedObject, real _duration)
 {
-    Vector3 * force = _simulatedObject->getPhysicalFeature()->getVelocity();
+    Vector3 * force = MakeVector3(_simulatedObject->getVelocity());
     
     // calculate the total drag coefficient.
     real dragCoeff = force->magnitude();
@@ -172,8 +156,9 @@ void ForceDrag::updateForce(SimulatedObject * _simulatedObject, real _duration)
     force->normalize();
     *force *= -dragCoeff;
     
-    _simulatedObject->getPhysicalFeature()->addForce(force);
+    _simulatedObject->addForce(force);
     
+    delete force;
     force = NULL;
 }
 
@@ -195,8 +180,8 @@ ForceSpring::~ForceSpring()
 void ForceSpring::updateForce(SimulatedObject * _simulatedObject, real _duration)
 {
     // calculate the vector of the spring.
-    Vector3 * force = _simulatedObject->getPhysicalFeature()->getPosition();
-    *force -= this->other->getPhysicalFeature()->getPosition();
+    Vector3 * force = MakeVector3(_simulatedObject->getPosition());
+    *force -= this->other->getPosition();
     
     // calculate the magnitude of the force.
     real magnitude = force->magnitude();
@@ -206,7 +191,10 @@ void ForceSpring::updateForce(SimulatedObject * _simulatedObject, real _duration
     // calculate the final force and apply it.
     force->normalize();
     *force *= -magnitude;
-    _simulatedObject->getPhysicalFeature()->addForce(force);
+    _simulatedObject->addForce(force);
+    
+    delete force;
+    force = NULL;
 }
 
 
@@ -231,17 +219,21 @@ ForceAnchoredSpring::~ForceAnchoredSpring()
 
 void ForceAnchoredSpring::updateForce(SimulatedObject * _simulatedObject, real _duration)
 {
-    Vector3 * force = _simulatedObject->getPhysicalFeature()->getPosition();
+    Vector3 * force = MakeVector3(_simulatedObject->getPosition());
     *force -= this->anchor;
-    // Calculate the magnitude of the force.
-    real magnitude = force->magnitude();
-    magnitude = real_abs(magnitude - restLength);
-    magnitude *= springConstant;
     
-    // Calculate the final force and apply it.
+    // calculate the magnitude of the force.
+    real magnitude = force->magnitude();
+    magnitude = real_abs(magnitude - this->restLength);
+    magnitude *= this->springConstant;
+    
+    // calculate the final force and apply it.
     force->normalize();
     *force *= -magnitude;
-    _simulatedObject->getPhysicalFeature()->addForce(force);
+    _simulatedObject->addForce(force);
+    
+    delete force;
+    force = NULL;
 }
 
 void ForceAnchoredSpring::setAnchor(Vector3 * _anchor)
@@ -266,12 +258,14 @@ ForceBungee::~ForceBungee()
 
 void ForceBungee::updateForce(SimulatedObject * _simulatedObject, real _duration)
 {
-    Vector3 * force = _simulatedObject->getPhysicalFeature()->getPosition();
-    *force -= other->getPhysicalFeature()->getPosition();
+    Vector3 * force = MakeVector3(_simulatedObject->getPosition());
+    *force -= other->getPosition();
     
     // check if the bungee is compressed.
     real magnitude = force->magnitude();
     if (magnitude <= this->restLength) {
+        delete force;
+        force = NULL;
         return;
     }
     
@@ -281,7 +275,10 @@ void ForceBungee::updateForce(SimulatedObject * _simulatedObject, real _duration
     // calculate the final force and apply it.
     force->normalize();
     *force *= -magnitude;
-    _simulatedObject->getPhysicalFeature()->addForce(force);
+    _simulatedObject->addForce(force);
+    
+    delete force;
+    force = NULL;
 }
 
 
@@ -306,12 +303,14 @@ ForceAnchoredBungee::~ForceAnchoredBungee()
 
 void ForceAnchoredBungee::updateForce(SimulatedObject * _simulatedObject, real _duration)
 {
-    Vector3 * force = _simulatedObject->getPhysicalFeature()->getPosition();
+    Vector3 * force = MakeVector3(_simulatedObject->getPosition());
     *force -= this->anchor;
     
     // check if the bungee is compressed.
     real magnitude = force->magnitude();
     if (magnitude <= this->restLength) {
+        delete force;
+        force = NULL;
         return;
     }
     
@@ -321,7 +320,10 @@ void ForceAnchoredBungee::updateForce(SimulatedObject * _simulatedObject, real _
     // calculate the final force and apply it.
     force->normalize();
     *force *= -magnitude;
-    _simulatedObject->getPhysicalFeature()->addForce(force);
+    _simulatedObject->addForce(force);
+
+    delete force;
+    force = NULL;
 }
 
 void ForceAnchoredBungee::setAnchor(Vector3 * _anchor)
@@ -348,7 +350,7 @@ ForceBuoyancy::~ForceBuoyancy()
 void ForceBuoyancy::updateForce(SimulatedObject * _simulatedObject, real _duration)
 {
     // calculate the submersion depth.
-    real depth = _simulatedObject->getPhysicalFeature()->getPosition()->y;
+    real depth = _simulatedObject->getPosition()->y;
     
     // check if we’re out of the water.
     if (depth >= this->waterHeight + this->maxDepth) {
@@ -360,13 +362,16 @@ void ForceBuoyancy::updateForce(SimulatedObject * _simulatedObject, real _durati
     // check if we’re at maximum depth.
     if (depth <= this->waterHeight - this->maxDepth) {
         force->y = this->liquidDensity * this->volume;
-        _simulatedObject->getPhysicalFeature()->addForce(force);
+        _simulatedObject->addForce(force);
         return;
     }
     
     // otherwise we are partly submerged.
     force->y = this->liquidDensity * this->volume * (depth - this->maxDepth - this->waterHeight) / 2 * this->maxDepth;
-    _simulatedObject->getPhysicalFeature()->addForce(force);
+    _simulatedObject->addForce(force);
+    
+    delete force;
+    force = NULL;
 }
 
 
@@ -385,19 +390,18 @@ ForceFakeStiffSpring::~ForceFakeStiffSpring()
     }
     this->anchor = NULL;
     
-    // TODO put your code here
     ForceGenerator::~ForceGenerator();
 }
 
 void ForceFakeStiffSpring::updateForce(SimulatedObject * _simulatedObject, real _duration)
 {
     // check that we do not have infinite mass.
-    if (!_simulatedObject->getPhysicalFeature()->hasFiniteMass()) {
+    if (!_simulatedObject->hasFiniteMass()) {
         return;
     }
     
     // calculate the relative position of the particle to the anchor.
-    Vector3 * position = _simulatedObject->getPhysicalFeature()->getPosition();
+    Vector3 * position = _simulatedObject->getPosition();
     *position -= anchor;
     
     // calculate the constants and check whether they are in bounds.
@@ -406,13 +410,13 @@ void ForceFakeStiffSpring::updateForce(SimulatedObject * _simulatedObject, real 
     if (gamma == 0.0f) {
         return;
     }
-    Vector3 * c = *(*position * (this->damping / (2.0f * gamma))) + (*_simulatedObject->getPhysicalFeature()->getVelocity() * (1.0f / gamma));
+    Vector3 * c = *(*position * (this->damping / (2.0f * gamma))) + (*_simulatedObject->getVelocity() * (1.0f / gamma));
     
     // calculate the target position.
     Vector3 * target = *(*position * real_cos(gamma * _duration)) + (*c * real_sin(gamma * _duration));
     *target *= real_exp(-0.5f * _duration * this->damping);
 
     // calculate the resulting acceleration and therefore the force
-    Vector3 * accel = *(*(*target - position) * (1.0f / _duration*_duration)) - (*_simulatedObject->getPhysicalFeature()->getVelocity() * _duration);
-    _simulatedObject->getPhysicalFeature()->addForce(*accel * _simulatedObject->getPhysicalFeature()->getMass());
+    Vector3 * accel = *(*(*target - position) * (1.0f / _duration*_duration)) - (*_simulatedObject->getVelocity() * _duration);
+    _simulatedObject->addForce(*accel * _simulatedObject->getMass());
 }

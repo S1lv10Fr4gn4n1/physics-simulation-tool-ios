@@ -10,10 +10,10 @@
 
 Vector3::Vector3()
 {
-    this->x = 0;
-    this->y = 0;
-    this->z = 0;
-    this->pad = 0;
+    this->x = 0.0f;
+    this->y = 0.0f;
+    this->z = 0.0f;
+    this->pad = 0.0f;
 }
 
 Vector3::Vector3(const real _x, const real _y, const real _z)
@@ -30,10 +30,10 @@ Vector3::~Vector3()
 
 void Vector3::clear()
 {
-    this->x = 0;
-    this->y = 0;
-    this->z = 0;
-    this->pad = 0;
+    this->x = 0.0f;
+    this->y = 0.0f;
+    this->z = 0.0f;
+    this->pad = 0.0f;
 }
 
 void Vector3::operator+=(const Vector3 * _vector)
@@ -138,8 +138,8 @@ real Vector3::squareMagnitude() const
 
 void Vector3::normalize()
 {
-    real l = magnitude();
-    if (l > 0) {
+    real l = this->magnitude();
+    if (l > 0.0f) {
         (*this)*=((real)1)/l;
     }
 }
