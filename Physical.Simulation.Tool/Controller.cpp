@@ -159,7 +159,7 @@ void Controller::touchesCancelled(real _x, real _y)
 
 void Controller::touchesMoved(real _x, real _y, int _countFingers)
 {
-    Vector3 * vector = MakeVector3(_x, _y);
+    Vector3 * vector = Vector3::MakeVector3(_x, _y);
 
     // move object
     if (_countFingers == 1) {
@@ -200,7 +200,7 @@ void Controller::touchesMoved(real _x, real _y, int _countFingers)
 //            previousVector = NULL;
 //        }
 //        
-//        previousVector = MakeVector3(vector);
+//        previousVector = Vector3::MakeVector3(vector);
 //    }
     
     delete vector;
@@ -257,7 +257,7 @@ void Controller::rotationDetected(real _radians, real _velocity, bool _began)
 
 void Controller::doubleTapOneFingerDetected(real _x, real _y)
 {
-    Vector3 * vector = MakeVector3(_x, _y);
+    Vector3 * vector = Vector3::MakeVector3(_x, _y);
     
     this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
     
@@ -276,7 +276,7 @@ void Controller::doubleTapOneFingerDetected(real _x, real _y)
 
 void Controller::longPressDetected(real _x, real _y)
 {
-    Vector3 * vector = MakeVector3(_x, _y);
+    Vector3 * vector = Vector3::MakeVector3(_x, _y);
     
     this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
 
@@ -312,20 +312,20 @@ void Controller::createSimulatedObject(TypeObject _typeObject)
     }
     
     SimulatedObject * object = new SimulatedObject();
-    object->setColorAux(MakeRandonColor());
+    object->setColorAux(Color::MakeRandonColor());
     object->setMode(GL_TRIANGLE_FAN);
 //    object->setMass(0.5f);
 //    object->setDamping(0.00001f);
 //    object->setAcceleration(0.0f, -10.0f);
 //    object->setVelocity(1.0f, 0.0f);
 
-    ForceRegistry::getInstance()->add(object, new ForceGravity(MakeVector3(0.0f, -9.8f)));
-    ForceRegistry::getInstance()->add(object, new ForceDrag(object->getDamping(), object->getDamping()*object->getDamping()));
+    ParticleForceRegistry::getInstance()->add(object, new ParticleGravity(Vector3::MakeVector3(0.0f, -9.8f)));
+    ParticleForceRegistry::getInstance()->add(object, new ParticleDrag(object->getDamping(), object->getDamping()*object->getDamping()));
     
-//    ForceBuoyancy * force = new ForceBuoyancy(0.1f, 0.1f, 0.0f);
-//    ForceAnchoredBungee * force = new ForceAnchoredBungee(MakeVector3(0.0f, 0.5f), 6.0f, 0.5f);
-//    ForceAnchoredSpring * force = new ForceAnchoredSpring(MakeVector3(0.0f, 0.5f), 6.0f, 0.5f);
-//    ForceRegistry::getInstance()->add(object, force);
+//    ParticleBuoyancy * force = new ParticleBuoyancy(0.1f, 0.1f, 0.0f);
+//    ParticleAnchoredBungee * force = new ParticleAnchoredBungee(Vector3::MakeVector3(0.0f, 0.5f), 6.0f, 0.5f);
+//    ParticleAnchoredSpring * force = new ParticleAnchoredSpring(Vector3::MakeVector3(0.0f, 0.5f), 6.0f, 0.5f);
+//    ParticleForceRegistry::getInstance()->add(object, force);
     
     this->mainEngine->makeSimulatedObject(object, _typeObject);
     
@@ -336,8 +336,8 @@ void Controller::createSimulatedObject(TypeObject _typeObject)
 //    object1->setMode(GL_TRIANGLE_FAN);
 //    object1->setPosition(0.0f, 0.4f);
 //
-//    ForceRegistry::getInstance()->add(object1, new ForceGravity(MakeVector3(0.0f, -9.8f)));
-//    ForceRegistry::getInstance()->add(object1, new ForceDrag(object1->getDamping(), object->getDamping()*object1->getDamping()));
+//    ParticleForceRegistry::getInstance()->add(object1, new ParticleGravity(Vector3::MakeVector3(0.0f, -9.8f)));
+//    ParticleForceRegistry::getInstance()->add(object1, new ParticleDrag(object1->getDamping(), object->getDamping()*object1->getDamping()));
 //
 //    this->mainEngine->translateSimulatedObject(object1, object1->getPosition());
 //    this->mainEngine->makeSimulatedObject(object1, _typeObject);
@@ -349,8 +349,6 @@ void Controller::createSimulatedObject(TypeObject _typeObject)
 //    rod->length = 2;
 
     
-    
-    
 //    // TODO for Tests
 //    float x = getRand(3.0f);
 //    x = fmodf(x, 0.04) <= 0.03 ? x : -x;
@@ -358,7 +356,7 @@ void Controller::createSimulatedObject(TypeObject _typeObject)
 //    float y = getRand(3.0f);
 //    y = fmodf(y, 0.04) <= 0.03 ? y : -y;
 //
-//    Vector3 *v = MakeVector3(x, y);
+//    Vector3 *v = Vector3::MakeVector3(x, y);
 //    this->mainEngine->translateSimulatedObject(object, v);
 //    this->mainEngine->updatePositionSimulatedObject(object, v);
 }

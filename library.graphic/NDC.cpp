@@ -55,20 +55,20 @@ void NDC::update(real _width, real _height)
     this->aspect = fabsf(this->width / this->height);
     
     if (this->maxOrtho == NULL) {
-        this->maxOrtho = MakeVector3(1.0f, 1.0f);
+        this->maxOrtho = Vector3::MakeVector3(1.0f, 1.0f);
     }
     
     if (this->minOrtho == NULL) {
-        this->minOrtho = MakeVector3(-1.0f, -1.0f);
+        this->minOrtho = Vector3::MakeVector3(-1.0f, -1.0f);
     }
     
     if (this->maxWindow) {
         delete this->maxWindow;
     }
-    this->maxWindow = MakeVector3(this->width, this->height);
+    this->maxWindow = Vector3::MakeVector3(this->width, this->height);
     
     if (this->minWindow == NULL) {
-        this->minWindow = MakeVector3(0.0f, 0.0f);
+        this->minWindow = Vector3::MakeVector3(0.0f, 0.0f);
     }
 
     this->setLeft(-this->aspect);

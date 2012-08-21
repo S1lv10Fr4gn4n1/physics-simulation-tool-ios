@@ -10,7 +10,7 @@
 #define PARTICLE_H
 
 #include <stdlib.h>
-#include "CommonStructs.h"
+#include "CommonStructures.h"
 
 class Particle {
 private:

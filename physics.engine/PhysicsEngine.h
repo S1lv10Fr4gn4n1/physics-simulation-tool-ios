@@ -10,5 +10,7 @@
 #define PHYSICSENGINE_H
 
 #include "MainEngine.h"
+#include "Selection.h"
+#include "NDC.h"
 
 #endif

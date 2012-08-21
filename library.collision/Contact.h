@@ -9,7 +9,6 @@
 #ifndef CONTACT_H
 #define CONTACT_H
 
-#include "Vector3.h"
 #include "Particle.h"
 
 class Contact {

@@ -9,13 +9,12 @@
 #ifndef COMMONS_H
 #define COMMONS_H
 
-#include "Utils.h"
-#include "CommonStructs.h"
-#include "Transform.h"
+#include "CommonStructures.h"
+#include "Particle.h"
 #include "SimulatedObject.h"
+#include "RigidBody.h"
 #include "World.h"
 #include "Precision.h"
-#include "Vector3.h"
-#include "ForceGenerators.h"
+#include "Utils.h"
 
 #endif

@@ -10,8 +10,7 @@
 #define SIMULATEDOBJECT_H
 
 #include <vector>
-#include "CommonStructs.h"
-#include "Transform.h"
+#include "CommonStructures.h"
 #include "Particle.h"
 
 class SimulatedObject : public Particle {

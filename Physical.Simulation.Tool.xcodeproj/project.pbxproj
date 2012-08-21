@@ -14,8 +14,6 @@
 		B913AEAA15B1F5190050B8DB /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913AEA915B1F5180050B8DB /* Controller.cpp */; };
 		B913AEB115B1F78D0050B8DB /* TabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B913AEB015B1F78D0050B8DB /* TabViewController.m */; };
 		B913AEB415B211830050B8DB /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913AEB315B211830050B8DB /* Utils.cpp */; };
-		B9311CBA15D9681A00307F68 /* Vector3.h in Headers */ = {isa = PBXBuildFile; fileRef = B9311CB915D9681A00307F68 /* Vector3.h */; };
-		B9311CBD15D9682B00307F68 /* Vector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9311CBC15D9682B00307F68 /* Vector3.cpp */; };
 		B9311CBF15D9694700307F68 /* Precision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9311CBE15D9694700307F68 /* Precision.h */; };
 		B93704D815D2A9520042B36B /* plane.png in Resources */ = {isa = PBXBuildFile; fileRef = B93704D715D2A9520042B36B /* plane.png */; };
 		B93704EF15D2D6DE0042B36B /* library.graphic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36DF1586481C004AAB28 /* library.graphic.a */; };
@@ -33,20 +31,24 @@
 		B94B371415864AD7004AAB28 /* MainEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B94B371115864AD7004AAB28 /* MainEngine.cpp */; };
 		B94B371515864AD7004AAB28 /* MainEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = B94B371215864AD7004AAB28 /* MainEngine.h */; };
 		B94B371615864AD7004AAB28 /* PhysicsEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = B94B371315864AD7004AAB28 /* PhysicsEngine.h */; };
-		B978EC1E15E2BD1A0087DDE8 /* ForceGenerators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B978EC1A15E2BD1A0087DDE8 /* ForceGenerators.cpp */; };
-		B978EC1F15E2BD1A0087DDE8 /* ForceGenerators.h in Headers */ = {isa = PBXBuildFile; fileRef = B978EC1B15E2BD1A0087DDE8 /* ForceGenerators.h */; };
-		B978EC2415E2BD830087DDE8 /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B978EC2215E2BD830087DDE8 /* Particle.cpp */; };
-		B978EC2515E2BD830087DDE8 /* Particle.h in Headers */ = {isa = PBXBuildFile; fileRef = B978EC2315E2BD830087DDE8 /* Particle.h */; };
 		B978EC2715E2BE0A0087DDE8 /* Contact.h in Headers */ = {isa = PBXBuildFile; fileRef = B978EC2615E2BE0A0087DDE8 /* Contact.h */; };
 		B978EC2915E2BE160087DDE8 /* Contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B978EC2815E2BE160087DDE8 /* Contact.cpp */; };
 		B978EC2B15E2F8A60087DDE8 /* Links.h in Headers */ = {isa = PBXBuildFile; fileRef = B978EC2A15E2F8A60087DDE8 /* Links.h */; };
 		B978EC2D15E2F8B00087DDE8 /* Links.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B978EC2C15E2F8B00087DDE8 /* Links.cpp */; };
 		B978EC3315E34A0D0087DDE8 /* RigidBody.h in Headers */ = {isa = PBXBuildFile; fileRef = B978EC3215E34A0C0087DDE8 /* RigidBody.h */; };
 		B978EC3615E34A190087DDE8 /* RigidBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B978EC3415E34A190087DDE8 /* RigidBody.cpp */; };
-		B97E83D815C5D61300D1FE72 /* Transform.h in Headers */ = {isa = PBXBuildFile; fileRef = B97E83D715C5D61300D1FE72 /* Transform.h */; };
 		B98DACCB158ABCFA00417C21 /* NDC.h in Headers */ = {isa = PBXBuildFile; fileRef = B98DACCA158ABCFA00417C21 /* NDC.h */; };
 		B98DACCE158ABD0A00417C21 /* NDC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B98DACCD158ABD0A00417C21 /* NDC.cpp */; };
 		B98DACE8158ACB7400417C21 /* CommonGraphics.h in Headers */ = {isa = PBXBuildFile; fileRef = B98DACE7158ACB7400417C21 /* CommonGraphics.h */; };
+		B9B17AAD15E3B156009339CA /* CommonStructures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B17AAC15E3B156009339CA /* CommonStructures.cpp */; };
+		B9B17AAF15E42068009339CA /* ForceGenerators.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B17AAE15E42068009339CA /* ForceGenerators.h */; };
+		B9B17AB115E42071009339CA /* ForceGenerators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B17AB015E42071009339CA /* ForceGenerators.cpp */; };
+		B9B17AB315E42C53009339CA /* TorqueGenerators.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B17AB215E42C53009339CA /* TorqueGenerators.h */; };
+		B9B17AB515E42C59009339CA /* TorqueGenerators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B17AB415E42C59009339CA /* TorqueGenerators.cpp */; };
+		B9B17AB815E439F3009339CA /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B17AB615E439F3009339CA /* Particle.cpp */; };
+		B9B17AB915E439F3009339CA /* Particle.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B17AB715E439F3009339CA /* Particle.h */; };
+		B9B17ABC15E439FE009339CA /* ParticleForceGenerators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B17ABA15E439FE009339CA /* ParticleForceGenerators.cpp */; };
+		B9B17ABD15E439FE009339CA /* ParticleForceGenerators.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B17ABB15E439FE009339CA /* ParticleForceGenerators.h */; };
 		B9B350971586BBB600180CE7 /* LibraryGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350941586BBB600180CE7 /* LibraryGraphic.h */; };
 		B9B350981586BBB600180CE7 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B350951586BBB600180CE7 /* Shader.cpp */; };
 		B9B350991586BBB600180CE7 /* Shader.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350961586BBB600180CE7 /* Shader.h */; };
@@ -61,9 +63,9 @@
 		B9C5325D159950040098C0A6 /* albert.icon.72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C53259159950040098C0A6 /* albert.icon.72x72.png */; };
 		B9C5325E159950040098C0A6 /* albert.icon.114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C5325A159950040098C0A6 /* albert.icon.114x114.png */; };
 		B9C5325F159950040098C0A6 /* albert.icon.144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C5325B159950040098C0A6 /* albert.icon.144x144.png */; };
-		B9D1F863158E929E000337BB /* CommonStructs.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStructs.h */; };
-		B9D1F864158E929E000337BB /* CommonStructs.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStructs.h */; };
-		B9D1F865158E929E000337BB /* CommonStructs.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStructs.h */; };
+		B9D1F863158E929E000337BB /* CommonStructures.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStructures.h */; };
+		B9D1F864158E929E000337BB /* CommonStructures.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStructures.h */; };
+		B9D1F865158E929E000337BB /* CommonStructures.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F862158E929E000337BB /* CommonStructures.h */; };
 		B9D1F873158EB8B3000337BB /* SimulatedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */; };
 		B9D1F874158EB8B3000337BB /* SimulatedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F870158EB8B3000337BB /* SimulatedObject.h */; };
 		B9D1F876158EB8B3000337BB /* World.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D1F872158EB8B3000337BB /* World.h */; };
@@ -166,8 +168,6 @@
 		B913AEB015B1F78D0050B8DB /* TabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabViewController.m; sourceTree = "<group>"; };
 		B913AEB215B2117D0050B8DB /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		B913AEB315B211830050B8DB /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
-		B9311CB915D9681A00307F68 /* Vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3.h; sourceTree = "<group>"; };
-		B9311CBC15D9682B00307F68 /* Vector3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector3.cpp; sourceTree = "<group>"; };
 		B9311CBE15D9694700307F68 /* Precision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Precision.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B93704D715D2A9520042B36B /* plane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plane.png; path = resources/images/plane.png; sourceTree = SOURCE_ROOT; };
 		B93ACE9415A3AC7100CED06E /* Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Selection.h; sourceTree = "<group>"; };
@@ -190,20 +190,24 @@
 		B94B371115864AD7004AAB28 /* MainEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainEngine.cpp; sourceTree = "<group>"; };
 		B94B371215864AD7004AAB28 /* MainEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainEngine.h; sourceTree = "<group>"; };
 		B94B371315864AD7004AAB28 /* PhysicsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEngine.h; sourceTree = "<group>"; };
-		B978EC1A15E2BD1A0087DDE8 /* ForceGenerators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ForceGenerators.cpp; sourceTree = "<group>"; };
-		B978EC1B15E2BD1A0087DDE8 /* ForceGenerators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForceGenerators.h; sourceTree = "<group>"; };
-		B978EC2215E2BD830087DDE8 /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Particle.cpp; sourceTree = "<group>"; };
-		B978EC2315E2BD830087DDE8 /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
 		B978EC2615E2BE0A0087DDE8 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
 		B978EC2815E2BE160087DDE8 /* Contact.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Contact.cpp; sourceTree = "<group>"; };
 		B978EC2A15E2F8A60087DDE8 /* Links.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Links.h; sourceTree = "<group>"; };
 		B978EC2C15E2F8B00087DDE8 /* Links.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Links.cpp; sourceTree = "<group>"; };
 		B978EC3215E34A0C0087DDE8 /* RigidBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RigidBody.h; sourceTree = "<group>"; };
 		B978EC3415E34A190087DDE8 /* RigidBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RigidBody.cpp; sourceTree = "<group>"; };
-		B97E83D715C5D61300D1FE72 /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Transform.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B98DACCA158ABCFA00417C21 /* NDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NDC.h; path = ../library.graphic/NDC.h; sourceTree = "<group>"; };
 		B98DACCD158ABD0A00417C21 /* NDC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NDC.cpp; path = ../library.graphic/NDC.cpp; sourceTree = "<group>"; };
 		B98DACE7158ACB7400417C21 /* CommonGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonGraphics.h; sourceTree = "<group>"; };
+		B9B17AAC15E3B156009339CA /* CommonStructures.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonStructures.cpp; sourceTree = "<group>"; };
+		B9B17AAE15E42068009339CA /* ForceGenerators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForceGenerators.h; sourceTree = "<group>"; };
+		B9B17AB015E42071009339CA /* ForceGenerators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ForceGenerators.cpp; sourceTree = "<group>"; };
+		B9B17AB215E42C53009339CA /* TorqueGenerators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TorqueGenerators.h; sourceTree = "<group>"; };
+		B9B17AB415E42C59009339CA /* TorqueGenerators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TorqueGenerators.cpp; sourceTree = "<group>"; };
+		B9B17AB615E439F3009339CA /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Particle.cpp; sourceTree = "<group>"; };
+		B9B17AB715E439F3009339CA /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
+		B9B17ABA15E439FE009339CA /* ParticleForceGenerators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleForceGenerators.cpp; sourceTree = "<group>"; };
+		B9B17ABB15E439FE009339CA /* ParticleForceGenerators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleForceGenerators.h; sourceTree = "<group>"; };
 		B9B350941586BBB600180CE7 /* LibraryGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryGraphic.h; sourceTree = "<group>"; };
 		B9B350951586BBB600180CE7 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		B9B350961586BBB600180CE7 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
@@ -222,7 +226,7 @@
 		B9C5325A159950040098C0A6 /* albert.icon.114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.114x114.png; path = resources/images/albert.icon.114x114.png; sourceTree = SOURCE_ROOT; };
 		B9C5325B159950040098C0A6 /* albert.icon.144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = albert.icon.144x144.png; path = resources/images/albert.icon.144x144.png; sourceTree = SOURCE_ROOT; };
 		B9D1F857158E923F000337BB /* common.feature.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = common.feature.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9D1F862158E929E000337BB /* CommonStructs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonStructs.h; sourceTree = "<group>"; };
+		B9D1F862158E929E000337BB /* CommonStructures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonStructures.h; sourceTree = "<group>"; };
 		B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = SimulatedObject.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B9D1F870158EB8B3000337BB /* SimulatedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatedObject.h; sourceTree = "<group>"; };
 		B9D1F871158EB8B3000337BB /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = World.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -418,11 +422,15 @@
 		B9B350C21586BEB200180CE7 /* library.physics */ = {
 			isa = PBXGroup;
 			children = (
+				B9B17ABA15E439FE009339CA /* ParticleForceGenerators.cpp */,
+				B9B17ABB15E439FE009339CA /* ParticleForceGenerators.h */,
 				B9B350CD1586BEF800180CE7 /* LibraryPhysics.h */,
 				B9DD97361586E20800E6DD9B /* MainPhysics.h */,
 				B9DD97381586E21100E6DD9B /* MainPhysics.cpp */,
-				B978EC1A15E2BD1A0087DDE8 /* ForceGenerators.cpp */,
-				B978EC1B15E2BD1A0087DDE8 /* ForceGenerators.h */,
+				B9B17AAE15E42068009339CA /* ForceGenerators.h */,
+				B9B17AB015E42071009339CA /* ForceGenerators.cpp */,
+				B9B17AB215E42C53009339CA /* TorqueGenerators.h */,
+				B9B17AB415E42C59009339CA /* TorqueGenerators.cpp */,
 			);
 			path = library.physics;
 			sourceTree = "<group>";
@@ -449,22 +457,20 @@
 		B9D1F859158E923F000337BB /* common */ = {
 			isa = PBXGroup;
 			children = (
-				B978EC2315E2BD830087DDE8 /* Particle.h */,
-				B978EC2215E2BD830087DDE8 /* Particle.cpp */,
+				B9B17AB615E439F3009339CA /* Particle.cpp */,
+				B9B17AB715E439F3009339CA /* Particle.h */,
+				B9066CE6159223650031264F /* Commons.h */,
 				B978EC3215E34A0C0087DDE8 /* RigidBody.h */,
 				B978EC3415E34A190087DDE8 /* RigidBody.cpp */,
-				B9066CE6159223650031264F /* Commons.h */,
-				B9D1F862158E929E000337BB /* CommonStructs.h */,
+				B9D1F862158E929E000337BB /* CommonStructures.h */,
+				B9B17AAC15E3B156009339CA /* CommonStructures.cpp */,
 				B9311CBE15D9694700307F68 /* Precision.h */,
-				B9311CB915D9681A00307F68 /* Vector3.h */,
-				B9311CBC15D9682B00307F68 /* Vector3.cpp */,
 				B9D1F870158EB8B3000337BB /* SimulatedObject.h */,
 				B9D1F86F158EB8B3000337BB /* SimulatedObject.cpp */,
 				B9D1F872158EB8B3000337BB /* World.h */,
 				B9D1F871158EB8B3000337BB /* World.cpp */,
 				B913AEB215B2117D0050B8DB /* Utils.h */,
 				B913AEB315B211830050B8DB /* Utils.cpp */,
-				B97E83D715C5D61300D1FE72 /* Transform.h */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -487,7 +493,7 @@
 			files = (
 				B94B371515864AD7004AAB28 /* MainEngine.h in Headers */,
 				B94B371615864AD7004AAB28 /* PhysicsEngine.h in Headers */,
-				B9D1F863158E929E000337BB /* CommonStructs.h in Headers */,
+				B9D1F863158E929E000337BB /* CommonStructures.h in Headers */,
 				B93ACE9515A3AC7100CED06E /* Selection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,7 +507,7 @@
 				B9DD92BE1586FE400029A4A3 /* MainGraphic.h in Headers */,
 				B98DACCB158ABCFA00417C21 /* NDC.h in Headers */,
 				B98DACE8158ACB7400417C21 /* CommonGraphics.h in Headers */,
-				B9D1F864158E929E000337BB /* CommonStructs.h in Headers */,
+				B9D1F864158E929E000337BB /* CommonStructures.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,7 +528,10 @@
 			files = (
 				B9B350CE1586BEF800180CE7 /* LibraryPhysics.h in Headers */,
 				B9DD97371586E20800E6DD9B /* MainPhysics.h in Headers */,
-				B978EC1F15E2BD1A0087DDE8 /* ForceGenerators.h in Headers */,
+				B9B17AAF15E42068009339CA /* ForceGenerators.h in Headers */,
+				B9B17AB315E42C53009339CA /* TorqueGenerators.h in Headers */,
+				B9B17AB915E439F3009339CA /* Particle.h in Headers */,
+				B9B17ABD15E439FE009339CA /* ParticleForceGenerators.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,14 +539,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9D1F865158E929E000337BB /* CommonStructs.h in Headers */,
+				B9D1F865158E929E000337BB /* CommonStructures.h in Headers */,
 				B9D1F874158EB8B3000337BB /* SimulatedObject.h in Headers */,
 				B9D1F876158EB8B3000337BB /* World.h in Headers */,
 				B9066CE81592237D0031264F /* Commons.h in Headers */,
-				B97E83D815C5D61300D1FE72 /* Transform.h in Headers */,
-				B9311CBA15D9681A00307F68 /* Vector3.h in Headers */,
 				B9311CBF15D9694700307F68 /* Precision.h in Headers */,
-				B978EC2515E2BD830087DDE8 /* Particle.h in Headers */,
 				B978EC3315E34A0D0087DDE8 /* RigidBody.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -765,7 +771,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9DD97391586E21100E6DD9B /* MainPhysics.cpp in Sources */,
-				B978EC1E15E2BD1A0087DDE8 /* ForceGenerators.cpp in Sources */,
+				B9B17AB115E42071009339CA /* ForceGenerators.cpp in Sources */,
+				B9B17AB515E42C59009339CA /* TorqueGenerators.cpp in Sources */,
+				B9B17AB815E439F3009339CA /* Particle.cpp in Sources */,
+				B9B17ABC15E439FE009339CA /* ParticleForceGenerators.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,9 +784,8 @@
 			files = (
 				B9D1F873158EB8B3000337BB /* SimulatedObject.cpp in Sources */,
 				B93704FF15D2DF310042B36B /* World.cpp in Sources */,
-				B9311CBD15D9682B00307F68 /* Vector3.cpp in Sources */,
-				B978EC2415E2BD830087DDE8 /* Particle.cpp in Sources */,
 				B978EC3615E34A190087DDE8 /* RigidBody.cpp in Sources */,
+				B9B17AAD15E3B156009339CA /* CommonStructures.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,12 +9,10 @@
 #ifndef MAINENGINE_H
 #define MAINENGINE_H
 
-#include "Commons.h"
 #include "LibraryCollision.h"
 #include "LibraryPhysics.h"
 #include "Selection.h"
 #include "NDC.h"
-#include <vector>
 
 class MainEngine {
 private:

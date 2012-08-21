@@ -10,7 +10,6 @@
 #define NDC_H
 
 #include "CommonGraphics.h"
-#include <math.h>
 
 class NDC {
     Vector3 * maxWindow;

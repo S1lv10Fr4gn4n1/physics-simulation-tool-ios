@@ -29,7 +29,7 @@ void MainPhysics::updateFeatures(SimulatedObject * _simulatedObject, real _durat
     _simulatedObject->getPosition()->addScaledVector(_simulatedObject->getVelocity(), _duration);
     
     // work out the acceleration from the force.
-    Vector3 * resultingAcc = MakeVector3(_simulatedObject->getAcceleration());
+    Vector3 * resultingAcc = Vector3::MakeVector3(_simulatedObject->getAcceleration());
     resultingAcc->addScaledVector(_simulatedObject->getForceAccum(), _simulatedObject->getInverseMass());
     
     // update linear velocity from the acceleration.

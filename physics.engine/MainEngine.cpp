@@ -69,7 +69,7 @@ void MainEngine::updateInformation(real _duration)
     SimulatedObject * object = NULL;
 
     // update all forces in all objects
-    ForceRegistry::getInstance()->updateForces(_duration);
+    ParticleForceRegistry::getInstance()->updateForces(_duration);
     
     for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
         object = this->world->getSimulatedObjects()->at(i);
@@ -189,7 +189,7 @@ void MainEngine::deleteAllSimulatedObjects()
 void MainEngine::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
     // remove object of ForceRegistry
-    ForceRegistry::getInstance()->removeObject(_simulatedObject);
+    ParticleForceRegistry::getInstance()->removeObject(_simulatedObject);
     this->world->deleteSimulatedObject(_simulatedObject);
 }
 
@@ -200,8 +200,8 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
         {
             // calculates the radius
             // takes the first point, which indicates the origin of the circle
-            Vector3 * v1 = MakeVector3(0.0f, 0.0f);
-            Vector3 * v2 = MakeVector3(0.0f, 0.052083f);
+            Vector3 * v1 = Vector3::MakeVector3(0.0f, 0.0f);
+            Vector3 * v2 = Vector3::MakeVector3(0.0f, 0.052083f);
             
             real x = v2->x - v1->x;
             real y = v2->y - v1->y;
@@ -220,7 +220,7 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
                 x1 = (radius * cos(M_PI * ang / 180.0f));
                 y1 = (radius * sin(M_PI * ang / 180.0f));
                 
-                _simulatedObject->addVector3(MakeVector3(x1 + v1->x, y1 + v1->y));
+                _simulatedObject->addVector3(Vector3::MakeVector3(x1 + v1->x, y1 + v1->y));
                 ang+=10;
             }
             
@@ -234,18 +234,18 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
             
         case SQUARE:
         {
-            _simulatedObject->addVector3(MakeVector3( -0.052083f, -0.052083f));
-            _simulatedObject->addVector3(MakeVector3(  0.052083f, -0.052083f));
-            _simulatedObject->addVector3(MakeVector3(  0.052083f,  0.052083f));
-            _simulatedObject->addVector3(MakeVector3( -0.052083f,  0.052083f));
+            _simulatedObject->addVector3(Vector3::MakeVector3( -0.052083f, -0.052083f));
+            _simulatedObject->addVector3(Vector3::MakeVector3(  0.052083f, -0.052083f));
+            _simulatedObject->addVector3(Vector3::MakeVector3(  0.052083f,  0.052083f));
+            _simulatedObject->addVector3(Vector3::MakeVector3( -0.052083f,  0.052083f));
             break;
         }
             
         case TRIANGLE:
         {
-            _simulatedObject->addVector3(MakeVector3(  0.000000f,  0.052083f));
-            _simulatedObject->addVector3(MakeVector3( -0.052083f, -0.052083f));
-            _simulatedObject->addVector3(MakeVector3(  0.052083f, -0.052083f));
+            _simulatedObject->addVector3(Vector3::MakeVector3(  0.000000f,  0.052083f));
+            _simulatedObject->addVector3(Vector3::MakeVector3( -0.052083f, -0.052083f));
+            _simulatedObject->addVector3(Vector3::MakeVector3(  0.052083f, -0.052083f));
             break;
         }
             
@@ -254,10 +254,10 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
             // TODO this is max screem possible for simulation
             // left: -3.960000, right: 3.960000, bottom: -2.970000, top: 2.970000
             _simulatedObject->setMass(0.0f); // immovable
-            _simulatedObject->addVector3(MakeVector3(-5.0f, -7.0f));
-            _simulatedObject->addVector3(MakeVector3(-5.0f, -0.9f));
-            _simulatedObject->addVector3(MakeVector3( 5.0f, -0.9f));
-            _simulatedObject->addVector3(MakeVector3( 5.0f, -7.0f));
+            _simulatedObject->addVector3(Vector3::MakeVector3(-5.0f, -7.0f));
+            _simulatedObject->addVector3(Vector3::MakeVector3(-5.0f, -0.9f));
+            _simulatedObject->addVector3(Vector3::MakeVector3( 5.0f, -0.9f));
+            _simulatedObject->addVector3(Vector3::MakeVector3( 5.0f, -7.0f));
             break;
         }
             
@@ -277,7 +277,7 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
             break;
         
         case PARTICLE:
-            _simulatedObject->addVector3(MakeVector3(0.0f, 0.5f));
+            _simulatedObject->addVector3(Vector3::MakeVector3(0.0f, 0.5f));
             break;
 
         default:

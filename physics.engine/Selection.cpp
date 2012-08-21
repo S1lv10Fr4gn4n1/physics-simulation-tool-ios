@@ -56,7 +56,7 @@ bool inSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)
 		p2Aux = _simulatedObject->getVectorsAux()->at(next);
         p2 = MatrixTransformPoint(_simulatedObject->getMatrixTransformation(), p2Aux);
 		
-		// equacoes parametrica da reta
+		// parametric equations of the line
 		ti = (_vector->y - p1->y) / (p2->y - p1->y);
 		xi = p1->x + (p2->x - p1->x) * ti;
 		
