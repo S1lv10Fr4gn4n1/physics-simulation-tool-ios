@@ -9,12 +9,18 @@
 #ifndef MAINCOLLISION_H
 #define MAINCOLLISION_H
 
+#include "SimulatedObject.h"
+
+#include "Links.h"
+
 class MainCollision {
 private:
     
 public:
     MainCollision();
     ~MainCollision();
+    
+    void update(SimulatedObject * _simulatedObject, real _duration);
 };
 
 #endif

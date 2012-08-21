@@ -23,7 +23,8 @@ enum TypeObject {
     POLYGON_OPEN,
     POLYGON_CLOSE,
     SPRINGS,
-    STRING,
+    SPRING,
+    ROPE,
     ENGINE,
     PLAN,
     PARTICLE
@@ -32,6 +33,25 @@ enum TypeObject {
 struct Color {
     unsigned char r, g, b, a;
 };
+
+static inline Color * MakeColor(real _r, real _g, real _b, real _a)
+{
+    Color * color = new Color();
+    color->r = _r;
+    color->g = _g;
+    color->b = _b;
+    color->a = _a;
+    
+    return color;
+}
+
+static inline Color * MakeRandonColor()
+{
+    return MakeColor(static_cast<unsigned char>(rand() % 256),
+                     static_cast<unsigned char>(rand() % 256),
+                     static_cast<unsigned char>(rand() % 256),
+                     1);
+}
 
 static const real colorBBox[16] = {
     255, 255, 255, 1,
@@ -80,25 +100,6 @@ static inline Vector3 * MakeVector3(real _x, real _y)
 static inline Vector3 * MakeVector3(Vector3 * _vector)
 {
     return MakeVector3(_vector->x, _vector->y, _vector->z);
-}
-
-static inline Color * MakeColor(real _r, real _g, real _b, real _a)
-{
-    Color * color = new Color();
-    color->r = _r;
-    color->g = _g;
-    color->b = _b;
-    color->a = _a;
-    
-    return color;
-}
-
-static inline Color * MakeRandonColor()
-{
-    return MakeColor(static_cast<unsigned char>(rand() % 256),
-                     static_cast<unsigned char>(rand() % 256),
-                     static_cast<unsigned char>(rand() % 256),
-                     1);
 }
 
 #endif

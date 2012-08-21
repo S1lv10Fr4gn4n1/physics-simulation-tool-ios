@@ -77,6 +77,8 @@ void MainEngine::updateInformation(real _duration)
         // mainPhysics updates the physical features
         this->mainPhysics->updateFeatures(object, _duration);
 
+        this->mainCollision->update(object, _duration);
+        
         // mainEngine(this) translate object
         this->translateSimulatedObject(object, object->getPosition());
         
@@ -262,7 +264,7 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
         case ENGINE:
             break;
             
-        case STRING:
+        case SPRING:
             break;
             
         case SPRINGS:

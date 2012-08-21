@@ -9,19 +9,20 @@
 #ifndef FORCEGENERATORS_H
 #define FORCEGENERATORS_H
 
-#include "SimulatedObject.h"
+#include <vector>
+#include "Particle.h"
 
 // interface ForceGenerator
 class ForceGenerator {
 public:
     virtual ~ForceGenerator();
-    virtual void updateForce(SimulatedObject * _simulatedObject, real _duration) = 0;
+    virtual void updateForce(Particle * _particle, real _duration) = 0;
 };
 
 class ForceRegistry {
 protected:
     struct ForceRegistration {
-        SimulatedObject * simulatedObject;
+        Particle * particle;
         ForceGenerator * forceGenerator;
     };
     std::vector<ForceRegistration *> * registrations;
@@ -30,9 +31,9 @@ protected:
 public:
     ForceRegistry();
     ~ForceRegistry();
-    void add(SimulatedObject * _simulatedObject, ForceGenerator * _forceGenerator);
-    void removeObject(SimulatedObject * _simulatedObject);
-    void removeForceOfObject(SimulatedObject * _simulatedObject, ForceGenerator * _forceGenerator);
+    void add(Particle * _particle, ForceGenerator * _forceGenerator);
+    void removeObject(Particle * _particle);
+    void removeForceOfObject(Particle * _particle, ForceGenerator * _forceGenerator);
     void clear();
     void updateForces(real _duration);
     
@@ -47,7 +48,7 @@ private:
 public:
     ForceGravity(Vector3 * _gravity);
     ~ForceGravity();
-    virtual void updateForce(SimulatedObject * _simulatedObject, real _duration);
+    virtual void updateForce(Particle * _particle, real _duration);
     void updateGravity(real _value);
 };
 
@@ -62,20 +63,20 @@ private:
 public:
     ForceDrag(real _k1, real _k2);
     ~ForceDrag();
-    virtual void updateForce(SimulatedObject * _simulatedObject, real _duration);
+    virtual void updateForce(Particle * _particle, real _duration);
 };
 
 
 // force generate - spring force
 class ForceSpring : public ForceGenerator {
 private:
-    SimulatedObject * other;
+    Particle * other;
     real springConstant;
     real restLength;
 public:
-    ForceSpring(SimulatedObject * _other, real _springConstant, real _restLength);
+    ForceSpring(Particle * _other, real _springConstant, real _restLength);
     ~ForceSpring();
-    virtual void updateForce(SimulatedObject * _simulatedObject, real _duration);
+    virtual void updateForce(Particle * _particle, real _duration);
 };
 
 
@@ -88,7 +89,7 @@ private:
 public:
     ForceAnchoredSpring(Vector3 * _anchor, real _springConstant, real _restLength);
     ~ForceAnchoredSpring();
-    virtual void updateForce(SimulatedObject * _simulatedObject, real _duration);
+    virtual void updateForce(Particle * _particle, real _duration);
     
     void setAnchor(Vector3 * _anchor);
 };
@@ -96,13 +97,13 @@ public:
 
 // force generate - force bungee
 class ForceBungee : public ForceGenerator {
-    SimulatedObject * other;
+    Particle * other;
     real springConstant;
     real restLength;
 public:
-    ForceBungee(SimulatedObject * _other, real _springConstant, real _restLength);
+    ForceBungee(Particle * _other, real _springConstant, real _restLength);
     ~ForceBungee();
-    virtual void updateForce(SimulatedObject * _simulatedObject, real _duration);
+    virtual void updateForce(Particle * _particle, real _duration);
 };
 
 // force generate - force anchored bungee
@@ -113,7 +114,7 @@ class ForceAnchoredBungee : public ForceGenerator {
 public:
     ForceAnchoredBungee(Vector3 * _anchor, real _springConstant, real _restLength);
     ~ForceAnchoredBungee();
-    virtual void updateForce(SimulatedObject * _simulatedObject, real _duration);
+    virtual void updateForce(Particle * _particle, real _duration);
     
     void setAnchor(Vector3 * _anchor);
 };
@@ -134,7 +135,7 @@ class ForceBuoyancy : public ForceGenerator {
 public:
     ForceBuoyancy(real _maxDepth, real _volume, real _waterHeight, real _liquidDensity = 1000.0f);
     ~ForceBuoyancy();
-    virtual void updateForce(SimulatedObject * _simulatedObject, real _duration);
+    virtual void updateForce(Particle * _particle, real _duration);
 };
 
 
@@ -147,7 +148,7 @@ class ForceFakeStiffSpring : public ForceGenerator {
 public:
     ForceFakeStiffSpring(Vector3 * _anchor, real _springConstant, real _damping);
     ~ForceFakeStiffSpring();
-    virtual void updateForce(SimulatedObject * _simulatedObject, real _duration);
+    virtual void updateForce(Particle * _particle, real _duration);
 };
 #endif
 

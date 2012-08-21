@@ -10,5 +10,7 @@
 #define LIBRARYCOLLISION_H
 
 #include "MainCollision.h"
+#include "Contact.h"
+#include "Links.h"
 
 #endif

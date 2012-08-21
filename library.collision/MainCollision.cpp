@@ -18,3 +18,8 @@ MainCollision::~MainCollision()
 {
     // TODO put your code here
 }
+
+void MainCollision::update(SimulatedObject * _simulatedObject, real _duration)
+{
+    // TODO put your code here
+}

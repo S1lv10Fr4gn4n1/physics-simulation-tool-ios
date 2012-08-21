@@ -314,19 +314,42 @@ void Controller::createSimulatedObject(TypeObject _typeObject)
     SimulatedObject * object = new SimulatedObject();
     object->setColorAux(MakeRandonColor());
     object->setMode(GL_TRIANGLE_FAN);
-    object->setMass(0.5f);
+//    object->setMass(0.5f);
 //    object->setDamping(0.00001f);
-    
+//    object->setAcceleration(0.0f, -10.0f);
+//    object->setVelocity(1.0f, 0.0f);
+
     ForceRegistry::getInstance()->add(object, new ForceGravity(MakeVector3(0.0f, -9.8f)));
     ForceRegistry::getInstance()->add(object, new ForceDrag(object->getDamping(), object->getDamping()*object->getDamping()));
+    
 //    ForceBuoyancy * force = new ForceBuoyancy(0.1f, 0.1f, 0.0f);
 //    ForceAnchoredBungee * force = new ForceAnchoredBungee(MakeVector3(0.0f, 0.5f), 6.0f, 0.5f);
 //    ForceAnchoredSpring * force = new ForceAnchoredSpring(MakeVector3(0.0f, 0.5f), 6.0f, 0.5f);
 //    ForceRegistry::getInstance()->add(object, force);
-//    object->setAcceleration(0.0f, -10.0f);
-//    object->setVelocity(1.0f, 0.0f);
     
     this->mainEngine->makeSimulatedObject(object, _typeObject);
+    
+    
+    
+//    SimulatedObject * object1 = new SimulatedObject();
+//    object1->setColorAux(MakeRandonColor());
+//    object1->setMode(GL_TRIANGLE_FAN);
+//    object1->setPosition(0.0f, 0.4f);
+//
+//    ForceRegistry::getInstance()->add(object1, new ForceGravity(MakeVector3(0.0f, -9.8f)));
+//    ForceRegistry::getInstance()->add(object1, new ForceDrag(object1->getDamping(), object->getDamping()*object1->getDamping()));
+//
+//    this->mainEngine->translateSimulatedObject(object1, object1->getPosition());
+//    this->mainEngine->makeSimulatedObject(object1, _typeObject);
+//
+//    
+//    Rod * rod = new Rod();
+//    rod->particle[0] = object;
+//    rod->particle[1] = object1;
+//    rod->length = 2;
+
+    
+    
     
 //    // TODO for Tests
 //    float x = getRand(3.0f);
