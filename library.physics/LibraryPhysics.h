@@ -10,7 +10,6 @@
 #define LIBRARYPHYSICS_H
 
 #include "MainPhysics.h"
-#include "ParticleForceGenerators.h"
 #include "ForceGenerators.h"
 
 #endif

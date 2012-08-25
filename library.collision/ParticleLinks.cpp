@@ -1,20 +1,20 @@
 //
-//  Links.cpp
+//  ParticleLinks.cpp
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani on 20/08/12.
 //
 //
 
-#include "Links.h"
+#include "ParticleLinks.h"
 
-real Link::currentLength() const
+real ParticleLink::currentLength() const
 {
     Vector3 * relativePos = *this->particle[0]->getPosition() - this->particle[1]->getPosition();
     return relativePos->magnitude();
 }
 
-unsigned Cable::addContact(Contact * _contact, unsigned _limit) const
+unsigned ParticleCable::addContact(ParticleContact * _contact, unsigned _limit) const
 {
     // find the length of the cable.
     real length = this->currentLength();
@@ -38,7 +38,7 @@ unsigned Cable::addContact(Contact * _contact, unsigned _limit) const
     return 1;
 }
 
-unsigned Rod::addContact(Contact * _contact, unsigned _limit) const
+unsigned ParticleRod::addContact(ParticleContact * _contact, unsigned _limit) const
 {
     // dind the length of the rod.
     real currentLen = this->currentLength();
@@ -71,14 +71,13 @@ unsigned Rod::addContact(Contact * _contact, unsigned _limit) const
     return 1;
 }
 
-real Constraint::currentLength() const
+real ParticleConstraint::currentLength() const
 {
     Vector3 * relativePos = *this->particle->getPosition() - this->anchor;
     return relativePos->magnitude();
 }
 
-
-unsigned CableConstraint::addContact(Contact * _contact, unsigned _limit) const
+unsigned ParticleCableConstraint::addContact(ParticleContact * _contact, unsigned _limit) const
 {
     // find the length of the cable
     real length = this->currentLength();
@@ -103,7 +102,7 @@ unsigned CableConstraint::addContact(Contact * _contact, unsigned _limit) const
     return 1;
 }
 
-unsigned RodConstraint::addContact(Contact * _contact, unsigned _limit) const
+unsigned ParticleRodConstraint::addContact(ParticleContact * _contact, unsigned _limit) const
 {
     // find the length of the rod
     real currentLen = this->currentLength();

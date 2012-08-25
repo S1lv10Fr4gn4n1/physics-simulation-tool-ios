@@ -57,7 +57,7 @@ public:
     ~Vector3();
     
     void clear();
-    
+    void operator=(const Vector3 * _vector);
     void operator+=(const Vector3 * _vector);
     Vector3 * operator+(const Vector3 * _vector) const;
     void operator-=(const Vector3 * _vector);
@@ -151,9 +151,9 @@ public:
     Matrix4 * operator*(const Matrix4 * _matrix) const;
     Vector3 * operator*(const Vector3 * _vector) const;
     real getDeterminant() const;
-//    void setInverse(const Matrix4 * _matrix);
-//    Matrix4 * inverse() const;
-//    void invert();
+    void setInverse(const Matrix4 * _matrix);
+    Matrix4 * inverse() const;
+    void invert();
     Vector3 * transform(const Vector3 * _vector) const;
     Vector3 * transformInverse(const Vector3 * _vector) const;
     Vector3 * localToWorld(const Vector3 * _local, const Matrix4 * _transform);
@@ -162,6 +162,7 @@ public:
     Vector3 * transformInverseDirection(const Vector3 * _vector) const;
     Vector3 * localToWorldDirn(const Vector3 * _local, const Matrix4 * _transform);
     Vector3 * worldToLocalDirn(const Vector3 * _world, const Matrix4 * _transform);
+    void setOrientationAndPos(const Quaternion * _quaternion, const Vector3 * _pos);
 };
 
 

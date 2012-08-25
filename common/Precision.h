@@ -19,4 +19,6 @@ typedef float real;
 #define real_cos cosf
 #define real_exp expf
 
+#define R_PI 3.14159f
+
 #endif

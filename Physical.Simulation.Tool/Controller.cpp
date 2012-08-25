@@ -35,12 +35,12 @@ Controller::~Controller()
 
 Controller * Controller::getInstance()
 {
-    if (!controller) {
-        controller = new Controller();
-        controller->initializeEngine();
+    if (!Controller::controller) {
+        Controller::controller = new Controller();
+        Controller::controller->initializeEngine();
     }
     
-    return controller;
+    return Controller::controller;
 }
 
 void Controller::freeObjects()
@@ -314,43 +314,17 @@ void Controller::createSimulatedObject(TypeObject _typeObject)
     SimulatedObject * object = new SimulatedObject();
     object->setColorAux(Color::MakeRandonColor());
     object->setMode(GL_TRIANGLE_FAN);
-//    object->setMass(0.5f);
-//    object->setDamping(0.00001f);
-//    object->setAcceleration(0.0f, -10.0f);
-//    object->setVelocity(1.0f, 0.0f);
+    object->setVelocity(getRand(2.0f), getRand(3.0f));
+    object->setLinearDamping(getRand(0.9f));
+    object->setAngularDamping(getRand(0.9f));
+    object->setPosition(0.3f, 0.1f);
+    ForceRegistry::getInstance()->add(object, new Gravity(Vector3::MakeVector3(0.0f, -9.8f)));
+//    ForceRegistry::getInstance()->add(object, new Drag(object->getDamping(), object->getDamping()*object->getDamping()));
 
-    ParticleForceRegistry::getInstance()->add(object, new ParticleGravity(Vector3::MakeVector3(0.0f, -9.8f)));
-    ParticleForceRegistry::getInstance()->add(object, new ParticleDrag(object->getDamping(), object->getDamping()*object->getDamping()));
-    
-//    ParticleBuoyancy * force = new ParticleBuoyancy(0.1f, 0.1f, 0.0f);
-//    ParticleAnchoredBungee * force = new ParticleAnchoredBungee(Vector3::MakeVector3(0.0f, 0.5f), 6.0f, 0.5f);
-//    ParticleAnchoredSpring * force = new ParticleAnchoredSpring(Vector3::MakeVector3(0.0f, 0.5f), 6.0f, 0.5f);
-//    ParticleForceRegistry::getInstance()->add(object, force);
-    
     this->mainEngine->makeSimulatedObject(object, _typeObject);
     
-    
-    
-//    SimulatedObject * object1 = new SimulatedObject();
-//    object1->setColorAux(MakeRandonColor());
-//    object1->setMode(GL_TRIANGLE_FAN);
-//    object1->setPosition(0.0f, 0.4f);
-//
-//    ParticleForceRegistry::getInstance()->add(object1, new ParticleGravity(Vector3::MakeVector3(0.0f, -9.8f)));
-//    ParticleForceRegistry::getInstance()->add(object1, new ParticleDrag(object1->getDamping(), object->getDamping()*object1->getDamping()));
-//
-//    this->mainEngine->translateSimulatedObject(object1, object1->getPosition());
-//    this->mainEngine->makeSimulatedObject(object1, _typeObject);
-//
-//    
-//    Rod * rod = new Rod();
-//    rod->particle[0] = object;
-//    rod->particle[1] = object1;
-//    rod->length = 2;
-
-    
 //    // TODO for Tests
-//    float x = getRand(3.0f);
+//    float x = getRand(4.0f);
 //    x = fmodf(x, 0.04) <= 0.03 ? x : -x;
 //
 //    float y = getRand(3.0f);
@@ -359,6 +333,8 @@ void Controller::createSimulatedObject(TypeObject _typeObject)
 //    Vector3 *v = Vector3::MakeVector3(x, y);
 //    this->mainEngine->translateSimulatedObject(object, v);
 //    this->mainEngine->updatePositionSimulatedObject(object, v);
+//    delete v;
+//    v = NULL;
 }
 
 void Controller::clearSimularion()

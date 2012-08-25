@@ -11,9 +11,9 @@
 
 #include <vector>
 #include "CommonStructures.h"
-#include "Particle.h"
+#include "RigidBody.h"
 
-class SimulatedObject : public Particle {
+class SimulatedObject : public RigidBody {
 private:
     real * vectors;
     std::vector<Vector3 *> * vectorsAux;

@@ -22,6 +22,7 @@ Vector3::Vector3(const real _x, const real _y, const real _z)
     this->x = _x;
     this->y = _y;
     this->z = _z;
+    this->pad = 0.0f;
 }
 
 Vector3::~Vector3()
@@ -41,7 +42,14 @@ void Vector3::operator+=(const Vector3 * _vector)
 {
     this->x += _vector->x;
     this->y += _vector->y;
-    this->x += _vector->z;
+    this->z += _vector->z;
+}
+
+void Vector3::operator=(const Vector3 * _vector)
+{
+    this->x = _vector->x;
+    this->y = _vector->y;
+    this->z = _vector->z;
 }
 
 Vector3 * Vector3::operator+(const Vector3 * _vector) const
@@ -53,7 +61,7 @@ void Vector3::operator-=(const Vector3 * _vector)
 {
     this->x -= _vector->x;
     this->y -= _vector->y;
-    this->x -= _vector->z;
+    this->z -= _vector->z;
 }
 
 Vector3 * Vector3::operator-(const Vector3 * _vector) const
@@ -344,73 +352,76 @@ real Matrix4::getDeterminant() const
 }
 
 
-//void Matrix4::setOrientationAndPos(const Quaternion * _quaternion, const Vector3 &pos) {
-//    this->data[0] = 1 - (2*_quaternion->j*_quaternion->j + 2*_quaternion->k*_quaternion->k);
-//    this->data[1] = 2*_quaternion->i*_quaternion->j + 2*_quaternion->k*_quaternion->r;
-//    this->data[2] = 2*_quaternion->i*_quaternion->k - 2*_quaternion->j*_quaternion->r;
-//    this->data[3] = pos.x;
-//    this->data[4] = 2*_quaternion->i*_quaternion->j - 2*_quaternion->k*_quaternion->r;
-//    this->data[5] = 1 - (2*_quaternion->i*_quaternion->i  + 2*_quaternion->k*_quaternion->k);
-//    this->data[6] = 2*_quaternion->j*_quaternion->k + 2*_quaternion->i*_quaternion->r;
-//    this->data[7] = pos.y;
-//    this->data[8] = 2*_quaternion->i*_quaternion->k + 2*_quaternion->j*_quaternion->r;
-//    this->data[9] = 2*_quaternion->j*_quaternion->k - 2*_quaternion->i*_quaternion->r;
-//    this->data[10] = 1 - (2*_quaternion->i*_quaternion->i  + 2*_quaternion->j*_quaternion->j);
-//    this->data[11] = pos.z;
-//}
+void Matrix4::setOrientationAndPos(const Quaternion * _quaternion, const Vector3 * _pos)
+{
+    this->data[0] = 1 - (2*_quaternion->j*_quaternion->j + 2*_quaternion->k*_quaternion->k);
+    this->data[1] = 2*_quaternion->i*_quaternion->j + 2*_quaternion->k*_quaternion->r;
+    this->data[2] = 2*_quaternion->i*_quaternion->k - 2*_quaternion->j*_quaternion->r;
+    this->data[3] = _pos->x;
+    this->data[4] = 2*_quaternion->i*_quaternion->j - 2*_quaternion->k*_quaternion->r;
+    this->data[5] = 1 - (2*_quaternion->i*_quaternion->i  + 2*_quaternion->k*_quaternion->k);
+    this->data[6] = 2*_quaternion->j*_quaternion->k + 2*_quaternion->i*_quaternion->r;
+    this->data[7] = _pos->y;
+    this->data[8] = 2*_quaternion->i*_quaternion->k + 2*_quaternion->j*_quaternion->r;
+    this->data[9] = 2*_quaternion->j*_quaternion->k - 2*_quaternion->i*_quaternion->r;
+    this->data[10] = 1 - (2*_quaternion->i*_quaternion->i  + 2*_quaternion->j*_quaternion->j);
+    this->data[11] = _pos->z;
+}
 
-//void Matrix4::setInverse(const Matrix4 * _matrix)
-//{
-//    // make sure the determinant is non-zero.
-//    real det = this->getDeterminant();
-//    
-//    if (det == 0) {
-//        return;
-//    }
-//    
-//    det = ((real)1.0)/det;
-//    
-//    this->data[0] = (-_matrix->data[9]*_matrix->data[6]+_matrix->data[5]*_matrix->data[10])*det;
-//    this->data[4] = (_matrix->data[8]*_matrix->data[6]-_matrix->data[4]*_matrix->data[10])*det;
-//    this->data[8] = (-_matrix->data[8]*_matrix->data[5]+_matrix->data[4]*_matrix->data[9]* _matrix->data[15])*det;
-//    this->data[1] = (_matrix->data[9]*_matrix->data[2]-_matrix->data[1]*_matrix->data[10])*det;
-//    this->data[5] = (-_matrix->data[8]*_matrix->data[2]+_matrix->data[0]*_matrix->data[10])*det;
-//    this->data[9] = (_matrix->data[8]*_matrix->data[1]-_matrix->data[0]*_matrix->data[9]* _matrix->data[15])*det;
-//    this->data[2] = (-_matrix->data[5]*_matrix->data[2]+_matrix->data[1]*_matrix->data[6]* _matrix->data[15])*det;
-//    this->data[6] = (+_matrix->data[4]*_matrix->data[2]-_matrix->data[0]*_matrix->data[6]* _matrix->data[15])*det;
-//    this->data[10] = (-_matrix->data[4]*_matrix->data[1]+_matrix->data[0]*_matrix->data[5]* _matrix->data[15])*det;
-//    this->data[3] = (_matrix->data[9]*_matrix->data[6]*_matrix->data[3]
-//                    -_matrix->data[5]*_matrix->data[10]*_matrix->data[3]
-//                    -_matrix->data[9]*_matrix->data[2]*_matrix->data[7]
-//                    +_matrix->data[1]*_matrix->data[10]*_matrix->data[7]
-//                    +_matrix->data[5]*_matrix->data[2]*_matrix->data[11]
-//                    -_matrix->data[1]*_matrix->data[6]*_matrix->data[11])*det;
-//    this->data[7] = (-_matrix->data[8]*_matrix->data[6]*_matrix->data[3]
-//               +_matrix->data[4]*_matrix->data[10]*_matrix->data[3]
-//               +_matrix->data[8]*_matrix->data[2]*_matrix->data[7]
-//               -_matrix->data[0]*_matrix->data[10]*_matrix->data[7]
-//               -_matrix->data[4]*_matrix->data[2]*_matrix->data[11]
-//               +_matrix->data[0]*_matrix->data[6]*_matrix->data[11])*det;
-//    this->data[11] =(_matrix->data[8]*_matrix->data[5]*_matrix->data[3]
-//               -_matrix->data[4]*_matrix->data[9]*_matrix->data[3]
-//               -_matrix->data[8]*_matrix->data[1]*_matrix->data[7]
-//               +_matrix->data[0]*_matrix->data[9]*_matrix->data[7]
-//               +_matrix->data[4]*_matrix->data[1]*_matrix->data[11]
-//               -_matrix->data[0]*_matrix->data[5]*_matrix->data[11])*det;
-//}
-//
-//Matrix4 * Matrix4::inverse() const
-//{
-//    Matrix4 * matrix = new Matrix4();
-//    matrix->setInverse(this);
-//    
-//    return matrix;
-//}
-//
-//void Matrix4::invert()
-//{
-//    this->setInverse(this);
-//}
+void Matrix4::setInverse(const Matrix4 * _matrix)
+{
+    // make sure the determinant is non-zero.
+    real det = this->getDeterminant();
+    
+    if (det == 0) {
+        return;
+    }
+    
+    det = ((real)1.0)/det;
+    
+    data[0] = (-_matrix->data[9]*_matrix->data[6]+_matrix->data[5]*_matrix->data[10])*det;
+    data[4] = (_matrix->data[8]*_matrix->data[6]-_matrix->data[4]*_matrix->data[10])*det;
+    data[8] = (-_matrix->data[8]*_matrix->data[5]+_matrix->data[4]*_matrix->data[9])*det;
+    
+    data[1] = (_matrix->data[9]*_matrix->data[2]-_matrix->data[1]*_matrix->data[10])*det;
+    data[5] = (-_matrix->data[8]*_matrix->data[2]+_matrix->data[0]*_matrix->data[10])*det;
+    data[9] = (_matrix->data[8]*_matrix->data[1]-_matrix->data[0]*_matrix->data[9])*det;
+    
+    data[2] = (-_matrix->data[5]*_matrix->data[2]+_matrix->data[1]*_matrix->data[6])*det;
+    data[6] = (+_matrix->data[4]*_matrix->data[2]-_matrix->data[0]*_matrix->data[6])*det;
+    data[10] = (-_matrix->data[4]*_matrix->data[1]+_matrix->data[0]*_matrix->data[5])*det;
+    
+    data[3] = (_matrix->data[9]*_matrix->data[6]*_matrix->data[3]
+               -_matrix->data[5]*_matrix->data[10]*_matrix->data[3]
+               -_matrix->data[9]*_matrix->data[2]*_matrix->data[7]
+               +_matrix->data[1]*_matrix->data[10]*_matrix->data[7]
+               +_matrix->data[5]*_matrix->data[2]*_matrix->data[11]
+               -_matrix->data[1]*_matrix->data[6]*_matrix->data[11])*det;
+    data[7] = (-_matrix->data[8]*_matrix->data[6]*_matrix->data[3]
+               +_matrix->data[4]*_matrix->data[10]*_matrix->data[3]
+               +_matrix->data[8]*_matrix->data[2]*_matrix->data[7]
+               -_matrix->data[0]*_matrix->data[10]*_matrix->data[7]
+               -_matrix->data[4]*_matrix->data[2]*_matrix->data[11]
+               +_matrix->data[0]*_matrix->data[6]*_matrix->data[11])*det;
+    data[11] =(_matrix->data[8]*_matrix->data[5]*_matrix->data[3]
+               -_matrix->data[4]*_matrix->data[9]*_matrix->data[3]
+               -_matrix->data[8]*_matrix->data[1]*_matrix->data[7]
+               +_matrix->data[0]*_matrix->data[9]*_matrix->data[7]
+               +_matrix->data[4]*_matrix->data[1]*_matrix->data[11]
+               -_matrix->data[0]*_matrix->data[5]*_matrix->data[11])*det;}
+
+Matrix4 * Matrix4::inverse() const
+{
+    Matrix4 * matrix = new Matrix4();
+    matrix->setInverse(this);
+    
+    return matrix;
+}
+
+void Matrix4::invert()
+{
+    this->setInverse(this);
+}
 
 Matrix4 * Matrix4::operator*(const Matrix4 * _matrix) const
 {

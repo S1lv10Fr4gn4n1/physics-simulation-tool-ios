@@ -54,13 +54,13 @@ bool Shader::loadShaders()
     
     // Create and compile vertex shader.
     if (!this->compileShader(&vertShader, GL_VERTEX_SHADER, this->vertShaderSource)) {
-        cout << "Failed to compile vertex shader" << endl;
+        printf("Failed to compile vertex shader\n");
         return false;
     }
     
     // Create and compile fragment shader.
     if (!this->compileShader(&fragShader, GL_FRAGMENT_SHADER, this->fragShaderSource)) {
-        cout << "Failed to compile fragment shader" << endl;
+        printf("Failed to compile fragment shader\n");
         return false;
     }
     
@@ -77,7 +77,7 @@ bool Shader::loadShaders()
     
     // Link program.
     if (!this->linkProgram(this->program)) {
-        cout << "Failed to link program: " << this->program << endl;;
+        printf("Failed to link program: %c\n", this->program);
         
         if (vertShader) {
             glDeleteShader(vertShader);
@@ -118,7 +118,7 @@ bool Shader::compileShader(GLuint * shader, GLenum type, const char * file)
     
     source = (GLchar *) file;
     if (!source) {
-        cout << "Failed to load vertex shader" << endl;
+        printf("Failed to load vertex shader\n");
         return false;
     }
     
@@ -132,7 +132,7 @@ bool Shader::compileShader(GLuint * shader, GLenum type, const char * file)
     if (logLength > 0) {
         GLchar *log = (GLchar *)malloc(logLength);
         glGetShaderInfoLog(*shader, logLength, &logLength, log);
-        cout << "Shader compile log:\n" << log << endl;
+        printf("Shader compile log: %s\n",log);
         free(log);
     }
 #endif
@@ -157,7 +157,7 @@ bool Shader::linkProgram(GLuint prog)
     if (logLength > 0) {
         GLchar *log = (GLchar *)malloc(logLength);
         glGetProgramInfoLog(prog, logLength, &logLength, log);
-        cout << "Program link log:\n%s" << log << endl;
+        printf("Program link log:\n%s\n", log);
         free(log);
     }
 #endif
@@ -179,7 +179,7 @@ bool Shader::validateProgram(GLuint prog)
     if (logLength > 0) {
         GLchar *log = (GLchar *)malloc(logLength);
         glGetProgramInfoLog(prog, logLength, &logLength, log);
-        cout << "Program validate log:\n%s" << log << endl;
+        printf("Program validate log:\n%s\n",log);
         free(log);
     }
     

@@ -41,6 +41,37 @@ Particle::~Particle()
     this->forceAccum = NULL;
 }
 
+//void Particle::integrate(real _duration)
+//{
+//    if (this->inverseMass <= 0.0f) {
+//        return;
+//    }
+//
+//    // update linear position.
+//    this->position->addScaledVector(this->velocity, _duration);
+//
+//    // work out the acceleration from the force.
+//    Vector3 * resultingAcc = Vector3::MakeVector3(this->acceleration);
+//    resultingAcc->addScaledVector(this->forceAccum, this->inverseMass);
+//
+//    // update linear velocity from the acceleration.
+//    this->velocity->addScaledVector(resultingAcc, _duration);
+//
+//    delete resultingAcc;
+//    resultingAcc = NULL;
+//
+////    // TODO revise: is needed? damping force is already being applied
+////    // impose drag.
+////    *_simulatedObject->getVelocity() *= real_pow(_simulatedObject->getDamping(), _duration);
+//
+////    printf("position: %f, velocity: %f, force: %f, accel: %f\n", _simulatedObject->getPosition()->y,
+////                                                                 _simulatedObject->getVelocity()->y,
+////                                                                 _simulatedObject->getForceAccum()->y,
+////                                                                 _simulatedObject->getAcceleration()->y);
+//    
+//    this->clearAccumulator();
+//}
+
 void Particle::clearAccumulator()
 {
     this->forceAccum->clear();

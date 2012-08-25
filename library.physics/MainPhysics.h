@@ -13,11 +13,15 @@
 
 class MainPhysics {
 private:
+    static MainPhysics * mainPhysics;
 public:
     MainPhysics();
     ~MainPhysics();
     
-    void updateFeatures(SimulatedObject * _simulatedObject, real _duration);
+    static MainPhysics * getInstance();
+    
+    void updateFeatures(RigidBody * _body, real _duration);
+    void updateFeatures(Particle * _particle, real _duration);
 };
 
 #endif

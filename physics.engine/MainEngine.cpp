@@ -43,6 +43,11 @@ MainEngine::~MainEngine()
 
 void MainEngine::start()
 {
+    SimulatedObject * object = NULL;
+    for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
+        object = this->world->getSimulatedObjects()->at(i);
+        this->mainCollision->updateObject(object, 0.0f);
+    }
     this->running = true;
 }
 
@@ -69,23 +74,28 @@ void MainEngine::updateInformation(real _duration)
     SimulatedObject * object = NULL;
 
     // update all forces in all objects
-    ParticleForceRegistry::getInstance()->updateForces(_duration);
+    ForceRegistry::getInstance()->updateForces(_duration);
+    
+    // update collisions
+    this->mainCollision->updateContacts();
     
     for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
         object = this->world->getSimulatedObjects()->at(i);
         
-        // mainPhysics updates the physical features
+        // updates the physical features
+        //object->integrate(_duration);
         this->mainPhysics->updateFeatures(object, _duration);
 
-        this->mainCollision->update(object, _duration);
+        // update the object in coarse collision
+        this->mainCollision->updateObject(object, _duration);
         
         // mainEngine(this) translate object
         this->translateSimulatedObject(object, object->getPosition());
         
-        // TODO revise
         // remove objects that left the scene
         if (real_abs(object->getPosition()->x) >= 4.0f ||
             real_abs(object->getPosition()->y) >= 3.0f) {
+            this->mainCollision->deleteObject(object);
             this->deleteSimulatedObject(object);
         }
     }
@@ -188,8 +198,8 @@ void MainEngine::deleteAllSimulatedObjects()
 
 void MainEngine::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
-    // remove object of ForceRegistry
-    ParticleForceRegistry::getInstance()->removeObject(_simulatedObject);
+    ForceRegistry::getInstance()->removeObject(_simulatedObject);
+    this->mainCollision->deleteObject(_simulatedObject);
     this->world->deleteSimulatedObject(_simulatedObject);
 }
 
@@ -284,6 +294,7 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
             break;
     }
     
+    _simulatedObject->setRadius(0.052083f);
     _simulatedObject->initialize();
     this->world->addSimulatedObject(_simulatedObject);
 }

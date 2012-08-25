@@ -28,6 +28,7 @@ public:
     Particle();
     ~Particle();
     
+//    void integrate(real _duration);
     void clearAccumulator();
     void addForce(Vector3 * _force);
     bool hasFiniteMass();

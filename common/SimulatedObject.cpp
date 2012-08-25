@@ -29,9 +29,8 @@ SimulatedObject::SimulatedObject()
     this->bbox->max->x = this->bbox->max->y = this->bbox->max->z = -1000000;
 	this->bbox->min->x = this->bbox->min->y = this->bbox->min->z =  1000000;
     
-    // Particle
-    this->setMass(2.0f);
-    this->setDamping(0.9f);
+    // Rigid-body
+    this->setMass(1.0f);
 }
 
 SimulatedObject::~SimulatedObject()

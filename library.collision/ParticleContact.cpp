@@ -1,31 +1,31 @@
 //
-//  Contact.cpp
+//  ParticleContact.cpp
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani on 20/08/12.
 //
 //
 
-#include "Contact.h"
+#include "ParticleContact.h"
 
 
-Contact::Contact()
+ParticleContact::ParticleContact()
 {
     // TODO put your code here
 }
 
-Contact::~Contact()
+ParticleContact::~ParticleContact()
 {
     // TODO put your code here
 }
 
-void Contact::resolve(real _duration)
+void ParticleContact::resolve(real _duration)
 {
     this->resolveVelocity(_duration);
     this->resolveInterpenetration(_duration);
 }
 
-real Contact::calculateSeparatingVelocity() const
+real ParticleContact::calculateSeparatingVelocity() const
 {
     Vector3 * relativeVelocity = this->particle[0]->getVelocity();
     
@@ -36,7 +36,7 @@ real Contact::calculateSeparatingVelocity() const
     return *relativeVelocity * this->contactNormal;
 }
 
-void Contact::resolveVelocity(real _duration)
+void ParticleContact::resolveVelocity(real _duration)
 {
     // find the velocity in the direction of the contact.
     real separatingVelocity = this->calculateSeparatingVelocity();
@@ -105,10 +105,9 @@ void Contact::resolveVelocity(real _duration)
     }
 }
 
-void Contact::resolveInterpenetration(real _duration)
+void ParticleContact::resolveInterpenetration(real _duration)
 {
     // if we don’t have any penetration, skip this step.
-    
     if (this->penetration <= 0) {
         return;
     }
@@ -137,18 +136,17 @@ void Contact::resolveInterpenetration(real _duration)
 }
 
 
-// ContactResolver
-ContactResolver::ContactResolver(unsigned _iterations)
+ParticleContactResolver::ParticleContactResolver(unsigned _iterations)
 {
     this->iterations = _iterations;
 }
 
-void ContactResolver::setIterations(unsigned _iterations)
+void ParticleContactResolver::setIterations(unsigned _iterations)
 {
     this->iterations = _iterations;
 }
 
-void ContactResolver::resolveContacts(Contact * _contactArray[], unsigned _numContacts, real _duration)
+void ParticleContactResolver::resolveContacts(ParticleContact * _particleContactArray[], unsigned _numContacts, real _duration)
 {
     this->iterationsUsed = 0;
 
@@ -158,7 +156,7 @@ void ContactResolver::resolveContacts(Contact * _contactArray[], unsigned _numCo
         unsigned maxIndex = _numContacts;
         
         for (unsigned i=0; i<_numContacts; i++) {
-            real sepVel = _contactArray[i]->calculateSeparatingVelocity();
+            real sepVel = _particleContactArray[i]->calculateSeparatingVelocity();
             if (sepVel < max) {
                 max = sepVel;
                 maxIndex = i;
@@ -166,7 +164,7 @@ void ContactResolver::resolveContacts(Contact * _contactArray[], unsigned _numCo
         }
         
         // resolve this contact.
-        _contactArray[maxIndex]->resolve(_duration);
+        _particleContactArray[maxIndex]->resolve(_duration);
         this->iterationsUsed++;
     }
 }

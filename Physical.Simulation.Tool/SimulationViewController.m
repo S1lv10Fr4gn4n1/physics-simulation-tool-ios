@@ -212,7 +212,6 @@ static EAGLContext * context;
 - (void)update
 {
     Controller::getInstance()->updateInformation(self.timeSinceLastDraw);
-    
 //    NSLog(@"frame: %u, fps: %u, lastDraw: %f", self.framesDisplayed, self.framesPerSecond, self.timeSinceLastDraw);
 }
 

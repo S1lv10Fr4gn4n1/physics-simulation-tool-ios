@@ -9,18 +9,25 @@
 #ifndef MAINCOLLISION_H
 #define MAINCOLLISION_H
 
-#include "SimulatedObject.h"
-
-#include "Links.h"
+#include "Commons.h"
+#include "CoarseCollision.h"
 
 class MainCollision {
 private:
+    static MainCollision * mainCollision;
     
+    void generateContacts();
+    void solverContacts();
 public:
     MainCollision();
     ~MainCollision();
     
-    void update(SimulatedObject * _simulatedObject, real _duration);
+    static MainCollision * getInstance();
+
+    void insertObject(RigidBody * _body);
+    void deleteObject(RigidBody * _body);
+    void updateObject(RigidBody * _body, real _duration);
+    void updateContacts();
 };
 
 #endif
