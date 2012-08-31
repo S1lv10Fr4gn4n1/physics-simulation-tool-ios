@@ -314,11 +314,12 @@ void Controller::createSimulatedObject(TypeObject _typeObject)
     SimulatedObject * object = new SimulatedObject();
     object->setColorAux(Color::MakeRandonColor());
     object->setMode(GL_TRIANGLE_FAN);
-    object->setVelocity(getRand(2.0f), getRand(3.0f));
-    object->setLinearDamping(getRand(0.9f));
-    object->setAngularDamping(getRand(0.9f));
-    object->setPosition(0.3f, 0.1f);
-    ForceRegistry::getInstance()->add(object, new Gravity(Vector3::MakeVector3(0.0f, -9.8f)));
+    // TODO revise: values of initialization
+    //object->setVelocity(getRand(2.0f), getRand(3.0f));
+    object->setLinearDamping(0.99f);//getRand(0.9f));
+    object->setAngularDamping(0.8f);//getRand(0.9f));
+    
+//    ForceRegistry::getInstance()->add(object, new Gravity(Vector3::MakeVector3(0.0f, -9.8f)));
 //    ForceRegistry::getInstance()->add(object, new Drag(object->getDamping(), object->getDamping()*object->getDamping()));
 
     this->mainEngine->makeSimulatedObject(object, _typeObject);

@@ -8,84 +8,14 @@
 
 #include "RigidBody.h"
 
-static inline void _calculateTransformMatrix(Matrix4 * _transformMatrix, const Vector3 * _position,
-                                             const Quaternion * _orientation)
-{
-    _transformMatrix->data[0] = 1 - 2*_orientation->j*_orientation->j - 2*_orientation->k*_orientation->k;
-    _transformMatrix->data[1] = 2*_orientation->i*_orientation->j - 2*_orientation->r*_orientation->k;
-    _transformMatrix->data[2] = 2*_orientation->i*_orientation->k + 2*_orientation->r*_orientation->j;
-    _transformMatrix->data[3] = _position->x;
-    _transformMatrix->data[4] = 2*_orientation->i*_orientation->j + 2*_orientation->r*_orientation->k;
-    _transformMatrix->data[5] = 1 - 2*_orientation->i*_orientation->i - 2*_orientation->k*_orientation->k;
-    _transformMatrix->data[6] = 2*_orientation->j*_orientation->k - 2*_orientation->r*_orientation->i;
-    _transformMatrix->data[7] = _position->y;
-    _transformMatrix->data[8] = 2*_orientation->i*_orientation->k - 2*_orientation->r*_orientation->j;
-    _transformMatrix->data[9] = 2*_orientation->j*_orientation->k + 2*_orientation->r*_orientation->i;
-    _transformMatrix->data[10] = 1 - 2*_orientation->i*_orientation->i-2*_orientation->j*_orientation->j;
-    _transformMatrix->data[11] = _position->z;
-}
-
-static inline void _transformInertiaTensor(Matrix3 * _iitWorld, const Quaternion * _quaternion,
-                                           const Matrix3 * _iitBody, const Matrix4 * _rotmat)
-{
-    real t4 = _rotmat->data[0]*_iitBody->data[0]+
-              _rotmat->data[1]*_iitBody->data[3]+
-              _rotmat->data[2]*_iitBody->data[6];
-    real t9 = _rotmat->data[0]*_iitBody->data[1]+
-              _rotmat->data[1]*_iitBody->data[4]+
-              _rotmat->data[2]*_iitBody->data[7];
-    real t14 = _rotmat->data[0]*_iitBody->data[2]+
-               _rotmat->data[1]*_iitBody->data[5]+
-               _rotmat->data[2]*_iitBody->data[8];
-    real t28 = _rotmat->data[4]*_iitBody->data[0]+
-               _rotmat->data[5]*_iitBody->data[3]+
-               _rotmat->data[6]*_iitBody->data[6];
-    real t33 = _rotmat->data[4]*_iitBody->data[1]+
-               _rotmat->data[5]*_iitBody->data[4]+
-               _rotmat->data[6]*_iitBody->data[7];
-    real t38 = _rotmat->data[4]*_iitBody->data[2]+
-               _rotmat->data[5]*_iitBody->data[5]+
-               _rotmat->data[6]*_iitBody->data[8];
-    real t52 = _rotmat->data[8]*_iitBody->data[0]+
-               _rotmat->data[9]*_iitBody->data[3]+
-               _rotmat->data[10]*_iitBody->data[6];
-    real t57 = _rotmat->data[8]*_iitBody->data[1]+
-               _rotmat->data[9]*_iitBody->data[4]+
-               _rotmat->data[10]*_iitBody->data[7];
-    real t62 = _rotmat->data[8]*_iitBody->data[2]+
-               _rotmat->data[9]*_iitBody->data[5]+
-               _rotmat->data[10]*_iitBody->data[8];
-    _iitWorld->data[0] = t4*_rotmat->data[0]+
-                         t9*_rotmat->data[1]+
-                         t14*_rotmat->data[2];
-    _iitWorld->data[1] = t4*_rotmat->data[4]+
-                         t9*_rotmat->data[5]+
-                         t14*_rotmat->data[6];
-    _iitWorld->data[2] = t4*_rotmat->data[8]+
-                         t9*_rotmat->data[9]+
-                         t14*_rotmat->data[10];
-    _iitWorld->data[3] = t28*_rotmat->data[0]+
-                        t33*_rotmat->data[1]+
-                        t38*_rotmat->data[2];
-    _iitWorld->data[4] = t28*_rotmat->data[4]+
-                         t33*_rotmat->data[5]+
-                         t38*_rotmat->data[6];
-    _iitWorld->data[5] = t28*_rotmat->data[8]+
-                        t33*_rotmat->data[9]+
-                        t38*_rotmat->data[10];
-    _iitWorld->data[6] = t52*_rotmat->data[0]+
-                         t57*_rotmat->data[1]+
-                         t62*_rotmat->data[2];
-    _iitWorld->data[7] = t52*_rotmat->data[4]+
-                         t57*_rotmat->data[5]+
-                         t62*_rotmat->data[6];
-    _iitWorld->data[8] = t52*_rotmat->data[8]+
-                         t57*_rotmat->data[9]+
-                         t62*_rotmat->data[10];
-}
+#include <stdio.h>
 
 RigidBody::RigidBody()
 {
+    static int countBody = 0;
+    this->_id = new char[15];
+
+    sprintf(this->_id, "objecto: %d",countBody++);
     this->mass = 0.0f;
     this->inverseMass = 0.0f;
     this->angularDamping = 0.0f;
@@ -93,14 +23,14 @@ RigidBody::RigidBody()
     this->volume = 0.0f;
     this->density = 0.0f;
 
-    this->position = Vector3::MakeVector3(0.0f, 0.0f);
-    this->acceleration = Vector3::MakeVector3(0.0f, 0.0f);
-    this->lastFrameAcceleration = Vector3::MakeVector3(0.0f, 0.0f);
-    this->velocity = Vector3::MakeVector3(0.0f, 0.0f);
-    this->orientation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
-    this->rotation = Vector3::MakeVector3(0.0f, 0.0f);
-    this->forceAccum = Vector3::MakeVector3(0.0f, 0.0f);
-    this->torqueAccum = Vector3::MakeVector3(0.0f, 0.0f);
+    this->position = new Vector3();
+    this->acceleration = new Vector3();
+    this->lastFrameAcceleration = new Vector3();
+    this->velocity = new Vector3();
+    this->orientation = new Quaternion();
+    this->rotation = new Vector3();
+    this->forceAccum = new Vector3();
+    this->torqueAccum = new Vector3();
 
     this->transformMatrix = new Matrix4();
     this->inverseInertiaTensor = new Matrix3();
@@ -174,13 +104,22 @@ void RigidBody::calculateDerivedData()
 
 void RigidBody::setInertiaTensor(const Matrix3 * _inertiaTensor)
 {
-    inverseInertiaTensor->setInverse(_inertiaTensor);
-//    _checkInverseInertiaTensor(inverseInertiaTensor);
+    this->inverseInertiaTensor->setInverse(_inertiaTensor);
 }
 
 void RigidBody::addForce(const Vector3 * _force)
 {
     *this->forceAccum += _force;
+}
+
+void RigidBody::addVelocity(const Vector3 * _velocity)
+{
+    *this->velocity += _velocity;
+}
+
+void RigidBody::addRotation(const Vector3 * _rotation)
+{
+    *this->rotation += _rotation;
 }
 
 void RigidBody::addForceAtBodyPoint(const Vector3 * _force, const Vector3 * _point)
@@ -189,54 +128,6 @@ void RigidBody::addForceAtBodyPoint(const Vector3 * _force, const Vector3 * _poi
     Vector3 * pt = this->getPointInWorldSpace(_point);
     this->addForceAtPoint(_force, pt);
 }
-
-//void RigidBody::integrate(real _duration)
-//{
-//    if (this->inverseMass <= 0.0f) {
-//        return;
-//    }
-//    
-//    // calculate linear acceleration from force inputs.
-//    if (this->lastFrameAcceleration) {
-//        delete this->lastFrameAcceleration;
-//        this->lastFrameAcceleration = NULL;
-//    }
-//    this->lastFrameAcceleration = Vector3::MakeVector3(this->acceleration);
-//    this->lastFrameAcceleration->addScaledVector(this->forceAccum, this->inverseMass);
-//    
-//    // calculate angular acceleration from torque inputs.
-//    Vector3 * angularAcceleration = this->inverseInertiaTensorWorld->transform(this->torqueAccum);
-//    
-//    // adjust velocities
-//    // update linear velocity from both acceleration and impulse.
-//    this->velocity->addScaledVector(this->lastFrameAcceleration, _duration);
-//    
-//    // update angular velocity from both acceleration and impulse.
-//    this->rotation->addScaledVector(angularAcceleration, _duration);
-//    
-//    // impose drag.
-//    *this->velocity *= real_pow(this->linearDamping, _duration);
-//    *this->rotation *= real_pow(this->angularDamping, _duration);
-//    
-//    // adjust positions
-//    // update linear position.
-//    this->position->addScaledVector(this->velocity, _duration);
-//    
-//    // update angular position.
-//    // impose drag.
-//    *this->velocity *= real_pow(this->linearDamping, _duration);
-//    *this->rotation *= real_pow(this->angularDamping, _duration);
-//    
-//    // normalize the orientation, and update the matrices with the new
-//    // position and orientation.
-//    this->calculateDerivedData();
-//    
-//    // clear accumulators.
-//    this->clearAccumulators();
-//    
-//    delete angularAcceleration;
-//    angularAcceleration = NULL;
-//}
 
 void RigidBody::clearAccumulators()
 {
@@ -486,4 +377,64 @@ real RigidBody::getRadius()
 void RigidBody::setRadius(real _radius)
 {
     this->radius = _radius;
+}
+
+
+Quaternion * RigidBody::getOrientation()
+{
+    return this->orientation;
+}
+
+void RigidBody::setOrientation(Quaternion * _orientation)
+{
+    this->orientation->r = _orientation->r;
+    this->orientation->i = _orientation->i;
+    this->orientation->j = _orientation->j;
+    this->orientation->k = _orientation->k;
+}
+
+void RigidBody::setOrientation(real _r, real _i, real _j, real _k)
+{
+    this->orientation->r = _r;
+    this->orientation->i = _i;
+    this->orientation->j = _j;
+    this->orientation->k = _k;
+}
+
+TypeObject RigidBody::getTypeObject()
+{
+    return this->typeObject;
+}
+
+void RigidBody::setTypeObject(TypeObject _typeObject)
+{
+    this->typeObject = _typeObject;
+}
+
+Matrix4 * RigidBody::getTransformMatrix()
+{
+    return this->transformMatrix;
+}
+
+void RigidBody::getGLTransform(float matrix[16]) const
+{
+    matrix[0] = (float)this->transformMatrix->data[0];
+    matrix[1] = (float)this->transformMatrix->data[4];
+    matrix[2] = (float)this->transformMatrix->data[8];
+    matrix[3] = 0;
+    
+    matrix[4] = (float)this->transformMatrix->data[1];
+    matrix[5] = (float)this->transformMatrix->data[5];
+    matrix[6] = (float)this->transformMatrix->data[9];
+    matrix[7] = 0;
+    
+    matrix[8] = (float)this->transformMatrix->data[2];
+    matrix[9] = (float)this->transformMatrix->data[6];
+    matrix[10] = (float)this->transformMatrix->data[10];
+    matrix[11] = 0;
+    
+    matrix[12] = (float)this->transformMatrix->data[3];
+    matrix[13] = (float)this->transformMatrix->data[7];
+    matrix[14] = (float)this->transformMatrix->data[11];
+    matrix[15] = 1;
 }

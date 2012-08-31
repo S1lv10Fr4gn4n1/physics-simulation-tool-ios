@@ -76,14 +76,10 @@ void MainEngine::updateInformation(real _duration)
     // update all forces in all objects
     ForceRegistry::getInstance()->updateForces(_duration);
     
-    // update collisions
-    this->mainCollision->updateContacts();
-    
     for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
         object = this->world->getSimulatedObjects()->at(i);
         
         // updates the physical features
-        //object->integrate(_duration);
         this->mainPhysics->updateFeatures(object, _duration);
 
         // update the object in coarse collision
@@ -99,6 +95,10 @@ void MainEngine::updateInformation(real _duration)
             this->deleteSimulatedObject(object);
         }
     }
+    
+    // update collisions
+    this->mainCollision->updateContacts(_duration);
+
     
     object = NULL;
 }
@@ -203,9 +203,9 @@ void MainEngine::deleteSimulatedObject(SimulatedObject * _simulatedObject)
     this->world->deleteSimulatedObject(_simulatedObject);
 }
 
-void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObject typeObject)
+void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObject _typeObject)
 {
-    switch (typeObject) {
+    switch (_typeObject) {
         case CIRCLE:
         {
             // calculates the radius
@@ -294,7 +294,17 @@ void MainEngine::makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObj
             break;
     }
     
-    _simulatedObject->setRadius(0.052083f);
+    _simulatedObject->setTypeObject(_typeObject);
+    _simulatedObject->setRadius(0.052083f); // TODO revise: how get radius ?
+
+    // TODO revise
+//    cyclone::Matrix3 tensor;
+//    cyclone::real coeff = 0.4f*body->getMass()*radius*radius;
+//    tensor.setInertiaTensorCoeffs(coeff,coeff,coeff);
+//    body->setInertiaTensor(tensor);
+
+    
+    
     _simulatedObject->initialize();
     this->world->addSimulatedObject(_simulatedObject);
 }

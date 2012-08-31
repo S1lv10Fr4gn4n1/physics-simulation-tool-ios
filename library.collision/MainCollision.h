@@ -11,13 +11,17 @@
 
 #include "Commons.h"
 #include "CoarseCollision.h"
+#include "FineCollision.h"
 
 class MainCollision {
 private:
     static MainCollision * mainCollision;
     
+    CollisionData * dataContacts;
+
+    void generateContact(RigidBody ** _bodies);
     void generateContacts();
-    void solverContacts();
+    void solverContacts(real _duration);
 public:
     MainCollision();
     ~MainCollision();
@@ -27,7 +31,7 @@ public:
     void insertObject(RigidBody * _body);
     void deleteObject(RigidBody * _body);
     void updateObject(RigidBody * _body, real _duration);
-    void updateContacts();
+    void updateContacts(real _duration);
 };
 
 #endif

@@ -114,6 +114,7 @@ public:
         real data[4];
     };
     
+    Quaternion();
     Quaternion(real _r, real _i, real _j, real _k);
     
     void normalize();
@@ -139,6 +140,8 @@ public:
     void setTranspose(const Matrix3 * _matrix);
     Matrix3 * transpose() const;
     void setOrientation(const Quaternion * _quaternion);
+    void setComponents(const Vector3 * _compOne, const Vector3 * _compTwo, const Vector3 * _compThree);
+    Vector3 * transformTranspose(const Vector3 * _vector) const;
 };
 
 
@@ -147,7 +150,10 @@ class Matrix4 {
 private:
 public:
     real data[12];
-
+    
+    Matrix4();
+    Matrix4(real _c0, real _c1, real _c2, real _c3, real _c4, real _c5,
+            real _c6, real _c7, real _c8, real _c9, real _c10, real _c11);
     Matrix4 * operator*(const Matrix4 * _matrix) const;
     Vector3 * operator*(const Vector3 * _vector) const;
     real getDeterminant() const;
@@ -163,6 +169,7 @@ public:
     Vector3 * localToWorldDirn(const Vector3 * _local, const Matrix4 * _transform);
     Vector3 * worldToLocalDirn(const Vector3 * _world, const Matrix4 * _transform);
     void setOrientationAndPos(const Quaternion * _quaternion, const Vector3 * _pos);
+    Vector3 * getAxisVector(int _i) const;
 };
 
 
@@ -235,8 +242,8 @@ static inline real * MatrixMakeTranslate(real _x, real _y)
 static inline void MatrixScale(real * matrix, real _x, real _y, real _z)
 {
 	// scale (sx, sy, sz) matrix identidade
-	matrix[0]  = _x; //(_x / 100);
-	matrix[5]  = _y; //(_y / 100);
+	matrix[0]  = _x;
+	matrix[5]  = _y;
 	matrix[10] = _z;
 }
 
@@ -330,5 +337,132 @@ static inline real * MatrixMakeOrtho(real left, real right, real bottom, real to
     return matrix;
 }
 
+
+static inline void _calculateTransformMatrix(Matrix4 * _transformMatrix, const Vector3 * _position,
+                                             const Quaternion * _orientation)
+{
+    _transformMatrix->data[0] = 1 - 2*_orientation->j*_orientation->j - 2*_orientation->k*_orientation->k;
+    _transformMatrix->data[1] = 2*_orientation->i*_orientation->j - 2*_orientation->r*_orientation->k;
+    _transformMatrix->data[2] = 2*_orientation->i*_orientation->k + 2*_orientation->r*_orientation->j;
+    _transformMatrix->data[3] = _position->x;
+    _transformMatrix->data[4] = 2*_orientation->i*_orientation->j + 2*_orientation->r*_orientation->k;
+    _transformMatrix->data[5] = 1 - 2*_orientation->i*_orientation->i - 2*_orientation->k*_orientation->k;
+    _transformMatrix->data[6] = 2*_orientation->j*_orientation->k - 2*_orientation->r*_orientation->i;
+    _transformMatrix->data[7] = _position->y;
+    _transformMatrix->data[8] = 2*_orientation->i*_orientation->k - 2*_orientation->r*_orientation->j;
+    _transformMatrix->data[9] = 2*_orientation->j*_orientation->k + 2*_orientation->r*_orientation->i;
+    _transformMatrix->data[10] = 1 - 2*_orientation->i*_orientation->i-2*_orientation->j*_orientation->j;
+    _transformMatrix->data[11] = _position->z;
+}
+
+static inline void _transformInertiaTensor(Matrix3 * _iitWorld, const Quaternion * _quaternion,
+                                           const Matrix3 * _iitBody, const Matrix4 * _rotmat)
+{
+    real t4 = _rotmat->data[0]*_iitBody->data[0]+
+    _rotmat->data[1]*_iitBody->data[3]+
+    _rotmat->data[2]*_iitBody->data[6];
+    real t9 = _rotmat->data[0]*_iitBody->data[1]+
+    _rotmat->data[1]*_iitBody->data[4]+
+    _rotmat->data[2]*_iitBody->data[7];
+    real t14 = _rotmat->data[0]*_iitBody->data[2]+
+    _rotmat->data[1]*_iitBody->data[5]+
+    _rotmat->data[2]*_iitBody->data[8];
+    real t28 = _rotmat->data[4]*_iitBody->data[0]+
+    _rotmat->data[5]*_iitBody->data[3]+
+    _rotmat->data[6]*_iitBody->data[6];
+    real t33 = _rotmat->data[4]*_iitBody->data[1]+
+    _rotmat->data[5]*_iitBody->data[4]+
+    _rotmat->data[6]*_iitBody->data[7];
+    real t38 = _rotmat->data[4]*_iitBody->data[2]+
+    _rotmat->data[5]*_iitBody->data[5]+
+    _rotmat->data[6]*_iitBody->data[8];
+    real t52 = _rotmat->data[8]*_iitBody->data[0]+
+    _rotmat->data[9]*_iitBody->data[3]+
+    _rotmat->data[10]*_iitBody->data[6];
+    real t57 = _rotmat->data[8]*_iitBody->data[1]+
+    _rotmat->data[9]*_iitBody->data[4]+
+    _rotmat->data[10]*_iitBody->data[7];
+    real t62 = _rotmat->data[8]*_iitBody->data[2]+
+    _rotmat->data[9]*_iitBody->data[5]+
+    _rotmat->data[10]*_iitBody->data[8];
+    _iitWorld->data[0] = t4*_rotmat->data[0]+
+    t9*_rotmat->data[1]+
+    t14*_rotmat->data[2];
+    _iitWorld->data[1] = t4*_rotmat->data[4]+
+    t9*_rotmat->data[5]+
+    t14*_rotmat->data[6];
+    _iitWorld->data[2] = t4*_rotmat->data[8]+
+    t9*_rotmat->data[9]+
+    t14*_rotmat->data[10];
+    _iitWorld->data[3] = t28*_rotmat->data[0]+
+    t33*_rotmat->data[1]+
+    t38*_rotmat->data[2];
+    _iitWorld->data[4] = t28*_rotmat->data[4]+
+    t33*_rotmat->data[5]+
+    t38*_rotmat->data[6];
+    _iitWorld->data[5] = t28*_rotmat->data[8]+
+    t33*_rotmat->data[9]+
+    t38*_rotmat->data[10];
+    _iitWorld->data[6] = t52*_rotmat->data[0]+
+    t57*_rotmat->data[1]+
+    t62*_rotmat->data[2];
+    _iitWorld->data[7] = t52*_rotmat->data[4]+
+    t57*_rotmat->data[5]+
+    t62*_rotmat->data[6];
+    _iitWorld->data[8] = t52*_rotmat->data[8]+
+    t57*_rotmat->data[9]+
+    t62*_rotmat->data[10];
+}
+
+static void MakeArrayVector3(Vector3 * _array[], unsigned _size)
+{
+    for (int i=0; i<_size; i++) {
+        _array[i] = new Vector3();
+    }
+}
+
+static void DeleteArrayVector3(Vector3 * _array[], unsigned _size)
+{
+    for (int i=0; i<_size; i++) {
+        delete _array[i];
+        _array[i] = NULL;
+    }
+    
+    _array = NULL;
+}
+
+static void MakeArrayMatrix3(Matrix3 * _array[], int _size)
+{
+    for (int i=0; i<_size; i++) {
+        _array[i] = new Matrix3();
+    }
+}
+
+static void DeleteArrayMatrix3(Matrix3 * _array[], int _size)
+{
+    for (int i=0; i<_size; i++) {
+        delete _array[i];
+        _array[i] = NULL;
+    }
+    
+    _array = NULL;
+}
+
+static void MakeArrayMatrix4(Matrix4 * _array[], int _size)
+{
+    for (int i=0; i<_size; i++) {
+        _array[i] = new Matrix4();
+    }
+}
+
+static void DeleteArrayMatrix4(Matrix4 * _array[], int _size)
+{
+    for (int i=0; i<_size; i++) {
+        delete _array[i];
+        _array[i] = NULL;
+    }
+    
+    _array = NULL;
+}
 
 #endif

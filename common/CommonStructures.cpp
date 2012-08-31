@@ -339,8 +339,54 @@ Vector3 * Matrix3::transform(const Vector3 * _vector) const
     return *this * _vector;
 }
 
+void Matrix3::setComponents(const Vector3 * _compOne, const Vector3 * _compTwo, const Vector3 * _compThree)
+{
+    this->data[0] = _compOne->x;
+    this->data[1] = _compTwo->x;
+    this->data[2] = _compThree->x;
+    this->data[3] = _compOne->y;
+    this->data[4] = _compTwo->y;
+    this->data[5] = _compThree->y;
+    this->data[6] = _compOne->z;
+    this->data[7] = _compTwo->z;
+    this->data[8] = _compThree->z;
+};
+
+Vector3 * Matrix3::transformTranspose(const Vector3 * _vector) const
+{
+    return new Vector3(_vector->x * this->data[0] + _vector->y * this->data[3] + _vector->z * this->data[6],
+                       _vector->x * this->data[1] + _vector->y * this->data[4] + _vector->z * this->data[7],
+                       _vector->x * this->data[2] + _vector->y * this->data[5] + _vector->z * this->data[8]
+                       );
+}
+
 
 /***************************** Matrix4 *****************************/
+
+Matrix4::Matrix4()
+{
+    this->data[0] = this->data[1] = this->data[2] = this->data[3] =
+    this->data[4] = this->data[5] = this->data[6] = this->data[7] =
+    this->data[8] = this->data[9] = this->data[10] = this->data[11] =0;
+}
+
+Matrix4::Matrix4(real _c0, real _c1, real _c2, real _c3, real _c4, real _c5,
+                 real _c6, real _c7, real _c8, real _c9, real _c10, real _c11)
+{
+    this->data[0] = _c0;
+    this->data[1] = _c1;
+    this->data[2] = _c2;
+    this->data[3] = _c3;
+    this->data[4] = _c4;
+    this->data[5] = _c5;
+    this->data[6] = _c6;
+    this->data[7] = _c7;
+    this->data[8] = _c8;
+    this->data[9] = _c9;
+    this->data[10] = _c10;
+    this->data[11] = _c11;
+}
+
 real Matrix4::getDeterminant() const
 {
     return this->data[8]*this->data[5]*this->data[2]+
@@ -379,36 +425,36 @@ void Matrix4::setInverse(const Matrix4 * _matrix)
     
     det = ((real)1.0)/det;
     
-    data[0] = (-_matrix->data[9]*_matrix->data[6]+_matrix->data[5]*_matrix->data[10])*det;
-    data[4] = (_matrix->data[8]*_matrix->data[6]-_matrix->data[4]*_matrix->data[10])*det;
-    data[8] = (-_matrix->data[8]*_matrix->data[5]+_matrix->data[4]*_matrix->data[9])*det;
+    this->data[0] = (-_matrix->data[9]*_matrix->data[6]+_matrix->data[5]*_matrix->data[10])*det;
+    this->data[4] = (_matrix->data[8]*_matrix->data[6]-_matrix->data[4]*_matrix->data[10])*det;
+    this->data[8] = (-_matrix->data[8]*_matrix->data[5]+_matrix->data[4]*_matrix->data[9])*det;
     
-    data[1] = (_matrix->data[9]*_matrix->data[2]-_matrix->data[1]*_matrix->data[10])*det;
-    data[5] = (-_matrix->data[8]*_matrix->data[2]+_matrix->data[0]*_matrix->data[10])*det;
-    data[9] = (_matrix->data[8]*_matrix->data[1]-_matrix->data[0]*_matrix->data[9])*det;
+    this->data[1] = (_matrix->data[9]*_matrix->data[2]-_matrix->data[1]*_matrix->data[10])*det;
+    this->data[5] = (-_matrix->data[8]*_matrix->data[2]+_matrix->data[0]*_matrix->data[10])*det;
+    this->data[9] = (_matrix->data[8]*_matrix->data[1]-_matrix->data[0]*_matrix->data[9])*det;
     
-    data[2] = (-_matrix->data[5]*_matrix->data[2]+_matrix->data[1]*_matrix->data[6])*det;
-    data[6] = (+_matrix->data[4]*_matrix->data[2]-_matrix->data[0]*_matrix->data[6])*det;
-    data[10] = (-_matrix->data[4]*_matrix->data[1]+_matrix->data[0]*_matrix->data[5])*det;
+    this->data[2] = (-_matrix->data[5]*_matrix->data[2]+_matrix->data[1]*_matrix->data[6])*det;
+    this->data[6] = (+_matrix->data[4]*_matrix->data[2]-_matrix->data[0]*_matrix->data[6])*det;
+    this->data[10] = (-_matrix->data[4]*_matrix->data[1]+_matrix->data[0]*_matrix->data[5])*det;
     
-    data[3] = (_matrix->data[9]*_matrix->data[6]*_matrix->data[3]
-               -_matrix->data[5]*_matrix->data[10]*_matrix->data[3]
-               -_matrix->data[9]*_matrix->data[2]*_matrix->data[7]
-               +_matrix->data[1]*_matrix->data[10]*_matrix->data[7]
-               +_matrix->data[5]*_matrix->data[2]*_matrix->data[11]
-               -_matrix->data[1]*_matrix->data[6]*_matrix->data[11])*det;
-    data[7] = (-_matrix->data[8]*_matrix->data[6]*_matrix->data[3]
-               +_matrix->data[4]*_matrix->data[10]*_matrix->data[3]
-               +_matrix->data[8]*_matrix->data[2]*_matrix->data[7]
-               -_matrix->data[0]*_matrix->data[10]*_matrix->data[7]
-               -_matrix->data[4]*_matrix->data[2]*_matrix->data[11]
-               +_matrix->data[0]*_matrix->data[6]*_matrix->data[11])*det;
-    data[11] =(_matrix->data[8]*_matrix->data[5]*_matrix->data[3]
-               -_matrix->data[4]*_matrix->data[9]*_matrix->data[3]
-               -_matrix->data[8]*_matrix->data[1]*_matrix->data[7]
-               +_matrix->data[0]*_matrix->data[9]*_matrix->data[7]
-               +_matrix->data[4]*_matrix->data[1]*_matrix->data[11]
-               -_matrix->data[0]*_matrix->data[5]*_matrix->data[11])*det;}
+    this->data[3] = (_matrix->data[9]*_matrix->data[6]*_matrix->data[3]
+                     -_matrix->data[5]*_matrix->data[10]*_matrix->data[3]
+                     -_matrix->data[9]*_matrix->data[2]*_matrix->data[7]
+                     +_matrix->data[1]*_matrix->data[10]*_matrix->data[7]
+                     +_matrix->data[5]*_matrix->data[2]*_matrix->data[11]
+                     -_matrix->data[1]*_matrix->data[6]*_matrix->data[11])*det;
+    this->data[7] = (-_matrix->data[8]*_matrix->data[6]*_matrix->data[3]
+                     +_matrix->data[4]*_matrix->data[10]*_matrix->data[3]
+                     +_matrix->data[8]*_matrix->data[2]*_matrix->data[7]
+                     -_matrix->data[0]*_matrix->data[10]*_matrix->data[7]
+                     -_matrix->data[4]*_matrix->data[2]*_matrix->data[11]
+                     +_matrix->data[0]*_matrix->data[6]*_matrix->data[11])*det;
+    this->data[11] =(_matrix->data[8]*_matrix->data[5]*_matrix->data[3]
+                     -_matrix->data[4]*_matrix->data[9]*_matrix->data[3]
+                     -_matrix->data[8]*_matrix->data[1]*_matrix->data[7]
+                     +_matrix->data[0]*_matrix->data[9]*_matrix->data[7]
+                     +_matrix->data[4]*_matrix->data[1]*_matrix->data[11]
+                     -_matrix->data[0]*_matrix->data[5]*_matrix->data[11])*det;}
 
 Matrix4 * Matrix4::inverse() const
 {
@@ -460,7 +506,6 @@ Vector3 * Matrix4::operator*(const Vector3 * _vector) const
                        _vector->z * this->data[10] + this->data[11]
                        );
 }
-
 
 Vector3 * Matrix4::transformInverse(const Vector3 * _vector) const
 {
@@ -537,8 +582,24 @@ Vector3 * Matrix4::worldToLocalDirn(const Vector3 * _world, const Matrix4 * _tra
     return _transform->transformInverseDirection(_world);
 }
 
+// gets a vector representing one axis, one column, in matrix.
+// row 3 corresponds to the position of the transform matrix.
+Vector3 * Matrix4::getAxisVector(int _i) const
+{
+    return new Vector3(this->data[_i], this->data[_i+4], this->data[_i+8]);
+}
+
+
 
 /***************************** Quaternion *****************************/
+Quaternion::Quaternion()
+{
+    this->r = 0.0f;
+    this->i = 0.0f;
+    this->j = 0.0f;
+    this->k = 0.0f;
+}
+
 Quaternion::Quaternion(real _r, real _i, real _j, real _k)
 {
     this->r = _r;
@@ -549,31 +610,34 @@ Quaternion::Quaternion(real _r, real _i, real _j, real _k)
 
 void Quaternion::normalize()
 {
-    real d = r*r+i*i+j*j+k*k;
+    real d = this->r*this->r +
+             this->i*this->i +
+             this->j*this->j +
+             this->k*this->k;
     
     // check for zero length quaternion, and use the no-rotation quaternion in that case.
     if (d == 0) {
-        r = 1;
+        this->r = 1;
         return;
     }
     
     d = ((real)1.0)/real_sqrt(d);
-    r *= d;
-    i *= d;
-    j *= d;
-    k *= d;
+    this->r *= d;
+    this->i *= d;
+    this->j *= d;
+    this->k *= d;
 }
 
 void Quaternion::operator *=(const Quaternion * _quaternion)
 {
-    r = this->r*_quaternion->r - this->i*_quaternion->i -
-        this->j*_quaternion->j - this->k*_quaternion->k;
-    i = this->r*_quaternion->i + this->i*_quaternion->r +
-        this->j*_quaternion->k - this->k*_quaternion->j;
-    j = this->r*_quaternion->j + this->j*_quaternion->r +
-        this->k*_quaternion->i - this->i*_quaternion->k;
-    k = this->r*_quaternion->k + this->k*_quaternion->r +
-        this->i*_quaternion->j - this->j*_quaternion->i;
+    this->r = this->r*_quaternion->r - this->i*_quaternion->i -
+              this->j*_quaternion->j - this->k*_quaternion->k;
+    this->i = this->r*_quaternion->i + this->i*_quaternion->r +
+              this->j*_quaternion->k - this->k*_quaternion->j;
+    this->j = this->r*_quaternion->j + this->j*_quaternion->r +
+              this->k*_quaternion->i - this->i*_quaternion->k;
+    this->k = this->r*_quaternion->k + this->k*_quaternion->r +
+              this->i*_quaternion->j - this->j*_quaternion->i;
 }
 
 void Quaternion::rotateByVector(const Vector3 * _vector)

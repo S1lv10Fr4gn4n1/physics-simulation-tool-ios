@@ -35,13 +35,11 @@ public:
     
     void updateInformation(real _duration);
     
-    // WORLD
     World * getWorld();
     void zoom(real _scale);
     void pan(real _scaleX, real _scaleY);
     void rotatedScreen(real _width, real _height);
     
-    // SIMULATED OBJECT
     void scaleSimulatedObject(SimulatedObject * _simulatedObject, real _scale);
     void rotateSimulatedObject(SimulatedObject * _simulatedObject, real _radians);
     void translateSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector);
@@ -50,7 +48,7 @@ public:
     
     void deleteAllSimulatedObjects();
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
-    void makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObject typeObject);
+    void makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObject _typeObject);
     
     SimulatedObject * selectedSimulatedObject(Vector3 * _vector);
 };

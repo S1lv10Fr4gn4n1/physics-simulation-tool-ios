@@ -62,6 +62,10 @@ void MainPhysics::updateFeatures(Particle * _particle, real _duration)
 
 void MainPhysics::updateFeatures(RigidBody * _body, real _duration)
 {
+    if (!_body->hasFiniteMass()) {
+        return;
+    }
+    
     // calculate linear acceleration from force inputs.
     if (_body->getLastFrameAcceleration()) {
         _body->setLastFrameAcceleration(NULL);

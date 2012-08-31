@@ -22,6 +22,8 @@
 		B937050915D2DFED0042B36B /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
 		B93ACE9515A3AC7100CED06E /* Selection.h in Headers */ = {isa = PBXBuildFile; fileRef = B93ACE9415A3AC7100CED06E /* Selection.h */; };
 		B93ACE9815A3AC8000CED06E /* Selection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B93ACE9715A3AC8000CED06E /* Selection.cpp */; };
+		B9429A1915EA7A7C00DD3126 /* FineCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9429A1815EA7A7C00DD3126 /* FineCollision.h */; };
+		B9429A1C15EA7A8600DD3126 /* FineCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9429A1B15EA7A8600DD3126 /* FineCollision.cpp */; };
 		B94B36B215864775004AAB28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B115864775004AAB28 /* UIKit.framework */; };
 		B94B36BC15864775004AAB28 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B94B36BA15864775004AAB28 /* InfoPlist.strings */; };
 		B94B36BE15864775004AAB28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B94B36BD15864775004AAB28 /* main.m */; };
@@ -33,6 +35,8 @@
 		B94B371615864AD7004AAB28 /* PhysicsEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = B94B371315864AD7004AAB28 /* PhysicsEngine.h */; };
 		B9618AF215E6B133006D8734 /* CoarseCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9618AF115E6B132006D8734 /* CoarseCollision.h */; };
 		B9618AF415E6B145006D8734 /* CoarseCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9618AF315E6B145006D8734 /* CoarseCollision.cpp */; };
+		B965BA1E15E99CA700F9B0B6 /* Contact.h in Headers */ = {isa = PBXBuildFile; fileRef = B965BA1D15E99CA700F9B0B6 /* Contact.h */; };
+		B965BA2015E99CB200F9B0B6 /* Contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B965BA1F15E99CB200F9B0B6 /* Contact.cpp */; };
 		B978EC3315E34A0D0087DDE8 /* RigidBody.h in Headers */ = {isa = PBXBuildFile; fileRef = B978EC3215E34A0C0087DDE8 /* RigidBody.h */; };
 		B978EC3615E34A190087DDE8 /* RigidBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B978EC3415E34A190087DDE8 /* RigidBody.cpp */; };
 		B98DACCB158ABCFA00417C21 /* NDC.h in Headers */ = {isa = PBXBuildFile; fileRef = B98DACCA158ABCFA00417C21 /* NDC.h */; };
@@ -174,6 +178,8 @@
 		B93704D715D2A9520042B36B /* plane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plane.png; path = resources/images/plane.png; sourceTree = SOURCE_ROOT; };
 		B93ACE9415A3AC7100CED06E /* Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Selection.h; sourceTree = "<group>"; };
 		B93ACE9715A3AC8000CED06E /* Selection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Selection.cpp; sourceTree = "<group>"; };
+		B9429A1815EA7A7C00DD3126 /* FineCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FineCollision.h; sourceTree = "<group>"; };
+		B9429A1B15EA7A8600DD3126 /* FineCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FineCollision.cpp; sourceTree = "<group>"; };
 		B94B36AD15864775004AAB28 /* Physical.Tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Physical.Tool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B94B36B115864775004AAB28 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B94B36B315864775004AAB28 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -194,6 +200,8 @@
 		B94B371315864AD7004AAB28 /* PhysicsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEngine.h; sourceTree = "<group>"; };
 		B9618AF115E6B132006D8734 /* CoarseCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoarseCollision.h; sourceTree = "<group>"; };
 		B9618AF315E6B145006D8734 /* CoarseCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoarseCollision.cpp; sourceTree = "<group>"; };
+		B965BA1D15E99CA700F9B0B6 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		B965BA1F15E99CB200F9B0B6 /* Contact.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Contact.cpp; sourceTree = "<group>"; };
 		B978EC3215E34A0C0087DDE8 /* RigidBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RigidBody.h; sourceTree = "<group>"; };
 		B978EC3415E34A190087DDE8 /* RigidBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RigidBody.cpp; sourceTree = "<group>"; };
 		B98DACCA158ABCFA00417C21 /* NDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NDC.h; path = ../library.graphic/NDC.h; sourceTree = "<group>"; };
@@ -421,6 +429,10 @@
 				B9B17AC815E46F25009339CA /* ParticleLinks.cpp */,
 				B9618AF115E6B132006D8734 /* CoarseCollision.h */,
 				B9618AF315E6B145006D8734 /* CoarseCollision.cpp */,
+				B965BA1D15E99CA700F9B0B6 /* Contact.h */,
+				B965BA1F15E99CB200F9B0B6 /* Contact.cpp */,
+				B9429A1815EA7A7C00DD3126 /* FineCollision.h */,
+				B9429A1B15EA7A8600DD3126 /* FineCollision.cpp */,
 			);
 			path = library.collision;
 			sourceTree = "<group>";
@@ -526,6 +538,7 @@
 				B9B17ACB15E46F25009339CA /* ParticleContact.h in Headers */,
 				B9B17ACD15E46F25009339CA /* ParticleLinks.h in Headers */,
 				B9618AF215E6B133006D8734 /* CoarseCollision.h in Headers */,
+				B9429A1915EA7A7C00DD3126 /* FineCollision.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,6 +552,7 @@
 				B9B17AB315E42C53009339CA /* TorqueGenerators.h in Headers */,
 				B9B17AC115E46ED5009339CA /* Particle.h in Headers */,
 				B9B17AC515E46F06009339CA /* ParticleForceGenerators.h in Headers */,
+				B965BA1E15E99CA700F9B0B6 /* Contact.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -771,6 +785,8 @@
 				B9B17ACA15E46F25009339CA /* ParticleContact.cpp in Sources */,
 				B9B17ACC15E46F25009339CA /* ParticleLinks.cpp in Sources */,
 				B9618AF415E6B145006D8734 /* CoarseCollision.cpp in Sources */,
+				B965BA2015E99CB200F9B0B6 /* Contact.cpp in Sources */,
+				B9429A1C15EA7A8600DD3126 /* FineCollision.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -77,7 +77,7 @@ private:
     static QuadTree * quadTree;
     QuadTreeNode * parent;
     
-    std::vector<RigidBody *> * listObjects;
+    std::vector<RigidBody **> * listObjects;
     void insertObject(QuadTreeNode * _tree, RigidBody * _body);
     void deleteObject(QuadTreeNode * _tree, RigidBody * _body);
     QuadTreeNode * buildQuadTree(Vector3 * _center, real _halfWidth, int _stopDepth);
@@ -90,7 +90,7 @@ public:
     void updateObject(RigidBody * _body);
     void deleteObject(RigidBody * _body);
     
-    std::vector<RigidBody *> * getPossibleCollisions();
+    std::vector<RigidBody **> * getPossibleCollisions();
     
     static QuadTree * getInstance();
 };

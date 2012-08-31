@@ -6,6 +6,10 @@
 //
 //
 
+// TODO revise: depth of tree and width/height of scene
+#define DEPTH_TREE 5
+#define WIDTH_SCENE 4.0f
+
 #include "CoarseCollision.h"
 
 bool less(real k1,real k2) {
@@ -240,6 +244,7 @@ real BoundingSphere::getSize() const
 
 
 
+// TODO revise: if working 3D, making octree
 QuadTree * QuadTree::quadTree = NULL;
 QuadTree * QuadTree::getInstance()
 {
@@ -252,7 +257,7 @@ QuadTree * QuadTree::getInstance()
 
 QuadTree::QuadTree()
 {
-    this->listObjects = new std::vector<RigidBody *>();
+    this->listObjects = new std::vector<RigidBody **>();
 }
 
 QuadTree::~QuadTree()
@@ -267,7 +272,7 @@ QuadTree::~QuadTree()
 void QuadTree::buildQuadTree()
 {
     Vector3 * center = Vector3::MakeVector3(0.0f, 0.0f);
-    this->parent = this->buildQuadTree(center, 4.0f, 5);
+    this->parent = this->buildQuadTree(center, WIDTH_SCENE, DEPTH_TREE);
     delete center;
     center = NULL;
 }
@@ -339,17 +344,24 @@ void QuadTree::insertObject(RigidBody * _body)
     this->insertObject(this->parent, _body);
 }
 
+RigidBody ** getBodies(RigidBody * _body1, RigidBody * _body2)
+{
+    RigidBody ** bodies = new RigidBody*[2];
+    bodies[0] = _body1;
+    bodies[1] = _body2;
+    
+    return bodies;
+}
+
 void QuadTree::insertObject(QuadTreeNode * _tree, RigidBody * _body) {
-    // TODO revise: consider the radius?  _tree->halfWidth + _body->radius
+    // TODO revise: consider the radius?  (_tree->halfWidth : _body->radius)
     if (!_tree) {
         return;
-    } else if (less(_body->getPosition()->x, _tree->center->x) &&
-               less(_body->getPosition()->y, _tree->center->y) &&
-               _tree->halfWidth) {
+    } else if (less(_body->getPosition()->x, _tree->center->x) && less(_body->getPosition()->y, _tree->center->y)) {
         this->insertObject(_tree->child[0], _body);
         if (!_tree->child[0]) {
             if (_tree->rigidBody) {
-                this->listObjects->push_back(_body);
+                this->listObjects->push_back(getBodies(_tree->rigidBody, _body));
             }
             _tree->rigidBody = _body;
         }
@@ -357,7 +369,7 @@ void QuadTree::insertObject(QuadTreeNode * _tree, RigidBody * _body) {
         this->insertObject(_tree->child[1], _body);
         if (!_tree->child[1]) {
             if (_tree->rigidBody) {
-                this->listObjects->push_back(_body);
+                this->listObjects->push_back(getBodies(_tree->rigidBody, _body));
             }
             _tree->rigidBody = _body;
         }
@@ -365,7 +377,7 @@ void QuadTree::insertObject(QuadTreeNode * _tree, RigidBody * _body) {
         this->insertObject(_tree->child[2], _body);
         if (!_tree->child[2]) {
             if (_tree->rigidBody) {
-                this->listObjects->push_back(_body);
+                this->listObjects->push_back(getBodies(_tree->rigidBody, _body));
             }
             _tree->rigidBody = _body;
         }
@@ -373,14 +385,14 @@ void QuadTree::insertObject(QuadTreeNode * _tree, RigidBody * _body) {
         this->insertObject(_tree->child[3], _body);
         if (!_tree->child[3]) {
             if (_tree->rigidBody) {
-                this->listObjects->push_back(_body);
+                this->listObjects->push_back(getBodies(_tree->rigidBody, _body));
             }
             _tree->rigidBody = _body;
         }
     }
 }
 
-std::vector<RigidBody *> * QuadTree::getPossibleCollisions()
+std::vector<RigidBody **> * QuadTree::getPossibleCollisions()
 {
     return this->listObjects;
 }

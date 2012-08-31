@@ -15,8 +15,6 @@
 class Particle {
 private:
     real mass;
-    real volume;
-    real density;
     real inverseMass;
     real damping;
 protected:
@@ -35,10 +33,6 @@ public:
     
     real getMass();
     void setMass(real _mass);
-    real getVolume();
-    void setVolume(real _volume);
-    real getDensity();
-    void setDensity(real _density);
     real getInverseMass();
     real getDamping();
     void setDamping(real _damping);

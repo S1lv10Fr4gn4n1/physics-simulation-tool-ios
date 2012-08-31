@@ -14,8 +14,6 @@ Particle::Particle()
     this->acceleration = Vector3::MakeVector3(0.0f, 0.0f);
     this->velocity = Vector3::MakeVector3(0.0f, 0.0f);
     this->mass = 0.0f;
-    this->volume = 0.0f;
-    this->density = 0.0f;
     this->inverseMass = 0.0f;
     this->damping = 0.0f;
     this->forceAccum = Vector3::MakeVector3(0.0f, 0.0f);
@@ -40,37 +38,6 @@ Particle::~Particle()
     this->velocity = NULL;
     this->forceAccum = NULL;
 }
-
-//void Particle::integrate(real _duration)
-//{
-//    if (this->inverseMass <= 0.0f) {
-//        return;
-//    }
-//
-//    // update linear position.
-//    this->position->addScaledVector(this->velocity, _duration);
-//
-//    // work out the acceleration from the force.
-//    Vector3 * resultingAcc = Vector3::MakeVector3(this->acceleration);
-//    resultingAcc->addScaledVector(this->forceAccum, this->inverseMass);
-//
-//    // update linear velocity from the acceleration.
-//    this->velocity->addScaledVector(resultingAcc, _duration);
-//
-//    delete resultingAcc;
-//    resultingAcc = NULL;
-//
-////    // TODO revise: is needed? damping force is already being applied
-////    // impose drag.
-////    *_simulatedObject->getVelocity() *= real_pow(_simulatedObject->getDamping(), _duration);
-//
-////    printf("position: %f, velocity: %f, force: %f, accel: %f\n", _simulatedObject->getPosition()->y,
-////                                                                 _simulatedObject->getVelocity()->y,
-////                                                                 _simulatedObject->getForceAccum()->y,
-////                                                                 _simulatedObject->getAcceleration()->y);
-//    
-//    this->clearAccumulator();
-//}
 
 void Particle::clearAccumulator()
 {
@@ -101,26 +68,6 @@ void Particle::setMass(real _mass)
         this->inverseMass = ((real)1.0)/_mass; // TODO attention
         this->mass = _mass;
     }
-}
-
-real Particle::getVolume()
-{
-    return this->volume;
-}
-
-void Particle::setVolume(real _volume)
-{
-    this->volume = _volume;
-}
-
-real Particle::getDensity()
-{
-    return this->density;
-}
-
-void Particle::setDensity(real _density)
-{
-    this->density = _density;
 }
 
 real Particle::getInverseMass()

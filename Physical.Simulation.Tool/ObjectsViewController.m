@@ -43,7 +43,7 @@
                                     repeats:NO];
     
 //    // TODO for Tests
-//    for (int i=0; i< 300; i++) {
+//    for (int i=0; i< 10; i++) {
 //        Controller::getInstance()->createSimulatedObject(SQUARE);
 //        Controller::getInstance()->createSimulatedObject(CIRCLE);
 //        Controller::getInstance()->createSimulatedObject(TRIANGLE);

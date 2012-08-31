@@ -13,6 +13,7 @@
 
 class RigidBody {
 private:
+    char * _id;
     real mass;
     real angularDamping;
     real linearDamping;
@@ -28,10 +29,11 @@ private:
     Matrix4 * transformMatrix;
     Matrix3 * inverseInertiaTensor;
     Matrix3 * inverseInertiaTensorWorld;
-    
     Vector3 * forceAccum;
     Vector3 * torqueAccum;
     Vector3 * lastFrameAcceleration;
+    
+    TypeObject typeObject;
 public:
     RigidBody();
     ~RigidBody();
@@ -40,8 +42,9 @@ public:
     void addForceAtBodyPoint(const Vector3 * _force, const Vector3 * _point);
     void addForceAtPoint(const Vector3 * _force, const Vector3 * _point);
     void addTorque(const Vector3 * _torque);
+    void addVelocity(const Vector3 * _velocity);
+    void addRotation(const Vector3 * _rotation);
     
-//    void integrate(real _duration);
     void setInertiaTensor(const Matrix3 * _inertiaTensor);
     
     Vector3 * getPointInWorldSpace(const Vector3 * _point) const;
@@ -86,5 +89,12 @@ public:
     void setRotation(real _x, real _y);
     real getRadius();
     void setRadius(real _radius);
+    Quaternion * getOrientation();
+    void setOrientation(Quaternion * _orientation);
+    void setOrientation(real _r, real _i, real _j, real _k);
+    TypeObject getTypeObject();
+    void setTypeObject(TypeObject _typeObject);
+    Matrix4 * getTransformMatrix();
+    void getGLTransform(float matrix[16]) const;
 };
 #endif
