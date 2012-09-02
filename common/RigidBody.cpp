@@ -91,10 +91,10 @@ void RigidBody::calculateDerivedData()
 {
     this->orientation->normalize();
     
-    // calculate the transform matrix for the body.
+    // calculate the transform matrix for the body
     _calculateTransformMatrix(this->transformMatrix, this->position, this->orientation);
     
-    // calculate the inertiaTensor in world space.
+    // calculate the inertiaTensor in world space
     _transformInertiaTensor(inverseInertiaTensorWorld,
                             this->orientation,
                             this->inverseInertiaTensor,
@@ -143,7 +143,7 @@ Vector3 * RigidBody::getPointInWorldSpace(const Vector3 * _point) const
 void RigidBody::addForceAtPoint(const Vector3 * _force, const Vector3 * _point)
 {
     // convert to coordinates relative to center of mass.
-    Vector3 * point = Vector3::MakeVector3(_point);
+    Vector3 * point = new Vector3(_point);
     *point -= this->position;
     
     *this->forceAccum += _force;
@@ -418,23 +418,23 @@ Matrix4 * RigidBody::getTransformMatrix()
 
 void RigidBody::getGLTransform(float matrix[16]) const
 {
-    matrix[0] = (float)this->transformMatrix->data[0];
-    matrix[1] = (float)this->transformMatrix->data[4];
-    matrix[2] = (float)this->transformMatrix->data[8];
+    matrix[0] = this->transformMatrix->data[0];
+    matrix[1] = this->transformMatrix->data[4];
+    matrix[2] = this->transformMatrix->data[8];
     matrix[3] = 0;
     
-    matrix[4] = (float)this->transformMatrix->data[1];
-    matrix[5] = (float)this->transformMatrix->data[5];
-    matrix[6] = (float)this->transformMatrix->data[9];
+    matrix[4] = this->transformMatrix->data[1];
+    matrix[5] = this->transformMatrix->data[5];
+    matrix[6] = this->transformMatrix->data[9];
     matrix[7] = 0;
     
-    matrix[8] = (float)this->transformMatrix->data[2];
-    matrix[9] = (float)this->transformMatrix->data[6];
-    matrix[10] = (float)this->transformMatrix->data[10];
+    matrix[8] = this->transformMatrix->data[2];
+    matrix[9] = this->transformMatrix->data[6];
+    matrix[10] = this->transformMatrix->data[10];
     matrix[11] = 0;
     
-    matrix[12] = (float)this->transformMatrix->data[3];
-    matrix[13] = (float)this->transformMatrix->data[7];
-    matrix[14] = (float)this->transformMatrix->data[11];
+    matrix[12] = this->transformMatrix->data[3];
+    matrix[13] = this->transformMatrix->data[7];
+    matrix[14] = this->transformMatrix->data[11];
     matrix[15] = 1;
 }

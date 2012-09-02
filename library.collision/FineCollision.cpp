@@ -279,7 +279,7 @@ unsigned CollisionDetector::boxAndPoint(const Box * _box, Vector3 * _point,  Col
 {
     // transform the point into box coordinates.
     Vector3 * relPoint = _box->transform->transformInverse(_point);
-    Vector3 * normal = new Vector3();
+//    Vector3 * normal = new Vector3();
     
     // check each axis, looking for the axis on which the penetration is least deep.
     real minDepth = _box->halfSize->x - real_abs(relPoint->x);
@@ -288,7 +288,7 @@ unsigned CollisionDetector::boxAndPoint(const Box * _box, Vector3 * _point,  Col
         return 0;
     }
     
-    normal = *_box->getAxis(0) * ((relPoint->x < 0) ? -1 : 1);
+    Vector3 * normal = *_box->getAxis(0) * ((relPoint->x < 0) ? -1 : 1);
     real depth = _box->halfSize->y - real_abs(relPoint->y);
     
     if (depth < 0) {

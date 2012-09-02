@@ -300,7 +300,7 @@ void Contact::applyVelocityChange(Vector3 * _velocityChange[2], Vector3 * _rotat
         // use the short format for frictionless contacts
         impulseContact = this->calculateFrictionlessImpulse(inverseInertiaTensor);
     } else {
-        
+        impulseContact = new Vector3(); //TODO delete
         // otherwise we may have impulses that aren't in the direction of the
         // contact, so we need the more complex version.
         // TODO with friction
@@ -387,8 +387,8 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
     real max;
     Vector3 * contactPoint;
 
-    MakeArrayVector3(velocityChange, 2); // TODO delete
-    MakeArrayVector3(rotationChange, 2); // TODO delete
+    MakeArrayVector3(velocityChange, 2);
+    MakeArrayVector3(rotationChange, 2);
     
     this->positionIterationsUsed = 0;
     this->positionIterations = _contacts->size() * 4; // TODO revise
@@ -448,8 +448,8 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
         this->positionIterationsUsed++;
     }
     
-//    DeleteArrayVector3(velocityChange, 2);
-//    DeleteArrayVector3(rotationChange, 2);
+    DeleteArrayVector3(velocityChange, 2);
+    DeleteArrayVector3(rotationChange, 2);
 }
 
 void ContactResolver::solverVelocities(std::vector<Contact *> * _contacts, real _duration)

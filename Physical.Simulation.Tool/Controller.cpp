@@ -8,18 +8,23 @@
 
 #include "Controller.h"
 
-Controller * Controller::controller;
+
+#define ZOOM_IN_LIMIT 6.0f
+#define ZOOM_OUT_LIMIT 0.1f
+#define ZOOM_SCALE 0.05f
+#define PAN_SCALE 0.005f
 
 // TODO revise: variables for this place is correct?
 real scaleObject = 1.0f;
-real scaleZoom = 1.0f;
-//real scalePanX = 0.0f;
-//real scalePanY = 0.0f;
+real scaleZoom = 6.0f;
+real scalePanX = 5.0f;
+real scalePanY = 2.0f;
 real previousRadians = 0.0f;
 real previousZoom = 0.0f;
 real previousScale = 0.0f;
-//Vector3 * previousVector3 = NULL;
+Vector3 * previousVector = NULL;
 
+Controller * Controller::controller;
 Controller::Controller()
 {
     this->mainEngine = NULL;
@@ -73,14 +78,7 @@ void Controller::initializeContextOpenGLES()
         return;
     }
     
-    // TODO revise, no objects 'no C++ ansi'
-    NSString * vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"vsh"];
-    NSString * fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"fsh"];
-    const char * vertShaderSource = [[NSString stringWithContentsOfFile:vertShaderPathname encoding:NSUTF8StringEncoding error:0] UTF8String];
-    const char * fragShaderSource = [[NSString stringWithContentsOfFile:fragShaderPathname encoding:NSUTF8StringEncoding error:0] UTF8String];
-
     this->mainGraphic = new MainGraphic();
-    this->mainGraphic->initializeShader(vertShaderSource, fragShaderSource);
 }
 
 void Controller::initializeEngine()
@@ -159,7 +157,7 @@ void Controller::touchesCancelled(real _x, real _y)
 
 void Controller::touchesMoved(real _x, real _y, int _countFingers)
 {
-    Vector3 * vector = Vector3::MakeVector3(_x, _y);
+    Vector3 * vector = new Vector3(_x, _y);
 
     // move object
     if (_countFingers == 1) {
@@ -178,20 +176,21 @@ void Controller::touchesMoved(real _x, real _y, int _countFingers)
         this->objectOffset = NULL;
     }
     
+#if defined (_3D_)
 //    TODO revise: pan
-//    move scene
-//    if (countFingers == 2) {
+    //move scene
+//    if (_countFingers == 2) {
 //        if (previousVector) {
 //            if (previousVector->x > vector->x) {
-//                scalePanX -= 0.009;
+//                scalePanX -= PAN_SCALE;
 //            } else if (previousVector->x < vector->x) {
-//                scalePanX += 0.009;
+//                scalePanX += PAN_SCALE;
 //            }
 //
 //            if (previousVector->y > vector->y) {
-//                scalePanY += 0.009;
+//                scalePanY += PAN_SCALE;
 //            } else if (previousVector->y < vector->y) {
-//                scalePanY -= 0.009;
+//                scalePanY -= PAN_SCALE;
 //            }
 //
 //            this->mainEngine->pan(scalePanX, scalePanY);
@@ -200,8 +199,9 @@ void Controller::touchesMoved(real _x, real _y, int _countFingers)
 //            previousVector = NULL;
 //        }
 //        
-//        previousVector = Vector3::MakeVector3(vector);
+//        previousVector = new Vector3(vector);
 //    }
+#endif
     
     delete vector;
     vector = NULL;
@@ -223,19 +223,20 @@ void Controller::pinchDetected(real _scale, real _velocity, bool _began)
         this->mainEngine->scaleSimulatedObject(this->objectEdition, scaleObject);
         previousScale = _scale;
     } else {
+        
         if ((_scale - previousZoom) < 0.0f) {
-            scaleZoom+=0.03f;
+            scaleZoom+=ZOOM_SCALE;
         } else {
-            scaleZoom-=0.03f;
+            scaleZoom-=ZOOM_SCALE;
         }
         // limit zoom in
-        if (scaleZoom >= 3.0f){
-            scaleZoom = 3.0f;
+        if (scaleZoom >= ZOOM_IN_LIMIT){
+            scaleZoom = ZOOM_IN_LIMIT;
             return;
         }
         // limit zoom out
-        if (scaleZoom <= 0.1f) {
-            scaleZoom = 0.1f;
+        if (scaleZoom <= ZOOM_OUT_LIMIT) {
+            scaleZoom = ZOOM_OUT_LIMIT;
             return;
         }
         this->mainEngine->zoom(scaleZoom);
@@ -257,7 +258,7 @@ void Controller::rotationDetected(real _radians, real _velocity, bool _began)
 
 void Controller::doubleTapOneFingerDetected(real _x, real _y)
 {
-    Vector3 * vector = Vector3::MakeVector3(_x, _y);
+    Vector3 * vector = new Vector3(_x, _y);
     
     this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
     
@@ -276,7 +277,7 @@ void Controller::doubleTapOneFingerDetected(real _x, real _y)
 
 void Controller::longPressDetected(real _x, real _y)
 {
-    Vector3 * vector = Vector3::MakeVector3(_x, _y);
+    Vector3 * vector = new Vector3(_x, _y);
     
     this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
 
@@ -305,37 +306,37 @@ void Controller::oneTapThreeFingerDetected(real _x, real _y)
     this->mainEngine->zoom(scaleZoom);
 }
 
-void Controller::createSimulatedObject(TypeObject _typeObject)
+void Controller::createSimulatedObject2D(TypeObject _typeObject)
 {    
     if (this->objectEdition) {
         this->objectEdition->setSelected(false);
     }
-    
-    SimulatedObject * object = new SimulatedObject();
-    object->setColorAux(Color::MakeRandonColor());
-    object->setMode(GL_TRIANGLE_FAN);
-    // TODO revise: values of initialization
-    //object->setVelocity(getRand(2.0f), getRand(3.0f));
-    object->setLinearDamping(0.99f);//getRand(0.9f));
-    object->setAngularDamping(0.8f);//getRand(0.9f));
-    
-//    ForceRegistry::getInstance()->add(object, new Gravity(Vector3::MakeVector3(0.0f, -9.8f)));
-//    ForceRegistry::getInstance()->add(object, new Drag(object->getDamping(), object->getDamping()*object->getDamping()));
 
-    this->mainEngine->makeSimulatedObject(object, _typeObject);
+    this->mainEngine->makeSimulatedObject2D(_typeObject);
     
-//    // TODO for Tests
-//    float x = getRand(4.0f);
-//    x = fmodf(x, 0.04) <= 0.03 ? x : -x;
-//
-//    float y = getRand(3.0f);
-//    y = fmodf(y, 0.04) <= 0.03 ? y : -y;
-//
-//    Vector3 *v = Vector3::MakeVector3(x, y);
-//    this->mainEngine->translateSimulatedObject(object, v);
-//    this->mainEngine->updatePositionSimulatedObject(object, v);
-//    delete v;
-//    v = NULL;
+#if defined (STRESS_TEST)
+    // TODO for Tests
+    float x = getRand(4.0f);
+    x = fmodf(x, 0.04) <= 0.03 ? x : -x;
+
+    float y = getRand(3.0f);
+    y = fmodf(y, 0.04) <= 0.03 ? y : -y;
+
+    Vector3 *v = Vector3::MakeVector3(x, y);
+    this->mainEngine->translateSimulatedObject(object, v);
+    this->mainEngine->updatePositionSimulatedObject(object, v);
+    delete v;
+    v = NULL;
+#endif
+}
+
+void Controller::createSimulatedObject3D(TypeObject _typeObject)
+{
+    if (this->objectEdition) {
+        this->objectEdition->setSelected(false);
+    }
+    
+    this->mainEngine->makeSimulatedObject3D(_typeObject);
 }
 
 void Controller::clearSimularion()

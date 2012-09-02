@@ -90,8 +90,6 @@
 		B9DD97351586E07E00E6DD9B /* MainCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9DD97341586E07E00E6DD9B /* MainCollision.cpp */; };
 		B9DD97371586E20800E6DD9B /* MainPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = B9DD97361586E20800E6DD9B /* MainPhysics.h */; };
 		B9DD97391586E21100E6DD9B /* MainPhysics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9DD97381586E21100E6DD9B /* MainPhysics.cpp */; };
-		B9DD97421586E35D00E6DD9B /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B9DD972E1586DF4C00E6DD9B /* Shader.fsh */; };
-		B9DD97431586E35D00E6DD9B /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B9DD972F1586DF4C00E6DD9B /* Shader.vsh */; };
 		B9F565A815B24AF300FA5EAF /* e=mc.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F565A515B24AF300FA5EAF /* e=mc.png */; };
 		B9F565AD15B24BA900FA5EAF /* albert.icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B9F565AC15B24BA900FA5EAF /* albert.icon.png */; };
 /* End PBXBuildFile section */
@@ -247,8 +245,6 @@
 		B9D88AD515A8EA4E00162199 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = circle.png; path = resources/images/circle.png; sourceTree = SOURCE_ROOT; };
 		B9DD92BD1586FE400029A4A3 /* MainGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainGraphic.h; sourceTree = "<group>"; };
 		B9DD92C01586FE500029A4A3 /* MainGraphic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainGraphic.cpp; sourceTree = "<group>"; };
-		B9DD972E1586DF4C00E6DD9B /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
-		B9DD972F1586DF4C00E6DD9B /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
 		B9DD97321586E06600E6DD9B /* MainCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainCollision.h; sourceTree = "<group>"; };
 		B9DD97341586E07E00E6DD9B /* MainCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainCollision.cpp; sourceTree = "<group>"; };
 		B9DD97361586E20800E6DD9B /* MainPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainPhysics.h; sourceTree = "<group>"; };
@@ -372,7 +368,6 @@
 				B913AEB015B1F78D0050B8DB /* TabViewController.m */,
 				B94B370F15864A94004AAB28 /* MainStoryboard_iPhone.storyboard */,
 				B94B370815864914004AAB28 /* MainStoryboard_iPad.storyboard */,
-				B9DD972D1586DF4C00E6DD9B /* Shaders */,
 				B94B36B815864775004AAB28 /* Supporting Files */,
 			);
 			path = Physical.Simulation.Tool;
@@ -491,15 +486,6 @@
 				B913AEB315B211830050B8DB /* Utils.cpp */,
 			);
 			path = common;
-			sourceTree = "<group>";
-		};
-		B9DD972D1586DF4C00E6DD9B /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				B9DD972E1586DF4C00E6DD9B /* Shader.fsh */,
-				B9DD972F1586DF4C00E6DD9B /* Shader.vsh */,
-			);
-			path = Shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -720,8 +706,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9DD97421586E35D00E6DD9B /* Shader.fsh in Resources */,
-				B9DD97431586E35D00E6DD9B /* Shader.vsh in Resources */,
 				B94B36BC15864775004AAB28 /* InfoPlist.strings in Resources */,
 				B94B370915864914004AAB28 /* MainStoryboard_iPad.storyboard in Resources */,
 				B94B371015864A94004AAB28 /* MainStoryboard_iPhone.storyboard in Resources */,
@@ -888,10 +872,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

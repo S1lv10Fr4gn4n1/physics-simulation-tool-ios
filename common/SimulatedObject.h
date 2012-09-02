@@ -20,7 +20,7 @@ private:
     unsigned char * color;
     unsigned char * colorVectors;
     Color * colorAux;
-    unsigned int mode; // GLenum
+    unsigned int mode;
     BBox * bbox;
     real * matrixTransformation;
     

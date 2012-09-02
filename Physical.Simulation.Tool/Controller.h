@@ -42,7 +42,8 @@ public:
     bool isRunning();
     bool isInitialized();
     
-    void createSimulatedObject(TypeObject _typeObject);
+    void createSimulatedObject2D(TypeObject _typeObject);
+    void createSimulatedObject3D(TypeObject _typeObject);
     
     void touchesMoved(real _x, real _y, int _countFingers);
     void touchesBegan(real _x, real _y);

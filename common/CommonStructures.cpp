@@ -17,11 +17,27 @@ Vector3::Vector3()
     this->pad = 0.0f;
 }
 
+Vector3::Vector3(const Vector3 * _vector)
+{
+    this->x = _vector->x;
+    this->y = _vector->y;
+    this->z = _vector->z;
+    this->pad = 0.0f;
+}
+
 Vector3::Vector3(const real _x, const real _y, const real _z)
 {
     this->x = _x;
     this->y = _y;
     this->z = _z;
+    this->pad = 0.0f;
+}
+
+Vector3::Vector3(const real _x, const real _y)
+{
+    this->x = _x;
+    this->y = _y;
+    this->z = 0.0f;
     this->pad = 0.0f;
 }
 
@@ -132,7 +148,7 @@ void Vector3::invert()
 {
     this->x = -this->x;
     this->y = -this->y;
-    this->x = -this->z;
+    this->z = -this->z;
 }
 
 real Vector3::magnitude() const
@@ -152,27 +168,6 @@ void Vector3::normalize()
         (*this)*=((real)1)/l;
     }
 }
-
-Vector3 * Vector3::MakeVector3(real _x, real _y, real _z)
-{
-    Vector3 * vector = new Vector3();
-    vector->x = _x;
-    vector->y = _y;
-    vector->z = _z;
-    
-    return vector;
-}
-
-Vector3 * Vector3::MakeVector3(real _x, real _y)
-{
-    return MakeVector3(_x, _y, 0.0f);
-}
-
-Vector3 * Vector3::MakeVector3(const Vector3 * _vector)
-{
-    return MakeVector3(_vector->x, _vector->y, _vector->z);
-}
-
 
 /***************************** Color *****************************/
 Color * Color::MakeColor(real _r, real _g, real _b, real _a)

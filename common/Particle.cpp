@@ -10,13 +10,13 @@
 
 Particle::Particle()
 {
-    this->position = Vector3::MakeVector3(0.0f, 0.0f);
-    this->acceleration = Vector3::MakeVector3(0.0f, 0.0f);
-    this->velocity = Vector3::MakeVector3(0.0f, 0.0f);
+    this->position = new Vector3(0.0f, 0.0f);
+    this->acceleration = new Vector3(0.0f, 0.0f);
+    this->velocity = new Vector3(0.0f, 0.0f);
     this->mass = 0.0f;
     this->inverseMass = 0.0f;
     this->damping = 0.0f;
-    this->forceAccum = Vector3::MakeVector3(0.0f, 0.0f);
+    this->forceAccum = new Vector3(0.0f, 0.0f);
 }
 
 Particle::~Particle()

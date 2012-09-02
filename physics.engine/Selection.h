@@ -13,7 +13,6 @@
 
 class Selection {
 private:
-    
 public:
     static SimulatedObject * selectSimulatedObject(World * _world, Vector3 * _vector);
 };

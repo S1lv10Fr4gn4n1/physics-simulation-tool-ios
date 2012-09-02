@@ -9,7 +9,7 @@
 #ifndef NDC_H
 #define NDC_H
 
-#include "CommonGraphics.h"
+#include "CommonStructures.h"
 
 class NDC {
     Vector3 * maxWindow;

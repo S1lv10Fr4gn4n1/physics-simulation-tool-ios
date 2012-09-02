@@ -22,8 +22,20 @@ private:
     MainCollision * mainCollision;
     
     bool running;
-    
     NDC * ndc;
+    
+    real eyeX;
+    real eyeY;
+    real eyeZ;
+    real centerX;
+    real centerY;
+    real centerZ;
+    
+    std::vector<Vector3 *> * createSphere();
+    std::vector<Vector3 *> * createPlan();
+    std::vector<Vector3 *> * createBox();
+    std::vector<Vector3 *> * createTriangleWithTriangularBase();
+    std::vector<Vector3 *> * createTriangleWithSquareBase();
 protected:
 public:
     MainEngine();
@@ -48,7 +60,8 @@ public:
     
     void deleteAllSimulatedObjects();
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
-    void makeSimulatedObject(SimulatedObject * _simulatedObject, TypeObject _typeObject);
+    void makeSimulatedObject2D(TypeObject _typeObject);
+    void makeSimulatedObject3D(TypeObject _typeObject);
     
     SimulatedObject * selectedSimulatedObject(Vector3 * _vector);
 };

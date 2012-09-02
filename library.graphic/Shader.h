@@ -16,18 +16,17 @@
 class Shader {
 private:
     GLuint program;
-    std::map<std::string, GLuint> * mapGLSLVars;
     const char * vertShaderSource;
     const char * fragShaderSource;
-public:
-    Shader(const char * _vertShaderSource, const char * _fragShaderSource);
-    ~Shader();
-    
+    std::map<std::string, GLuint> * mapGLSLVars;
+
     bool loadShaders();
     bool compileShader(GLuint * shader, GLenum type, const char * file);
     bool linkProgram(GLuint prog);
     bool validateProgram(GLuint prog);
-    
+public:
+    Shader();
+    ~Shader();
     GLuint getProgram();
     GLuint getVar(std::string _var);
 };

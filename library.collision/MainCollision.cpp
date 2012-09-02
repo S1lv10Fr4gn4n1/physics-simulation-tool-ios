@@ -55,6 +55,42 @@ void MainCollision::updateObject(RigidBody * _body, real _duration)
 
 void MainCollision::generateContact(RigidBody * _bodies[2])
 {
+    
+#if defined (_3D_)
+    if (_bodies[0]->getTypeObject() == SPHERE && _bodies[1]->getTypeObject() == SPHERE) {
+        Sphere * sphere1 = new Sphere(_bodies[0], _bodies[0]->getRadius());
+        Sphere * sphere2 = new Sphere(_bodies[1], _bodies[1]->getRadius());
+        sphere1->calculateInternals();
+        sphere2->calculateInternals();
+        CollisionDetector::sphereAndSphere(sphere1, sphere2, this->dataContacts);
+        
+        delete sphere1;
+        delete sphere2;
+        
+    } else if (_bodies[0]->getTypeObject() == SPHERE && _bodies[1]->getTypeObject() == PLAN) {
+        Sphere * sphere = new Sphere(_bodies[0], _bodies[0]->getRadius());
+        Plane * plane = new Plane(_bodies[1], new Vector3(0.0f, 1.0f, 0.0f), 0.0f);
+        CollisionDetector::sphereAndHalfSpace(sphere, plane, this->dataContacts);
+        
+        delete sphere;
+        delete plane;
+
+    } else if (_bodies[0]->getTypeObject() == PLAN && _bodies[1]->getTypeObject() == SPHERE) {
+        Sphere * sphere = new Sphere(_bodies[1], _bodies[1]->getRadius());
+        Plane * plane = new Plane(_bodies[0], new Vector3(0.0f, -0.9f, 0.0f), 0.0f);
+        CollisionDetector::sphereAndHalfSpace(sphere, plane, this->dataContacts);
+        
+        delete sphere;
+        delete plane;
+        
+    } else if (_bodies[0]->getTypeObject() == BOX && _bodies[1]->getTypeObject() == BOX) {
+        
+    } else if (_bodies[0]->getTypeObject() == BOX && _bodies[1]->getTypeObject() == PLAN) {
+        
+    } else if ((_bodies[0]->getTypeObject() == SPHERE && _bodies[1]->getTypeObject() == BOX) &&
+               (_bodies[0]->getTypeObject() == BOX &&_bodies[1]->getTypeObject() == SPHERE)) {
+    }
+#else
     if (_bodies[0]->getTypeObject() == CIRCLE && _bodies[1]->getTypeObject() == CIRCLE) {
         Sphere * sphere1 = new Sphere(_bodies[0], _bodies[0]->getRadius());
         Sphere * sphere2 = new Sphere(_bodies[1], _bodies[1]->getRadius());
@@ -72,7 +108,7 @@ void MainCollision::generateContact(RigidBody * _bodies[2])
         
         delete sphere;
         delete plane;
-
+        
     } else if (_bodies[0]->getTypeObject() == PLAN && _bodies[1]->getTypeObject() == CIRCLE) {
         Sphere * sphere = new Sphere(_bodies[1], _bodies[1]->getRadius());
         Plane * plane = new Plane(_bodies[0], new Vector3(0.0f, -0.9f, 0.0f), 0.0f);
@@ -86,9 +122,9 @@ void MainCollision::generateContact(RigidBody * _bodies[2])
     } else if (_bodies[0]->getTypeObject() == SQUARE && _bodies[1]->getTypeObject() == PLAN) {
         
     } else if ((_bodies[0]->getTypeObject() == CIRCLE && _bodies[1]->getTypeObject() == SQUARE) &&
-               (_bodies[0]->getTypeObject() == SQUARE &&_bodies[1]->getTypeObject() == CIRCLE)) {
+               (_bodies[0]->getTypeObject() == SQUARE && _bodies[1]->getTypeObject() == CIRCLE)) {
     }
-    // TODO implements TRIANGLE colision or v-clip
+#endif
     
     delete _bodies;
     _bodies = NULL;
@@ -107,7 +143,6 @@ void MainCollision::generateContacts()
             } else {
                 printf("ja se foi :D \n");
             }
-            
         }
 //        delete bodies;
         listObjects->clear(); // remember to clean

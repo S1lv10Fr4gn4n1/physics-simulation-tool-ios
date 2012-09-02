@@ -18,6 +18,7 @@ typedef float real;
 #define real_sin sinf
 #define real_cos cosf
 #define real_exp expf
+#define real_tan tanf
 
 #define R_PI 3.14159f
 

@@ -16,14 +16,14 @@
 
 class MainGraphic {
     Shader * shader;
-    SimulatedObject * simulatedObjectDrawn; 
+    SimulatedObject * simulatedObjectDrawn;
+    
+    void initializeShader();
 public:
     MainGraphic();
     ~MainGraphic();
     
-    void initializeShader(const char* _vertShaderSource, const char* _fragShaderSource);
     Shader * getShader();
-    void loadImage();
     void draw(World * _world);
 };
 

@@ -8,27 +8,63 @@
 
 #include "Shader.h"
 
-const char * defaultVertexShader = "attribute vec4 position; " 
-                                   "attribute vec4 color; "
-                                   "varying vec4 colorVarying; "
-                                   "void main() { "
-                                   "  gl_Position = position; "
-                                   "  colorVarying = color; "
-                                   "}" ;
+const char * vertexShader2D =
+                                "attribute vec4 position;"
+                                "attribute vec4 color;"
+                                "varying lowp vec4 colorVarying;"
+                                "uniform mat4 modelViewProjectionMatrix;"
+                                "uniform mat4 orthoMatrix;"
+                                "void main()"
+                                "{"
+                                "    gl_Position = orthoMatrix * modelViewProjectionMatrix * position;"
+                                "    gl_PointSize = 4.0;"
+                                "    colorVarying = color;"
+                                "}";
 
-const char * defaultFragmentShader = "varying lowp vec4 colorVarying; "
-                                     "void main() { "
-                                     "  gl_FragColor = colorVarying; "
-                                     "} ";
+const char * fragmentShader2D =
+                                "varying lowp vec4 colorVarying;"
+                                "void main()"
+                                "{"
+                                "    gl_FragColor = colorVarying;"
+                                "}";
+
+
+const char * vertexShader3D =
+                                "attribute vec4 position;"
+                                "attribute vec4 color;"
+                                "varying lowp vec4 colorVarying;"
+                                "uniform mat4 modelViewProjectionMatrix;"
+                                "uniform mat4 lookAtMatrix;"
+                                "uniform mat4 perspectiveMatrix;"
+                                "void main()"
+                                "{"
+                                "    gl_Position = perspectiveMatrix * lookAtMatrix * modelViewProjectionMatrix * position;"
+                                "    gl_PointSize = 4.0;"
+                                "    colorVarying = color;"
+                                "}";
+
+const char * fragmentShader3D =
+                                "varying lowp vec4 colorVarying;"
+                                "void main()"
+                                "{"
+                                "    gl_FragColor = colorVarying;"
+                                "}";
 
 using namespace std;
 
-Shader::Shader(const char * _vertShaderSource, const char * _fragShaderSource)
+Shader::Shader()
 {
     this->mapGLSLVars = new map<string, GLuint>();
     
-    this->vertShaderSource = _vertShaderSource ? _vertShaderSource : defaultVertexShader;  
-    this->fragShaderSource = _fragShaderSource ? _fragShaderSource : defaultFragmentShader;
+#if defined (_3D_)
+    this->vertShaderSource = vertexShader3D;
+    this->fragShaderSource = fragmentShader3D;
+#else
+    this->vertShaderSource = vertexShader2D;
+    this->fragShaderSource = fragmentShader2D;
+#endif
+    
+    this->loadShaders();
 }
 
 Shader::~Shader()
@@ -46,7 +82,7 @@ Shader::~Shader()
 #pragma mark -  OpenGL ES 2 shader compilation
 bool Shader::loadShaders()
 {
-    GLuint vertShader, fragShader; //geomShader;
+    GLuint vertShader, fragShader;
     string vertShaderPathname, fragShaderPathname;
     
     // Create shader program.
@@ -96,7 +132,13 @@ bool Shader::loadShaders()
     }
 
     this->mapGLSLVars->insert(std::pair<string, GLuint>(UNIFORM_MODELVIEWPROJECTION_MATRIX, glGetUniformLocation(this->program, "modelViewProjectionMatrix")));
+    
+#if defined (_3D_)
+    this->mapGLSLVars->insert(std::pair<string, GLuint>(UNIFORM_LOOKAT_MATRIX, glGetUniformLocation(this->program, "lookAtMatrix")));
+    this->mapGLSLVars->insert(std::pair<string, GLuint>(UNIFORM_PERSPECTIVE_MATRIX, glGetUniformLocation(this->program, "perspectiveMatrix")));
+#else
     this->mapGLSLVars->insert(std::pair<string, GLuint>(UNIFORM_ORTHO_MATRIX, glGetUniformLocation(this->program, "orthoMatrix")));
+#endif
     
     // Release vertex and fragment shaders.
     if (vertShader) {

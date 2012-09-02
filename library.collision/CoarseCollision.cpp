@@ -271,7 +271,7 @@ QuadTree::~QuadTree()
 
 void QuadTree::buildQuadTree()
 {
-    Vector3 * center = Vector3::MakeVector3(0.0f, 0.0f);
+    Vector3 * center = new Vector3(0.0f, 0.0f);
     this->parent = this->buildQuadTree(center, WIDTH_SCENE, DEPTH_TREE);
     delete center;
     center = NULL;

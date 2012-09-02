@@ -22,6 +22,8 @@ SimulatedObject::SimulatedObject()
     this->color = NULL;
     this->colorVectors = NULL;
     
+    this->mode = -1;
+    
     this->matrixTransformation = new real[16];
     MatrixTransformIdentity(&this->matrixTransformation);
     
@@ -31,6 +33,7 @@ SimulatedObject::SimulatedObject()
     
     // Rigid-body
     this->setMass(1.0f);
+    this->setRadius(0.0f);
 }
 
 SimulatedObject::~SimulatedObject()

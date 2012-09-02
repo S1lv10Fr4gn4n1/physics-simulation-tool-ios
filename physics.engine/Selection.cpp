@@ -31,7 +31,7 @@ bool inBBox(SimulatedObject * _simulatedObject, Vector3 * _vector)
         result = true;
     }
     
-    //_simulatedObject->initBBox(MATRIX_IDENTITY);
+//    _simulatedObject->initBBox(MatrixMakeIdentity());
     
     return result;
 }
@@ -86,9 +86,15 @@ SimulatedObject * Selection::selectSimulatedObject(World * _world, Vector3 * _ve
     for (int i=0; i<_world->getSimulatedObjects()->size(); i++) {
         simulatedObject = _world->getSimulatedObjects()->at(i);
 
+#if defined (_3D_)
+        if (inBBox(simulatedObject, _vector)) {
+            return simulatedObject;
+        }
+#else
         if (inBBox(simulatedObject, _vector) && inSimulatedObject(simulatedObject, _vector)) {
             return simulatedObject;
         }
+#endif
     }
     
     return NULL;

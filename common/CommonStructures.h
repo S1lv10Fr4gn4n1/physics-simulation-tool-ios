@@ -21,6 +21,13 @@
 
 /***************************** Enumations *****************************/
 enum TypeObject {
+    PLAN,
+    
+    SPHERE,
+    BOX,
+    TRIANGLE_TRIANGULAR_BASE,
+    TRIANGLE_SQUARE_BASE,
+
     CIRCLE,
     SQUARE,
     TRIANGLE,
@@ -30,10 +37,19 @@ enum TypeObject {
     SPRING,
     ROPE,
     ENGINE,
-    PLAN,
-    PARTICLE
+    PARTICLE,
 };
 
+// TODO revise
+enum GLtype {
+    POINTS         = 0x0000,
+    LINES          = 0x0001,
+    LINE_LOOP      = 0x0002,
+    LINE_STRIP     = 0x0003,
+    TRIANGLES      = 0x0004,
+    TRIANGLE_STRIP = 0x0005,
+    TRIANGLE_FAN   = 0x0006,
+};
 
 /***************************** Color *****************************/
 class Color {
@@ -53,6 +69,8 @@ public:
     real x, y, z;
     
     Vector3();
+    Vector3(const Vector3 * _vector);
+    Vector3(const real _x, const real _y);
     Vector3(const real _x, const real _y, const real _z);
     ~Vector3();
     
@@ -72,10 +90,6 @@ public:
     Vector3 * vectorProduct(const Vector3 * _vector) const;
     void operator%=(const Vector3 *_vector);
     Vector3 * operator%(const Vector3 * _vector) const;
-    
-    static Vector3 * MakeVector3(const Vector3 * _vector);
-    static Vector3 * MakeVector3(real _x, real _y);
-    static Vector3 * MakeVector3(real _x, real _y, real _z);
     
     void invert();
     real magnitude() const;
@@ -259,6 +273,13 @@ static inline real * MatrixMakeScale(real _x, real _y)
     return matrix;
 }
 
+static inline real * MatrixMakeScale(real _x, real _y, real _z)
+{
+    real * matrix = MatrixMakeIdentity();
+    MatrixScale(matrix, _x, _y, _z);
+    return matrix;
+}
+
 static inline real * MatrixMakeXRotation(real radians)
 {
     real cos = cosf(radians);
@@ -308,7 +329,7 @@ static inline Vector3 * MatrixTransformPoint(const real * matrix, const Vector3 
 	real z = matrix[2] * _vector->x + matrix[6] * _vector->y + matrix[10] * _vector->z + matrix[14] * 1;//vector->w;
 	//real w = matrix[3] * vector->x + matrix[7] * vector->y + matrix[11] * vector->z + matrix[15] * vector->w;
     
-	return Vector3::MakeVector3(x, y, z);
+	return new Vector3(x, y, z);
 }
 
 static inline void MatrixOrtho(real * matrix, real left, real right, real bottom, real top, real nearZ, real farZ)
@@ -334,6 +355,93 @@ static inline real * MatrixMakeOrtho(real left, real right, real bottom, real to
 {
     real * matrix = new real(16);
     MatrixOrtho(matrix, left, right, bottom, top, nearZ, farZ);
+    return matrix;
+}
+
+static inline void MatrixMakePerspective(real * _matrix, real _fovyRadians, real _aspect, real _nearZ, real _farZ)
+{
+    float cotan = 1.0f / real_tan(_fovyRadians / 2.0f);
+    
+    _matrix[0] = cotan / _aspect;
+    _matrix[1] = 0.0f;
+    _matrix[2] = 0.0f;
+    _matrix[3] = 0.0f;
+    _matrix[4] = 0.0f;
+    _matrix[5] = cotan;
+    _matrix[6] = 0.0f;
+    _matrix[7] = 0.0f;
+    _matrix[8] = 0.0f;
+    _matrix[9] = 0.0f;
+    _matrix[10] = (_farZ + _nearZ) / (_nearZ - _farZ);
+    _matrix[11] = -1.0f;
+    _matrix[12] = 0.0f;
+    _matrix[13] = 0.0f;
+    _matrix[14] = (2.0f * _farZ * _nearZ) / (_nearZ - _farZ);
+    _matrix[15] = 0.0f;
+}
+
+static inline real * MatrixMakePerspective(real _fovyRadians, real _aspect, real _nearZ, real _farZ)
+{
+    real * matrix = new real[16];
+    MatrixMakePerspective(matrix, _fovyRadians, _aspect, _nearZ, _farZ);
+    return matrix;
+}
+
+static inline void MatrixMakeLookAt(real * _matrix, float _eyeX, float _eyeY, float _eyeZ,
+                                       float _centerX, float _centerY, float _centerZ,
+                                       float _upX, float _upY, float _upZ)
+{
+    Vector3 * ev = new Vector3( _eyeX, _eyeY, _eyeZ);
+    Vector3 * cv = new Vector3(_centerX, _centerY, _centerZ);
+    Vector3 * uv = new Vector3(_upX, _upY, _upZ);
+    
+    cv->invert();
+    Vector3 * n = *ev + cv;
+    n->normalize();
+    
+    Vector3 * u =  uv->vectorProduct(n);
+    u->normalize();
+    Vector3 * v = n->vectorProduct(u);
+    
+    _matrix[0] = u->x;
+    _matrix[1] = v->x;
+    _matrix[2] = n->x;
+    _matrix[3] = 0.0f;
+    _matrix[4] = u->y;
+    _matrix[5] = v->y;
+    _matrix[6] = n->y;
+    _matrix[7] = 0.0f;
+    _matrix[8] = u->z;
+    _matrix[9] = v->z;
+    _matrix[10] = n->z;
+    
+    u->invert();
+    v->invert();
+    n->invert();
+    real a30 = u->scalarProduct(ev);
+    real a31 = v->scalarProduct(ev);
+    real a32 = n->scalarProduct(ev);
+    
+    _matrix[11] = 0.0f;
+    _matrix[12] = a30;
+    _matrix[13] = a31;
+    _matrix[14] = a32;
+    _matrix[15] = 1.0f;
+
+    delete ev;
+    delete cv;
+    delete uv;
+    delete n;
+    delete u;
+    delete v;
+}
+
+static inline real * MatrixMakeLookAt(float _eyeX, float _eyeY, float _eyeZ,
+                                    float _centerX, float _centerY, float _centerZ,
+                                    float _upX, float _upY, float _upZ)
+{
+    real * matrix = new real[16];
+    MatrixMakeLookAt(matrix, _eyeX, _eyeY, _eyeZ, _centerX, _centerY, _centerZ, _upX, _upY, _upZ);
     return matrix;
 }
 

@@ -145,7 +145,7 @@ ParticleDrag::~ParticleDrag()
 
 void ParticleDrag::updateForce(Particle * _particle, real _duration)
 {
-    Vector3 * force = Vector3::MakeVector3(_particle->getVelocity());
+    Vector3 * force = new Vector3(_particle->getVelocity());
     
     // calculate the total drag coefficient.
     real dragCoeff = force->magnitude();
@@ -178,7 +178,7 @@ ParticleSpring::~ParticleSpring()
 void ParticleSpring::updateForce(Particle * _particle, real _duration)
 {
     // calculate the vector of the spring.
-    Vector3 * force = Vector3::MakeVector3(_particle->getPosition());
+    Vector3 * force = new Vector3(_particle->getPosition());
     *force -= this->other->getPosition();
     
     // calculate the magnitude of the force.
@@ -216,7 +216,7 @@ ParticleAnchoredSpring::~ParticleAnchoredSpring()
 
 void ParticleAnchoredSpring::updateForce(Particle * _particle, real _duration)
 {
-    Vector3 * force = Vector3::MakeVector3(_particle->getPosition());
+    Vector3 * force = new Vector3(_particle->getPosition());
     *force -= this->anchor;
     
     // calculate the magnitude of the force.
@@ -254,7 +254,7 @@ ParticleBungee::~ParticleBungee()
 
 void ParticleBungee::updateForce(Particle * _particle, real _duration)
 {
-    Vector3 * force = Vector3::MakeVector3(_particle->getPosition());
+    Vector3 * force = new Vector3(_particle->getPosition());
     *force -= other->getPosition();
     
     // check if the bungee is compressed.
@@ -298,7 +298,7 @@ ParticleAnchoredBungee::~ParticleAnchoredBungee()
 
 void ParticleAnchoredBungee::updateForce(Particle * _particle, real _duration)
 {
-    Vector3 * force = Vector3::MakeVector3(_particle->getPosition());
+    Vector3 * force = new Vector3(_particle->getPosition());
     *force -= this->anchor;
     
     // check if the bungee is compressed.
@@ -352,7 +352,7 @@ void ParticleBuoyancy::updateForce(Particle * _particle, real _duration)
         return;
     }
     
-    Vector3 * force = Vector3::MakeVector3(0.0f, 0.0f, 0.0f);
+    Vector3 * force = new Vector3(0.0f, 0.0f, 0.0f);
     
     // check if we’re at maximum depth.
     if (depth <= this->waterHeight - this->maxDepth) {
@@ -368,7 +368,6 @@ void ParticleBuoyancy::updateForce(Particle * _particle, real _duration)
     delete force;
     force = NULL;
 }
-
 
 ParticleFakeStiffSpring::ParticleFakeStiffSpring(Vector3 * _anchor, real _springConstant, real _damping)
 {

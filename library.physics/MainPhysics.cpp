@@ -39,7 +39,7 @@ void MainPhysics::updateFeatures(Particle * _particle, real _duration)
     _particle->getPosition()->addScaledVector(_particle->getVelocity(), _duration);
     
     // work out the acceleration from the force.
-    Vector3 * resultingAcc = Vector3::MakeVector3(_particle->getAcceleration());
+    Vector3 * resultingAcc = new Vector3(_particle->getAcceleration());
     resultingAcc->addScaledVector(_particle->getForceAccum(), _particle->getInverseMass());
     
     // update linear velocity from the acceleration.

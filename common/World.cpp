@@ -16,6 +16,10 @@ World::World()
 
     this->orthoMatrix = new real[16];
     MatrixTransformIdentity(&this->orthoMatrix);
+    this->lookAtMatrix = new real[16];
+    MatrixTransformIdentity(&this->lookAtMatrix);
+    this->perspectiveMatrix = new real[16];
+    MatrixTransformIdentity(&this->perspectiveMatrix);
 }
 
 World::~World()
@@ -37,8 +41,18 @@ World::~World()
         delete [] this->orthoMatrix;
     }
     
+    if (this->lookAtMatrix) {
+        delete [] this->lookAtMatrix;
+    }
+    
+    if (this->perspectiveMatrix) {
+        delete [] this->perspectiveMatrix;
+    }
+    
     this->simulatedObjects = NULL;
     this->orthoMatrix = NULL;
+    this->lookAtMatrix = NULL;
+    this->perspectiveMatrix = NULL;
 }
 
 void World::addSimulatedObject(SimulatedObject * _simulatedObject)
@@ -76,12 +90,17 @@ std::vector<SimulatedObject *> * World::getSimulatedObjects()
     return this->simulatedObjects;
 }
 
-void World::setOrthoMatrix(real * _matrix)
-{
-    this->orthoMatrix = _matrix;
-}
-
 real * World::getOrthoMatrix()
 {
     return this->orthoMatrix;
+}
+
+real * World::getLookAtMatrix()
+{
+    return this->lookAtMatrix;
+}
+
+real * World::getPerspectiveMatrix()
+{
+    return this->perspectiveMatrix;
 }

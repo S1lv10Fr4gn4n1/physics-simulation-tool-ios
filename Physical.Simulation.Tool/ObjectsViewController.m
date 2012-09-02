@@ -41,13 +41,20 @@
                                    selector:@selector(startSimulation:)
                                    userInfo:NULL
                                     repeats:NO];
-    
-//    // TODO for Tests
-//    for (int i=0; i< 10; i++) {
-//        Controller::getInstance()->createSimulatedObject(SQUARE);
-//        Controller::getInstance()->createSimulatedObject(CIRCLE);
-//        Controller::getInstance()->createSimulatedObject(TRIANGLE);
-//    }
+#if defined (STRESS_TEST)
+    // TODO for Tests
+    for (int i=0; i< 10; i++) {
+    #if define(_3D_)
+        Controller::getInstance()->createSimulatedObject3D(BOX);
+        Controller::getInstance()->createSimulatedObject3D(SPHERE);
+        Controller::getInstance()->createSimulatedObject3D(TRIANGLE_SQUARE_BASE);
+    #else
+        Controller::getInstance()->createSimulatedObject2D(SQUARE);
+        Controller::getInstance()->createSimulatedObject2D(CIRCLE);
+        Controller::getInstance()->createSimulatedObject2D(TRIANGLE);
+    #endif
+    }
+#endif
 }
 
 - (IBAction)actionEditSimulation:(id)sender
@@ -58,17 +65,29 @@
 
 - (IBAction)actionCircle:(id)sender
 {
-    Controller::getInstance()->createSimulatedObject(CIRCLE);
+#if defined (_3D_)
+    Controller::getInstance()->createSimulatedObject3D(SPHERE);
+#else
+    Controller::getInstance()->createSimulatedObject2D(CIRCLE);
+#endif
 }
 
 - (IBAction)actionSquare:(id)sender
 {
-    Controller::getInstance()->createSimulatedObject(SQUARE);
+#if defined (_3D_)
+    Controller::getInstance()->createSimulatedObject3D(BOX);
+#else
+    Controller::getInstance()->createSimulatedObject2D(SQUARE);
+#endif
 }
 
-- (IBAction)actionTriangle:(id)sender 
+- (IBAction)actionTriangle:(id)sender
 {
-    Controller::getInstance()->createSimulatedObject(TRIANGLE);
+#if defined (_3D_)
+    Controller::getInstance()->createSimulatedObject3D(TRIANGLE_SQUARE_BASE);
+#else
+    Controller::getInstance()->createSimulatedObject2D(TRIANGLE);
+#endif
 }
 
 - (IBAction)actionClearSimulation:(id)sender
@@ -78,6 +97,10 @@
 
 - (IBAction)actionSurfaceScene:(id)sender
 {
-    Controller::getInstance()->createSimulatedObject(PLAN);
+#if defined (_3D_)
+    Controller::getInstance()->createSimulatedObject3D(PLAN);
+#else
+    Controller::getInstance()->createSimulatedObject2D(PLAN);
+#endif
 }
 @end
