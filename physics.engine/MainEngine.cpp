@@ -84,17 +84,22 @@ void MainEngine::updateInformation(real _duration)
     // update all forces in all objects
     ForceRegistry::getInstance()->updateForces(_duration);
     
+    // clean all collisions in quadtree
+    this->mainCollision->cleanCollisions();
+    
     for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
         object = this->world->getSimulatedObjects()->at(i);
         
         // updates the physical features
         this->mainPhysics->updateFeatures(object, _duration);
+        //TODO object->integrate(_duration);
 
         // update the object in coarse collision
         this->mainCollision->updateObject(object, _duration);
         
         // mainEngine(this) translate object
         this->translateSimulatedObject(object, object->getPosition());
+//        object->getGLTransform(object->getMatrixTransformation()); // TODO rever
         
         // remove objects that left the scene
         if (real_abs(object->getPosition()->x) >= 4.0f ||
@@ -237,35 +242,34 @@ void MainEngine::deleteSimulatedObject(SimulatedObject * _simulatedObject)
     this->world->deleteSimulatedObject(_simulatedObject);
 }
 
-void MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
+SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
 {
     // TODO revise: values of initialization
     SimulatedObject * simulatedObject = new SimulatedObject();
-    simulatedObject->setColorAux(Color::MakeRandonColor());
+    simulatedObject->setPosition(0.0f, 0.0f);
     simulatedObject->setMode(TRIANGLE_FAN);
     simulatedObject->setTypeObject(_typeObject);
-    simulatedObject->setRadius(0.052083f);     // TODO revise: how get radius ?
     simulatedObject->setLinearDamping(0.99f);
     simulatedObject->setAngularDamping(0.8f);
-//    ForceRegistry::getInstance()->add(object, new Gravity(Vector3::MakeVector3(0.0f, -9.8f)));
-//    ForceRegistry::getInstance()->add(object, new Drag(object->getDamping(), object->getDamping()*object->getDamping()));
+    simulatedObject->setCanSleep(false);
+    simulatedObject->setAwake();
+//    ForceRegistry::getInstance()->add(simulatedObject, new Gravity(new Vector3(0.0f, -9.8f)));
     
-    // TODO revise
-    //    cyclone::Matrix3 tensor;
-    //    cyclone::real coeff = 0.4f*body->getMass()*radius*radius;
-    //    tensor.setInertiaTensorCoeffs(coeff,coeff,coeff);
-    //    body->setInertiaTensor(tensor);
+    
+// TODO revise
+//    cyclone::Matrix3 tensor;
+//    cyclone::real coeff = 0.4f*body->getMass()*radius*radius;
+//    tensor.setInertiaTensorCoeffs(coeff,coeff,coeff);
+//    body->setInertiaTensor(tensor);
 
-#if defined(STRESS_TEST)
-    simulatedObject->setVelocity(getRand(2.0f), getRand(3.0f));
-    simulatedObject->setLinearDamping(getRand(0.9f));
-    simulatedObject->setAngularDamping(getRand(0.9f));
-    simulatedObject->setRadius(0.052083f);
-#endif
-    
     switch (_typeObject) {
         case CIRCLE:
         {
+            this->translateSimulatedObject(simulatedObject, simulatedObject->getPosition());
+            
+            simulatedObject->setRadius(0.052083f);
+            simulatedObject->setHalfSize(new Vector3(0.052083f, 0.052083f));
+            
             // calculates the radius
             // takes the first point, which indicates the origin of the circle
             Vector3 * v1 = new Vector3(0.0f, 0.0f);
@@ -302,15 +306,17 @@ void MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
             
         case SQUARE:
         {
-            simulatedObject->addVector3(new Vector3( -0.052083f, -0.052083f));
-            simulatedObject->addVector3(new Vector3(  0.052083f, -0.052083f));
-            simulatedObject->addVector3(new Vector3(  0.052083f,  0.052083f));
-            simulatedObject->addVector3(new Vector3( -0.052083f,  0.052083f));
+            simulatedObject->setHalfSize(0.052083f, 0.052083f);
+            simulatedObject->addVector3(new Vector3( -simulatedObject->getHalfSize()->x, -simulatedObject->getHalfSize()->y));
+            simulatedObject->addVector3(new Vector3(  simulatedObject->getHalfSize()->x, -simulatedObject->getHalfSize()->y));
+            simulatedObject->addVector3(new Vector3(  simulatedObject->getHalfSize()->x,  simulatedObject->getHalfSize()->y));
+            simulatedObject->addVector3(new Vector3( -simulatedObject->getHalfSize()->x,  simulatedObject->getHalfSize()->y));
             break;
         }
             
         case TRIANGLE:
         {
+            simulatedObject->setHalfSize(0.052083f, 0.052083f);
             simulatedObject->addVector3(new Vector3(  0.000000f,  0.052083f));
             simulatedObject->addVector3(new Vector3( -0.052083f, -0.052083f));
             simulatedObject->addVector3(new Vector3(  0.052083f, -0.052083f));
@@ -321,11 +327,20 @@ void MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
         {
             // TODO this is max screem possible for simulation
             // left: -3.960000, right: 3.960000, bottom: -2.970000, top: 2.970000
+            simulatedObject->setMode(LINE_LOOP);
+            simulatedObject->setColorAux(255, 255, 255, 0);
             simulatedObject->setMass(0.0f); // immovable
-            simulatedObject->addVector3(new Vector3(-5.0f, -7.0f));
-            simulatedObject->addVector3(new Vector3(-5.0f, -0.9f));
-            simulatedObject->addVector3(new Vector3( 5.0f, -0.9f));
-            simulatedObject->addVector3(new Vector3( 5.0f, -7.0f));
+            simulatedObject->setPosition(0.0f, -0.9f);
+            simulatedObject->setHalfSize(new Vector3(5.0f, 0.0f));
+            simulatedObject->addVector3(new Vector3(-5.0f, 0.0f));
+            simulatedObject->addVector3(new Vector3( 5.0f, 0.0f));
+            this->translateSimulatedObject(simulatedObject, simulatedObject->getPosition());
+//            simulatedObject->addVector3(new Vector3(-5.0f, -7.0f));
+//            simulatedObject->addVector3(new Vector3(-5.0f, -0.9f));
+//            simulatedObject->addVector3(new Vector3( 5.0f, -0.9f));
+//            simulatedObject->addVector3(new Vector3( 5.0f, -7.0f));
+            
+            
             break;
         }
             
@@ -349,11 +364,46 @@ void MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
             break;
 
         default:
+            simulatedObject->setMode(LINES);
+            simulatedObject->setColorAux(255, 255, 255, 0);
+            simulatedObject->setMass(0.0f); // immovable
+            simulatedObject->addAllVectors(this->paintQuadTree());
+            simulatedObject->setPosition(0.0f, 0.0f);
+            
+            SimulatedObject * s1 = new SimulatedObject();
+            s1->setColorAux(0.0f, 0.0f, 0.0f, 0.0f);
+            s1->setMode(LINES);
+            s1->setTypeObject(NONE);
+            s1->setLinearDamping(0.99f);
+            s1->setAngularDamping(0.8f);
+            s1->setCanSleep(false);
+            s1->setAwake();
+            s1->setMass(0.0f);
+            simulatedObject->setPosition(0.0f, 0.0f);
+
+            //(0, 0)
+            // VERTICAL
+            s1->addVector3(new Vector3(0.0f, WIDTH_SCENE));
+            s1->addVector3(new Vector3(0.0f, -WIDTH_SCENE));
+            // HORIZONTAL
+            s1->addVector3(new Vector3(WIDTH_SCENE, 0.0f));
+            s1->addVector3(new Vector3(-WIDTH_SCENE, 0.0f));
+            s1->initialize();
+            this->world->addSimulatedObject(s1);
+
+//            printf("linhas pretas\n");
+//            printf("%f, %f, %f, \n", 0.0f, WIDTH_SCENE, 0.0f);
+//            printf("%f, %f, %f, \n", 0.0f, -WIDTH_SCENE, 0.0f);
+//            printf("%f, %f, %f, \n", WIDTH_SCENE, 0.0f, 0.0f);
+//            printf("%f, %f, %f, \n", -WIDTH_SCENE, 0.0f, 0.0f);
+            
             break;
     }
     
     simulatedObject->initialize();
     this->world->addSimulatedObject(simulatedObject);
+    
+    return simulatedObject;
 }
 
 void MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
@@ -361,25 +411,31 @@ void MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
     // TODO revise: values of initialization
     SimulatedObject * simulatedObject = new SimulatedObject();
     simulatedObject->setTypeObject(_typeObject);
-    simulatedObject->setVelocity(getRand(2.0f), getRand(3.0f));
     simulatedObject->setLinearDamping(0.99f);  //getRand(0.9f));
     simulatedObject->setAngularDamping(0.8f);  //getRand(0.9f));
+    simulatedObject->setPosition(new Vector3(0.0f, 0.0f, 0.0f));
 
+    // TODO revise: create ToqueForces
+    ForceRegistry::getInstance()->add(simulatedObject, new Gravity(new Vector3(0.0f, -9.8f)));
+    
     switch (_typeObject) {
         case SPHERE:
-            simulatedObject->addAllVectors(this->createSphere());
+            simulatedObject->setRadius(0.1f);
+            simulatedObject->addAllVectors(this->createSphere(simulatedObject->getPosition(), simulatedObject->getRadius()));
             break;
 
         case BOX:
-            simulatedObject->addAllVectors(this->createBox());
+            simulatedObject->setHalfSize(0.1f, 0.1f, 0.1f);
+            simulatedObject->addAllVectors(this->createBox(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
             break;
             
         case PLAN:
         {
             simulatedObject->setMass(0.0f);
             simulatedObject->setMode(LINES);
-            simulatedObject->setColorAux(Color::MakeColor(0, 0, 0, 0));
-            simulatedObject->addAllVectors(this->createPlan());
+            simulatedObject->setColorAux(0, 0, 0, 0);
+            simulatedObject->setPosition(0.0f, 1.0f, 0.0f);
+            simulatedObject->addAllVectors(this->createPlan(simulatedObject->getPosition()));
             
             break;
         }
@@ -397,10 +453,6 @@ void MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
 
     }
     
-    if (!simulatedObject->getColorAux()) {
-        simulatedObject->setColorAux(Color::MakeRandonColor());
-    }
-    
     if (simulatedObject->getMode() == -1) {
         simulatedObject->setMode(TRIANGLES);
     }
@@ -413,41 +465,42 @@ void MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
     this->world->addSimulatedObject(simulatedObject);
 }
 
-std::vector<Vector3 *> * MainEngine::createSphere()
+std::vector<Vector3 *> * MainEngine::createSphere(Vector3 * _origin, real _radius)
 {
+    // TODO revise: consider _origem
+    
     // Based on http://www.swiftless.com/tutorials/opengl/sphere.html
     vector<Vector3 *> * vectors = new vector<Vector3 *>();
     
     const real degreeIncrement = 10; // 10 degrees between
     const real M_PI_Divided_By_180 = M_PI/180;
-    real radius = 0.1f;
     
     Vector3 * vector = NULL;
     
     for (real z = 0; z <= 180 - degreeIncrement; z += degreeIncrement) {
         for (real c = 0; c <= 360 - degreeIncrement; c += degreeIncrement) {
             vector = new Vector3();
-            vector->x = radius * sinf( (c) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
-            vector->y = radius * cosf( (c) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
-            vector->z = radius * cosf( (z) * M_PI_Divided_By_180 );
+            vector->x = _radius * sinf( (c) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
+            vector->y = _radius * cosf( (c) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
+            vector->z = _radius * cosf( (z) * M_PI_Divided_By_180 );
             vectors->push_back(vector);
             
             vector = new Vector3();
-            vector->x = radius * sinf( (c) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
-            vector->y = radius * cosf( (c) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
-            vector->z = radius * cosf( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector->x = _radius * sinf( (c) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector->y = _radius * cosf( (c) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector->z = _radius * cosf( (z + degreeIncrement) * M_PI_Divided_By_180 );
             vectors->push_back(vector);
 
             vector = new Vector3();
-            vector->x = radius * sinf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
-            vector->y = radius * cosf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
-            vector->z = radius * cosf( (z) * M_PI_Divided_By_180 );
+            vector->x = _radius * sinf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
+            vector->y = _radius * cosf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
+            vector->z = _radius * cosf( (z) * M_PI_Divided_By_180 );
             vectors->push_back(vector);
             
             vector = new Vector3();
-            vector->x = radius * sinf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
-            vector->y = radius * cosf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
-            vector->z = radius * cosf( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector->x = _radius * sinf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector->y = _radius * cosf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector->z = _radius * cosf( (z + degreeIncrement) * M_PI_Divided_By_180 );
             vectors->push_back(vector);
         }
     }
@@ -455,8 +508,10 @@ std::vector<Vector3 *> * MainEngine::createSphere()
     return vectors;
 }
 
-vector<Vector3 *> * MainEngine::createPlan()
+vector<Vector3 *> * MainEngine::createPlan(Vector3 * _origin)
 {
+    // TODO revise: consider _origem
+    
     real x = 3.0f;
     real y = 0.0f;
     real z = 3.0f;
@@ -483,8 +538,9 @@ vector<Vector3 *> * MainEngine::createPlan()
     return vectors;
 }
 
-vector<Vector3 *> * MainEngine::createBox()
+vector<Vector3 *> * MainEngine::createBox(Vector3 * _origin, Vector3 * _halfSize)
 {
+    // TODO revise: consider _origem and _halfSize
     vector<Vector3 *> * vectors = new vector<Vector3 *>();
     vectors->push_back(new Vector3(0.1f, -0.1f, -0.1f));
     vectors->push_back(new Vector3(0.1f, 0.1f, -0.1f));
@@ -589,40 +645,90 @@ vector<Vector3 *> * MainEngine::createTriangleWithSquareBase()
     return vectors;
 }
 
-/*
-CONE
- 
- v -0.329893 -0.244687 -0.965621
- v -0.134803 -0.244687 -0.946406
- v 0.052790 -0.244687 -0.889500
- v 0.225677 -0.244687 -0.797090
- v 0.377213 -0.244687 -0.672727
- v 0.501576 -0.244687 -0.521191
- v 0.593986 -0.244687 -0.348304
- v 0.650892 -0.244687 -0.160711
- v 0.670107 -0.244687 0.034379
- v -0.329893 1.755313 0.034379
- v 0.650892 -0.244687 0.229470
- v 0.593986 -0.244687 0.417063
- v 0.501576 -0.244687 0.589949
- v 0.377213 -0.244687 0.741486
- v 0.225677 -0.244687 0.865849
- v 0.052790 -0.244687 0.958259
- v -0.134803 -0.244687 1.015165
- v -0.329894 -0.244687 1.034379
- v -0.524984 -0.244687 1.015164
- v -0.712577 -0.244687 0.958259
- v -0.885464 -0.244687 0.865849
- v -1.037001 -0.244687 0.741486
- v -1.161363 -0.244687 0.589949
- v -1.253773 -0.244687 0.417062
- v -1.310679 -0.244687 0.229469
- v -1.329893 -0.244687 0.034378
- v -1.310679 -0.244687 -0.160712
- v -1.253773 -0.244687 -0.348305
- v -1.161362 -0.244687 -0.521192
- v -1.036999 -0.244687 -0.672728
- v -0.885463 -0.244687 -0.797091
- v -0.712576 -0.244687 -0.889501
- v -0.524982 -0.244687 -0.946406
-*/
+vector<Vector3 *> * MainEngine::paintQuadTree()
+{
+    vector<Vector3 *> * vectors = new vector<Vector3 *>();
+    
+    real increment = 0.25f;//WIDTH_SCENE;
+//    for (int i=0; i<DEPTH_TREE; i++) {
+//        increment = increment*0.5f;
+//    }
+    
+//    //(0, 0)
+//    // VERTICAL
+//    vectors->push_back(new Vector3(0.0f, WIDTH_SCENE));
+//    vectors->push_back(new Vector3(0.0f, -WIDTH_SCENE));
+//    // HORIZONTAL
+//    vectors->push_back(new Vector3(WIDTH_SCENE, 0.0f));
+//    vectors->push_back(new Vector3(-WIDTH_SCENE, 0.0f));
+    
+    real accumulator = 0.0f;
+    while (WIDTH_SCENE>accumulator) {
+        accumulator += increment;
+        
+        // VERTICAL
+        vectors->push_back(new Vector3( accumulator,  WIDTH_SCENE));
+        vectors->push_back(new Vector3( accumulator, -WIDTH_SCENE));
+        vectors->push_back(new Vector3(-accumulator,  WIDTH_SCENE));
+        vectors->push_back(new Vector3(-accumulator, -WIDTH_SCENE));
+        // HORIZONTAL
+        vectors->push_back(new Vector3( WIDTH_SCENE,  accumulator));
+        vectors->push_back(new Vector3(-WIDTH_SCENE,  accumulator));
+        vectors->push_back(new Vector3( WIDTH_SCENE, -accumulator));
+        vectors->push_back(new Vector3(-WIDTH_SCENE, -accumulator));
+
+//        printf("linhas brancas\n");
+//        printf("%f, %f, %f, \n",  accumulator,  WIDTH_SCENE, 0.0f);
+//        printf("%f, %f, %f, \n",  accumulator, -WIDTH_SCENE, 0.0f);
+//        printf("%f, %f, %f, \n", -accumulator,  WIDTH_SCENE, 0.0f);
+//        printf("%f, %f, %f, \n", -accumulator, -WIDTH_SCENE, 0.0f);
+//        printf("%f, %f, %f, \n",  WIDTH_SCENE,  accumulator, 0.0f);
+//        printf("%f, %f, %f, \n", -WIDTH_SCENE,  accumulator, 0.0f);
+//        printf("%f, %f, %f, \n",  WIDTH_SCENE, -accumulator, 0.0f);
+//        printf("%f, %f, %f, \n", -WIDTH_SCENE, -accumulator, 0.0f);
+
+    }
+    
+    return vectors;
+}
+
+
+vector<Vector3 *> * MainEngine::createCone()
+{
+    vector<Vector3 *> * vectors = new vector<Vector3 *>();
+    vectors->push_back(new Vector3(-0.329893f, -0.244687f, -0.965621f));
+    vectors->push_back(new Vector3(-0.134803f, -0.244687f, -0.946406f));
+    vectors->push_back(new Vector3(0.052790f, -0.244687f, -0.889500f));
+    vectors->push_back(new Vector3(0.225677f, -0.244687f, -0.797090f));
+    vectors->push_back(new Vector3(0.377213f, -0.244687f, -0.672727f));
+    vectors->push_back(new Vector3(0.501576f, -0.244687f, -0.521191f));
+    vectors->push_back(new Vector3(0.593986f, -0.244687f, -0.348304f));
+    vectors->push_back(new Vector3(0.650892f, -0.244687f, -0.160711f));
+    vectors->push_back(new Vector3(0.670107f, -0.244687f, 0.034379f));
+    vectors->push_back(new Vector3(-0.329893f, 1.755313f, 0.034379f));
+    vectors->push_back(new Vector3(0.650892f, -0.244687f, 0.229470f));
+    vectors->push_back(new Vector3(0.593986f, -0.244687f, 0.417063f));
+    vectors->push_back(new Vector3(0.501576f, -0.244687f, 0.589949f));
+    vectors->push_back(new Vector3(0.377213f, -0.244687f, 0.741486f));
+    vectors->push_back(new Vector3(0.225677f, -0.244687f, 0.865849f));
+    vectors->push_back(new Vector3(0.052790f, -0.244687f, 0.958259f));
+    vectors->push_back(new Vector3(-0.134803f, -0.244687f, 1.015165f));
+    vectors->push_back(new Vector3(-0.329894f, -0.244687f, 1.034379f));
+    vectors->push_back(new Vector3(-0.524984f, -0.244687f, 1.015164f));
+    vectors->push_back(new Vector3(-0.712577f, -0.244687f, 0.958259f));
+    vectors->push_back(new Vector3(-0.885464f, -0.244687f, 0.865849f));
+    vectors->push_back(new Vector3(-1.037001f, -0.244687f, 0.741486f));
+    vectors->push_back(new Vector3(-1.161363f, -0.244687f, 0.589949f));
+    vectors->push_back(new Vector3(-1.253773f, -0.244687f, 0.417062f));
+    vectors->push_back(new Vector3(-1.310679f, -0.244687f, 0.229469f));
+    vectors->push_back(new Vector3(-1.329893f, -0.244687f, 0.034378f));
+    vectors->push_back(new Vector3(-1.310679f, -0.244687f, -0.160712f));
+    vectors->push_back(new Vector3(-1.253773f, -0.244687f, -0.348305f));
+    vectors->push_back(new Vector3(-1.161362f, -0.244687f, -0.521192f));
+    vectors->push_back(new Vector3(-1.036999f, -0.244687f, -0.672728f));
+    vectors->push_back(new Vector3(-0.885463f, -0.244687f, -0.797091f));
+    vectors->push_back(new Vector3(-0.712576f, -0.244687f, -0.889501f));
+    vectors->push_back(new Vector3(-0.524982f, -0.244687f, -0.946406f));
+    
+    return vectors;
+}

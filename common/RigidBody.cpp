@@ -13,16 +13,17 @@
 RigidBody::RigidBody()
 {
     static int countBody = 0;
-    this->_id = new char[15];
-
-    sprintf(this->_id, "objecto: %d",countBody++);
+    this->id = new char[15];
+    sprintf(this->id, "objecto:%d",countBody++);
+    
     this->mass = 0.0f;
     this->inverseMass = 0.0f;
     this->angularDamping = 0.0f;
     this->linearDamping = 0.0f;
     this->volume = 0.0f;
     this->density = 0.0f;
-
+    this->radius = 0.0f;
+    
     this->position = new Vector3();
     this->acceleration = new Vector3();
     this->lastFrameAcceleration = new Vector3();
@@ -31,7 +32,8 @@ RigidBody::RigidBody()
     this->rotation = new Vector3();
     this->forceAccum = new Vector3();
     this->torqueAccum = new Vector3();
-
+    this->halfSize = new Vector3();
+    
     this->transformMatrix = new Matrix4();
     this->inverseInertiaTensor = new Matrix3();
     this->inverseInertiaTensorWorld = new Matrix3();
@@ -72,6 +74,9 @@ RigidBody::~RigidBody()
     if (this->lastFrameAcceleration) {
         delete this->lastFrameAcceleration;
     }
+    if (this->halfSize) {
+        delete this->halfSize;
+    }
     
     this->position = NULL;
     this->orientation = NULL;
@@ -84,7 +89,12 @@ RigidBody::~RigidBody()
     this->forceAccum = NULL;
     this->torqueAccum = NULL;
     this->lastFrameAcceleration = NULL;
+    this->halfSize = NULL;
+}
 
+char * RigidBody::getId()
+{
+    return this->id;
 }
 
 void RigidBody::calculateDerivedData()
@@ -110,11 +120,13 @@ void RigidBody::setInertiaTensor(const Matrix3 * _inertiaTensor)
 void RigidBody::addForce(const Vector3 * _force)
 {
     *this->forceAccum += _force;
+    this->awake = true;
 }
 
 void RigidBody::addVelocity(const Vector3 * _velocity)
 {
     *this->velocity += _velocity;
+    this->awake = true;
 }
 
 void RigidBody::addRotation(const Vector3 * _rotation)
@@ -156,6 +168,7 @@ void RigidBody::addForceAtPoint(const Vector3 * _force, const Vector3 * _point)
 void RigidBody::addTorque(const Vector3 * _torque)
 {
     *this->torqueAccum += _torque;
+    this->awake = true;
 }
 
 bool RigidBody::hasFiniteMass()
@@ -437,4 +450,81 @@ void RigidBody::getGLTransform(float matrix[16]) const
     matrix[13] = this->transformMatrix->data[7];
     matrix[14] = this->transformMatrix->data[11];
     matrix[15] = 1;
+}
+
+Vector3 * RigidBody::getHalfSize()
+{
+    return this->halfSize;
+}
+
+void RigidBody::setHalfSize(Vector3 * _halfSize)
+{
+    this->halfSize->x = _halfSize->x;
+    this->halfSize->y = _halfSize->y;
+    this->halfSize->z = _halfSize->z;
+}
+
+void RigidBody::setHalfSize(real _x, real _y, real _z)
+{
+    this->halfSize->x = _x;
+    this->halfSize->y = _y;
+    this->halfSize->z = _z;
+}
+
+void RigidBody::setHalfSize(real _x, real _y)
+{
+    this->halfSize->x = _x;
+    this->halfSize->y = _y;
+}
+
+bool RigidBody::isDirty()
+{
+    return this->dirty;
+}
+
+void RigidBody::setDirty(bool _dirty)
+{
+    this->dirty = _dirty;
+}
+
+real RigidBody::getMotion()
+{
+    return this->motion;
+}
+
+void RigidBody::setMotion(real _motion)
+{
+    this->motion = _motion;
+}
+
+bool RigidBody::isCanSleep()
+{
+    return this->canSleep;
+}
+
+void RigidBody::setCanSleep(bool _canSleep)
+{
+    this->canSleep = _canSleep;
+    
+    if (!this->canSleep && !this->awake) {
+        this->setAwake();
+    }
+}
+
+bool RigidBody::isAwake()
+{
+    return this->awake;
+}
+
+void RigidBody::setAwake(bool _awake)
+{
+    if (_awake) {
+        this->awake = true;
+        // add a bit of motion to avoid it falling asleep immediately.
+        this->motion = sleepEpsilon*2.0f;
+    } else {
+        this->awake = false;
+        this->velocity->clear();
+        this->rotation->clear();
+    }
 }

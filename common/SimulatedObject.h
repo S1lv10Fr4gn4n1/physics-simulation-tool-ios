@@ -51,13 +51,13 @@ public:
     unsigned char * getColorVectors();
     
     void setColorAux(Color * _color);
+    void setColorAux(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a);
     Color * getColorAux();
     
     void setMode(unsigned int _mode);
     unsigned int getMode();
     
     BBox * getBBox();
-    void setBBox(BBox * _bbox);
     
     bool isShowBBox();
     void setShowBBox(bool _show);

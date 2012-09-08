@@ -11,13 +11,7 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include "Precision.h"
-
-/***************************** Define *****************************/
-
-#define CHANNEL_COLOR 4
-#define COUNT_COORD 3
-
+#include "Defines.h"
 
 /***************************** Enumations *****************************/
 enum TypeObject {
@@ -38,6 +32,8 @@ enum TypeObject {
     ROPE,
     ENGINE,
     PARTICLE,
+    
+    NONE
 };
 
 // TODO revise
@@ -51,12 +47,24 @@ enum GLtype {
     TRIANGLE_FAN   = 0x0006,
 };
 
+
+static real sleepEpsilon = ((real)0.3);
+
+static void setSleepEpsilon(real _sleepEpsilon)
+{
+    sleepEpsilon = _sleepEpsilon;
+}
+
+static real getSleepEpsilon()
+{
+    return sleepEpsilon;
+}
+
 /***************************** Color *****************************/
 class Color {
 public:
     unsigned char r, g, b, a;
     
-    static Color * MakeColor(real _r, real _g, real _b, real _a);
     static Color * MakeRandonColor();
 };
 
@@ -95,6 +103,8 @@ public:
     real magnitude() const;
     real squareMagnitude() const;
     void normalize();
+    void set(unsigned _index, real _value);
+    real get(unsigned _index);
 };
 
 
@@ -147,6 +157,9 @@ public:
     Matrix3(real _c0, real _c1, real _c2, real _c3, real _c4, real _c5, real _c6, real _c7, real _c8);
     Vector3 * operator*(const Vector3 * _vector) const;
     Matrix3 * operator*(const Matrix3 * _matrix) const;
+    void operator*=(const Matrix3 * _matrix);
+    void operator*=(const real _scalar);
+    void operator+=(const Matrix3 * _matrix);
     void setInverse(const Matrix3 * _matrix);
     Matrix3 * inverse() const;
     void invert();
@@ -156,6 +169,7 @@ public:
     void setOrientation(const Quaternion * _quaternion);
     void setComponents(const Vector3 * _compOne, const Vector3 * _compTwo, const Vector3 * _compThree);
     Vector3 * transformTranspose(const Vector3 * _vector) const;
+    void setSkewSymmetric(const Vector3 * _vector);
 };
 
 

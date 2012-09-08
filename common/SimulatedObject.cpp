@@ -18,7 +18,7 @@ SimulatedObject::SimulatedObject()
     this->vectorsAux = new vector<Vector3 *>();
     this->vectors = NULL;
     
-    this->colorAux = NULL;
+    this->colorAux = Color::MakeRandonColor();
     this->color = NULL;
     this->colorVectors = NULL;
     
@@ -266,7 +266,18 @@ unsigned char * SimulatedObject::getColorVectors()
 
 void SimulatedObject::setColorAux(Color * _color)
 {
-    this->colorAux = _color;
+    this->colorAux->r = _color->r;
+    this->colorAux->g = _color->g;
+    this->colorAux->b = _color->b;
+    this->colorAux->a = _color->a;
+}
+
+void SimulatedObject::setColorAux(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a)
+{
+    this->colorAux->r = _r;
+    this->colorAux->g = _g;
+    this->colorAux->b = _b;
+    this->colorAux->a = _a;
 }
 
 Color * SimulatedObject::getColorAux()
@@ -287,11 +298,6 @@ unsigned int SimulatedObject::getMode()
 BBox * SimulatedObject::getBBox()
 {
     return this->bbox;
-}
-
-void SimulatedObject::setBBox(BBox * _bbox)
-{
-    this->bbox = _bbox;
 }
 
 bool SimulatedObject::isShowBBox()

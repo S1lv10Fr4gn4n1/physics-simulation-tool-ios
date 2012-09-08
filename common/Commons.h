@@ -14,7 +14,7 @@
 #include "RigidBody.h"
 #include "Particle.h"
 #include "World.h"
-#include "Precision.h"
+#include "Defines.h"
 #include "Utils.h"
 
 #endif

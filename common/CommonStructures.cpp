@@ -54,6 +54,28 @@ void Vector3::clear()
     this->pad = 0.0f;
 }
 
+void Vector3::set(unsigned _index, real _value)
+{
+    if (_index == 0) {
+        this->x = _value;
+    } else if (_index == 1) {
+        this->y = _value;
+    } else {
+        this->z = _value;
+    }
+}
+
+real Vector3::get(unsigned _index)
+{
+    if (_index == 0) {
+        return this->x;
+    }
+    if (_index == 1) {
+        return this->y;
+    }
+    return this->z;
+}
+
 void Vector3::operator+=(const Vector3 * _vector)
 {
     this->x += _vector->x;
@@ -170,23 +192,15 @@ void Vector3::normalize()
 }
 
 /***************************** Color *****************************/
-Color * Color::MakeColor(real _r, real _g, real _b, real _a)
-{
-    Color * color = new Color();
-    color->r = _r;
-    color->g = _g;
-    color->b = _b;
-    color->a = _a;
-
-    return color;
-}
-
 Color * Color::MakeRandonColor()
 {
-    return Color::MakeColor(static_cast<unsigned char>(rand() % 256),
-                            static_cast<unsigned char>(rand() % 256),
-                            static_cast<unsigned char>(rand() % 256),
-                            1);
+    Color * color = new Color();
+    color->r = static_cast<unsigned char>(rand() % 256);
+    color->g = static_cast<unsigned char>(rand() % 256);
+    color->b = static_cast<unsigned char>(rand() % 256);
+    color->a = 1;
+    
+    return color;
 }
 
 
@@ -250,6 +264,60 @@ Matrix3 * Matrix3::operator*(const Matrix3 * _matrix) const
                        this->data[6]*_matrix->data[1] + this->data[7]*_matrix->data[4] + this->data[8]*_matrix->data[7],
                        this->data[6]*_matrix->data[2] + this->data[7]*_matrix->data[5] + this->data[8]*_matrix->data[8]
                        );
+}
+
+void Matrix3::operator*=(const Matrix3 * _matrix)
+{
+    real t1;
+    real t2;
+    real t3;
+    
+    t1 = this->data[0]*_matrix->data[0] + this->data[1]*_matrix->data[3] + this->data[2]*_matrix->data[6];
+    t2 = this->data[0]*_matrix->data[1] + this->data[1]*_matrix->data[4] + this->data[2]*_matrix->data[7];
+    t3 = this->data[0]*_matrix->data[2] + this->data[1]*_matrix->data[5] + this->data[2]*_matrix->data[8];
+    this->data[0] = t1;
+    this->data[1] = t2;
+    this->data[2] = t3;
+    
+    t1 = this->data[3]*_matrix->data[0] + this->data[4]*_matrix->data[3] + this->data[5]*_matrix->data[6];
+    t2 = this->data[3]*_matrix->data[1] + this->data[4]*_matrix->data[4] + this->data[5]*_matrix->data[7];
+    t3 = this->data[3]*_matrix->data[2] + this->data[4]*_matrix->data[5] + this->data[5]*_matrix->data[8];
+    data[3] = t1;
+    data[4] = t2;
+    data[5] = t3;
+    
+    t1 = this->data[6]*_matrix->data[0] + this->data[7]*_matrix->data[3] + this->data[8]*_matrix->data[6];
+    t2 = this->data[6]*_matrix->data[1] + this->data[7]*_matrix->data[4] + this->data[8]*_matrix->data[7];
+    t3 = this->data[6]*_matrix->data[2] + this->data[7]*_matrix->data[5] + this->data[8]*_matrix->data[8];
+    this->data[6] = t1;
+    this->data[7] = t2;
+    this->data[8] = t3;
+}
+
+void Matrix3::operator+=(const Matrix3 * _matrix)
+{
+    this->data[0] += _matrix->data[0];
+    this->data[1] += _matrix->data[1];
+    this->data[2] += _matrix->data[2];
+    this->data[3] += _matrix->data[3];
+    this->data[4] += _matrix->data[4];
+    this->data[5] += _matrix->data[5];
+    this->data[6] += _matrix->data[6];
+    this->data[7] += _matrix->data[7];
+    this->data[8] += _matrix->data[8];
+}
+
+void Matrix3::operator*=(const real _scalar)
+{
+    this->data[0] *= _scalar;
+    this->data[1] *= _scalar;
+    this->data[2] *= _scalar;
+    this->data[3] *= _scalar;
+    this->data[4] *= _scalar;
+    this->data[5] *= _scalar;
+    this->data[6] *= _scalar;
+    this->data[7] *= _scalar;
+    this->data[8] *= _scalar;
 }
 
 void Matrix3::setInverse(const Matrix3 * _matrix)
@@ -353,6 +421,17 @@ Vector3 * Matrix3::transformTranspose(const Vector3 * _vector) const
                        _vector->x * this->data[1] + _vector->y * this->data[4] + _vector->z * this->data[7],
                        _vector->x * this->data[2] + _vector->y * this->data[5] + _vector->z * this->data[8]
                        );
+}
+
+void Matrix3::setSkewSymmetric(const Vector3 * _vector)
+{
+    this->data[0] = this->data[4] = this->data[8] = 0;
+    this->data[1] = -_vector->z;
+    this->data[2] = _vector->y;
+    this->data[3] = _vector->z;
+    this->data[5] = -_vector->x;
+    this->data[6] = -_vector->y;
+    this->data[7] = _vector->x;
 }
 
 

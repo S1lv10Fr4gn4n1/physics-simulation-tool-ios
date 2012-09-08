@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B902352B15FAA498008ABCCA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B115864775004AAB28 /* UIKit.framework */; };
+		B902352C15FAA498008ABCCA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B315864775004AAB28 /* Foundation.framework */; };
+		B902352D15FAA498008ABCCA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B515864775004AAB28 /* CoreGraphics.framework */; };
+		B902352E15FAA498008ABCCA /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A21586BCFE00180CE7 /* GLKit.framework */; };
+		B902352F15FAA498008ABCCA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
+		B902353515FAA498008ABCCA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B902353315FAA498008ABCCA /* InfoPlist.strings */; };
+		B902353715FAA498008ABCCA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B902353615FAA498008ABCCA /* main.m */; };
+		B902353B15FAA498008ABCCA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B902353A15FAA498008ABCCA /* AppDelegate.m */; };
+		B902353E15FAA498008ABCCA /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B902353C15FAA498008ABCCA /* MainStoryboard.storyboard */; };
+		B902355015FAA62D008ABCCA /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B902354F15FAA62D008ABCCA /* TestViewController.m */; };
+		B902355B15FAA73A008ABCCA /* common.feature.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D1F857158E923F000337BB /* common.feature.a */; };
+		B902355C15FAA73A008ABCCA /* library.collision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350B11586BE8C00180CE7 /* library.collision.a */; };
+		B902355D15FAA73A008ABCCA /* library.graphic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36DF1586481C004AAB28 /* library.graphic.a */; };
+		B902355E15FAA73A008ABCCA /* library.physics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350C01586BEB200180CE7 /* library.physics.a */; };
+		B902355F15FAA73A008ABCCA /* physics.engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36D0158647FE004AAB28 /* physics.engine.a */; };
+		B902356315FAA7A0008ABCCA /* TestController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B902356115FAA7A0008ABCCA /* TestController.cpp */; };
 		B9066CE81592237D0031264F /* Commons.h in Headers */ = {isa = PBXBuildFile; fileRef = B9066CE6159223650031264F /* Commons.h */; };
 		B911B9B715CD557F00DCF35B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B350A01586BCED00180CE7 /* OpenGLES.framework */; };
 		B913AEA415B1F35C0050B8DB /* PresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B913AEA315B1F35C0050B8DB /* PresentationViewController.m */; };
@@ -14,7 +30,7 @@
 		B913AEAA15B1F5190050B8DB /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913AEA915B1F5180050B8DB /* Controller.cpp */; };
 		B913AEB115B1F78D0050B8DB /* TabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B913AEB015B1F78D0050B8DB /* TabViewController.m */; };
 		B913AEB415B211830050B8DB /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B913AEB315B211830050B8DB /* Utils.cpp */; };
-		B9311CBF15D9694700307F68 /* Precision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9311CBE15D9694700307F68 /* Precision.h */; };
+		B9311CBF15D9694700307F68 /* Defines.h in Headers */ = {isa = PBXBuildFile; fileRef = B9311CBE15D9694700307F68 /* Defines.h */; };
 		B93704D815D2A9520042B36B /* plane.png in Resources */ = {isa = PBXBuildFile; fileRef = B93704D715D2A9520042B36B /* plane.png */; };
 		B93704EF15D2D6DE0042B36B /* library.graphic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36DF1586481C004AAB28 /* library.graphic.a */; };
 		B93704FF15D2DF310042B36B /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D1F871158EB8B3000337BB /* World.cpp */; };
@@ -95,6 +111,41 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B902355115FAA72E008ABCCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B94B36CF158647FE004AAB28;
+			remoteInfo = physics.engine;
+		};
+		B902355315FAA72E008ABCCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B94B36DE1586481C004AAB28;
+			remoteInfo = library.graphic;
+		};
+		B902355515FAA72E008ABCCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9B350B01586BE8C00180CE7;
+			remoteInfo = library.collision;
+		};
+		B902355715FAA72E008ABCCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9B350BF1586BEB200180CE7;
+			remoteInfo = library.physics;
+		};
+		B902355915FAA72E008ABCCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B94B36A415864775004AAB28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9D1F856158E923F000337BB;
+			remoteInfo = common.feature;
+		};
 		B93704E515D2D6C30042B36B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B94B36A415864775004AAB28 /* Project object */;
@@ -161,6 +212,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B902352915FAA498008ABCCA /* Test.Physical.Simulation.Tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.Physical.Simulation.Tool.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B902353215FAA498008ABCCA /* Test.Physical.Simulation.Tool-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test.Physical.Simulation.Tool-Info.plist"; sourceTree = "<group>"; };
+		B902353415FAA498008ABCCA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B902353615FAA498008ABCCA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B902353815FAA498008ABCCA /* Test.Physical.Simulation.Tool-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Test.Physical.Simulation.Tool-Prefix.pch"; sourceTree = "<group>"; };
+		B902353915FAA498008ABCCA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B902353A15FAA498008ABCCA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B902353D15FAA498008ABCCA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		B902354315FAA498008ABCCA /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		B902354F15FAA62D008ABCCA /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		B902356115FAA7A0008ABCCA /* TestController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestController.cpp; sourceTree = "<group>"; };
+		B902356215FAA7A0008ABCCA /* TestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestController.h; sourceTree = "<group>"; };
 		B9066CE6159223650031264F /* Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commons.h; sourceTree = "<group>"; };
 		B913AEA215B1F35C0050B8DB /* PresentationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationViewController.h; sourceTree = "<group>"; };
 		B913AEA315B1F35C0050B8DB /* PresentationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentationViewController.m; sourceTree = "<group>"; };
@@ -172,7 +235,7 @@
 		B913AEB015B1F78D0050B8DB /* TabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabViewController.m; sourceTree = "<group>"; };
 		B913AEB215B2117D0050B8DB /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		B913AEB315B211830050B8DB /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
-		B9311CBE15D9694700307F68 /* Precision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Precision.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B9311CBE15D9694700307F68 /* Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Defines.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B93704D715D2A9520042B36B /* plane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plane.png; path = resources/images/plane.png; sourceTree = SOURCE_ROOT; };
 		B93ACE9415A3AC7100CED06E /* Selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Selection.h; sourceTree = "<group>"; };
 		B93ACE9715A3AC8000CED06E /* Selection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Selection.cpp; sourceTree = "<group>"; };
@@ -254,6 +317,23 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B902352615FAA498008ABCCA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B902355B15FAA73A008ABCCA /* common.feature.a in Frameworks */,
+				B902355C15FAA73A008ABCCA /* library.collision.a in Frameworks */,
+				B902355D15FAA73A008ABCCA /* library.graphic.a in Frameworks */,
+				B902355E15FAA73A008ABCCA /* library.physics.a in Frameworks */,
+				B902355F15FAA73A008ABCCA /* physics.engine.a in Frameworks */,
+				B902352B15FAA498008ABCCA /* UIKit.framework in Frameworks */,
+				B902352C15FAA498008ABCCA /* Foundation.framework in Frameworks */,
+				B902352D15FAA498008ABCCA /* CoreGraphics.framework in Frameworks */,
+				B902352E15FAA498008ABCCA /* GLKit.framework in Frameworks */,
+				B902352F15FAA498008ABCCA /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B94B36AA15864775004AAB28 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -312,10 +392,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B902353015FAA498008ABCCA /* Test.Physical.Simulation.Tool */ = {
+			isa = PBXGroup;
+			children = (
+				B902356215FAA7A0008ABCCA /* TestController.h */,
+				B902356115FAA7A0008ABCCA /* TestController.cpp */,
+				B902353915FAA498008ABCCA /* AppDelegate.h */,
+				B902353A15FAA498008ABCCA /* AppDelegate.m */,
+				B902353C15FAA498008ABCCA /* MainStoryboard.storyboard */,
+				B902354315FAA498008ABCCA /* TestViewController.h */,
+				B902354F15FAA62D008ABCCA /* TestViewController.m */,
+				B902353115FAA498008ABCCA /* Supporting Files */,
+			);
+			path = Test.Physical.Simulation.Tool;
+			sourceTree = "<group>";
+		};
+		B902353115FAA498008ABCCA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B902353215FAA498008ABCCA /* Test.Physical.Simulation.Tool-Info.plist */,
+				B902353315FAA498008ABCCA /* InfoPlist.strings */,
+				B902353615FAA498008ABCCA /* main.m */,
+				B902353815FAA498008ABCCA /* Test.Physical.Simulation.Tool-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		B94B36A215864775004AAB28 = {
 			isa = PBXGroup;
 			children = (
 				B94B36B715864775004AAB28 /* Physical.Simulation.Tool */,
+				B902353015FAA498008ABCCA /* Test.Physical.Simulation.Tool */,
 				B94B36D2158647FE004AAB28 /* physics.engine */,
 				B94B36E11586481C004AAB28 /* library.graphic */,
 				B9B350B31586BE8C00180CE7 /* library.collision */,
@@ -335,6 +442,7 @@
 				B9B350B11586BE8C00180CE7 /* library.collision.a */,
 				B9B350C01586BEB200180CE7 /* library.physics.a */,
 				B9D1F857158E923F000337BB /* common.feature.a */,
+				B902352915FAA498008ABCCA /* Test.Physical.Simulation.Tool.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -471,7 +579,7 @@
 			isa = PBXGroup;
 			children = (
 				B9066CE6159223650031264F /* Commons.h */,
-				B9311CBE15D9694700307F68 /* Precision.h */,
+				B9311CBE15D9694700307F68 /* Defines.h */,
 				B9D1F862158E929E000337BB /* CommonStructures.h */,
 				B9B17AAC15E3B156009339CA /* CommonStructures.cpp */,
 				B978EC3215E34A0C0087DDE8 /* RigidBody.h */,
@@ -550,7 +658,7 @@
 				B9D1F874158EB8B3000337BB /* SimulatedObject.h in Headers */,
 				B9D1F876158EB8B3000337BB /* World.h in Headers */,
 				B9066CE81592237D0031264F /* Commons.h in Headers */,
-				B9311CBF15D9694700307F68 /* Precision.h in Headers */,
+				B9311CBF15D9694700307F68 /* Defines.h in Headers */,
 				B978EC3315E34A0D0087DDE8 /* RigidBody.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -558,6 +666,28 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		B902352815FAA498008ABCCA /* Test.Physical.Simulation.Tool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B902354615FAA499008ABCCA /* Build configuration list for PBXNativeTarget "Test.Physical.Simulation.Tool" */;
+			buildPhases = (
+				B902352515FAA498008ABCCA /* Sources */,
+				B902352615FAA498008ABCCA /* Frameworks */,
+				B902352715FAA498008ABCCA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B902355215FAA72E008ABCCA /* PBXTargetDependency */,
+				B902355415FAA72E008ABCCA /* PBXTargetDependency */,
+				B902355615FAA72E008ABCCA /* PBXTargetDependency */,
+				B902355815FAA72E008ABCCA /* PBXTargetDependency */,
+				B902355A15FAA72E008ABCCA /* PBXTargetDependency */,
+			);
+			name = Test.Physical.Simulation.Tool;
+			productName = Test.Physical.Simulation.Tool;
+			productReference = B902352915FAA498008ABCCA /* Test.Physical.Simulation.Tool.app */;
+			productType = "com.apple.product-type.application";
+		};
 		B94B36AC15864775004AAB28 /* Physical.Simulation.Tool */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B94B36C515864775004AAB28 /* Build configuration list for PBXNativeTarget "Physical.Simulation.Tool" */;
@@ -692,6 +822,7 @@
 			projectRoot = "";
 			targets = (
 				B94B36AC15864775004AAB28 /* Physical.Simulation.Tool */,
+				B902352815FAA498008ABCCA /* Test.Physical.Simulation.Tool */,
 				B94B36CF158647FE004AAB28 /* physics.engine */,
 				B94B36DE1586481C004AAB28 /* library.graphic */,
 				B9B350B01586BE8C00180CE7 /* library.collision */,
@@ -702,6 +833,15 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B902352715FAA498008ABCCA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B902353515FAA498008ABCCA /* InfoPlist.strings in Resources */,
+				B902353E15FAA498008ABCCA /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B94B36AB15864775004AAB28 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -727,6 +867,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B902352515FAA498008ABCCA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B902353715FAA498008ABCCA /* main.m in Sources */,
+				B902353B15FAA498008ABCCA /* AppDelegate.m in Sources */,
+				B902355015FAA62D008ABCCA /* TestViewController.m in Sources */,
+				B902356315FAA7A0008ABCCA /* TestController.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B94B36A915864775004AAB28 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -800,6 +951,31 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B902355215FAA72E008ABCCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B94B36CF158647FE004AAB28 /* physics.engine */;
+			targetProxy = B902355115FAA72E008ABCCA /* PBXContainerItemProxy */;
+		};
+		B902355415FAA72E008ABCCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B94B36DE1586481C004AAB28 /* library.graphic */;
+			targetProxy = B902355315FAA72E008ABCCA /* PBXContainerItemProxy */;
+		};
+		B902355615FAA72E008ABCCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9B350B01586BE8C00180CE7 /* library.collision */;
+			targetProxy = B902355515FAA72E008ABCCA /* PBXContainerItemProxy */;
+		};
+		B902355815FAA72E008ABCCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9B350BF1586BEB200180CE7 /* library.physics */;
+			targetProxy = B902355715FAA72E008ABCCA /* PBXContainerItemProxy */;
+		};
+		B902355A15FAA72E008ABCCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9D1F856158E923F000337BB /* common.feature */;
+			targetProxy = B902355915FAA72E008ABCCA /* PBXContainerItemProxy */;
+		};
 		B93704E615D2D6C30042B36B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B94B36CF158647FE004AAB28 /* physics.engine */;
@@ -848,6 +1024,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B902353315FAA498008ABCCA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B902353415FAA498008ABCCA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B902353C15FAA498008ABCCA /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B902353D15FAA498008ABCCA /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
 		B94B36BA15864775004AAB28 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -859,6 +1051,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B902354715FAA499008ABCCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Test.Physical.Simulation.Tool/Test.Physical.Simulation.Tool-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Test.Physical.Simulation.Tool/Test.Physical.Simulation.Tool-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B902354815FAA499008ABCCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Test.Physical.Simulation.Tool/Test.Physical.Simulation.Tool-Prefix.pch";
+				INFOPLIST_FILE = "Test.Physical.Simulation.Tool/Test.Physical.Simulation.Tool-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		B94B36C315864775004AAB28 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1071,6 +1301,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B902354615FAA499008ABCCA /* Build configuration list for PBXNativeTarget "Test.Physical.Simulation.Tool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B902354715FAA499008ABCCA /* Debug */,
+				B902354815FAA499008ABCCA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B94B36A715864775004AAB28 /* Build configuration list for PBXProject "Physical.Simulation.Tool" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

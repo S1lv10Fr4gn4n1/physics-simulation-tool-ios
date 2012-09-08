@@ -11,8 +11,6 @@
 using namespace std;
 
 MainCollision * MainCollision::mainCollision = NULL;
-static const unsigned MAX_CONTACTS = 256;
-
 MainCollision::MainCollision()
 {
     QuadTree::getInstance()->buildQuadTree();
@@ -50,101 +48,155 @@ void MainCollision::insertObject(RigidBody * _body)
 
 void MainCollision::updateObject(RigidBody * _body, real _duration)
 {
-    QuadTree::getInstance()->updateObject(_body);
+    _body->setDirty(false);
+//    QuadTree::getInstance()->updateObject(_body);
+    QuadTree::getInstance()->insertObject(_body);
 }
 
-void MainCollision::generateContact(RigidBody * _bodies[2])
+void MainCollision::generateContact(RigidBody * _body1, RigidBody * _body2)
 {
-    
 #if defined (_3D_)
-    if (_bodies[0]->getTypeObject() == SPHERE && _bodies[1]->getTypeObject() == SPHERE) {
-        Sphere * sphere1 = new Sphere(_bodies[0], _bodies[0]->getRadius());
-        Sphere * sphere2 = new Sphere(_bodies[1], _bodies[1]->getRadius());
-        sphere1->calculateInternals();
-        sphere2->calculateInternals();
+    if (_body1->getTypeObject() == SPHERE && _body2->getTypeObject() == SPHERE) {
+        CollisionSphere * sphere1 = new CollisionSphere(_body1, _body1->getRadius());
+        CollisionSphere * sphere2 = new CollisionSphere(_body2, _body2->getRadius());
         CollisionDetector::sphereAndSphere(sphere1, sphere2, this->dataContacts);
-        
         delete sphere1;
         delete sphere2;
         
-    } else if (_bodies[0]->getTypeObject() == SPHERE && _bodies[1]->getTypeObject() == PLAN) {
-        Sphere * sphere = new Sphere(_bodies[0], _bodies[0]->getRadius());
-        Plane * plane = new Plane(_bodies[1], new Vector3(0.0f, 1.0f, 0.0f), 0.0f);
+    } else if (_body1->getTypeObject() == SPHERE && _body2->getTypeObject() == PLAN) {
+        CollisionSphere * sphere = new CollisionSphere(_body1, _body1->getRadius());
+        CollisionPlane * plane = new CollisionPlane(_body2, _body2->getPosition(), 0.0f);
+        CollisionDetector::sphereAndHalfSpace(sphere, plane, this->dataContacts);
+        delete sphere;
+        delete plane;
+        
+    } else if (_body1->getTypeObject() == SPHERE && _body2->getTypeObject() == BOX) {
+        CollisionSphere * sphere = new CollisionSphere(_body1, _body1->getRadius());
+        CollisionBox * box = new CollisionBox(_body2, _body2->getHalfSize());
+        CollisionDetector::boxAndSphere(box, sphere, this->dataContacts);
+        delete sphere;
+        delete box;
+        
+    } else if (_body1->getTypeObject() == BOX && _body2->getTypeObject() == BOX) {
+        CollisionBox * box1 = new CollisionBox(_body1, _body1->getHalfSize());
+        CollisionBox * box2 = new CollisionBox(_body2, _body2->getHalfSize());
+        CollisionDetector::boxAndBox(box1, box2, this->dataContacts);
+        delete box1;
+        delete box2;
+        
+    } else if (_body1->getTypeObject() == BOX && _body2->getTypeObject() == PLAN) {
+        CollisionBox * box = new CollisionBox(_body1, _body1->getHalfSize());
+        CollisionPlane * plane = new CollisionPlane(_body2, _body2->getPosition(), 0.0f);
+        CollisionDetector::boxAndHalfSpace(box, plane, this->dataContacts);
+        delete box;
+        delete plane;
+        
+    } else if (_body1->getTypeObject() == BOX && _body2->getTypeObject() == SPHERE) {
+        CollisionBox * box = new CollisionBox(_body1, _body1->getHalfSize());
+        CollisionSphere * sphere = new CollisionSphere(_body2, _body2->getRadius());
+        CollisionDetector::boxAndSphere(box, sphere, this->dataContacts);
+        delete sphere;
+        delete box;
+        
+    } else if (_body1->getTypeObject() == PLAN && _body2->getTypeObject() == SPHERE) {
+        CollisionSphere * sphere = new CollisionSphere(_body2, _body2->getRadius());
+        CollisionPlane * plane = new CollisionPlane(_body1, _body1->getPosition(), 0.0f);
         CollisionDetector::sphereAndHalfSpace(sphere, plane, this->dataContacts);
         
         delete sphere;
         delete plane;
-
-    } else if (_bodies[0]->getTypeObject() == PLAN && _bodies[1]->getTypeObject() == SPHERE) {
-        Sphere * sphere = new Sphere(_bodies[1], _bodies[1]->getRadius());
-        Plane * plane = new Plane(_bodies[0], new Vector3(0.0f, -0.9f, 0.0f), 0.0f);
-        CollisionDetector::sphereAndHalfSpace(sphere, plane, this->dataContacts);
         
-        delete sphere;
+    } else if (_body1->getTypeObject() == PLAN && _body2->getTypeObject() == BOX) {
+        CollisionPlane * plane = new CollisionPlane(_body1, _body1->getPosition(), 0.0f);
+        CollisionBox * box = new CollisionBox(_body2, _body2->getHalfSize());
+        CollisionDetector::boxAndHalfSpace(box, plane, this->dataContacts);
+        delete box;
         delete plane;
-        
-    } else if (_bodies[0]->getTypeObject() == BOX && _bodies[1]->getTypeObject() == BOX) {
-        
-    } else if (_bodies[0]->getTypeObject() == BOX && _bodies[1]->getTypeObject() == PLAN) {
-        
-    } else if ((_bodies[0]->getTypeObject() == SPHERE && _bodies[1]->getTypeObject() == BOX) &&
-               (_bodies[0]->getTypeObject() == BOX &&_bodies[1]->getTypeObject() == SPHERE)) {
     }
 #else
-    if (_bodies[0]->getTypeObject() == CIRCLE && _bodies[1]->getTypeObject() == CIRCLE) {
-        Sphere * sphere1 = new Sphere(_bodies[0], _bodies[0]->getRadius());
-        Sphere * sphere2 = new Sphere(_bodies[1], _bodies[1]->getRadius());
-        sphere1->calculateInternals();
-        sphere2->calculateInternals();
+    if (_body1->getTypeObject() == CIRCLE && _body2->getTypeObject() == CIRCLE) {
+        CollisionSphere * sphere1 = new CollisionSphere(_body1, _body1->getRadius());
+        CollisionSphere * sphere2 = new CollisionSphere(_body2, _body2->getRadius());
         CollisionDetector::sphereAndSphere(sphere1, sphere2, this->dataContacts);
-        
         delete sphere1;
         delete sphere2;
         
-    } else if (_bodies[0]->getTypeObject() == CIRCLE && _bodies[1]->getTypeObject() == PLAN) {
-        Sphere * sphere = new Sphere(_bodies[0], _bodies[0]->getRadius());
-        Plane * plane = new Plane(_bodies[1], new Vector3(0.0f, 1.0f, 0.0f), 0.0f);
+    } else if (_body1->getTypeObject() == CIRCLE && _body2->getTypeObject() == PLAN) {
+        CollisionSphere * sphere = new CollisionSphere(_body1, _body1->getRadius());
+        CollisionPlane * plane = new CollisionPlane(_body2, _body2->getPosition(), 0.0f);
+        CollisionDetector::sphereAndHalfSpace(sphere, plane, this->dataContacts);
+        delete sphere;
+        delete plane;
+        
+    } else if (_body1->getTypeObject() == CIRCLE && _body2->getTypeObject() == SQUARE) {
+        CollisionSphere * sphere = new CollisionSphere(_body1, _body1->getRadius());
+        CollisionBox * box = new CollisionBox(_body2, _body2->getHalfSize());
+        CollisionDetector::boxAndSphere(box, sphere, this->dataContacts);
+        delete sphere;
+        delete box;
+        
+    } else if (_body1->getTypeObject() == SQUARE && _body2->getTypeObject() == SQUARE) {
+        CollisionBox * box1 = new CollisionBox(_body1, _body1->getHalfSize());
+        CollisionBox * box2 = new CollisionBox(_body2, _body2->getHalfSize());
+        CollisionDetector::boxAndBox(box1, box2, this->dataContacts);
+        delete box1;
+        delete box2;
+        
+    } else if (_body1->getTypeObject() == SQUARE && _body2->getTypeObject() == PLAN) {
+        CollisionBox * box = new CollisionBox(_body1, _body1->getHalfSize());
+        CollisionPlane * plane = new CollisionPlane(_body2, _body2->getPosition(), 0.0f);
+        CollisionDetector::boxAndHalfSpace(box, plane, this->dataContacts);
+        delete box;
+        delete plane;
+        
+    } else if (_body1->getTypeObject() == SQUARE && _body2->getTypeObject() == CIRCLE) {
+        CollisionBox * box = new CollisionBox(_body1, _body1->getHalfSize());
+        CollisionSphere * sphere = new CollisionSphere(_body2, _body2->getRadius());
+        CollisionDetector::boxAndSphere(box, sphere, this->dataContacts);
+        delete sphere;
+        delete box;
+        
+    } else if (_body1->getTypeObject() == PLAN && _body2->getTypeObject() == CIRCLE) {
+        CollisionSphere * sphere = new CollisionSphere(_body2, _body2->getRadius());
+        CollisionPlane * plane = new CollisionPlane(_body1, _body1->getPosition(), 0.0f);
         CollisionDetector::sphereAndHalfSpace(sphere, plane, this->dataContacts);
         
         delete sphere;
         delete plane;
         
-    } else if (_bodies[0]->getTypeObject() == PLAN && _bodies[1]->getTypeObject() == CIRCLE) {
-        Sphere * sphere = new Sphere(_bodies[1], _bodies[1]->getRadius());
-        Plane * plane = new Plane(_bodies[0], new Vector3(0.0f, -0.9f, 0.0f), 0.0f);
-        CollisionDetector::sphereAndHalfSpace(sphere, plane, this->dataContacts);
-        
-        delete sphere;
+    } else if (_body1->getTypeObject() == PLAN && _body2->getTypeObject() == SQUARE) {
+        CollisionPlane * plane = new CollisionPlane(_body1, _body1->getPosition(), 0.0f);
+        CollisionBox * box = new CollisionBox(_body2, _body2->getHalfSize());
+        CollisionDetector::boxAndHalfSpace(box, plane, this->dataContacts);
+        delete box;
         delete plane;
-        
-    } else if (_bodies[0]->getTypeObject() == SQUARE && _bodies[1]->getTypeObject() == SQUARE) {
-        
-    } else if (_bodies[0]->getTypeObject() == SQUARE && _bodies[1]->getTypeObject() == PLAN) {
-        
-    } else if ((_bodies[0]->getTypeObject() == CIRCLE && _bodies[1]->getTypeObject() == SQUARE) &&
-               (_bodies[0]->getTypeObject() == SQUARE && _bodies[1]->getTypeObject() == CIRCLE)) {
     }
 #endif
-    
-    delete _bodies;
-    _bodies = NULL;
 }
 
 void MainCollision::generateContacts()
 {
-    vector<RigidBody **> * listObjects = QuadTree::getInstance()->getPossibleCollisions();
+    vector<RigidBody *> * listObjects = QuadTree::getInstance()->getPossibleCollisions();
     
     if (listObjects && listObjects->size() > 0) {
-        RigidBody ** bodies = NULL;
+        printf("collision: %lu\n", listObjects->size());
+        RigidBody * body1 = NULL;
+        RigidBody * body2 = NULL;
+        
         for (int i=0; i<listObjects->size(); i++) {
-            bodies = listObjects->at(i);
-            if (bodies[0] && bodies[1]) {
-                this->generateContact(bodies);
-            } else {
-                printf("ja se foi :D \n");
+            body1 = listObjects->at(i);
+            for (int j=0; j<listObjects->size(); j++) {
+                body2 = listObjects->at(j);
+                if (body1 == body2 || body2->isDirty()) {
+                    continue;
+                }
+                
+                this->generateContact(body1, body2);
+                body1->setDirty(true);
+                body2->setDirty(true);
             }
         }
-//        delete bodies;
+
         listObjects->clear(); // remember to clean
     }
 }
@@ -152,11 +204,16 @@ void MainCollision::generateContacts()
 void MainCollision::solverContacts(real _duration)
 {
     ContactResolver::getInstance()->solverContacts(this->dataContacts->contacts, _duration);
-    this->dataContacts->reset(MAX_CONTACTS); // TODO revise: is a good value ?
+    this->dataContacts->reset(MAX_CONTACTS);
 }
 
 void MainCollision::updateContacts(real _duration)
 {
     this->generateContacts();
     this->solverContacts(_duration);
+}
+
+void MainCollision::cleanCollisions()
+{
+    QuadTree::getInstance()->cleanLeaves();
 }

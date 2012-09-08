@@ -31,11 +31,13 @@ private:
     real centerY;
     real centerZ;
     
-    std::vector<Vector3 *> * createSphere();
-    std::vector<Vector3 *> * createPlan();
-    std::vector<Vector3 *> * createBox();
+    std::vector<Vector3 *> * createSphere(Vector3 * _origin, real _radius);
+    std::vector<Vector3 *> * createPlan(Vector3 * _origin);
+    std::vector<Vector3 *> * createBox(Vector3 * _origin, Vector3 * _halfSize);
     std::vector<Vector3 *> * createTriangleWithTriangularBase();
     std::vector<Vector3 *> * createTriangleWithSquareBase();
+    std::vector<Vector3 *> * createCone();
+    std::vector<Vector3 *> * paintQuadTree();
 protected:
 public:
     MainEngine();
@@ -60,7 +62,7 @@ public:
     
     void deleteAllSimulatedObjects();
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
-    void makeSimulatedObject2D(TypeObject _typeObject);
+    SimulatedObject * makeSimulatedObject2D(TypeObject _typeObject);
     void makeSimulatedObject3D(TypeObject _typeObject);
     
     SimulatedObject * selectedSimulatedObject(Vector3 * _vector);

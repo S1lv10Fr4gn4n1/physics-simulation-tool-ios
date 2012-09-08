@@ -35,26 +35,12 @@
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
 
-    // start simulation after 1 seconds
-    [NSTimer scheduledTimerWithTimeInterval:1
+    // start simulation after 2 seconds
+    [NSTimer scheduledTimerWithTimeInterval:2
                                      target:self
                                    selector:@selector(startSimulation:)
                                    userInfo:NULL
                                     repeats:NO];
-#if defined (STRESS_TEST)
-    // TODO for Tests
-    for (int i=0; i< 10; i++) {
-    #if define(_3D_)
-        Controller::getInstance()->createSimulatedObject3D(BOX);
-        Controller::getInstance()->createSimulatedObject3D(SPHERE);
-        Controller::getInstance()->createSimulatedObject3D(TRIANGLE_SQUARE_BASE);
-    #else
-        Controller::getInstance()->createSimulatedObject2D(SQUARE);
-        Controller::getInstance()->createSimulatedObject2D(CIRCLE);
-        Controller::getInstance()->createSimulatedObject2D(TRIANGLE);
-    #endif
-    }
-#endif
 }
 
 - (IBAction)actionEditSimulation:(id)sender
@@ -100,7 +86,8 @@
 #if defined (_3D_)
     Controller::getInstance()->createSimulatedObject3D(PLAN);
 #else
-    Controller::getInstance()->createSimulatedObject2D(PLAN);
+    Controller::getInstance()->createSimulatedObject2D(NONE); // TODO revise: PLAN
 #endif
 }
+
 @end

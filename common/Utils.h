@@ -13,8 +13,6 @@
 #include <string>
 #include <fstream>
 
-#define DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0 * M_PI)
-
 std::string loadFile(std::string _pathFile);
 
 // get number rand

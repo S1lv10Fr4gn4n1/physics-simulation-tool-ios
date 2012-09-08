@@ -1,12 +1,12 @@
 //
-//  Controller.cpp
+//  TestController.cpp
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani on 14/07/12.
 //  
 //
 
-#include "Controller.h"
+#include "TestController.h"
 
 
 // TODO revise: variables for this place is correct?
@@ -19,8 +19,8 @@ real previousZoom = 0.0f;
 real previousScale = 0.0f;
 Vector3 * previousVector = NULL;
 
-Controller * Controller::controller;
-Controller::Controller()
+TestController * TestController::testController;
+TestController::TestController()
 {
     this->mainEngine = NULL;
     this->mainGraphic = NULL;
@@ -28,22 +28,22 @@ Controller::Controller()
     this->objectOffset = NULL;
 }
 
-Controller::~Controller()
+TestController::~TestController()
 {
     this->freeObjects();
 }
 
-Controller * Controller::getInstance()
+TestController * TestController::getInstance()
 {
-    if (!Controller::controller) {
-        Controller::controller = new Controller();
-        Controller::controller->initializeEngine();
+    if (!TestController::testController) {
+        TestController::testController = new TestController();
+        TestController::testController->initializeEngine();
     }
     
-    return Controller::controller;
+    return TestController::testController;
 }
 
-void Controller::freeObjects()
+void TestController::freeObjects()
 {
     if (this->mainGraphic) {
         delete this->mainGraphic;
@@ -67,7 +67,7 @@ void Controller::freeObjects()
     this->objectOffset = NULL;
 }
 
-void Controller::initializeContextOpenGLES()
+void TestController::initializeContextOpenGLES()
 {
     if (this->mainGraphic) {
         return;
@@ -76,7 +76,7 @@ void Controller::initializeContextOpenGLES()
     this->mainGraphic = new MainGraphic();
 }
 
-void Controller::initializeEngine()
+void TestController::initializeEngine()
 {
     if (this->mainEngine) {
         return;
@@ -85,39 +85,42 @@ void Controller::initializeEngine()
     this->mainEngine = new MainEngine();
 }
 
-void Controller::resizeScreen(real _width, real _height)
+void TestController::resizeScreen(real _width, real _height)
 {
     this->mainEngine->rotatedScreen(_width, _height);
 }
 
-void Controller::updateInformation(real _duration)
+void TestController::updateInformation(real _duration)
 {
     this->mainEngine->updateInformation(0.005f); // TODO for debug
 }
 
-void Controller::draw()
+void TestController::draw()
 {
     this->mainGraphic->draw(this->mainEngine->getWorld());
 }
 
-void Controller::stopSimulation()
+void TestController::stopSimulation()
 {
     this->mainEngine->stop();
     scaleZoom = 1.0f;
     this->mainEngine->zoom(scaleZoom);
 }
 
-void Controller::startSimulation()
+void TestController::startSimulation()
 {
+    
+    this->createScene();
+    
     this->mainEngine->start();
 }
 
-void Controller::editSimulation()
+void TestController::editSimulation()
 {
     // TODO put your code here
 }
 
-bool Controller::isRunning()
+bool TestController::isRunning()
 {
     if (!this->mainEngine) {
         return false;
@@ -126,7 +129,7 @@ bool Controller::isRunning()
     return this->mainEngine->isRunning();
 }
 
-bool Controller::isInitialized()
+bool TestController::isInitialized()
 {
     if (this->mainEngine && this->mainGraphic && this->mainEngine->isRunning()) {
         return true;
@@ -135,22 +138,22 @@ bool Controller::isInitialized()
     return false;
 }
 
-void Controller::touchesBegan(real _x, real _y)
+void TestController::touchesBegan(real _x, real _y)
 {
     // TODO put your code here
 }
 
-void Controller::touchesEnded(real _x, real _y)
+void TestController::touchesEnded(real _x, real _y)
 {
     // TODO put your code here
 }
 
-void Controller::touchesCancelled(real _x, real _y)
+void TestController::touchesCancelled(real _x, real _y)
 {
     // TODO put your code here
 }
 
-void Controller::touchesMoved(real _x, real _y, int _countFingers)
+void TestController::touchesMoved(real _x, real _y, int _countFingers)
 {
     Vector3 * vector = new Vector3(_x, _y);
 
@@ -202,7 +205,7 @@ void Controller::touchesMoved(real _x, real _y, int _countFingers)
     vector = NULL;
 }
 
-void Controller::pinchDetected(real _scale, real _velocity, bool _began)
+void TestController::pinchDetected(real _scale, real _velocity, bool _began)
 {
     if (this->objectEdition && this->objectEdition->isSelected() && this->objectEdition->hasFiniteMass()) {
         if (_began) {
@@ -239,7 +242,7 @@ void Controller::pinchDetected(real _scale, real _velocity, bool _began)
     }
 }
 
-void Controller::rotationDetected(real _radians, real _velocity, bool _began)
+void TestController::rotationDetected(real _radians, real _velocity, bool _began)
 {
     if (_began) {
         previousRadians = 0.0f;
@@ -251,7 +254,7 @@ void Controller::rotationDetected(real _radians, real _velocity, bool _began)
     previousRadians = _radians;
 }
 
-void Controller::doubleTapOneFingerDetected(real _x, real _y)
+void TestController::doubleTapOneFingerDetected(real _x, real _y)
 {
     Vector3 * vector = new Vector3(_x, _y);
     
@@ -270,7 +273,7 @@ void Controller::doubleTapOneFingerDetected(real _x, real _y)
     vector = NULL;    
 }
 
-void Controller::longPressDetected(real _x, real _y)
+void TestController::longPressDetected(real _x, real _y)
 {
     Vector3 * vector = new Vector3(_x, _y);
     
@@ -283,16 +286,16 @@ void Controller::longPressDetected(real _x, real _y)
     this->objectEdition = NULL;
 }
 
-void Controller::swipeRightDetected(real _x, real _y)
+void TestController::swipeRightDetected(real _x, real _y)
 {
     // TODO put your code here
 }
-void Controller::swipeLeftDetected(real _x, real _y)
+void TestController::swipeLeftDetected(real _x, real _y)
 {
     // TODO put your code here
 }
 
-void Controller::oneTapThreeFingerDetected(real _x, real _y)
+void TestController::oneTapThreeFingerDetected(real _x, real _y)
 {
 //    delete previousVector;
 //    previousVector = NULL;
@@ -301,7 +304,7 @@ void Controller::oneTapThreeFingerDetected(real _x, real _y)
     this->mainEngine->zoom(scaleZoom);
 }
 
-void Controller::createSimulatedObject2D(TypeObject _typeObject)
+void TestController::createSimulatedObject2D(TypeObject _typeObject)
 {    
     if (this->objectEdition) {
         this->objectEdition->setSelected(false);
@@ -310,7 +313,7 @@ void Controller::createSimulatedObject2D(TypeObject _typeObject)
     this->mainEngine->makeSimulatedObject2D(_typeObject);
 }
 
-void Controller::createSimulatedObject3D(TypeObject _typeObject)
+void TestController::createSimulatedObject3D(TypeObject _typeObject)
 {
     if (this->objectEdition) {
         this->objectEdition->setSelected(false);
@@ -319,7 +322,7 @@ void Controller::createSimulatedObject3D(TypeObject _typeObject)
     this->mainEngine->makeSimulatedObject3D(_typeObject);
 }
 
-void Controller::clearSimularion()
+void TestController::clearSimularion()
 {
     this->mainEngine->deleteAllSimulatedObjects();
     
@@ -333,4 +336,14 @@ void Controller::clearSimularion()
     
     this->objectEdition = NULL;
     this->objectOffset = NULL;
+}
+
+void TestController::createScene()
+{
+    SimulatedObject * obj1 = this->mainEngine->makeSimulatedObject2D(CIRCLE);
+    obj1->setPosition(0.1f, 0.07f);
+    SimulatedObject * obj2 = this->mainEngine->makeSimulatedObject2D(CIRCLE);
+    obj2->setPosition(0.4f, 0.07f);
+    SimulatedObject * obj3 = this->mainEngine->makeSimulatedObject2D(SQUARE);
+    obj3->setPosition(0.4f, 0.4f);
 }

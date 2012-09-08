@@ -17,8 +17,30 @@ Contact::~Contact()
 {
     delete this->contactToWorld;
     this->contactToWorld = NULL;
+    
+    // TODO
+//    delete this->contactNormal;
+//    delete this->contactPoint;
 }
 
+void Contact::matchAwakeState()
+{
+    // collisions with the world never cause a body to wake up.
+    if (!this->body[1]) {
+        return;
+    }
+    
+    bool body0awake = body[0]->isAwake();
+    bool body1awake = body[1]->isAwake();
+    // wake up only the sleeping one.
+    if (body0awake ^ body1awake) {
+        if (body0awake) {
+            this->body[1]->setAwake();
+        } else {
+            body[0]->setAwake();
+        }
+    }
+}
 
 // orthonormal basis for the contact where each vector is a column.
 // The matrix transforms contact space into world space.
@@ -104,6 +126,75 @@ Vector3 * Contact::calculateFrictionlessImpulse(Matrix3 * _inverseInertiaTensor[
     return impulseContact;
 }
 
+
+Vector3 * Contact::calculateFrictionImpulse(Matrix3 * _inverseInertiaTensor[])
+{
+    real inverseMass = body[0]->getInverseMass();
+    Vector3 * impulseContact = new Vector3();
+    
+    // the equivalent of a cross product in matrices is multiplication
+    // by a skew-symmetric matrix - we build the matrix for converting
+    // between linear and angular quantities.
+    Matrix3 * impulseToTorque = new Matrix3();
+    impulseToTorque->setSkewSymmetric(this->relativeContactPosition[0]);
+    
+    // build the matrix to convert contact impulse to change in velocity in world coordinates.
+    Matrix3 * deltaVelWorld = impulseToTorque;
+    *deltaVelWorld *= _inverseInertiaTensor[0];
+    *deltaVelWorld *= impulseToTorque;
+    *deltaVelWorld *= -1;
+    
+    // check whether we need to add body 2’s data.
+    if (this->body[1]) {
+        // find the inertia tensor for this body.
+        _inverseInertiaTensor[1] = this->body[1]->getInverseInertiaTensorWorld();
+        // set the cross product matrix.
+        impulseToTorque->setSkewSymmetric(this->relativeContactPosition[1]);
+        // calculate the velocity change matrix.
+        Matrix3 * deltaVelWorld2 = impulseToTorque;
+        *deltaVelWorld2 *= _inverseInertiaTensor[1];
+        *deltaVelWorld2 *= impulseToTorque;
+        *deltaVelWorld2 *= -1;
+        // Add to the total delta velocity.
+        *deltaVelWorld += deltaVelWorld2;
+        // Add to the inverse mass.
+        inverseMass += body[1]->getInverseMass();
+    }
+    // do a change of basis to convert into contact coordinates.
+    Matrix3 * deltaVelocity = contactToWorld->transpose();
+    *deltaVelocity *= deltaVelWorld;
+    *deltaVelocity *= contactToWorld;
+    
+    // add in the linear velocity change.
+    deltaVelocity->data[0] += inverseMass;
+    deltaVelocity->data[4] += inverseMass;
+    deltaVelocity->data[8] += inverseMass;
+    
+    // invert to get the impulse needed per unit velocity.
+    Matrix3 * impulseMatrix = deltaVelocity->inverse();
+    
+    // find the target velocities to kill.
+    Vector3 * velKill = new Vector3(this->desiredDeltaVelocity, -contactVelocity->y, -contactVelocity->z);
+    // find the impulse to kill target velocities.
+    impulseContact = impulseMatrix->transform(velKill);
+    // check for exceeding friction.
+    real planarImpulse = real_sqrt(impulseContact->y*impulseContact->y +
+                                   impulseContact->z*impulseContact->z);
+    
+    if (planarImpulse > impulseContact->x * friction) {
+        // We need to use dynamic friction.
+        impulseContact->y /= planarImpulse;
+        impulseContact->z /= planarImpulse;
+        impulseContact->x = deltaVelocity->data[0] + deltaVelocity->data[1] * friction * impulseContact->y +
+                            deltaVelocity->data[2] * friction * impulseContact->z;
+        impulseContact->x = desiredDeltaVelocity / impulseContact->x;
+        impulseContact->y *= friction * impulseContact->x;
+        impulseContact->z *= friction * impulseContact->x;
+    }
+    
+    return impulseContact;
+}
+
 void Contact::calculateInternals(real _duration)
 {
     // check if the first object is NULL, and swap if it is.
@@ -143,13 +234,16 @@ void Contact::calculateDesiredDeltaVelocity(real _duration)
     }
     
     // if the velocity is very slow, limit the restitution.
-    real thisRestitution = this->restitution;
+    real appliedRestitution = this->restitution;
     
-    if (real_abs(contactVelocity->x) < velocityLimit) {
-        thisRestitution = (real)0.0f;
+    //if (real_abs(this->contactVelocity->x) < velocityLimit) {
+    if (this->contactVelocity->magnitude() < velocityLimit) {
+        appliedRestitution = (real)0.0f;
     }
+    
+    
     // combine the bounce velocity with the removed acceleration velocity.
-    this->desiredDeltaVelocity = -this->contactVelocity->x -thisRestitution * (this->contactVelocity->x - velocityFromAcc);
+    this->desiredDeltaVelocity = -this->contactVelocity->x -appliedRestitution * (this->contactVelocity->x - velocityFromAcc);
 }
 
 void Contact::swapBodies()
@@ -169,8 +263,20 @@ Vector3 * Contact::calculateLocalVelocity(unsigned _bodyIndex, real _duration)
     Vector3 * velocity = *thisBody->getRotation() % this->relativeContactPosition[_bodyIndex];
     *velocity += thisBody->getVelocity();
     
-    // turn the velocity into contact coordinates
-    return this->contactToWorld->transformTranspose(velocity);
+    // turn the velocity into contact coordinates.
+    Vector3 * contactVelocity = this->contactToWorld->transformTranspose(velocity);
+    // calculate the amount of velocity that is due to forces without reactions
+    Vector3 * accVelocity = *thisBody->getLastFrameAcceleration() * _duration;
+    // Calculate the velocity in contact coordinates.
+    accVelocity = contactToWorld->transformTranspose(accVelocity);
+    // we ignore any component of acceleration in the contact normal
+    // direction; we are only interested in planar acceleration
+    accVelocity->x = 0;
+    // add the planar velocities - if there’s enough friction they will
+    // be removed during velocity resolution
+    *contactVelocity += accVelocity;
+    
+    return contactVelocity;
 }
 
 void Contact::applyPositionChange(Vector3 * _linearChange[2], Vector3 * _angularChange[2], real _penetration)
@@ -276,7 +382,7 @@ void Contact::applyPositionChange(Vector3 * _linearChange[2], Vector3 * _angular
             // have the same penetration.
             
             // TODO revise
-//            if (!this->body[i]->getAwake()) {
+//            if (!this->body[i]->isAwake()) {
 //                this->body[i]->calculateDerivedData();
 //            }
     }
@@ -303,8 +409,8 @@ void Contact::applyVelocityChange(Vector3 * _velocityChange[2], Vector3 * _rotat
         impulseContact = new Vector3(); //TODO delete
         // otherwise we may have impulses that aren't in the direction of the
         // contact, so we need the more complex version.
-        // TODO with friction
-        // impulseContact = this->calculateFrictionImpulse(inverseInertiaTensor);
+        
+        impulseContact = this->calculateFrictionImpulse(inverseInertiaTensor);
     }
     
     // convert impulse to world coordinates
@@ -333,7 +439,7 @@ void Contact::applyVelocityChange(Vector3 * _velocityChange[2], Vector3 * _rotat
     }
     
     // TODO revise
-//    DeleteArrayMatrix3(inverseInertiaTensor, 2);
+    DeleteArrayMatrix3(inverseInertiaTensor, 2);
 }
 
 
@@ -411,7 +517,7 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
         }
         
         // match the awake state at the contact.
-        //_contacts[index]->matchAwakeState();
+        _contacts->at(index)->matchAwakeState();
         
         // resolve the penetration.
         _contacts->at(index)->applyPositionChange(velocityChange, rotationChange, max);//rotationAmount, max, -positionEpsilon);
@@ -511,8 +617,8 @@ void ContactResolver::solverVelocities(std::vector<Contact *> * _contacts, real 
         }
     }
     
-//    delete deltaVel;
-//    deltaVel = NULL;
-//    DeleteArrayVector3(velocityChange, 2);
-//    DeleteArrayVector3(rotationChange, 2);
+    delete deltaVel;
+    deltaVel = NULL;
+    DeleteArrayVector3(velocityChange, 2);
+    DeleteArrayVector3(rotationChange, 2);
 }

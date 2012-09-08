@@ -13,10 +13,6 @@
 
 class Contact {
 public:
-    // first contact in the array. This is used so that the contact pointer (below)
-    // can be incremented each time a contact is detected, while this pointer points to the first contact found.
-//    Contact * contactArray;
-
     // position of the contact in world coordinates
     Vector3 * contactPoint;
     
@@ -51,12 +47,14 @@ public:
     Contact();
     ~Contact();
     
+    void matchAwakeState();
     Vector3 * calculateLocalVelocity(unsigned _bodyIndex, real _duration);
     void calculateDesiredDeltaVelocity(real _duration);
     void swapBodies();
     void calculateContactBasis();
     void calculateInternals(real _duration);
     Vector3 * calculateFrictionlessImpulse(Matrix3 * _inverseInertiaTensor[]);
+    Vector3 * calculateFrictionImpulse(Matrix3 * _inverseInertiaTensor[]);
     void applyPositionChange(Vector3 * _linearChange[2], Vector3 * _angularChange[2], real _penetration);
     void applyVelocityChange(Vector3 * _velocityChange[2], Vector3 * _rotationChange[2]);
 };

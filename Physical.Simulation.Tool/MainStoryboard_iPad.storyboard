@@ -291,6 +291,30 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
         <image name="square.png" width="512" height="512"/>
         <image name="triangle.png" width="512" height="512"/>
     </resources>
+    <classes>
+        <class className="ObjectsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ObjectsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="actionCircle:"/>
+                <relationship kind="action" name="actionClearSimulation:"/>
+                <relationship kind="action" name="actionDimension:"/>
+                <relationship kind="action" name="actionEditSimulation:"/>
+                <relationship kind="action" name="actionSquare:"/>
+                <relationship kind="action" name="actionStartSimulation:"/>
+                <relationship kind="action" name="actionSurfaceScene:"/>
+                <relationship kind="action" name="actionTriangle:"/>
+            </relationships>
+        </class>
+        <class className="PresentationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PresentationViewController.h"/>
+        </class>
+        <class className="SimulationViewController" superclassName="GLKViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SimulationViewController.h"/>
+        </class>
+        <class className="TabViewController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TabViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>

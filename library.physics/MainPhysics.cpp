@@ -48,15 +48,6 @@ void MainPhysics::updateFeatures(Particle * _particle, real _duration)
     delete resultingAcc;
     resultingAcc = NULL;
     
-//    // TODO revise: is needed? damping force is already being applied
-//    // impose drag.
-//    *_simulatedObject->getVelocity() *= real_pow(_simulatedObject->getDamping(), _duration);
-    
-//    printf("position: %f, velocity: %f, force: %f, accel: %f\n", _simulatedObject->getPosition()->y,
-//                                                                 _simulatedObject->getVelocity()->y,
-//                                                                 _simulatedObject->getForceAccum()->y,
-//                                                                 _simulatedObject->getAcceleration()->y);
-    
     _particle->clearAccumulator();
 }
 
@@ -65,6 +56,11 @@ void MainPhysics::updateFeatures(RigidBody * _body, real _duration)
     if (!_body->hasFiniteMass()) {
         return;
     }
+
+    if (!_body->isAwake()) {
+        return;
+    }
+    
     
     // calculate linear acceleration from force inputs.
     if (_body->getLastFrameAcceleration()) {
@@ -105,4 +101,20 @@ void MainPhysics::updateFeatures(RigidBody * _body, real _duration)
     
     delete angularAcceleration;
     angularAcceleration = NULL;
+    
+    // Update the kinetic energy store, and possibly put the body to
+    // sleep.
+    if (_body->isCanSleep()) {
+        real currentMotion = _body->getVelocity()->scalarProduct(_body->getVelocity()) +
+                             _body->getRotation()->scalarProduct(_body->getRotation());
+        
+        real bias = real_pow(0.5, _duration);
+        _body->setMotion(bias*_body->getMotion() + (1-bias)*currentMotion);
+        
+        if (_body->getMotion() < sleepEpsilon) {
+            _body->setAwake(false);
+        } else if (_body->getMotion() > 10 * sleepEpsilon) {
+            _body->setMotion(10 * sleepEpsilon);
+        }
+    }
 }

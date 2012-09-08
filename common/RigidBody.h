@@ -13,7 +13,12 @@
 
 class RigidBody {
 private:
-    char * _id;
+    char * id;
+    bool dirty;
+    real motion;
+    bool awake;
+    bool canSleep;
+    
     real mass;
     real angularDamping;
     real linearDamping;
@@ -21,6 +26,7 @@ private:
     real density;
     real inverseMass;
     real radius;
+    Vector3 * halfSize;
     Vector3 * position;
     Quaternion * orientation;
     Vector3 * velocity;
@@ -96,5 +102,18 @@ public:
     void setTypeObject(TypeObject _typeObject);
     Matrix4 * getTransformMatrix();
     void getGLTransform(float matrix[16]) const;
+    Vector3 * getHalfSize();
+    void setHalfSize(Vector3 * _halfSize);
+    void setHalfSize(real _x, real _y, real _z);
+    void setHalfSize(real _x, real _y);
+    char * getId();
+    bool isDirty();
+    void setDirty(bool _dirty);
+    real getMotion();
+    void setMotion(real _motion);
+    bool isCanSleep();
+    void setCanSleep(bool _canSleep=true);
+    bool isAwake();
+    void setAwake(bool _awake=true);
 };
 #endif

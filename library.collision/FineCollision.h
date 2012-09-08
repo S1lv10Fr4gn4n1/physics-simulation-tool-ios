@@ -29,7 +29,7 @@ public:
     void reset(unsigned _maxContacts);
 };
 
-class Primitive {
+class CollisionPrimitive {
 public:
     
     // the resultant transform of the primitive. This is
@@ -39,51 +39,43 @@ public:
     RigidBody * body;
     Matrix4 * offset;
     
-    Primitive();
-    ~Primitive();
+    CollisionPrimitive();
+    ~CollisionPrimitive();
     Vector3 * getAxis(unsigned _index) const;
     void calculateInternals();
 };
 
-class Sphere : public Primitive {
+class CollisionSphere : public CollisionPrimitive {
 public:
     real radius;
     
-    Sphere(RigidBody * _body, real _radius) {
-        this->body = _body;
-        this->radius = _radius;
-    }
+    CollisionSphere(RigidBody * _body, real _radius);
 };
 
-class Plane : public Primitive {
+class CollisionPlane : public CollisionPrimitive {
 public:
     Vector3 * direction;
     real offset;
     
-    Plane(RigidBody * _body, Vector3 * _direction, real _offset) {
-        this->body = _body;
-        this->direction = _direction;
-        this->offset = _offset;
-    }
+    CollisionPlane(RigidBody * _body, Vector3 * _direction, real _offset);
 };
 
-class Box : public Primitive {
+class CollisionBox : public CollisionPrimitive {
 public:
     Vector3 * halfSize;
     
-    Box(RigidBody * _body, Vector3 * _halfSize) {
-        this->body = _body;
-        this->halfSize = _halfSize;
-    }
+    CollisionBox(RigidBody * _body, Vector3 * _halfSize);
 };
 
 class CollisionDetector {
 public:
-    static unsigned sphereAndSphere(const Sphere * _one, const Sphere * _two, CollisionData * _data);
-    static unsigned sphereAndHalfSpace(const Sphere * _sphere, const Plane * _plane, CollisionData * _data);
-    static unsigned sphereAndTruePlane(const Sphere * _sphere, const Plane * _plane, CollisionData * _data);
-    static unsigned boxAndSphere(const Box * _box, const Sphere * _sphere, CollisionData * _data);
-    static unsigned boxAndPoint(const Box * _box, Vector3 * _point,  CollisionData * _data);
+    static unsigned sphereAndSphere(const CollisionSphere * _one, const CollisionSphere * _two, CollisionData * _data);
+    static unsigned sphereAndHalfSpace(const CollisionSphere * _sphere, const CollisionPlane * _plane, CollisionData * _data);
+    static unsigned sphereAndTruePlane(const CollisionSphere * _sphere, const CollisionPlane * _plane, CollisionData * _data);
+    static unsigned boxAndHalfSpace(const CollisionBox * _box, const CollisionPlane * _plane, CollisionData * _data);
+    static unsigned boxAndBox(const CollisionBox * _one, const CollisionBox * _two, CollisionData * _data);
+    static unsigned boxAndSphere(const CollisionBox * _box, const CollisionSphere * _sphere, CollisionData * _data);
+    static unsigned boxAndPoint(const CollisionBox * _box, Vector3 * _point,  CollisionData * _data);
 };
 
 #endif

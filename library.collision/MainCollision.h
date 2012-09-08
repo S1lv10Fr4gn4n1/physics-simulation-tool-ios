@@ -19,7 +19,7 @@ private:
     
     CollisionData * dataContacts;
 
-    void generateContact(RigidBody ** _bodies);
+    void generateContact(RigidBody * _body1, RigidBody * _body2);
     void generateContacts();
     void solverContacts(real _duration);
 public:
@@ -32,6 +32,8 @@ public:
     void deleteObject(RigidBody * _body);
     void updateObject(RigidBody * _body, real _duration);
     void updateContacts(real _duration);
+    
+    void cleanCollisions();
 };
 
 #endif
