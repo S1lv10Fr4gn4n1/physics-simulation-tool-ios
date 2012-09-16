@@ -1,13 +1,13 @@
 //
-//  CoarseCollision.h
+//  QuadTree.h
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani on 23/08/12.
 //
 //
 
-#ifndef COARSECOLLISION_H
-#define COARSECOLLISION_H
+#ifndef QUADTREE_H
+#define QUADTREE_H
 
 #include <vector>
 #include <map>
@@ -34,7 +34,6 @@ struct QuadTreeNode {
 
 class QuadTree {
 private:
-    static QuadTree * quadTree;
     QuadTreeNode * parent;
     
     std::vector<RigidBody *> * possibleCollisions;
@@ -54,8 +53,6 @@ public:
     void cleanLeaves();
     
     std::vector<RigidBody *> * getPossibleCollisions();
-    
-    static QuadTree * getInstance();
 };
 
 #endif

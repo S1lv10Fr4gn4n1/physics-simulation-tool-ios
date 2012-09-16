@@ -366,6 +366,7 @@ void MainGraphic::MainGraphic::draw(World * _world)
     
     
     // IF TODO test
+#ifndef _3D_
     glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, cor_linhas_brancas);
     glEnableVertexAttribArray(ATTRIB_COLOR);
     
@@ -387,7 +388,7 @@ void MainGraphic::MainGraphic::draw(World * _world)
     glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
     glDrawArrays(GL_LINES, 0, 4);
     // END TODO test
-    
+#endif
     
     
     for (int i=0; i< _world->getSimulatedObjects()->size(); i++) {

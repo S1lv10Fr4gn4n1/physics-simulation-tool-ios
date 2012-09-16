@@ -61,11 +61,10 @@ void MainPhysics::updateFeatures(RigidBody * _body, real _duration)
         return;
     }
     
-    
     // calculate linear acceleration from force inputs.
-    if (_body->getLastFrameAcceleration()) {
-        _body->setLastFrameAcceleration(NULL);
-    }
+//    if (_body->getLastFrameAcceleration()) {
+//        _body->setLastFrameAcceleration(NULL);
+//    }
     _body->setLastFrameAcceleration(_body->getAcceleration()->x, _body->getAcceleration()->y, _body->getAcceleration()->z);
     _body->getLastFrameAcceleration()->addScaledVector(_body->getForceAccum(), _body->getInverseMass());
     
@@ -88,13 +87,16 @@ void MainPhysics::updateFeatures(RigidBody * _body, real _duration)
     _body->getPosition()->addScaledVector(_body->getVelocity(), _duration);
     
     // update angular position.
-    // impose drag.
-    *_body->getVelocity() *= real_pow(_body->getLinearDamping(), _duration);
-    *_body->getRotation() *= real_pow(_body->getAngularDamping(), _duration);
+    _body->getOrientation()->addScaledVector(_body->getRotation(), _duration);
     
     // normalize the orientation, and update the matrices with the new
     // position and orientation.
     _body->calculateDerivedData();
+
+    printf("info, velocity-> x: %2.6f, y: %2.6f, z: %2.6f \n", _body->getVelocity()->x, _body->getVelocity()->y,_body->getVelocity()->z);
+//    printf("info, rotation-> x: %2.6f, y: %2.6f, z: %2.6f \n", _body->getRotation()->x, _body->getRotation()->y,_body->getRotation()->z);
+    printf("info, force   -> x: %2.6f, y: %2.6f, z: %2.6f \n", _body->getForceAccum()->x, _body->getForceAccum()->y,_body->getForceAccum()->z);
+//    printf("info, torque  -> x: %2.6f, y: %2.6f, z: %2.6f \n", _body->getTorqueAccum()->x, _body->getTorqueAccum()->y,_body->getTorqueAccum()->z);
     
     // clear accumulators.
     _body->clearAccumulators();
@@ -102,8 +104,7 @@ void MainPhysics::updateFeatures(RigidBody * _body, real _duration)
     delete angularAcceleration;
     angularAcceleration = NULL;
     
-    // Update the kinetic energy store, and possibly put the body to
-    // sleep.
+    // update the kinetic energy store, and possibly put the body to sleep
     if (_body->isCanSleep()) {
         real currentMotion = _body->getVelocity()->scalarProduct(_body->getVelocity()) +
                              _body->getRotation()->scalarProduct(_body->getRotation());
@@ -111,10 +112,26 @@ void MainPhysics::updateFeatures(RigidBody * _body, real _duration)
         real bias = real_pow(0.5, _duration);
         _body->setMotion(bias*_body->getMotion() + (1-bias)*currentMotion);
         
-        if (_body->getMotion() < sleepEpsilon) {
+        printf("sleep, motion: %f, \n", _body->getMotion());
+        if (_body->getMotion() < SLEEP_EPSILON) {
             _body->setAwake(false);
-        } else if (_body->getMotion() > 10 * sleepEpsilon) {
-            _body->setMotion(10 * sleepEpsilon);
+        } else if (_body->getMotion() > 10 * SLEEP_EPSILON) {
+            _body->setMotion(10 * SLEEP_EPSILON);
         }
+        
+//        real currentMotion = velocity.scalarProduct(velocity) +
+//                             rotation.scalarProduct(rotation);
+//        
+//        real bias = real_pow(0.5, duration);
+//        motion = bias*motion + (1-bias)*currentMotion;
+//        
+//        printf("sleep, motion: %f, \n", motion);
+//        if (motion < sleepEpsilon)
+//            setAwake(false);
+//        else if (motion > 10 * sleepEpsilon)
+//            motion = 10 * sleepEpsilon;
+
+        
+        
     }
 }

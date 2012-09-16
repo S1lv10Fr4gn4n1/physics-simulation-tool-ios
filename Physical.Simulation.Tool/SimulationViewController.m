@@ -34,6 +34,8 @@ static EAGLContext * context;
     view.context = context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     
+    self.preferredFramesPerSecond = FRAME_PER_SECOND;
+    
     [self initializeGestureRecognizer: view];
     
     [self setupGL];

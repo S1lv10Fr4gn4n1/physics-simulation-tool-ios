@@ -24,6 +24,11 @@ RigidBody::RigidBody()
     this->density = 0.0f;
     this->radius = 0.0f;
     
+    this->friction = 0.0f;
+    this->restitution = 0.0f;
+    
+    this->motion = 0.0f;
+    
     this->position = new Vector3();
     this->acceleration = new Vector3();
     this->lastFrameAcceleration = new Vector3();
@@ -102,10 +107,10 @@ void RigidBody::calculateDerivedData()
     this->orientation->normalize();
     
     // calculate the transform matrix for the body
-    _calculateTransformMatrix(this->transformMatrix, this->position, this->orientation);
+    calculateTransformMatrix(this->transformMatrix, this->position, this->orientation);
     
     // calculate the inertiaTensor in world space
-    _transformInertiaTensor(inverseInertiaTensorWorld,
+    transformInertiaTensor(inverseInertiaTensorWorld,
                             this->orientation,
                             this->inverseInertiaTensor,
                             this->transformMatrix);
@@ -117,16 +122,22 @@ void RigidBody::setInertiaTensor(const Matrix3 * _inertiaTensor)
     this->inverseInertiaTensor->setInverse(_inertiaTensor);
 }
 
-void RigidBody::addForce(const Vector3 * _force)
+void RigidBody::addForce(const Vector3 * _force, bool _awakeUp)
 {
     *this->forceAccum += _force;
-    this->awake = true;
+    
+    if (_awakeUp) {
+        this->awake = true;
+    }
 }
 
-void RigidBody::addVelocity(const Vector3 * _velocity)
+void RigidBody::addVelocity(const Vector3 * _velocity, bool _awakeUp)
 {
     *this->velocity += _velocity;
-    this->awake = true;
+
+    if (_awakeUp) {
+        this->awake = true;
+    }
 }
 
 void RigidBody::addRotation(const Vector3 * _rotation)
@@ -165,10 +176,13 @@ void RigidBody::addForceAtPoint(const Vector3 * _force, const Vector3 * _point)
     point = NULL;
 }
 
-void RigidBody::addTorque(const Vector3 * _torque)
+void RigidBody::addTorque(const Vector3 * _torque, bool _awakeUp)
 {
     *this->torqueAccum += _torque;
-    this->awake = true;
+    
+    if (_awakeUp) {
+        this->awake = true;
+    }
 }
 
 bool RigidBody::hasFiniteMass()
@@ -521,10 +535,30 @@ void RigidBody::setAwake(bool _awake)
     if (_awake) {
         this->awake = true;
         // add a bit of motion to avoid it falling asleep immediately.
-        this->motion = sleepEpsilon*2.0f;
+        this->motion = SLEEP_EPSILON*2.0f;
     } else {
         this->awake = false;
         this->velocity->clear();
         this->rotation->clear();
     }
+}
+
+real RigidBody::getRestitution()
+{
+    return this->restitution;
+}
+
+void RigidBody::setRestitution(real _restitution)
+{
+    this->restitution = _restitution;
+}
+
+real RigidBody::getFriction()
+{
+    return this->friction;
+}
+
+void RigidBody::setFriction(real _friction)
+{
+    this->friction = _friction;
 }

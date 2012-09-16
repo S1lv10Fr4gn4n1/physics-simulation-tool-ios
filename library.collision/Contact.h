@@ -58,32 +58,4 @@ public:
     void applyPositionChange(Vector3 * _linearChange[2], Vector3 * _angularChange[2], real _penetration);
     void applyVelocityChange(Vector3 * _velocityChange[2], Vector3 * _rotationChange[2]);
 };
-
-class ContactResolver {
-private:
-    static ContactResolver * contactResolver;
-
-    // stores the number of position iterations used in the last call to resolve contacts
-    unsigned positionIterationsUsed;
-    // number of iterations to perform when resolving position
-    unsigned positionIterations;
-    // stores the number of velocity iterations used in the last call to resolve contacts
-    unsigned velocityIterationsUsed;
-    // number of iterations to perform when resolving velocity
-    unsigned velocityIterations;
-    // avoid instability velocities smaller
-    real velocityEpsilon;
-    // avoid instability penetrations smaller than this value are considered to be not interpenetrating
-    real positionEpsilon;
-
-    void prepareContacts(std::vector<Contact *> * _contacts, real _duration);
-    void solverPositions(std::vector<Contact *> * _contacts, real _duration);
-    void solverVelocities(std::vector<Contact *> * _contacts, real _duration);
-public:
-    ContactResolver(real _positionEpsilon=0.01f, real _velocityEpsilon=0.01f);
-    void solverContacts(std::vector<Contact *> * _contacts, real _duration);
-    
-    static ContactResolver * getInstance();
-};
-
 #endif

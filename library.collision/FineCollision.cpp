@@ -13,16 +13,12 @@
 CollisionData::CollisionData()
 {
     this->contacts = new std::vector<Contact *>();
-    
-    this->contactsCount = 0;
-    this->contactsLeft = 0;
-    this->restitution = 0.0f;
-    this->friction = 0.0f;
 }
 
 CollisionData::~CollisionData()
 {
     this->clearContacts();
+    
     delete this->contacts;
     this->contacts = NULL;
 }
@@ -35,23 +31,6 @@ void CollisionData::clearContacts()
     
     this->contacts->clear();
 }
-
-void CollisionData::addContacts(unsigned _num)
-{
-    this->contactsLeft -= _num;
-    this->contactsCount += _num;
-}
-
-void CollisionData::reset(unsigned _maxContacts)
-{
-    this->contactsLeft = _maxContacts;
-    this->contactsCount = 0;
-        
-    this->clearContacts();
-}
-
-
-
 
 CollisionPrimitive::CollisionPrimitive() {
     this->transform = new Matrix4();
@@ -73,7 +52,7 @@ Vector3 * CollisionPrimitive::getAxis(unsigned _index) const
 
 void CollisionPrimitive::calculateInternals()
 {
-    this->transform = *this->body->getTransformMatrix() * offset;
+    this->transform = *this->body->getTransformMatrix() * this->offset;
 }
 
 CollisionSphere::CollisionSphere(RigidBody * _body, real _radius) {
@@ -83,9 +62,9 @@ CollisionSphere::CollisionSphere(RigidBody * _body, real _radius) {
     this->calculateInternals();
 }
 
-CollisionPlane::CollisionPlane(RigidBody * _body, Vector3 * _direction, real _offset) {
+CollisionPlane::CollisionPlane(RigidBody * _body, Vector3 * _normal, real _offset) {
     this->body = _body;
-    this->direction = _direction;
+    this->normal = _normal;
     this->offset = _offset;
     
     this->calculateInternals();
@@ -98,12 +77,21 @@ CollisionBox::CollisionBox(RigidBody * _body, Vector3 * _halfSize) {
     this->calculateInternals();
 }
 
-
 real transformToAxis(const CollisionBox * _box, const Vector3 * _axis)
 {
-    return _box->halfSize->x * real_abs(*_axis * _box->getAxis(0)) +
-           _box->halfSize->y * real_abs(*_axis * _box->getAxis(1)) +
-           _box->halfSize->z * real_abs(*_axis * _box->getAxis(2));
+    Vector3 * axis0 = _box->getAxis(0);
+    Vector3 * axis1 = _box->getAxis(1);
+    Vector3 * axis2 = _box->getAxis(2);
+    
+    real result = _box->halfSize->x * real_abs(*_axis * axis0) +
+                  _box->halfSize->y * real_abs(*_axis * axis1) +
+                  _box->halfSize->z * real_abs(*_axis * axis2);
+    
+    delete axis0;
+    delete axis1;
+    delete axis2;
+    
+    return result;
 }
 
 bool overlapOnAxis(const CollisionBox * _one, const CollisionBox * _two, const Vector3 * _axis)
@@ -113,10 +101,19 @@ bool overlapOnAxis(const CollisionBox * _one, const CollisionBox * _two, const V
     real twoProject = transformToAxis(_two, _axis);
     
     // find the vector between the two centers.
-    Vector3 * toCenter = *_two->getAxis(3) - _one->getAxis(3);
+    Vector3 * oneAxis = _two->getAxis(3);
+    Vector3 * twoAxis = _two->getAxis(3);
+    Vector3 * toCenter = *twoAxis - oneAxis;
     
     // project this onto the axis.
     real distance = real_abs(*toCenter * _axis);
+    
+    delete toCenter;
+    delete oneAxis;
+    delete twoAxis;
+    toCenter = NULL;
+    oneAxis = NULL;
+    twoAxis = NULL;
     
     // check for overlap.
     return (distance < oneProject + twoProject);
@@ -192,15 +189,15 @@ void fillPointFaceBoxBox(const CollisionBox * _one, const CollisionBox * _two, c
     	vertex->z = -vertex->z;
     }
     
-    // Create the contact data
+    // create the contact data
     Contact * contact = new Contact();
     contact->contactNormal = normal;
     contact->penetration = _pen;
     contact->contactPoint = *_two->transform * vertex;
     contact->body[0] = _one->body;
     contact->body[0] = _two->body;
-    contact->friction = _data->friction;
-    contact->restitution = _data->restitution;
+    contact->friction = _one->body->getFriction() + _two->body->getFriction(); //TODO revise
+    contact->restitution = _one->body->getRestitution() + _two->body->getRestitution();
 }
 
 Vector3 * contactPoint(Vector3 * _pOne, Vector3 * _dOne, real oneSize, Vector3 * _pTwo,
@@ -244,10 +241,6 @@ Vector3 * contactPoint(Vector3 * _pOne, Vector3 * _dOne, real oneSize, Vector3 *
 
 unsigned CollisionDetector::sphereAndSphere(const CollisionSphere * _one, const CollisionSphere * _two, CollisionData * _data)
 {
-    if (_data->contactsLeft <= 0) {
-        return 0;
-    }
-        
     // sphere positions
     Vector3 * positionOne = _one->getAxis(3);
     Vector3 * positionTwo = _two->getAxis(3);
@@ -270,56 +263,46 @@ unsigned CollisionDetector::sphereAndSphere(const CollisionSphere * _one, const 
     contact->penetration = (_one->radius + _two->radius - size);
     contact->body[0] = _one->body;
     contact->body[1] = _two->body;
-    contact->restitution = _data->restitution;
-    contact->friction = _data->friction;
+    contact->restitution = _one->body->getRestitution() + _two->body->getRestitution();
+    contact->friction = _one->body->getFriction() + _two->body->getFriction();
     
     _data->contacts->push_back(contact);
-    _data->addContacts(1);
     
     return 1;
 }
 
 unsigned CollisionDetector::sphereAndHalfSpace(const CollisionSphere * _sphere, const CollisionPlane * _plane, CollisionData * _data)
 {
-    if (_data->contactsLeft <= 0) {
-        return 0;
-    }
-    
     // sphere position
-    Vector3 * position = _sphere->getAxis(3);
+    Vector3 * position = _sphere->body->getPosition(); //_sphere->getAxis(3);
     
     // find the distance from the plane.
-    real distance = *_plane->direction * position - _sphere->radius - _plane->offset;
+    real distance = *_plane->normal * position - _sphere->radius - _plane->offset;
     if (distance >= 0) {
         return 0;
     }
     
     Contact * contact = new Contact();
-    contact->contactNormal = _plane->direction; // it has a normal in the plane direction.
+    contact->contactNormal = new Vector3(_plane->normal);
     contact->penetration = -distance;
-    contact->contactPoint = *position - *_plane->direction * (distance + _sphere->radius);
+    contact->contactPoint = *position - *_plane->normal * (distance + _sphere->radius);
     contact->body[0] = _sphere->body;
     contact->body[1] = NULL;
-    contact->restitution = _data->restitution;
-    contact->friction = _data->friction;
+    contact->restitution = _sphere->body->getRestitution() + _plane->body->getRestitution();
+    contact->friction = _sphere->body->getFriction() + _plane->body->getFriction();
     
     _data->contacts->push_back(contact);
-    _data->addContacts(1);
+    
+    position = NULL;
     
     return 1;
 }
 
 unsigned CollisionDetector::sphereAndTruePlane(const CollisionSphere * _sphere, const CollisionPlane * _plane, CollisionData * _data)
 {
-    if (_data->contactsLeft <= 0) {
-        return 0;
-    }
-    
-    // sphere position.
     Vector3 * position = _sphere->getAxis(3);
     
-    // find the distance from the plane.
-    real centerDistance = *_plane->direction * position - _plane->offset;
+    real centerDistance = *_plane->normal * position - _plane->offset;
     
     // check if we’re within radius.
     if (centerDistance * centerDistance > _sphere->radius * _sphere->radius) {
@@ -327,7 +310,7 @@ unsigned CollisionDetector::sphereAndTruePlane(const CollisionSphere * _sphere, 
     }
     
     // check which side of the plane we’re on.
-    Vector3 * normal = _plane->direction;
+    Vector3 * normal = _plane->normal;
     real penetration = -centerDistance;
     
     if (centerDistance < 0) {
@@ -340,84 +323,68 @@ unsigned CollisionDetector::sphereAndTruePlane(const CollisionSphere * _sphere, 
     Contact * contact = new Contact();
     contact->contactNormal = normal;
     contact->penetration = penetration;
-    contact->contactPoint = *position - *_plane->direction * centerDistance;
+    contact->contactPoint = *position - *_plane->normal * centerDistance;
     contact->body[0] = _sphere->body;
     contact->body[1] = NULL;
-    contact->restitution = _data->restitution;
-    contact->friction = _data->friction;
+    contact->restitution = _sphere->body->getRestitution() + _plane->body->getRestitution();
+    contact->friction = _sphere->body->getFriction() + _plane->body->getFriction();
     
     _data->contacts->push_back(contact);
-    _data->addContacts(1);
     
     return 1;
 }
 
 unsigned CollisionDetector::boxAndHalfSpace(const CollisionBox * _box, const CollisionPlane * _plane, CollisionData * _data)
 {
-    if (_data->contactsLeft <= 0) {
-        return 0;
-    }
-    
     // work out the projected radius of the box onto the plane direction
-    real projectedRadius = transformToAxis(_box, _plane->direction);
+    real projectedRadius = transformToAxis(_box, _plane->normal);
     
     // work out how far the box is from the origin
-    real boxDistance = *_plane->direction * _box->getAxis(3) - projectedRadius;
+    real boxDistance = *_plane->normal * _box->getAxis(3) - projectedRadius;
     
-    // Check for the intersection
-    if (!boxDistance <= _plane->offset) {
+    // check for the intersection
+    if (boxDistance >= _plane->offset) {
         return 0;
     }
 
     // go through each combination of + and - for each half-size
-    static real mults[8][3] = {{1,1,1}, {-1,1,1}, {1,-1,1}, {-1,-1,1},
-                               {1,1,-1}, {-1,1,-1}, {1,-1,-1}, {-1,-1,-1}};
-    
-    Contact * contact = new Contact();
+    static real mults[8][3] = {{ 1, 1, 1}, {-1,1, 1}, {1,-1, 1}, {-1,-1, 1},
+                               { 1, 1,-1}, {-1,1,-1}, {1,-1,-1}, {-1,-1,-1}};
     unsigned contactsUsed = 0;
+
     for (unsigned i = 0; i < 8; i++) {
-        
         // calculate the position of each vertex
         Vector3 * vertexPos = new Vector3(mults[i][0], mults[i][1], mults[i][2]);
         vertexPos->componentProductUpdate(_box->halfSize);
         vertexPos = _box->transform->transform(vertexPos);
         
         // calculate the distance from the plane
-        real vertexDistance = *vertexPos * _plane->direction;
+        real vertexDistance = *vertexPos * _plane->normal;
         
         // compare this to the plane's distance
         if (vertexDistance <= _plane->offset) {
-            // create the contact data.
-            
+            Contact * contact = new Contact();
             // the contact point is halfway between the vertex and the
             // plane - we multiply the direction by half the separation
             // distance and add the vertex location.
-            contact->contactPoint = _plane->direction;
-            *contact->contactPoint *= (vertexDistance - _plane->offset);
             contact->contactPoint = vertexPos;
-            contact->contactNormal = _plane->direction;
+            contact->contactNormal = new Vector3(_plane->normal);
             contact->penetration = _plane->offset - vertexDistance;
             
             // write the appropriate data
             contact->body[0] = _box->body;
             contact->body[1] = NULL;
-            contact->friction = _data->friction;
-            contact->restitution = _data->restitution;
+            contact->friction = _box->body->getFriction() + _plane->body->getFriction();
+            contact->restitution = _box->body->getRestitution() + _plane->body->getRestitution();
+            _data->contacts->push_back(contact);
             
             // move onto the next contact
             contactsUsed++;
-            
-            if (contactsUsed == _data->contactsLeft) {
-                return contactsUsed;
-            }
         }
     }
     
-    _data->addContacts(contactsUsed);
-    
     return contactsUsed;
 }
-
 
 unsigned CollisionDetector::boxAndBox(const CollisionBox * _one, const CollisionBox * _two, CollisionData * _data)
 {
@@ -459,7 +426,6 @@ unsigned CollisionDetector::boxAndBox(const CollisionBox * _one, const Collision
     if (best < 3) {
         // we've got a vertex of box two on a face of box one.
         fillPointFaceBoxBox(_one, _two, toCentre, _data, best, pen);
-        _data->addContacts(1);
         return 1;
     
     } else if (best < 6) {
@@ -468,7 +434,6 @@ unsigned CollisionDetector::boxAndBox(const CollisionBox * _one, const Collision
         // one and two (and therefore also the vector between their
         // centres).
         fillPointFaceBoxBox(_two, _one, *toCentre * -1.0f, _data, best-3, pen);
-        _data->addContacts(1);
         return 1;
         
     } else {
@@ -526,9 +491,8 @@ unsigned CollisionDetector::boxAndBox(const CollisionBox * _one, const Collision
         contact->contactPoint = vertex;
         contact->body[0] = _one->body;
         contact->body[1] = _two->body;
-        contact->friction = _data->friction;
-        contact->restitution = _data->restitution;
-        _data->addContacts(1);
+        contact->friction = _one->body->getFriction() + _two->body->getFriction();
+        contact->restitution = _one->body->getRestitution() + _two->body->getRestitution();
         
         return 1;
     }
@@ -557,25 +521,33 @@ unsigned CollisionDetector::boxAndSphere(const CollisionBox * _box, const Collis
     if (distance > _box->halfSize->x) {
         distance = _box->halfSize->x;
     }
+    
     if (distance < -_box->halfSize->x) {
         distance = -_box->halfSize->x;
     }
+    
     closestPoint->x = distance;
     distance = relCenter->y;
+    
     if (distance > _box->halfSize->y) {
         distance = _box->halfSize->y;
     }
+    
     if (distance < -_box->halfSize->y) {
         distance = -_box->halfSize->y;
     }
+    
     closestPoint->y = distance;
     distance = relCenter->z;
+    
     if (distance > _box->halfSize->z) {
         distance = _box->halfSize->z;
     }
+    
     if (distance < -_box->halfSize->z) {
         distance = -_box->halfSize->z;
     }
+    
     closestPoint->z = distance;
     
     // check we’re in contact.
@@ -593,11 +565,10 @@ unsigned CollisionDetector::boxAndSphere(const CollisionBox * _box, const Collis
     contact->penetration = _sphere->radius - real_sqrt(distance);
     contact->body[0] = _box->body;
     contact->body[1] = _sphere->body;
-    contact->restitution = _data->restitution;
-    contact->friction = _data->friction;
+    contact->restitution = _box->body->getRestitution() + _sphere->body->getRestitution();
+    contact->friction = _box->body->getFriction() + _sphere->body->getFriction();
     
     _data->contacts->push_back(contact);
-    _data->addContacts(1);
     
     return 1;
 }
@@ -639,11 +610,10 @@ unsigned CollisionDetector::boxAndPoint(const CollisionBox * _box, Vector3 * _po
     contact->penetration = minDepth;
     contact->body[0] = _box->body;
     contact->body[1] = NULL;
-    contact->restitution = _data->restitution;
-    contact->friction = _data->friction;
+    contact->restitution = _box->body->getRestitution();
+    contact->friction = _box->body->getFriction();
     
     _data->contacts->push_back(contact);
-    _data->addContacts(1);
     
     return 1;
 }

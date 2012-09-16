@@ -11,7 +11,7 @@
 
 // TODO revise: variables for this place is correct?
 real scaleObject = 1.0f;
-real scaleZoom = 6.0f;
+real scaleZoom = ZOOM_INIT;
 real scalePanX = 5.0f;
 real scalePanY = 2.0f;
 real previousRadians = 0.0f;
@@ -92,7 +92,7 @@ void TestController::resizeScreen(real _width, real _height)
 
 void TestController::updateInformation(real _duration)
 {
-    this->mainEngine->updateInformation(0.005f); // TODO for debug
+    this->mainEngine->updateInformation(0.005f);
 }
 
 void TestController::draw()
@@ -103,7 +103,7 @@ void TestController::draw()
 void TestController::stopSimulation()
 {
     this->mainEngine->stop();
-    scaleZoom = 1.0f;
+    scaleZoom = ZOOM_INIT;
     this->mainEngine->zoom(scaleZoom);
 }
 
@@ -340,10 +340,10 @@ void TestController::clearSimularion()
 
 void TestController::createScene()
 {
-    SimulatedObject * obj1 = this->mainEngine->makeSimulatedObject2D(CIRCLE);
-    obj1->setPosition(0.1f, 0.07f);
-    SimulatedObject * obj2 = this->mainEngine->makeSimulatedObject2D(CIRCLE);
-    obj2->setPosition(0.4f, 0.07f);
-    SimulatedObject * obj3 = this->mainEngine->makeSimulatedObject2D(SQUARE);
-    obj3->setPosition(0.4f, 0.4f);
+    this->mainEngine->makeSimulatedObject3D(PLAN);
+    SimulatedObject *box = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    box->setPosition(0.0f, 0.8f, 0.0f);
+//    box->setRotation(2.0f, 0.0f, 0.0f);
+    box->initialize();
+//    this->mainEngine->makeSimulatedObject3D(SPHERE);
 }

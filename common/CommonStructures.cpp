@@ -435,13 +435,39 @@ void Matrix3::setSkewSymmetric(const Vector3 * _vector)
 }
 
 
+
+// Sets the value of the matrix as an inertia tensor of
+// a rectangular block aligned with the body's coordinate
+// system with the given axis half-sizes and mass.
+void Matrix3::setBlockInertiaTensor(const Vector3 * _halfSizes, real _mass)
+{
+    Vector3 * squares = _halfSizes->componentProduct(_halfSizes);
+    this->setInertiaTensorCoeffs(0.3f*_mass*(squares->y + squares->z),
+                                 0.3f*_mass*(squares->x + squares->z),
+                                 0.3f*_mass*(squares->x + squares->y));
+    delete squares;
+    squares = NULL;
+}
+
+// sets the value of the matrix from inertia tensor values
+void Matrix3::setInertiaTensorCoeffs(real _ix, real _iy, real _iz, real _ixy, real _ixz, real _iyz)
+{
+    this->data[0] = _ix;
+    this->data[1] = this->data[3] = -_ixy;
+    this->data[2] = this->data[6] = -_ixz;
+    this->data[4] = _iy;
+    this->data[5] = this->data[7] = -_iyz;
+    this->data[8] = _iz;
+}
+
 /***************************** Matrix4 *****************************/
 
 Matrix4::Matrix4()
 {
-    this->data[0] = this->data[1] = this->data[2] = this->data[3] =
-    this->data[4] = this->data[5] = this->data[6] = this->data[7] =
-    this->data[8] = this->data[9] = this->data[10] = this->data[11] =0;
+    this->data[1] = this->data[2] = this->data[3] =
+    this->data[4] = this->data[6] = this->data[7] =
+    this->data[8] = this->data[9] = this->data[11] = 0;
+    this->data[0] = this->data[5] = this->data[10] = 1;
 }
 
 Matrix4::Matrix4(real _c0, real _c1, real _c2, real _c3, real _c4, real _c5,

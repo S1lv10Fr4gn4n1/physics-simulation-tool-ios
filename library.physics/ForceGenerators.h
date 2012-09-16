@@ -44,8 +44,9 @@ public:
 
 class Gravity : public ForceGenerator {
     Vector3 * gravity;
+    bool considerMass;
 public:
-    Gravity(Vector3 * _gravity);
+    Gravity(Vector3 * _gravity, bool _considerMass=true);
     ~Gravity();
     virtual void updateForce(RigidBody * _body, real _duration);
     void updateGravity(real _gravity);

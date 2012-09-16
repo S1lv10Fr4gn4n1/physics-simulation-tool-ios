@@ -11,6 +11,12 @@
 #ifndef DEFINES_H
 #define PDEFINES_H
 
+// 3D
+#define _3D_
+
+// frame per second
+#define FRAME_PER_SECOND 60
+
 
 // DEFINE PRECISION
 typedef float real;
@@ -42,16 +48,9 @@ typedef float real;
 #define ZOOM_IN_LIMIT 4.0f
 #define ZOOM_OUT_LIMIT 0.1f
 #define ZOOM_SCALE 0.05f
+#define ZOOM_INIT 1.0f
 #define PAN_SCALE 0.005f
 
-// DATA COLLISION
-#define MAX_CONTACTS 256
-
-// 3D
-//#define _3D_
-
-
-
-
+#define SLEEP_EPSILON 0.2f
 
 #endif

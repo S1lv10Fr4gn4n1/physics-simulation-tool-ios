@@ -97,9 +97,10 @@ ForceRegistry * ForceRegistry::getInstance()
 }
 
 
-Gravity::Gravity(Vector3 * _gravity)
+Gravity::Gravity(Vector3 * _gravity, bool _considerMass)
 {
     this->gravity = _gravity;
+    this->considerMass = _considerMass;
 }
 
 Gravity::~Gravity()
@@ -125,6 +126,11 @@ void Gravity::updateForce(RigidBody * _body, real _duration)
     }
     
     // apply the mass-scaled force to the body
+    if (!considerMass) {
+        _body->addForce(this->gravity);
+        return;
+    }
+    
     Vector3 * force = *this->gravity * _body->getMass();
     _body->addForce(force);
     

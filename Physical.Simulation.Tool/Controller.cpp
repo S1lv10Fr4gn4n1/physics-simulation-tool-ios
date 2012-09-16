@@ -11,7 +11,7 @@
 
 // TODO revise: variables for this place is correct?
 real scaleObject = 1.0f;
-real scaleZoom = 6.0f;
+real scaleZoom = ZOOM_INIT;
 real scalePanX = 5.0f;
 real scalePanY = 2.0f;
 real previousRadians = 0.0f;
@@ -92,7 +92,7 @@ void Controller::resizeScreen(real _width, real _height)
 
 void Controller::updateInformation(real _duration)
 {
-    this->mainEngine->updateInformation(0.005f); // TODO for debug
+    this->mainEngine->updateInformation(_duration);
 }
 
 void Controller::draw()
@@ -103,7 +103,7 @@ void Controller::draw()
 void Controller::stopSimulation()
 {
     this->mainEngine->stop();
-    scaleZoom = 1.0f;
+    scaleZoom = scaleZoom;
     this->mainEngine->zoom(scaleZoom);
 }
 
@@ -297,7 +297,7 @@ void Controller::oneTapThreeFingerDetected(real _x, real _y)
 //    delete previousVector;
 //    previousVector = NULL;
     
-    scaleZoom = 1.0f;
+    scaleZoom = ZOOM_INIT;
     this->mainEngine->zoom(scaleZoom);
 }
 

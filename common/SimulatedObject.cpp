@@ -132,6 +132,7 @@ void SimulatedObject::initialize()
     this->makeColorObject();
     this->makeColorVectors();
     this->initBBox(this->matrixTransformation);
+    this->calculateDerivedData();
 }
 
 void SimulatedObject::addVector3(Vector3 * Vector3)

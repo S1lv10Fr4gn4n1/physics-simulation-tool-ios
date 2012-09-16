@@ -15,10 +15,14 @@ class RigidBody {
 private:
     char * id;
     bool dirty;
+    
     real motion;
     bool awake;
     bool canSleep;
     
+    real restitution;
+    real friction;
+
     real mass;
     real angularDamping;
     real linearDamping;
@@ -44,11 +48,11 @@ public:
     RigidBody();
     ~RigidBody();
     void calculateDerivedData();
-    void addForce(const Vector3 * _force);
+    void addForce(const Vector3 * _force, bool _awakeUp=false);
     void addForceAtBodyPoint(const Vector3 * _force, const Vector3 * _point);
     void addForceAtPoint(const Vector3 * _force, const Vector3 * _point);
-    void addTorque(const Vector3 * _torque);
-    void addVelocity(const Vector3 * _velocity);
+    void addTorque(const Vector3 * _torque, bool _awakeUp=false);
+    void addVelocity(const Vector3 * _velocity, bool _awakeUp=false);
     void addRotation(const Vector3 * _rotation);
     
     void setInertiaTensor(const Matrix3 * _inertiaTensor);
@@ -115,5 +119,9 @@ public:
     void setCanSleep(bool _canSleep=true);
     bool isAwake();
     void setAwake(bool _awake=true);
+    real getRestitution();
+    void setRestitution(real _restitution);
+    real getFriction();
+    void setFriction(real _friction);
 };
 #endif

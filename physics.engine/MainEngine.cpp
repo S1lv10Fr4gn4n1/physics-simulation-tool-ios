@@ -20,8 +20,8 @@ MainEngine::MainEngine()
     this->ndc = new NDC();
     
     this->eyeX = 0.0f;
-    this->eyeY = 2.0f;
-    this->eyeZ = 6.0f;
+    this->eyeY = 0.0f;
+    this->eyeZ = 2.0f;
     
     this->centerX = 0.0f;
     this->centerY = 0.0f;
@@ -97,14 +97,13 @@ void MainEngine::updateInformation(real _duration)
         // update the object in coarse collision
         this->mainCollision->updateObject(object, _duration);
         
-        // mainEngine(this) translate object
-        this->translateSimulatedObject(object, object->getPosition());
-//        object->getGLTransform(object->getMatrixTransformation()); // TODO rever
+        object->getGLTransform(object->getMatrixTransformation());
         
         // remove objects that left the scene
-        if (real_abs(object->getPosition()->x) >= 4.0f ||
-            real_abs(object->getPosition()->y) >= 3.0f) {
-            this->mainCollision->deleteObject(object);
+        // TODO revise values
+        if (real_abs(object->getPosition()->x) >= 6.0f ||
+            real_abs(object->getPosition()->y) >= 6.0f ||
+            real_abs(object->getPosition()->z) >= 6.0f) {
             this->deleteSimulatedObject(object);
         }
     }
@@ -253,15 +252,9 @@ SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
     simulatedObject->setAngularDamping(0.8f);
     simulatedObject->setCanSleep(false);
     simulatedObject->setAwake();
-//    ForceRegistry::getInstance()->add(simulatedObject, new Gravity(new Vector3(0.0f, -9.8f)));
     
+    ForceRegistry::getInstance()->add(simulatedObject, new Gravity(new Vector3(0.0f, -9.8f)));
     
-// TODO revise
-//    cyclone::Matrix3 tensor;
-//    cyclone::real coeff = 0.4f*body->getMass()*radius*radius;
-//    tensor.setInertiaTensorCoeffs(coeff,coeff,coeff);
-//    body->setInertiaTensor(tensor);
-
     switch (_typeObject) {
         case CIRCLE:
         {
@@ -334,7 +327,6 @@ SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
             simulatedObject->setHalfSize(new Vector3(5.0f, 0.0f));
             simulatedObject->addVector3(new Vector3(-5.0f, 0.0f));
             simulatedObject->addVector3(new Vector3( 5.0f, 0.0f));
-            this->translateSimulatedObject(simulatedObject, simulatedObject->getPosition());
 //            simulatedObject->addVector3(new Vector3(-5.0f, -7.0f));
 //            simulatedObject->addVector3(new Vector3(-5.0f, -0.9f));
 //            simulatedObject->addVector3(new Vector3( 5.0f, -0.9f));
@@ -406,35 +398,55 @@ SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
     return simulatedObject;
 }
 
-void MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
+SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool _init)
 {
-    // TODO revise: values of initialization
     SimulatedObject * simulatedObject = new SimulatedObject();
     simulatedObject->setTypeObject(_typeObject);
-    simulatedObject->setLinearDamping(0.99f);  //getRand(0.9f));
-    simulatedObject->setAngularDamping(0.8f);  //getRand(0.9f));
-    simulatedObject->setPosition(new Vector3(0.0f, 0.0f, 0.0f));
+    simulatedObject->setLinearDamping(0.99f);
+    simulatedObject->setAngularDamping(0.8f);
+    simulatedObject->setCanSleep(false);
+    simulatedObject->setAwake();
 
-    // TODO revise: create ToqueForces
-    ForceRegistry::getInstance()->add(simulatedObject, new Gravity(new Vector3(0.0f, -9.8f)));
+    simulatedObject->setMass(2.0f);
+    simulatedObject->setRestitution(0.6f);
+    simulatedObject->setPosition(0.0f, 0.8f, 0.0f);
+    
+    simulatedObject->setSelected(true);
+    
+//    simulatedObject->setAcceleration(0.0f, -9.8f, 0.0f);
+    ForceRegistry::getInstance()->add(simulatedObject, new Gravity(new Vector3(0.0f, -9.8f), false));
     
     switch (_typeObject) {
         case SPHERE:
+        {
+            simulatedObject->setMode(TRIANGLE_STRIP);
             simulatedObject->setRadius(0.1f);
             simulatedObject->addAllVectors(this->createSphere(simulatedObject->getPosition(), simulatedObject->getRadius()));
             break;
-
+        }
         case BOX:
+        {
             simulatedObject->setHalfSize(0.1f, 0.1f, 0.1f);
+//            simulatedObject->setRotation(0.0f, 3.0f, 0.0f);
             simulatedObject->addAllVectors(this->createBox(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
-            break;
             
+//            Matrix3 * tensor = new Matrix3();
+//            tensor->setBlockInertiaTensor(simulatedObject->getHalfSize(), simulatedObject->getMass());
+//            simulatedObject->setInertiaTensor(tensor);
+//            delete tensor;
+//            tensor = NULL;
+            
+            break;
+        }
         case PLAN:
         {
+            simulatedObject->setSelected(false);
+            simulatedObject->setPosition(0.0f, 0.0f, 0.0f);
             simulatedObject->setMass(0.0f);
+            simulatedObject->setFriction(0.9f);
             simulatedObject->setMode(LINES);
             simulatedObject->setColorAux(0, 0, 0, 0);
-            simulatedObject->setPosition(0.0f, 1.0f, 0.0f);
+            simulatedObject->setHalfSize(3.0f, 0.0f, 3.0f);
             simulatedObject->addAllVectors(this->createPlan(simulatedObject->getPosition()));
             
             break;
@@ -457,12 +469,13 @@ void MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
         simulatedObject->setMode(TRIANGLES);
     }
     
-    if (simulatedObject->getRadius() == 0.0f) {
-        simulatedObject->setRadius(0.1f); // TODO revise: how get radius ?
+    if (_init) {
+        simulatedObject->initialize();
     }
-
-    simulatedObject->initialize();
+    
     this->world->addSimulatedObject(simulatedObject);
+    
+    return simulatedObject;
 }
 
 std::vector<Vector3 *> * MainEngine::createSphere(Vector3 * _origin, real _radius)
@@ -676,22 +689,10 @@ vector<Vector3 *> * MainEngine::paintQuadTree()
         vectors->push_back(new Vector3(-WIDTH_SCENE,  accumulator));
         vectors->push_back(new Vector3( WIDTH_SCENE, -accumulator));
         vectors->push_back(new Vector3(-WIDTH_SCENE, -accumulator));
-
-//        printf("linhas brancas\n");
-//        printf("%f, %f, %f, \n",  accumulator,  WIDTH_SCENE, 0.0f);
-//        printf("%f, %f, %f, \n",  accumulator, -WIDTH_SCENE, 0.0f);
-//        printf("%f, %f, %f, \n", -accumulator,  WIDTH_SCENE, 0.0f);
-//        printf("%f, %f, %f, \n", -accumulator, -WIDTH_SCENE, 0.0f);
-//        printf("%f, %f, %f, \n",  WIDTH_SCENE,  accumulator, 0.0f);
-//        printf("%f, %f, %f, \n", -WIDTH_SCENE,  accumulator, 0.0f);
-//        printf("%f, %f, %f, \n",  WIDTH_SCENE, -accumulator, 0.0f);
-//        printf("%f, %f, %f, \n", -WIDTH_SCENE, -accumulator, 0.0f);
-
     }
     
     return vectors;
 }
-
 
 vector<Vector3 *> * MainEngine::createCone()
 {

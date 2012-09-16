@@ -48,18 +48,6 @@ enum GLtype {
 };
 
 
-static real sleepEpsilon = ((real)0.3);
-
-static void setSleepEpsilon(real _sleepEpsilon)
-{
-    sleepEpsilon = _sleepEpsilon;
-}
-
-static real getSleepEpsilon()
-{
-    return sleepEpsilon;
-}
-
 /***************************** Color *****************************/
 class Color {
 public:
@@ -170,6 +158,8 @@ public:
     void setComponents(const Vector3 * _compOne, const Vector3 * _compTwo, const Vector3 * _compThree);
     Vector3 * transformTranspose(const Vector3 * _vector) const;
     void setSkewSymmetric(const Vector3 * _vector);
+    void setBlockInertiaTensor(const Vector3 * _halfSizes, real _mass);
+    void setInertiaTensorCoeffs(real _ix, real _iy, real _iz, real _ixy=0, real _ixz=0, real _iyz=0);
 };
 
 
@@ -214,7 +204,7 @@ static inline real * MatrixMakeIdentity()
     return matrix;
 }
 
-//static real * MatrixIdentity = MatrixMakeIdentity();
+const static real * MatrixIdentity = MatrixMakeIdentity();
 
 static inline void MatrixTransformIdentity(real ** matrix)
 {
@@ -223,8 +213,34 @@ static inline void MatrixTransformIdentity(real ** matrix)
 		*(*matrix+i) = 0.0f;
 	}
 	
-	*(*matrix+0) = *(*matrix+5) = *(*matrix+10) = *(*matrix+15) = 1.0;
+	*(*matrix+0) = *(*matrix+5) = *(*matrix+10) = *(*matrix+15) = 1.0f;
 }
+
+static inline void MatrixTransformIdentity(real * matrix)
+{
+    
+    for (int i = 0; i < 16; i++) {
+		*(matrix+i) = 0.0f;
+	}
+	
+	*(matrix+0) = *(matrix+5) = *(matrix+10) = *(matrix+15) = 1.0f;
+}
+
+static inline real * MatrixMultiplyRigidBody(real * _matrixLeft, real * _matrixRight)
+{
+	real * matrixResult = new real[12];
+	
+    for (int i = 0; i < 12; i++) {
+        matrixResult[i] = _matrixLeft[i % 4] *        _matrixRight[i / 4 * 4] +
+                          _matrixLeft[(i % 4) + 4]  * _matrixRight[i / 4 * 4 + 1] +
+                          _matrixLeft[(i % 4) + 8]  * _matrixRight[i / 4 * 4 + 2] +
+                          _matrixLeft[(i % 4) + 12] * _matrixRight[i / 4 * 4 + 3];
+    }
+    
+    
+	return matrixResult;
+}
+
 
 static inline real * MatrixMultiply(real * _matrixLeft, real * _matrixRight)
 {
@@ -241,6 +257,7 @@ static inline real * MatrixMultiply(real * _matrixLeft, real * _matrixRight)
 	return matrixResult;
 }
 
+
 static inline void MatrixTranslate(real * matrix, real _x, real _y, real _z)
 {
 	// translate (tx, ty, tz)  matrix identity
@@ -250,22 +267,37 @@ static inline void MatrixTranslate(real * matrix, real _x, real _y, real _z)
 	//matrix[15] = _w;
 }
 
-static inline void MatrixTranslate(real * matrix, real _x, real _y)
+static inline void MatrixTranslateRigidBody(real * matrix, real _x, real _y, real _z)
 {
-    MatrixTranslate(matrix, _x, _y, 0.0f);
+	// translate (tx, ty, tz)  matrix rigidbody
+	matrix[3] = _x;
+	matrix[7] = _y;
+	matrix[11] = _z;
+	//matrix[15] = _w;
 }
+
+static inline void MatrixTranslateRigidBody(real * matrix, Vector3 * _vector)
+{
+    MatrixTranslateRigidBody(matrix, _vector->x, _vector->y, _vector->z);
+}
+
+
+//static inline void MatrixTranslate(real * matrix, real _x, real _y)
+//{
+//    MatrixTranslate(matrix, _x, _y, 0.0f);
+//}
 
 static inline void MatrixTranslate(real * matrix, Vector3 * _vector)
 {
     MatrixTranslate(matrix, _vector->x, _vector->y, _vector->z);
 }
 
-static inline real * MatrixMakeTranslate(real _x, real _y)
-{
-    real * matrix = MatrixMakeIdentity();
-    MatrixTranslate(matrix, _x, _y);
-    return matrix;
-}
+//static inline real * MatrixMakeTranslate(real _x, real _y)
+//{
+//    real * matrix = MatrixMakeIdentity();
+//    MatrixTranslate(matrix, _x, _y);
+//    return matrix;
+//}
 
 static inline void MatrixScale(real * matrix, real _x, real _y, real _z)
 {
@@ -287,45 +319,45 @@ static inline real * MatrixMakeScale(real _x, real _y)
     return matrix;
 }
 
-static inline real * MatrixMakeScale(real _x, real _y, real _z)
-{
-    real * matrix = MatrixMakeIdentity();
-    MatrixScale(matrix, _x, _y, _z);
-    return matrix;
-}
+//static inline real * MatrixMakeScale(real _x, real _y, real _z)
+//{
+//    real * matrix = MatrixMakeIdentity();
+//    MatrixScale(matrix, _x, _y, _z);
+//    return matrix;
+//}
 
-static inline real * MatrixMakeXRotation(real radians)
-{
-    real cos = cosf(radians);
-    real sin = sinf(radians);
-    
-    real * matrix = MatrixMakeIdentity();
-    matrix[5] = cos;
-    matrix[6] = sin;
-    matrix[9] = -sin;
-    matrix[10] = cos;
-    
-    return matrix;
-}
+//static inline real * MatrixMakeXRotation(real radians)
+//{
+//    real cos = cosf(radians);
+//    real sin = sinf(radians);
+//    
+//    real * matrix = MatrixMakeIdentity();
+//    matrix[5] = cos;
+//    matrix[6] = sin;
+//    matrix[9] = -sin;
+//    matrix[10] = cos;
+//    
+//    return matrix;
+//}
 
-static inline real * MatrixMakeYRotation(real radians)
-{
-    real cos = cosf(radians);
-    real sin = sinf(radians);
-    
-    real * matrix = MatrixMakeIdentity();
-    matrix[0] = cos;
-    matrix[2] = -sin;
-    matrix[8] = sin;
-    matrix[10] = cos;
-    
-    return matrix;
-}
+//static inline real * MatrixMakeYRotation(real radians)
+//{
+//    real cos = cosf(radians);
+//    real sin = sinf(radians);
+//    
+//    real * matrix = MatrixMakeIdentity();
+//    matrix[0] = cos;
+//    matrix[2] = -sin;
+//    matrix[8] = sin;
+//    matrix[10] = cos;
+//    
+//    return matrix;
+//}
 
-static inline real * MatrixMakeZRotation(real radians)
+static inline real * MatrixMakeZRotation(real _radians)
 {
-    real cos = cosf(radians);
-    real sin = sinf(radians);
+    real cos = cosf(_radians);
+    real sin = sinf(_radians);
     
     real * matrix = MatrixMakeIdentity();
     matrix[0] = cos;
@@ -335,6 +367,22 @@ static inline real * MatrixMakeZRotation(real radians)
     
     return matrix;
 }
+
+
+static inline real * MatrixMakeZRotationRigidBody(real _radians)
+{
+    real cos = cosf(_radians);
+    real sin = sinf(_radians);
+    
+    real * matrix = MatrixMakeIdentity();
+    matrix[0] = cos;
+    matrix[4] = sin;
+    matrix[1] = -sin;
+    matrix[5] = cos;
+    
+    return matrix;
+}
+
 
 static inline Vector3 * MatrixTransformPoint(const real * matrix, const Vector3 * _vector)
 {
@@ -374,7 +422,7 @@ static inline real * MatrixMakeOrtho(real left, real right, real bottom, real to
 
 static inline void MatrixMakePerspective(real * _matrix, real _fovyRadians, real _aspect, real _nearZ, real _farZ)
 {
-    float cotan = 1.0f / real_tan(_fovyRadians / 2.0f);
+    real cotan = 1.0f / real_tan(_fovyRadians / 2.0f);
     
     _matrix[0] = cotan / _aspect;
     _matrix[1] = 0.0f;
@@ -402,8 +450,8 @@ static inline real * MatrixMakePerspective(real _fovyRadians, real _aspect, real
 }
 
 static inline void MatrixMakeLookAt(real * _matrix, float _eyeX, float _eyeY, float _eyeZ,
-                                       float _centerX, float _centerY, float _centerZ,
-                                       float _upX, float _upY, float _upZ)
+                                    float _centerX, float _centerY, float _centerZ,
+                                    float _upX, float _upY, float _upZ)
 {
     Vector3 * ev = new Vector3( _eyeX, _eyeY, _eyeZ);
     Vector3 * cv = new Vector3(_centerX, _centerY, _centerZ);
@@ -451,17 +499,16 @@ static inline void MatrixMakeLookAt(real * _matrix, float _eyeX, float _eyeY, fl
 }
 
 static inline real * MatrixMakeLookAt(float _eyeX, float _eyeY, float _eyeZ,
-                                    float _centerX, float _centerY, float _centerZ,
-                                    float _upX, float _upY, float _upZ)
+                                      float _centerX, float _centerY, float _centerZ,
+                                      float _upX, float _upY, float _upZ)
 {
     real * matrix = new real[16];
     MatrixMakeLookAt(matrix, _eyeX, _eyeY, _eyeZ, _centerX, _centerY, _centerZ, _upX, _upY, _upZ);
     return matrix;
 }
 
-
-static inline void _calculateTransformMatrix(Matrix4 * _transformMatrix, const Vector3 * _position,
-                                             const Quaternion * _orientation)
+static inline void calculateTransformMatrix(Matrix4 * _transformMatrix, const Vector3 * _position,
+                                            const Quaternion * _orientation)
 {
     _transformMatrix->data[0] = 1 - 2*_orientation->j*_orientation->j - 2*_orientation->k*_orientation->k;
     _transformMatrix->data[1] = 2*_orientation->i*_orientation->j - 2*_orientation->r*_orientation->k;
@@ -477,63 +524,63 @@ static inline void _calculateTransformMatrix(Matrix4 * _transformMatrix, const V
     _transformMatrix->data[11] = _position->z;
 }
 
-static inline void _transformInertiaTensor(Matrix3 * _iitWorld, const Quaternion * _quaternion,
-                                           const Matrix3 * _iitBody, const Matrix4 * _rotmat)
+static inline void transformInertiaTensor(Matrix3 * _iitWorld, const Quaternion * _quaternion,
+                                          const Matrix3 * _iitBody, const Matrix4 * _rotmat)
 {
     real t4 = _rotmat->data[0]*_iitBody->data[0]+
-    _rotmat->data[1]*_iitBody->data[3]+
-    _rotmat->data[2]*_iitBody->data[6];
+              _rotmat->data[1]*_iitBody->data[3]+
+              _rotmat->data[2]*_iitBody->data[6];
     real t9 = _rotmat->data[0]*_iitBody->data[1]+
-    _rotmat->data[1]*_iitBody->data[4]+
-    _rotmat->data[2]*_iitBody->data[7];
+              _rotmat->data[1]*_iitBody->data[4]+
+              _rotmat->data[2]*_iitBody->data[7];
     real t14 = _rotmat->data[0]*_iitBody->data[2]+
-    _rotmat->data[1]*_iitBody->data[5]+
-    _rotmat->data[2]*_iitBody->data[8];
+               _rotmat->data[1]*_iitBody->data[5]+
+               _rotmat->data[2]*_iitBody->data[8];
     real t28 = _rotmat->data[4]*_iitBody->data[0]+
-    _rotmat->data[5]*_iitBody->data[3]+
-    _rotmat->data[6]*_iitBody->data[6];
+               _rotmat->data[5]*_iitBody->data[3]+
+               _rotmat->data[6]*_iitBody->data[6];
     real t33 = _rotmat->data[4]*_iitBody->data[1]+
-    _rotmat->data[5]*_iitBody->data[4]+
-    _rotmat->data[6]*_iitBody->data[7];
+               _rotmat->data[5]*_iitBody->data[4]+
+               _rotmat->data[6]*_iitBody->data[7];
     real t38 = _rotmat->data[4]*_iitBody->data[2]+
-    _rotmat->data[5]*_iitBody->data[5]+
-    _rotmat->data[6]*_iitBody->data[8];
+               _rotmat->data[5]*_iitBody->data[5]+
+               _rotmat->data[6]*_iitBody->data[8];
     real t52 = _rotmat->data[8]*_iitBody->data[0]+
-    _rotmat->data[9]*_iitBody->data[3]+
-    _rotmat->data[10]*_iitBody->data[6];
+               _rotmat->data[9]*_iitBody->data[3]+
+               _rotmat->data[10]*_iitBody->data[6];
     real t57 = _rotmat->data[8]*_iitBody->data[1]+
-    _rotmat->data[9]*_iitBody->data[4]+
-    _rotmat->data[10]*_iitBody->data[7];
+               _rotmat->data[9]*_iitBody->data[4]+
+               _rotmat->data[10]*_iitBody->data[7];
     real t62 = _rotmat->data[8]*_iitBody->data[2]+
-    _rotmat->data[9]*_iitBody->data[5]+
-    _rotmat->data[10]*_iitBody->data[8];
+               _rotmat->data[9]*_iitBody->data[5]+
+               _rotmat->data[10]*_iitBody->data[8];
     _iitWorld->data[0] = t4*_rotmat->data[0]+
-    t9*_rotmat->data[1]+
-    t14*_rotmat->data[2];
+                         t9*_rotmat->data[1]+
+                         t14*_rotmat->data[2];
     _iitWorld->data[1] = t4*_rotmat->data[4]+
-    t9*_rotmat->data[5]+
-    t14*_rotmat->data[6];
+                         t9*_rotmat->data[5]+
+                         t14*_rotmat->data[6];
     _iitWorld->data[2] = t4*_rotmat->data[8]+
-    t9*_rotmat->data[9]+
-    t14*_rotmat->data[10];
+                         t9*_rotmat->data[9]+
+                         t14*_rotmat->data[10];
     _iitWorld->data[3] = t28*_rotmat->data[0]+
-    t33*_rotmat->data[1]+
-    t38*_rotmat->data[2];
+                         t33*_rotmat->data[1]+
+                         t38*_rotmat->data[2];
     _iitWorld->data[4] = t28*_rotmat->data[4]+
-    t33*_rotmat->data[5]+
-    t38*_rotmat->data[6];
+                         t33*_rotmat->data[5]+
+                         t38*_rotmat->data[6];
     _iitWorld->data[5] = t28*_rotmat->data[8]+
-    t33*_rotmat->data[9]+
-    t38*_rotmat->data[10];
+                         t33*_rotmat->data[9]+
+                         t38*_rotmat->data[10];
     _iitWorld->data[6] = t52*_rotmat->data[0]+
-    t57*_rotmat->data[1]+
-    t62*_rotmat->data[2];
+                         t57*_rotmat->data[1]+
+                         t62*_rotmat->data[2];
     _iitWorld->data[7] = t52*_rotmat->data[4]+
-    t57*_rotmat->data[5]+
-    t62*_rotmat->data[6];
+                         t57*_rotmat->data[5]+
+                         t62*_rotmat->data[6];
     _iitWorld->data[8] = t52*_rotmat->data[8]+
-    t57*_rotmat->data[9]+
-    t62*_rotmat->data[10];
+                         t57*_rotmat->data[9]+
+                         t62*_rotmat->data[10];
 }
 
 static void MakeArrayVector3(Vector3 * _array[], unsigned _size)
@@ -553,31 +600,33 @@ static void DeleteArrayVector3(Vector3 * _array[], unsigned _size)
     _array = NULL;
 }
 
-static void MakeArrayMatrix3(Matrix3 * _array[], int _size)
+static inline void MakeArrayMatrix3(Matrix3 * _array[], int _size)
 {
     for (int i=0; i<_size; i++) {
         _array[i] = new Matrix3();
     }
 }
 
-static void DeleteArrayMatrix3(Matrix3 * _array[], int _size)
+static inline void DeleteArrayMatrix3(Matrix3 * _array[], int _size)
 {
     for (int i=0; i<_size; i++) {
-        delete _array[i];
-        _array[i] = NULL;
+        if (_array[i]) {
+            delete _array[i];
+            _array[i] = NULL;
+        }
     }
     
     _array = NULL;
 }
 
-static void MakeArrayMatrix4(Matrix4 * _array[], int _size)
+static inline void MakeArrayMatrix4(Matrix4 * _array[], int _size)
 {
     for (int i=0; i<_size; i++) {
         _array[i] = new Matrix4();
     }
 }
 
-static void DeleteArrayMatrix4(Matrix4 * _array[], int _size)
+static inline void DeleteArrayMatrix4(Matrix4 * _array[], int _size)
 {
     for (int i=0; i<_size; i++) {
         delete _array[i];

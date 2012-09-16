@@ -63,7 +63,7 @@ public:
     void deleteAllSimulatedObjects();
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
     SimulatedObject * makeSimulatedObject2D(TypeObject _typeObject);
-    void makeSimulatedObject3D(TypeObject _typeObject);
+    SimulatedObject * makeSimulatedObject3D(TypeObject _typeObject, bool _init=true);
     
     SimulatedObject * selectedSimulatedObject(Vector3 * _vector);
 };
