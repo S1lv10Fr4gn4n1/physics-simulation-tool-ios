@@ -43,10 +43,10 @@ public:
 
 
 class Gravity : public ForceGenerator {
-    Vector3 * gravity;
+    Vector3 gravity;
     bool considerMass;
 public:
-    Gravity(Vector3 * _gravity, bool _considerMass=true);
+    Gravity(const Vector3 &_gravity, bool _considerMass=true);
     ~Gravity();
     virtual void updateForce(RigidBody * _body, real _duration);
     void updateGravity(real _gravity);
@@ -54,13 +54,13 @@ public:
 
 
 class Spring : public ForceGenerator {
-    Vector3 * connectionPoint;
-    Vector3 * otherConnectionPoint;
+    Vector3 connectionPoint;
+    Vector3 otherConnectionPoint;
     RigidBody * other;
     real springConstant;
     real restLength;
 public:
-    Spring(Vector3 * _localConnectionPt, RigidBody * _other, Vector3 * _otherConnectionPt,
+    Spring(const Vector3 &_localConnectionPt, RigidBody * _other, const Vector3 &_otherConnectionPt,
            real _springConstant, real _restLength);
     ~Spring();
     virtual void updateForce(RigidBody * _body, real _duration);

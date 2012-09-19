@@ -36,7 +36,7 @@ private:
     void solverPositions(std::vector<Contact *> * _contacts, real _duration);
     void solverVelocities(std::vector<Contact *> * _contacts, real _duration);
 public:
-    ContactResolver(real _positionEpsilon=0.01f, real _velocityEpsilon=0.01f);
+    ContactResolver(real _positionEpsilon=0.007f, real _velocityEpsilon=0.01f);
     void solverContacts(std::vector<Contact *> * _contacts, real _duration);
 };
 

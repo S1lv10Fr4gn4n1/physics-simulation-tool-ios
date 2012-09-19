@@ -15,9 +15,9 @@
 class World {
 private:
     std::vector<SimulatedObject *> * simulatedObjects;
-    real * orthoMatrix;
-    real * lookAtMatrix;
-    real * perspectiveMatrix;
+    Matrix4x4 orthoMatrix;
+    Matrix4x4 lookAtMatrix;
+    Matrix4x4 perspectiveMatrix;
 protected:
     
 public:
@@ -28,9 +28,11 @@ public:
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
     void deleteAllSimulatedObject();
     
-    real * getOrthoMatrix();
-    real * getLookAtMatrix();
-    real * getPerspectiveMatrix();
+    Matrix4x4 getOrthoMatrix();
+    Matrix4x4 getLookAtMatrix();
+    void setLookAtMatrix(Matrix4x4 _matrix);
+    Matrix4x4 getPerspectiveMatrix();
+    void setPerspectiveMatrix(Matrix4x4 _matrix);
     std::vector<SimulatedObject *> * getSimulatedObjects();
 };
 

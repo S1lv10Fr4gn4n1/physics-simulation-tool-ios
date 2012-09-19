@@ -402,13 +402,13 @@
 		B902353015FAA498008ABCCA /* Test.Physical.Simulation.Tool */ = {
 			isa = PBXGroup;
 			children = (
-				B902356215FAA7A0008ABCCA /* TestController.h */,
-				B902356115FAA7A0008ABCCA /* TestController.cpp */,
 				B902353915FAA498008ABCCA /* AppDelegate.h */,
 				B902353A15FAA498008ABCCA /* AppDelegate.m */,
 				B902353C15FAA498008ABCCA /* MainStoryboard.storyboard */,
 				B902354315FAA498008ABCCA /* TestViewController.h */,
 				B902354F15FAA62D008ABCCA /* TestViewController.m */,
+				B902356215FAA7A0008ABCCA /* TestController.h */,
+				B902356115FAA7A0008ABCCA /* TestController.cpp */,
 				B902353115FAA498008ABCCA /* Supporting Files */,
 			);
 			path = Test.Physical.Simulation.Tool;

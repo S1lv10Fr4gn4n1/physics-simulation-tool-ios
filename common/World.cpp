@@ -13,13 +13,6 @@ using namespace std;
 World::World()
 {
     this->simulatedObjects = new vector<SimulatedObject *>();
-
-    this->orthoMatrix = new real[16];
-    MatrixTransformIdentity(&this->orthoMatrix);
-    this->lookAtMatrix = new real[16];
-    MatrixTransformIdentity(&this->lookAtMatrix);
-    this->perspectiveMatrix = new real[16];
-    MatrixTransformIdentity(&this->perspectiveMatrix);
 }
 
 World::~World()
@@ -37,22 +30,7 @@ World::~World()
         delete this->simulatedObjects;
     }
     
-    if (this->orthoMatrix) {
-        delete [] this->orthoMatrix;
-    }
-    
-    if (this->lookAtMatrix) {
-        delete [] this->lookAtMatrix;
-    }
-    
-    if (this->perspectiveMatrix) {
-        delete [] this->perspectiveMatrix;
-    }
-    
     this->simulatedObjects = NULL;
-    this->orthoMatrix = NULL;
-    this->lookAtMatrix = NULL;
-    this->perspectiveMatrix = NULL;
 }
 
 void World::addSimulatedObject(SimulatedObject * _simulatedObject)
@@ -90,17 +68,27 @@ std::vector<SimulatedObject *> * World::getSimulatedObjects()
     return this->simulatedObjects;
 }
 
-real * World::getOrthoMatrix()
+Matrix4x4 World::getOrthoMatrix()
 {
     return this->orthoMatrix;
 }
 
-real * World::getLookAtMatrix()
+Matrix4x4 World::getLookAtMatrix()
 {
     return this->lookAtMatrix;
 }
 
-real * World::getPerspectiveMatrix()
+void World::setLookAtMatrix(Matrix4x4 _matrix)
+{
+    this->lookAtMatrix = _matrix;
+}
+
+Matrix4x4 World::getPerspectiveMatrix()
 {
     return this->perspectiveMatrix;
+}
+
+void World::setPerspectiveMatrix(Matrix4x4 _matrix)
+{
+    this->perspectiveMatrix = _matrix;
 }

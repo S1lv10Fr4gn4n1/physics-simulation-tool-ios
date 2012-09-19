@@ -51,6 +51,6 @@ typedef float real;
 #define ZOOM_INIT 1.0f
 #define PAN_SCALE 0.005f
 
-#define SLEEP_EPSILON 0.2f
+#define SLEEP_EPSILON 0.06f
 
 #endif

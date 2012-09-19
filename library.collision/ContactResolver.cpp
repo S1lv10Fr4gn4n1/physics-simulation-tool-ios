@@ -21,7 +21,7 @@ void ContactResolver::solverContacts(std::vector<Contact *> * _contacts, real _d
     }
     
     if (this->velocityIterations <= 0.0f && this->positionIterations <= 0.0f &&
-        this->positionEpsilon <= 0.0f && this->positionEpsilon <= 0.0f) {
+        this->positionEpsilon <= 0.0f && this->velocityEpsilon <= 0.0f) {
         return;
     }
 
@@ -46,17 +46,14 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
 {
     unsigned i;
     unsigned index;
-    Vector3 * velocityChange[2];
-    Vector3 * rotationChange[2];
+    Vector3 velocityChange[2];
+    Vector3 rotationChange[2];
     real rotationAmount[2];
     real max;
-    Vector3 * contactPoint;
-    
-    MakeArrayVector3(velocityChange, 2);
-    MakeArrayVector3(rotationChange, 2);
+    Vector3 contactPoint;
     
     this->positionIterationsUsed = 0;
-    this->positionIterations = _contacts->size() * 4; // TODO revise
+    this->positionIterations = _contacts->size(); // TODO revise or 4
     
     // iteratively resolve interpenetration in order of severity.
     while (this->positionIterationsUsed < this->positionIterations) {
@@ -85,49 +82,43 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
         for (i=0; i<_contacts->size(); i++) {
             if (_contacts->at(i)->body[0]) {
                 if (_contacts->at(i)->body[0] == _contacts->at(index)->body[0]) {
-                    contactPoint = rotationChange[0]->vectorProduct(_contacts->at(i)->relativeContactPosition[0]);
-                    *contactPoint += velocityChange[0];
-                    _contacts->at(i)->penetration -= rotationAmount[0] * contactPoint->scalarProduct(_contacts->at(i)->contactNormal);
+                    contactPoint = rotationChange[0].vectorProduct(_contacts->at(i)->relativeContactPosition[0]);
+                    contactPoint += velocityChange[0];
+                    _contacts->at(i)->penetration -= rotationAmount[0] * contactPoint.scalarProduct(_contacts->at(i)->contactNormal);
                     
                 } else if (_contacts->at(i)->body[0] == _contacts->at(index)->body[1]) {
-                    contactPoint = rotationChange[1]->vectorProduct(_contacts->at(i)->relativeContactPosition[0]);
-                    *contactPoint += velocityChange[1];
-                    _contacts->at(i)->penetration -= rotationAmount[1] * contactPoint->scalarProduct(_contacts->at(i)->contactNormal);
+                    contactPoint = rotationChange[1].vectorProduct(_contacts->at(i)->relativeContactPosition[0]);
+                    contactPoint += velocityChange[1];
+                    _contacts->at(i)->penetration -= rotationAmount[1] * contactPoint.scalarProduct(_contacts->at(i)->contactNormal);
                 }
             }
             
             if (_contacts->at(i)->body[1]) {
                 if (_contacts->at(i)->body[1] == _contacts->at(index)->body[0]) {
-                    contactPoint = rotationChange[0]->vectorProduct(_contacts->at(i)->relativeContactPosition[1]);
-                    *contactPoint += velocityChange[0];
-                    _contacts->at(i)->penetration += rotationAmount[0] * contactPoint->scalarProduct(_contacts->at(i)->contactNormal);
+                    contactPoint = rotationChange[0].vectorProduct(_contacts->at(i)->relativeContactPosition[1]);
+                    contactPoint += velocityChange[0];
+                    _contacts->at(i)->penetration += rotationAmount[0] * contactPoint.scalarProduct(_contacts->at(i)->contactNormal);
                     
                 } else if (_contacts->at(i)->body[1] == _contacts->at(index)->body[1]) {
-                    contactPoint = rotationChange[1]->vectorProduct(_contacts->at(i)->relativeContactPosition[1]);
-                    *contactPoint += velocityChange[1];
-                    _contacts->at(i)->penetration += rotationAmount[1] * contactPoint->scalarProduct(_contacts->at(i)->contactNormal);
+                    contactPoint = rotationChange[1].vectorProduct(_contacts->at(i)->relativeContactPosition[1]);
+                    contactPoint += velocityChange[1];
+                    _contacts->at(i)->penetration += rotationAmount[1] * contactPoint.scalarProduct(_contacts->at(i)->contactNormal);
                 }
             }
         }
         
         this->positionIterationsUsed++;
     }
-    
-    DeleteArrayVector3(velocityChange, 2);
-    DeleteArrayVector3(rotationChange, 2);
 }
 
 void ContactResolver::solverVelocities(std::vector<Contact *> * _contacts, real _duration)
 {
-    Vector3 * velocityChange[2];
-    Vector3 * rotationChange[2];
-    Vector3 * deltaVel = new Vector3();
-    
-    MakeArrayVector3(velocityChange, 2);
-    MakeArrayVector3(rotationChange, 2);
+    Vector3 velocityChange[2];
+    Vector3 rotationChange[2];
+    Vector3 deltaVel;
     
     this->velocityIterationsUsed = 0;
-    this->velocityIterations = _contacts->size() * 8;
+    this->velocityIterations = _contacts->size();
     
     // iteratively handle impacts in order of severity.
     while (this->velocityIterationsUsed < this->velocityIterations) {
@@ -152,7 +143,7 @@ void ContactResolver::solverVelocities(std::vector<Contact *> * _contacts, real 
         // do the resolution on the contact that came out top.
         _contacts->at(index)->applyVelocityChange(velocityChange, rotationChange);
         
-        // With the change in velocity of the two bodies, the update of
+        // with the change in velocity of the two bodies, the update of
         // contact velocities means that some of the relative closing
         // velocities need recomputing.
         for (unsigned i=0; i<_contacts->size(); i++) {
@@ -162,11 +153,11 @@ void ContactResolver::solverVelocities(std::vector<Contact *> * _contacts, real 
                     // check for a match with each body in the newly resolved contact
                     for (unsigned d=0; d < 2; d++) {
                         if (_contacts->at(i)->body[b] == _contacts->at(index)->body[d]) {
-                            deltaVel = *velocityChange[d] + rotationChange[d]->vectorProduct(_contacts->at(i)->relativeContactPosition[b]);
+                            deltaVel = velocityChange[d] + rotationChange[d].vectorProduct(_contacts->at(i)->relativeContactPosition[b]);
                             
                             // the sign of the change is negative if we're dealing
                             // with the second body in a contact.
-                            *_contacts->at(i)->contactVelocity += *_contacts->at(i)->contactToWorld->transformTranspose(deltaVel) * (b ? -1 : 1);
+                            _contacts->at(i)->contactVelocity += _contacts->at(i)->contactToWorld.transformTranspose(deltaVel) * (b ? -1 : 1);
                             _contacts->at(i)->calculateDesiredDeltaVelocity(_duration);
                         }
                     }
@@ -175,11 +166,4 @@ void ContactResolver::solverVelocities(std::vector<Contact *> * _contacts, real 
         	this->velocityIterationsUsed++;
         }
     }
-    
-    if (deltaVel) {
-        delete deltaVel;
-        deltaVel = NULL;
-    }
-    DeleteArrayVector3(velocityChange, 2);
-    DeleteArrayVector3(rotationChange, 2);
 }

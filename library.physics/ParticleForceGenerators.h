@@ -43,9 +43,9 @@ public:
 
 class ParticleGravity : public ParticleForceGenerator {
 private:
-    Vector3 * gravity;
+    Vector3 gravity;
 public:
-    ParticleGravity(Vector3 * _gravity);
+    ParticleGravity(const Vector3 &_gravity);
     ~ParticleGravity();
     virtual void updateForce(Particle * _particle, real _duration);
     void updateGravity(real _value);
@@ -79,15 +79,15 @@ public:
 
 class ParticleAnchoredSpring : public ParticleForceGenerator {
 private:
-    Vector3 * anchor;
+    Vector3 anchor;
     real springConstant;
     real restLength;
 public:
-    ParticleAnchoredSpring(Vector3 * _anchor, real _springConstant, real _restLength);
+    ParticleAnchoredSpring(const Vector3 &_anchor, real _springConstant, real _restLength);
     ~ParticleAnchoredSpring();
     virtual void updateForce(Particle * _particle, real _duration);
     
-    void setAnchor(Vector3 * _anchor);
+    void setAnchor(const Vector3 &_anchor);
 };
 
 
@@ -103,15 +103,15 @@ public:
 
 
 class ParticleAnchoredBungee : public ParticleForceGenerator {
-    Vector3 * anchor;
+    Vector3 anchor;
     real springConstant;
     real restLength;
 public:
-    ParticleAnchoredBungee(Vector3 * _anchor, real _springConstant, real _restLength);
+    ParticleAnchoredBungee(const Vector3 &_anchor, real _springConstant, real _restLength);
     ~ParticleAnchoredBungee();
     virtual void updateForce(Particle * _particle, real _duration);
     
-    void setAnchor(Vector3 * _anchor);
+    void setAnchor(const Vector3 &_anchor);
 };
 
 
@@ -135,11 +135,11 @@ public:
 
 // a force generator that fakes a stiff spring force, and where one end is attached to a fixed point in space.
 class ParticleFakeStiffSpring : public ParticleForceGenerator {
-    Vector3 * anchor;
+    Vector3 anchor;
     real springConstant;
     real damping;
 public:
-    ParticleFakeStiffSpring(Vector3 * _anchor, real _springConstant, real _damping);
+    ParticleFakeStiffSpring(const Vector3 &_anchor, real _springConstant, real _damping);
     ~ParticleFakeStiffSpring();
     virtual void updateForce(Particle * _particle, real _duration);
 };

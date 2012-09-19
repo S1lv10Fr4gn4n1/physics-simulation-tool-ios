@@ -92,7 +92,7 @@ void TestController::resizeScreen(real _width, real _height)
 
 void TestController::updateInformation(real _duration)
 {
-    this->mainEngine->updateInformation(0.005f);
+    this->mainEngine->updateInformation(0.02f);
 }
 
 void TestController::draw()
@@ -342,8 +342,14 @@ void TestController::createScene()
 {
     this->mainEngine->makeSimulatedObject3D(PLAN);
     SimulatedObject *box = this->mainEngine->makeSimulatedObject3D(BOX, false);
-//    box->setPosition(0.0f, 0.8f, 0.0f);
-//    box->setRotation(2.0f, 0.0f, 0.0f);
+    box->setPosition(0.2f, 0.8f, 0.2f);
+//    box->setRotation(1.0f, 0.0f, 0.0f);
     box->initialize();
+
+//    SimulatedObject * sphere = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+//    sphere->setVelocity(1.0f, 0.0f, 0.0f);
+//    sphere->initialize();
+
+//    this->mainEngine->makeSimulatedObject3D(BOX);
 //    this->mainEngine->makeSimulatedObject3D(SPHERE);
 }

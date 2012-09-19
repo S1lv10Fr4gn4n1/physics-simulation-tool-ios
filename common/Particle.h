@@ -17,17 +17,16 @@ private:
     real mass;
     real inverseMass;
     real damping;
-protected:
-    Vector3 * position;
-    Vector3 * acceleration;
-    Vector3 * velocity;
-    Vector3 * forceAccum; 
+    Vector3 position;
+    Vector3 acceleration;
+    Vector3 velocity;
+    Vector3 forceAccum;
 public:
     Particle();
     ~Particle();
     
     void clearAccumulator();
-    void addForce(Vector3 * _force);
+    void addForce(const Vector3 &_force);
     bool hasFiniteMass();
     
     real getMass();
@@ -35,18 +34,18 @@ public:
     real getInverseMass();
     real getDamping();
     void setDamping(real _damping);
-    Vector3 * getPosition();
-    void setPosition(Vector3 * _position);
+    Vector3 getPosition();
+    void setPosition(const Vector3 &_position);
     void setPosition(real _x, real _y, real _z);
     void setPosition(real _x, real _y);
-    Vector3 * getAcceleration();
-    void setAcceleration(Vector3 * _acceleration);
+    Vector3 getAcceleration();
+    void setAcceleration(const Vector3 &_acceleration);
     void setAcceleration(real _x, real _y, real _z);
     void setAcceleration(real _x, real _y);
-    Vector3 * getVelocity();
-    void setVelocity(Vector3 * _velocity);
+    Vector3 getVelocity();
+    void setVelocity(const Vector3 &_velocity);
     void setVelocity(real _x, real _y, real _z);
     void setVelocity(real _x, real _y);
-    Vector3 * getForceAccum();
+    Vector3 getForceAccum();
 };
 #endif

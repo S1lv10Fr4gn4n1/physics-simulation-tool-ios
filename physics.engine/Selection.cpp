@@ -8,26 +8,16 @@
 
 #include "Selection.h"
 
-int countObjectsRight = 0;
-unsigned long next = 0;
-real ti = 0.0f;
-real xi = 0.0f;
-Vector3 * p1 = NULL;
-Vector3 * p2 = NULL;
-Vector3 * p1Aux = NULL;
-Vector3 * p2Aux = NULL;
-
-
 bool inBBox(SimulatedObject * _simulatedObject, Vector3 * _vector)
 {
-    _simulatedObject->initBBox(_simulatedObject->getMatrixTransformation());
+    _simulatedObject->initBBox(_simulatedObject->getMatrixTransformation().data);
 
     bool result = false;
     
-    if (_vector->x < _simulatedObject->getBBox()->max->x &&
-        _vector->x > _simulatedObject->getBBox()->min->x &&
-        _vector->y < _simulatedObject->getBBox()->max->y &&
-        _vector->y > _simulatedObject->getBBox()->min->y) {
+    if (_vector->x < _simulatedObject->getBBox()->max.x &&
+        _vector->x > _simulatedObject->getBBox()->min.x &&
+        _vector->y < _simulatedObject->getBBox()->max.y &&
+        _vector->y > _simulatedObject->getBBox()->min.y) {
         result = true;
     }
     
@@ -38,36 +28,32 @@ bool inBBox(SimulatedObject * _simulatedObject, Vector3 * _vector)
 
 bool inSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)
 {
-    countObjectsRight = 0;
-	long next = 0;
-	ti = 0.0f;
-	xi = 0.0f;
-	p1 = NULL;
-	p2 = NULL;
-	p1Aux = NULL;
-	p2Aux = NULL;
-
+    int countObjectsRight = 0;
+    unsigned long next = 0;
+    real ti = 0.0f;
+    real xi = 0.0f;
+    Vector3 p1;
+    Vector3 p2;
+    Vector3 p1Aux;
+    Vector3 p2Aux;
+    
     for (int i=0; i<_simulatedObject->getVectorsAux()->size(); i++) {
 		p1Aux = _simulatedObject->getVectorsAux()->at(i);
-        p1 = MatrixTransformPoint(_simulatedObject->getMatrixTransformation(), p1Aux);
+        p1 = MatrixTransformPoint(_simulatedObject->getMatrixTransformation().data, p1Aux);
 		
 		next = (i + 1) % _simulatedObject->getVectorsAux()->size();
 		
 		p2Aux = _simulatedObject->getVectorsAux()->at(next);
-        p2 = MatrixTransformPoint(_simulatedObject->getMatrixTransformation(), p2Aux);
+        p2 = MatrixTransformPoint(_simulatedObject->getMatrixTransformation().data, p2Aux);
 		
 		// parametric equations of the line
-		ti = (_vector->y - p1->y) / (p2->y - p1->y);
-		xi = p1->x + (p2->x - p1->x) * ti;
+		ti = (_vector->y - p1.y) / (p2.y - p1.y);
+		xi = p1.x + (p2.x - p1.x) * ti;
 		
 		if ((ti >= 0.0f && ti <= 1.0f) && xi < _vector->x) {
 			countObjectsRight++;
 		}
         
-        delete p1;
-        delete p2;
-        p1 = NULL;
-        p2 = NULL;
     }
     
     // if there is an odd number of lines crossing the scanline to 

@@ -97,7 +97,7 @@ ForceRegistry * ForceRegistry::getInstance()
 }
 
 
-Gravity::Gravity(Vector3 * _gravity, bool _considerMass)
+Gravity::Gravity(const Vector3 &_gravity, bool _considerMass)
 {
     this->gravity = _gravity;
     this->considerMass = _considerMass;
@@ -105,18 +105,12 @@ Gravity::Gravity(Vector3 * _gravity, bool _considerMass)
 
 Gravity::~Gravity()
 {
-    if (this->gravity) {
-        delete this->gravity;
-    }
-    
-    this->gravity = NULL;
-    
     ForceGenerator::~ForceGenerator();
 }
 
 void Gravity::updateGravity(real _gravity)
 {
-    this->gravity->y = _gravity;
+    this->gravity.y = _gravity;
 }
 
 void Gravity::updateForce(RigidBody * _body, real _duration)
@@ -131,11 +125,8 @@ void Gravity::updateForce(RigidBody * _body, real _duration)
         return;
     }
     
-    Vector3 * force = *this->gravity * _body->getMass();
+    Vector3 force = this->gravity * _body->getMass();
     _body->addForce(force);
-    
-    delete force;
-    force = NULL;
 }
 
 //Drag::Drag(real _k1, real _k2)
@@ -169,7 +160,7 @@ void Gravity::updateForce(RigidBody * _body, real _duration)
 //}
 
 
-Spring::Spring(Vector3 * _localConnectionPt, RigidBody * _other, Vector3 * _otherConnectionPt,
+Spring::Spring(const Vector3 &_localConnectionPt, RigidBody * _other, const Vector3 &_otherConnectionPt,
                real _springConstant, real _restLength)
 {
     this->connectionPoint = _localConnectionPt;
@@ -187,19 +178,19 @@ Spring::~Spring()
 void Spring::updateForce(RigidBody * _body, real _duration)
 {
     // calculate the two ends in world space.
-    Vector3 * lws = _body->getPointInWorldSpace(this->connectionPoint);
-    Vector3 * ows = this->other->getPointInWorldSpace(this->otherConnectionPoint);
+    Vector3 lws = _body->getPointInWorldSpace(this->connectionPoint);
+    Vector3 ows = this->other->getPointInWorldSpace(this->otherConnectionPoint);
     
     // calculate the vector of the spring.
-    Vector3 * force = *lws - ows;
+    Vector3 force = lws - ows;
     
     // calculate the magnitude of the force.
-    real magnitude = force->magnitude();
+    real magnitude = force.magnitude();
     magnitude = real_abs(magnitude - this->restLength);
     magnitude *= this->springConstant;
     
     // calculate the final force and apply it.
-    force->normalize();
-    *force *= -magnitude;
+    force.normalize();
+    force *= -magnitude;
     _body->addForceAtPoint(force, lws);
 }

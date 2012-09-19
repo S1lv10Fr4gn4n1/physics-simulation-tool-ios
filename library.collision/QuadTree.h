@@ -14,18 +14,14 @@
 #include "RigidBody.h"
 
 struct QuadTreeNode {
-    Vector3 * center;
+    Vector3 center;
     real halfWidth;
     QuadTreeNode * child[4];
     std::map<char *, RigidBody*> * rigidBodies;
     QuadTreeNode() {
-        this->center = new Vector3();
         this->rigidBodies = new std::map<char*, RigidBody *>();
     }
     ~QuadTreeNode() {
-        delete this->center;
-        this->center = NULL;
-
         this->rigidBodies->clear();
         delete this->rigidBodies;
         this->rigidBodies = NULL;
@@ -40,7 +36,7 @@ private:
     void insertObject(QuadTreeNode * _tree, RigidBody * _body);
     void deleteObject(QuadTreeNode * _tree, RigidBody * _body);
     void cleanLeaves(QuadTreeNode * _tree);
-    QuadTreeNode * buildQuadTree(Vector3 * _center, real _halfWidth, int _stopDepth);
+    QuadTreeNode * buildQuadTree(const Vector3 &_center, real _halfWidth, int _stopDepth);
 public:
     QuadTree();
     ~QuadTree();

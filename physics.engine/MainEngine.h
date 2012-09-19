@@ -31,13 +31,13 @@ private:
     real centerY;
     real centerZ;
     
-    std::vector<Vector3 *> * createSphere(Vector3 * _origin, real _radius);
-    std::vector<Vector3 *> * createPlan(Vector3 * _origin);
-    std::vector<Vector3 *> * createBox(Vector3 * _origin, Vector3 * _halfSize);
-    std::vector<Vector3 *> * createTriangleWithTriangularBase();
-    std::vector<Vector3 *> * createTriangleWithSquareBase();
-    std::vector<Vector3 *> * createCone();
-    std::vector<Vector3 *> * paintQuadTree();
+    std::vector<Vector3> * createSphere(const Vector3 &_origin, real _radius);
+    std::vector<Vector3> * createPlan(const Vector3 &_origin);
+    std::vector<Vector3> * createBox(const Vector3 &_origin, const Vector3 &_halfSize);
+    std::vector<Vector3> * createTriangleWithTriangularBase();
+    std::vector<Vector3> * createTriangleWithSquareBase();
+    std::vector<Vector3> * createCone();
+    std::vector<Vector3> * paintQuadTree();
 protected:
 public:
     MainEngine();

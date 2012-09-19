@@ -44,7 +44,7 @@ class ParticleConstraint : public ParticleContactGenerator {
 private:
 protected:
     Particle * particle;
-    Vector3 * anchor;
+    Vector3 anchor;
     real currentLength() const;
 public:
     virtual unsigned addContact(ParticleContact * _contact, unsigned _limit) const = 0;

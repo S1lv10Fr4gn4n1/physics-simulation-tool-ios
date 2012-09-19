@@ -51,7 +51,7 @@ void MainCollision::updateObject(RigidBody * _body, real _duration)
 
 void MainCollision::generateContact(RigidBody * _body1, RigidBody * _body2)
 {
-    Vector3 * normalPlane = new Vector3(0.0f, 1.0f, 0.0f);
+    Vector3 normalPlane(0.0f, 1.0f, 0.0f);
     real offset = 0.0f;
     
 #if defined (_3D_)
@@ -178,9 +178,6 @@ void MainCollision::generateContact(RigidBody * _body1, RigidBody * _body2)
         delete plane;
     }
 #endif
-    
-    delete normalPlane;
-    normalPlane = NULL;
 }
 
 void MainCollision::generateContacts()
@@ -213,6 +210,7 @@ void MainCollision::generateContacts()
 void MainCollision::solverContacts(real _duration)
 {
     this->contactResolver->solverContacts(this->dataContacts->contacts, _duration);
+    this->dataContacts->clearContacts();
 }
 
 void MainCollision::updateContacts(real _duration)

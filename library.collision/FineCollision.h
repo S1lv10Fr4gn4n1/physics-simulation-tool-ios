@@ -25,12 +25,11 @@ class CollisionPrimitive {
 public:
     // calculated by combining the offset of the primitive
     // with the transform of the rigid body.
-    Matrix4 * transform;
+    Matrix4 transform;
     RigidBody * body;
-    Matrix4 * offset;
-    CollisionPrimitive();
-    ~CollisionPrimitive();
-    Vector3 * getAxis(unsigned _index) const;
+    Matrix4 offset;
+
+    Vector3 getAxis(unsigned _index) const;
     void calculateInternals();
 };
 
@@ -42,15 +41,15 @@ public:
 
 class CollisionPlane : public CollisionPrimitive {
 public:
-    Vector3 * normal;
+    Vector3 normal;
     real offset;
-    CollisionPlane(RigidBody * _body, Vector3 * _normal, real _offset);
+    CollisionPlane(RigidBody * _body, const Vector3 &_normal, real _offset);
 };
 
 class CollisionBox : public CollisionPrimitive {
 public:
-    Vector3 * halfSize;
-    CollisionBox(RigidBody * _body, Vector3 * _halfSize);
+    Vector3 halfSize;
+    CollisionBox(RigidBody * _body, const Vector3 &_halfSize);
 };
 
 class CollisionDetector {
@@ -61,7 +60,7 @@ public:
     static unsigned boxAndHalfSpace(const CollisionBox * _box, const CollisionPlane * _plane, CollisionData * _data);
     static unsigned boxAndBox(const CollisionBox * _one, const CollisionBox * _two, CollisionData * _data);
     static unsigned boxAndSphere(const CollisionBox * _box, const CollisionSphere * _sphere, CollisionData * _data);
-    static unsigned boxAndPoint(const CollisionBox * _box, Vector3 * _point,  CollisionData * _data);
+    static unsigned boxAndPoint(const CollisionBox * _box, const Vector3 &_point,  CollisionData * _data);
 };
 
 #endif

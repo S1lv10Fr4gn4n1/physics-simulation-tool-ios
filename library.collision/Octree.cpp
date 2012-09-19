@@ -17,20 +17,20 @@ bool less(real k1,real k2) {
 
 bool inPlusPlus(OctreeNode * _tree, RigidBody * _body)
 {
-    if (!less(_body->getPosition()->x + _body->getHalfSize()->x, _tree->center->x) &&
-        !less(_body->getPosition()->y + _body->getHalfSize()->y, _tree->center->y))
+    if (!less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
+        !less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
         return true;
     
-    if (!less(_body->getPosition()->x - _body->getHalfSize()->x, _tree->center->x) &&
-        !less(_body->getPosition()->y - _body->getHalfSize()->y, _tree->center->y))
+    if (!less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
+        !less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
         return true;
     
-    if (!less(_body->getPosition()->x + _body->getHalfSize()->x, _tree->center->x) &&
-        !less(_body->getPosition()->y - _body->getHalfSize()->y, _tree->center->y))
+    if (!less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
+        !less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
         return true;
     
-    if (!less(_body->getPosition()->x - _body->getHalfSize()->x, _tree->center->x) &&
-        !less(_body->getPosition()->y + _body->getHalfSize()->y, _tree->center->y))
+    if (!less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
+        !less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
         return true;
     
     return false;
@@ -38,20 +38,20 @@ bool inPlusPlus(OctreeNode * _tree, RigidBody * _body)
 
 bool inPlusMinus(OctreeNode * _tree, RigidBody * _body)
 {
-    if (!less(_body->getPosition()->x + _body->getHalfSize()->x, _tree->center->x) &&
-        less(_body->getPosition()->y + _body->getHalfSize()->y, _tree->center->y))
+    if (!less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
+        less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
         return true;
     
-    if (!less(_body->getPosition()->x - _body->getHalfSize()->x, _tree->center->x) &&
-        less(_body->getPosition()->y - _body->getHalfSize()->y, _tree->center->y))
+    if (!less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
+        less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
         return true;
     
-    if (!less(_body->getPosition()->x + _body->getHalfSize()->x, _tree->center->x) &&
-        less(_body->getPosition()->y - _body->getHalfSize()->y, _tree->center->y))
+    if (!less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
+        less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
         return true;
     
-    if (!less(_body->getPosition()->x - _body->getHalfSize()->x, _tree->center->x) &&
-        less(_body->getPosition()->y + _body->getHalfSize()->y, _tree->center->y))
+    if (!less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
+        less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
         return true;
     
     return false;
@@ -59,19 +59,19 @@ bool inPlusMinus(OctreeNode * _tree, RigidBody * _body)
 
 bool inMinusMinus(OctreeNode * _tree, RigidBody * _body)
 {
-    if (less(_body->getPosition()->x + _body->getHalfSize()->x, _tree->center->x) &&
-        less(_body->getPosition()->y + _body->getHalfSize()->y, _tree->center->y))
+    if (less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
+        less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
         return true;
-    if (less(_body->getPosition()->x - _body->getHalfSize()->x, _tree->center->x) &&
-        less(_body->getPosition()->y - _body->getHalfSize()->y, _tree->center->y))
-        return true;
-    
-    if (less(_body->getPosition()->x + _body->getHalfSize()->x, _tree->center->x) &&
-        less(_body->getPosition()->y - _body->getHalfSize()->y, _tree->center->y))
+    if (less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
+        less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
         return true;
     
-    if (less(_body->getPosition()->x - _body->getHalfSize()->x, _tree->center->x) &&
-        less(_body->getPosition()->y + _body->getHalfSize()->y, _tree->center->y))
+    if (less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
+        less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
+        return true;
+    
+    if (less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
+        less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
         return true;
     
     return false;
@@ -79,20 +79,20 @@ bool inMinusMinus(OctreeNode * _tree, RigidBody * _body)
 
 bool inMinusPlus(OctreeNode * _tree, RigidBody * _body)
 {
-    if ( less(_body->getPosition()->x + _body->getHalfSize()->x, _tree->center->x) &&
-        !less(_body->getPosition()->y + _body->getHalfSize()->y, _tree->center->y))
+    if ( less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
+        !less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
         return true;
     
-    if ( less(_body->getPosition()->x - _body->getHalfSize()->x, _tree->center->x) &&
-        !less(_body->getPosition()->y - _body->getHalfSize()->y, _tree->center->y))
+    if ( less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
+        !less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
         return true;
     
-    if ( less(_body->getPosition()->x + _body->getHalfSize()->x, _tree->center->x) &&
-        !less(_body->getPosition()->y - _body->getHalfSize()->y, _tree->center->y))
+    if ( less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
+        !less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
         return true;
     
-    if ( less(_body->getPosition()->x - _body->getHalfSize()->x, _tree->center->x) &&
-        !less(_body->getPosition()->y + _body->getHalfSize()->y, _tree->center->y))
+    if ( less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
+        !less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
         return true;
     
     return false;
@@ -100,17 +100,17 @@ bool inMinusPlus(OctreeNode * _tree, RigidBody * _body)
 
 bool radiusReachesObject(OctreeNode * _tree, RigidBody * _body)
 {
-    if ((_tree->center->x + _tree->halfWidth >= _body->getPosition()->x + _body->getHalfSize()->x ||
-         _tree->center->x + _tree->halfWidth >= _body->getPosition()->x - _body->getHalfSize()->x) &&
+    if ((_tree->center.x + _tree->halfWidth >= _body->getPosition().x + _body->getHalfSize().x ||
+         _tree->center.x + _tree->halfWidth >= _body->getPosition().x - _body->getHalfSize().x) &&
         
-        (_tree->center->x - _tree->halfWidth <= _body->getPosition()->x + _body->getHalfSize()->x ||
-         _tree->center->x - _tree->halfWidth <= _body->getPosition()->x - _body->getHalfSize()->x) &&
+        (_tree->center.x - _tree->halfWidth <= _body->getPosition().x + _body->getHalfSize().x ||
+         _tree->center.x - _tree->halfWidth <= _body->getPosition().x - _body->getHalfSize().x) &&
         
-        (_tree->center->y + _tree->halfWidth >= _body->getPosition()->y + _body->getHalfSize()->y ||
-         _tree->center->y + _tree->halfWidth >= _body->getPosition()->y - _body->getHalfSize()->y) &&
+        (_tree->center.y + _tree->halfWidth >= _body->getPosition().y + _body->getHalfSize().y ||
+         _tree->center.y + _tree->halfWidth >= _body->getPosition().y - _body->getHalfSize().y) &&
         
-        (_tree->center->y - _tree->halfWidth <= _body->getPosition()->y + _body->getHalfSize()->y &&
-         _tree->center->y - _tree->halfWidth <= _body->getPosition()->y - _body->getHalfSize()->y)) {
+        (_tree->center.y - _tree->halfWidth <= _body->getPosition().y + _body->getHalfSize().y &&
+         _tree->center.y - _tree->halfWidth <= _body->getPosition().y - _body->getHalfSize().y)) {
             return true;
         }
     
@@ -137,38 +137,30 @@ Octree::~Octree()
 
 void Octree::buildOctree()
 {
-    Vector3 * center = new Vector3(0.0f, 0.0f);
+    Vector3 center;
     this->parent = this->buildOctree(center, WIDTH_SCENE, DEPTH_TREE);
-    delete center;
-    center = NULL;
 }
 
-OctreeNode * Octree::buildOctree(Vector3 * _center, real _halfWidth, int _stopDepth)
+OctreeNode * Octree::buildOctree(const Vector3 &_center, real _halfWidth, int _stopDepth)
 {
     if (_stopDepth < 0) {
         return NULL;
     } else {
         OctreeNode * node = new OctreeNode();
-        *node->center = _center;
+        node->center = _center;
         node->halfWidth = _halfWidth;
         
-        Vector3 * offset = NULL;
-        Vector3 * offsetAux = NULL;
+        Vector3 offset;
+        Vector3 offsetAux;
         real step = _halfWidth * 0.5f;
         
         for (int i = 0; i < 8; i++) {
-            offset = new Vector3();
-            offset->x = ((i & 1) ? step : -step);
-            offset->y = ((i & 2) ? step : -step);
-            offset->z = ((i & 4) ? step : -step);
+            offset.x = ((i & 1) ? step : -step);
+            offset.y = ((i & 2) ? step : -step);
+            offset.z = ((i & 4) ? step : -step);
             
-            offsetAux = *_center + offset;
+            offsetAux = _center + offset;
             node->child[i] = this->buildOctree(offsetAux, step, _stopDepth - 1);
-            
-            delete offset;
-            offset = NULL;
-            delete offsetAux;
-            offsetAux = NULL;
         }
         
         return node;
@@ -230,9 +222,9 @@ void Octree::deleteObject(OctreeNode * _tree, RigidBody * _body)
     
     RigidBody * body = getBody(_tree, _body);
     if (body) {
-        //        printf("bodies x:%f, y:%f, body: %s -> before delete size: %lu\n", _tree->center->x, _tree->center->y, _body->getId(), _tree->rigidBodies->size());
+        //        printf("bodies x:%f, y:%f, body: %s -> before delete size: %lu\n", _tree->center.x, _tree->center.y, _body->getId(), _tree->rigidBodies->size());
         _tree->rigidBodies->erase(body->getId());
-        //        printf("bodies x:%f, y:%f, body: %s -> after delete size: %lu\n", _tree->center->x, _tree->center->y, _body->getId(), _tree->rigidBodies->size());
+        //        printf("bodies x:%f, y:%f, body: %s -> after delete size: %lu\n", _tree->center.x, _tree->center.y, _body->getId(), _tree->rigidBodies->size());
     }
     
     // 0 - -
@@ -317,9 +309,9 @@ void Octree::insertObject(OctreeNode * _tree, RigidBody * _body) {
             
             this->possibleCollisions->push_back(_body);
         }
-        //        printf("bodies x:%f, y:%f, body: %s -> before insert size: %lu\n", _tree->center->x, _tree->center->y, _body->getId(), _tree->rigidBodies->size());
+        //        printf("bodies x:%f, y:%f, body: %s -> before insert size: %lu\n", _tree->center.x, _tree->center.y, _body->getId(), _tree->rigidBodies->size());
         _tree->rigidBodies->insert(mapBody(_body->getId(), _body));
-        //        printf("bodies x:%f, y:%f, body: %s -> after insert size: %lu\n", _tree->center->x, _tree->center->y, _body->getId(), _tree->rigidBodies->size());
+        //        printf("bodies x:%f, y:%f, body: %s -> after insert size: %lu\n", _tree->center.x, _tree->center.y, _body->getId(), _tree->rigidBodies->size());
     }
     
     // 0 - -

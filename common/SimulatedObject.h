@@ -16,13 +16,13 @@
 class SimulatedObject : public RigidBody {
 private:
     real * vectors;
-    std::vector<Vector3 *> * vectorsAux;
+    std::vector<Vector3> * vectorsAux;
     unsigned char * color;
     unsigned char * colorVectors;
     Color * colorAux;
     unsigned int mode;
     BBox * bbox;
-    real * matrixTransformation;
+    Matrix4x4 matrixTransformation;
     
     bool showBBox;
     bool selected;
@@ -40,12 +40,12 @@ public:
     void initialize();
     void initBBox(real * _matrix);
     
-    void addVector3(Vector3 * _vector);
-    void deleteVector3(Vector3 * _vector);
-    void addAllVectors(std::vector<Vector3 *> * _vectors);
+    void addVector3(const Vector3 &_vector);
+    void deleteVector3(const Vector3 &_vector);
+    void addAllVectors(std::vector<Vector3> * _vectors);
     real * getVectors();
 
-    std::vector<Vector3 *> * getVectorsAux();
+    std::vector<Vector3> * getVectorsAux();
 
     unsigned char * getColor();
     unsigned char * getColorVectors();
@@ -65,8 +65,8 @@ public:
     bool isSelected();
     void setSelected(bool _selected);
     
-    real * getMatrixTransformation();
-    void setMatrixTransformation(real * _matrix);
+    Matrix4x4 getMatrixTransformation();
+    void setMatrixTransformation(Matrix4x4 _matrix);
 };
 
 #endif

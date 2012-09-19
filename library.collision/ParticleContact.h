@@ -26,7 +26,7 @@ public:
     real penetration;
     Particle * particle[2];
     real restitution;
-    Vector3 * contactNormal;
+    Vector3 contactNormal;
 };
 
 

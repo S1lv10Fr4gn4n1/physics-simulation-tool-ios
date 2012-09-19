@@ -401,10 +401,10 @@ void MainGraphic::MainGraphic::draw(World * _world)
         glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getVectors());
         glEnableVertexAttribArray(ATTRIB_VERTEX);
 
-        glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation());
+        glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation().data);
     #if defined (_3D_)
-        glUniformMatrix4fv(matrixLookAt, 1, 0, _world->getLookAtMatrix());
-        glUniformMatrix4fv(matrixPerspective, 1, 0, _world->getPerspectiveMatrix());
+        glUniformMatrix4fv(matrixLookAt, 1, 0, _world->getLookAtMatrix().data);
+        glUniformMatrix4fv(matrixPerspective, 1, 0, _world->getPerspectiveMatrix().data);
     #else
         glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
     #endif
@@ -419,10 +419,10 @@ void MainGraphic::MainGraphic::draw(World * _world)
             glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getVectors());
             glEnableVertexAttribArray(ATTRIB_VERTEX);
             
-            glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation());
+            glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation().data);
         #if defined (_3D_)
-            glUniformMatrix4fv(matrixLookAt, 1, 0, _world->getLookAtMatrix());
-            glUniformMatrix4fv(matrixPerspective, 1, 0, _world->getPerspectiveMatrix());
+            glUniformMatrix4fv(matrixLookAt, 1, 0, _world->getLookAtMatrix().data);
+            glUniformMatrix4fv(matrixPerspective, 1, 0, _world->getPerspectiveMatrix().data);
         #else
             glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
         #endif
@@ -438,10 +438,10 @@ void MainGraphic::MainGraphic::draw(World * _world)
             glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getBBox()->ptr);
             glEnableVertexAttribArray(ATTRIB_VERTEX);
             
-            glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation());
+            glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation().data);
         #if defined (_3D_)
-            glUniformMatrix4fv(matrixLookAt, 1, 0, _world->getLookAtMatrix());
-            glUniformMatrix4fv(matrixPerspective, 1, 0, _world->getPerspectiveMatrix());
+            glUniformMatrix4fv(matrixLookAt, 1, 0, _world->getLookAtMatrix().data);
+            glUniformMatrix4fv(matrixPerspective, 1, 0, _world->getPerspectiveMatrix().data);
         #else
             glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
         #endif

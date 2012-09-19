@@ -27,13 +27,13 @@ void ParticleContact::resolve(real _duration)
 
 real ParticleContact::calculateSeparatingVelocity() const
 {
-    Vector3 * relativeVelocity = this->particle[0]->getVelocity();
+    Vector3 relativeVelocity = this->particle[0]->getVelocity();
     
     if (this->particle[1]) {
-        *relativeVelocity -= this->particle[1]->getVelocity();
+        relativeVelocity -= this->particle[1]->getVelocity();
     }
     
-    return *relativeVelocity * this->contactNormal;
+    return relativeVelocity * this->contactNormal;
 }
 
 void ParticleContact::resolveVelocity(real _duration)
@@ -54,13 +54,13 @@ void ParticleContact::resolveVelocity(real _duration)
     // adjustment for RESTING CONTACTS
     
     // check the velocity build-up due to acceleration only.
-    Vector3 * accCausedVelocity = this->particle[0]->getAcceleration();
+    Vector3 accCausedVelocity = this->particle[0]->getAcceleration();
     
     if (particle[1]) {
-        *accCausedVelocity -= this->particle[1]->getAcceleration();
+        accCausedVelocity -= this->particle[1]->getAcceleration();
     }
     
-    real accCausedSepVelocity = *accCausedVelocity * (*this->contactNormal * _duration);
+    real accCausedSepVelocity = accCausedVelocity * this->contactNormal * _duration;
     
     // if we’ve got a closing velocity due to acceleration build-up, // remove it from the new separating velocity.
     if (accCausedSepVelocity < 0) {
@@ -93,15 +93,15 @@ void ParticleContact::resolveVelocity(real _duration)
     real impulse = deltaVelocity / totalInverseMass;
     
     // find the amount of impulse per unit of inverse mass.
-    Vector3 * impulsePerIMass = *contactNormal * impulse;
+    Vector3 impulsePerIMass = contactNormal * impulse;
     
     // apply impulses: they are applied in the direction of the contact,
     // and are proportional to the inverse mass.
-    this->particle[0]->setVelocity(*this->particle[0]->getVelocity() + (*impulsePerIMass * this->particle[0]->getInverseMass()));
+    this->particle[0]->setVelocity(this->particle[0]->getVelocity() + impulsePerIMass * this->particle[0]->getInverseMass());
     
     if (this->particle[1]) {
         // particle 1 goes in the opposite direction.
-        this->particle[1]->setVelocity(*this->particle[1]->getVelocity() + (*impulsePerIMass * -this->particle[1]->getInverseMass()));
+        this->particle[1]->setVelocity(this->particle[1]->getVelocity() + impulsePerIMass * -this->particle[1]->getInverseMass());
     }
 }
 
@@ -125,13 +125,13 @@ void ParticleContact::resolveInterpenetration(real _duration)
     }
     
     // find the amount of penetration resolution per unit of inverse mass.
-    Vector3 * movePerIMass = *this->contactNormal * (-this->penetration / totalInverseMass);
+    Vector3 movePerIMass = this->contactNormal * (-this->penetration / totalInverseMass);
     
     // apply the penetration resolution.
-    this->particle[0]->setPosition(*this->particle[0]->getPosition() + (*movePerIMass * this->particle[0]->getInverseMass()));
+    this->particle[0]->setPosition(this->particle[0]->getPosition() + (movePerIMass * this->particle[0]->getInverseMass()));
     
     if (this->particle[1]) {
-        this->particle[1]->setPosition(*this->particle[1]->getPosition() + (*movePerIMass * this->particle[1]->getInverseMass()));
+        this->particle[1]->setPosition(this->particle[1]->getPosition() + (movePerIMass * this->particle[1]->getInverseMass()));
     }
 }
 

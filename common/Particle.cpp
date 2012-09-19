@@ -10,43 +10,24 @@
 
 Particle::Particle()
 {
-    this->position = new Vector3(0.0f, 0.0f);
-    this->acceleration = new Vector3(0.0f, 0.0f);
-    this->velocity = new Vector3(0.0f, 0.0f);
     this->mass = 0.0f;
     this->inverseMass = 0.0f;
     this->damping = 0.0f;
-    this->forceAccum = new Vector3(0.0f, 0.0f);
 }
 
 Particle::~Particle()
 {
-    if (this->position) {
-        delete this->position;
-    }
-    if (this->acceleration) {
-        delete this->acceleration;
-    }
-    if (this->velocity) {
-        delete this->velocity;
-    }
-    if (this->forceAccum) {
-        delete this->forceAccum;
-    }
-    this->position = NULL;
-    this->acceleration = NULL;
-    this->velocity = NULL;
-    this->forceAccum = NULL;
+    // TODO put your code here
 }
 
 void Particle::clearAccumulator()
 {
-    this->forceAccum->clear();
+    this->forceAccum.clear();
 }
 
-void Particle::addForce(Vector3 * _force)
+void Particle::addForce(const Vector3 &_force)
 {
-    *this->forceAccum += _force;
+    this->forceAccum += _force;
 }
 
 bool Particle::hasFiniteMass()
@@ -85,82 +66,82 @@ void Particle::setDamping(real _damping)
     this->damping = _damping;
 }
 
-Vector3 * Particle::getPosition()
+Vector3 Particle::getPosition()
 {
     return this->position;
 }
 
-void Particle::setPosition(Vector3 * _position)
+void Particle::setPosition(const Vector3 &_position)
 {
-    this->position->x = _position->x;
-    this->position->y = _position->y;
-    this->position->z = _position->z;
+    this->position.x = _position.x;
+    this->position.y = _position.y;
+    this->position.z = _position.z;
 }
 
 void Particle::setPosition(real _x, real _y, real _z)
 {
-    this->position->x = _x;
-    this->position->y = _y;
-    this->position->z = _z;
+    this->position.x = _x;
+    this->position.y = _y;
+    this->position.z = _z;
 }
 
 void Particle::setPosition(real _x, real _y)
 {
-    this->position->x = _x;
-    this->position->y = _y;
+    this->position.x = _x;
+    this->position.y = _y;
 }
 
-Vector3 * Particle::getAcceleration()
+Vector3 Particle::getAcceleration()
 {
     return this->acceleration;
 }
 
-void Particle::setAcceleration(Vector3 * _acceleration)
+void Particle::setAcceleration(const Vector3 &_acceleration)
 {
-    this->acceleration->x = _acceleration->x;
-    this->acceleration->y = _acceleration->y;
-    this->acceleration->z = _acceleration->z;
+    this->acceleration.x = _acceleration.x;
+    this->acceleration.y = _acceleration.y;
+    this->acceleration.z = _acceleration.z;
 }
 
 void Particle::setAcceleration(real _x, real _y, real _z)
 {
-    this->acceleration->x = _x;
-    this->acceleration->y = _y;
-    this->acceleration->z = _z;
+    this->acceleration.x = _x;
+    this->acceleration.y = _y;
+    this->acceleration.z = _z;
 }
 
 void Particle::setAcceleration(real _x, real _y)
 {
-    this->acceleration->x = _x;
-    this->acceleration->y = _y;
+    this->acceleration.x = _x;
+    this->acceleration.y = _y;
 }
 
-Vector3 * Particle::getVelocity()
+Vector3 Particle::getVelocity()
 {
     return this->velocity;
 }
 
-void Particle::setVelocity(Vector3 * _velocity)
+void Particle::setVelocity(const Vector3 &_velocity)
 {
-    this->velocity->x = _velocity->x;
-    this->velocity->y = _velocity->y;
-    this->velocity->z = _velocity->z;
+    this->velocity.x = _velocity.x;
+    this->velocity.y = _velocity.y;
+    this->velocity.z = _velocity.z;
 }
 
 void Particle::setVelocity(real _x, real _y, real _z)
 {
-    this->velocity->x = _x;
-    this->velocity->y = _y;
-    this->velocity->z = _z;
+    this->velocity.x = _x;
+    this->velocity.y = _y;
+    this->velocity.z = _z;
 }
 
 void Particle::setVelocity(real _x, real _y)
 {
-    this->velocity->x = _x;
-    this->velocity->y = _y;
+    this->velocity.x = _x;
+    this->velocity.y = _y;
 }
 
-Vector3 * Particle::getForceAccum()
+Vector3 Particle::getForceAccum()
 {
     return this->forceAccum;
 }

@@ -14,18 +14,14 @@
 #include "RigidBody.h"
 
 struct OctreeNode {
-    Vector3 * center;
+    Vector3 center;
     real halfWidth;
     OctreeNode * child[8];
     std::map<char *, RigidBody*> * rigidBodies;
     OctreeNode() {
-        this->center = new Vector3();
         this->rigidBodies = new std::map<char*, RigidBody *>();
     }
     ~OctreeNode() {
-        delete this->center;
-        this->center = NULL;
-        
         this->rigidBodies->clear();
         delete this->rigidBodies;
         this->rigidBodies = NULL;
@@ -40,7 +36,7 @@ private:
     void insertObject(OctreeNode * _tree, RigidBody * _body);
     void deleteObject(OctreeNode * _tree, RigidBody * _body);
     void cleanLeaves(OctreeNode * _tree);
-    OctreeNode * buildOctree(Vector3 * _center, real _halfWidth, int _stopDepth);
+    OctreeNode * buildOctree(const Vector3 &_center, real _halfWidth, int _stopDepth);
 public:
     Octree();
     ~Octree();
