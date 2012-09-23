@@ -21,6 +21,8 @@ enum TypeObject {
     BOX,
     TRIANGLE_TRIANGULAR_BASE,
     TRIANGLE_SQUARE_BASE,
+    CONE,
+    CYLINDER,
 
     CIRCLE,
     SQUARE,

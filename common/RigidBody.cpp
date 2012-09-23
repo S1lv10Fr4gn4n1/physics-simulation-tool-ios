@@ -528,26 +528,25 @@ void RigidBody::integrate(real _duration)
     // impose drag.
     this->velocity *= real_pow(this->linearDamping, _duration);
     this->rotation *= real_pow(this->angularDamping, _duration);
-    
+
     // adjust positions
     // update linear position.
     this->position.addScaledVector(this->velocity, _duration);
-    
-//    printf("after, position-> y: %f velocity-> y: %f \n", this->position.y, this->velocity.y);
-
     
     // update angular position.
     this->orientation.addScaledVector(this->rotation, _duration);
     
     // normalize the orientation, and update the matrices with the new position and orientation.
     this->calculateDerivedData();
-    
+
+//    static int test = 0;
+//    printf("____%u____\n", test++);
 //    printf("info, velocity-> x: %2.6f, y: %2.6f, z: %2.6f \n", this->velocity.x, this->velocity.y,this->velocity.z);
-//    printf("info, rotation-> x: %2.6f, y: %2.6f, z: %2.6f \n", this->getRotation()->x, this->getRotation()->y,this->getRotation()->z);
+//    printf("info, rotation-> x: %2.6f, y: %2.6f, z: %2.6f \n", this->rotation.x, this->rotation.y,this->rotation.z);
 //    printf("info, force   -> x: %2.6f, y: %2.6f, z: %2.6f \n", this->forceAccum.x, this->forceAccum.y, this->forceAccum.z);
-    printf("position -> x: %f, y: %f, z: %f\n", this->position.x, this->position.y, this->position.z);
-//    printf("info, torque  -> x: %2.6f, y: %2.6f, z: %2.6f \n", this->getTorqueAccum()->x, this->getTorqueAccum()->y,this->getTorqueAccum()->z);
-    
+//    printf("info, position -> x: %f, y: %f, z: %f\n", this->position.x, this->position.y, this->position.z);
+//    printf("info, torque  -> x: %2.6f, y: %2.6f, z: %2.6f \n", this->torqueAccum.x, this->torqueAccum.y,this->torqueAccum.z);
+
     // clear accumulators.
     this->clearAccumulators();
     
@@ -559,7 +558,7 @@ void RigidBody::integrate(real _duration)
         real bias = real_pow(0.5, _duration);
         this->motion = bias*this->motion + (1-bias)*currentMotion;
         
-        printf("sleep, motion: %f, \n", this->getMotion());
+//        printf("sleep, motion: %f, \n", this->getMotion());
         if (this->motion < SLEEP_EPSILON) {
             this->setAwake(false);
         } else if (this->motion > 10.0f * SLEEP_EPSILON) {

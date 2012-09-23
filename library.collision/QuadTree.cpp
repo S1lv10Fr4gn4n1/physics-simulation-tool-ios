@@ -1,5 +1,5 @@
 //
-//  CoarseCollision.cpp
+//  QuadTree.cpp
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani on 23/08/12.
@@ -120,6 +120,7 @@ bool radiusReachesObject(QuadTreeNode * _tree, RigidBody * _body)
 QuadTree::QuadTree()
 {
     this->possibleCollisions = new std::vector<RigidBody *>();
+    this->parent = this->buildQuadTree(Vector3(), WIDTH_SCENE, DEPTH_TREE);
 }
 
 QuadTree::~QuadTree()
@@ -133,12 +134,6 @@ QuadTree::~QuadTree()
     this->possibleCollisions->clear();
     delete this->possibleCollisions;
     this->possibleCollisions = NULL;
-}
-
-void QuadTree::buildQuadTree()
-{
-    Vector3 center;
-    this->parent = this->buildQuadTree(center, WIDTH_SCENE, DEPTH_TREE);
 }
 
 QuadTreeNode * QuadTree::buildQuadTree(const Vector3 &_center, real _halfWidth, int _stopDepth)

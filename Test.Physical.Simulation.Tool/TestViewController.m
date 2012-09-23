@@ -66,21 +66,34 @@ static EAGLContext * context;
     [super didReceiveMemoryWarning];
     
     UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Memory Warning"
-                                                    message:@"Memory Warning"
+                                                    message:@"Holy crap!! memory warning"
                                                    delegate:self
                                           cancelButtonTitle:@"Ok"
                                           otherButtonTitles: nil];
     [alert show];
 }
 
+
+
+#ifndef __IPHONE_6_0
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     if (self.view) {
         TestController::getInstance()->resizeScreen(self.view.bounds.size.width, self.view.bounds.size.height);
     }
-    
+
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
+#else
+-(NSUInteger)supportedInterfaceOrientations
+{
+    if (self.view) {
+        TestController::getInstance()->resizeScreen(self.view.bounds.size.width, self.view.bounds.size.height);
+    }
+
+	return UIInterfaceOrientationMaskLandscape;
+}
+#endif
 
 - (void)setupGL
 {

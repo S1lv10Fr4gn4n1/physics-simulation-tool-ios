@@ -71,14 +71,25 @@ static EAGLContext * context;
     [alert show];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{   
+#ifdef __IPHONE_6_0
+-(NSUInteger)supportedInterfaceOrientations
+{
     if (self.view) {
         Controller::getInstance()->resizeScreen(self.view.bounds.size.width, self.view.bounds.size.height);
     }
-    
+
+	return UIInterfaceOrientationMaskLandscape;
+}
+#else
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if (self.view) {
+        Controller::getInstance()->resizeScreen(self.view.bounds.size.width, self.view.bounds.size.height);
+    }
+
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
+#endif
 
 - (void)setupGL
 {

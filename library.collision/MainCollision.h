@@ -10,17 +10,16 @@
 #define MAINCOLLISION_H
 
 #include "Commons.h"
-#include "Quadtree.h"
-//#include "Octree.h"
 #include "FineCollision.h"
+#include "Octree.h"
 #include "ContactResolver.h"
 
 class MainCollision {
 private:
     CollisionData * dataContacts;
     ContactResolver * contactResolver;
-    QuadTree * tree;
-//    Octree * tree;
+
+    Octree * tree;
 
     void generateContact(RigidBody * _body1, RigidBody * _body2);
     void generateContacts();

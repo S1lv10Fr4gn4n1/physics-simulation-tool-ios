@@ -44,24 +44,21 @@ void ContactResolver::prepareContacts(std::vector<Contact *> * _contacts, real _
 
 void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _duration)
 {
-    unsigned i;
     unsigned index;
     Vector3 velocityChange[2];
     Vector3 rotationChange[2];
-    real rotationAmount[2];
     real max;
     Vector3 contactPoint;
     
     this->positionIterationsUsed = 0;
-    this->positionIterations = _contacts->size(); // TODO revise or 4
+    this->positionIterations = _contacts->size() * 8;
     
-    // iteratively resolve interpenetration in order of severity.
+    // resolve interpenetration in order of severity.
     while (this->positionIterationsUsed < this->positionIterations) {
-        // find biggest penetration.
-        max = positionEpsilon;
+        max = this->positionEpsilon;
         index = _contacts->size();
         
-        for (i=0; i<_contacts->size(); i++) {
+        for (unsigned i=0; i<_contacts->size(); i++) {
             if (_contacts->at(i)->penetration > max) {
                 max = _contacts->at(i)->penetration;
                 index = i;
@@ -72,41 +69,28 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
             break;
         }
         
-        // match the awake state at the contact.
         _contacts->at(index)->matchAwakeState();
         
-        // resolve the penetration.
-        _contacts->at(index)->applyPositionChange(velocityChange, rotationChange, max);//rotationAmount, max, -positionEpsilon);
-        
+        _contacts->at(index)->applyPositionChange(velocityChange, rotationChange, max);
+
+
         // again this action may have changed the penetration of other bodies, so we update contacts
-        for (i=0; i<_contacts->size(); i++) {
-            if (_contacts->at(i)->body[0]) {
-                if (_contacts->at(i)->body[0] == _contacts->at(index)->body[0]) {
-                    contactPoint = rotationChange[0].vectorProduct(_contacts->at(i)->relativeContactPosition[0]);
-                    contactPoint += velocityChange[0];
-                    _contacts->at(i)->penetration -= rotationAmount[0] * contactPoint.scalarProduct(_contacts->at(i)->contactNormal);
-                    
-                } else if (_contacts->at(i)->body[0] == _contacts->at(index)->body[1]) {
-                    contactPoint = rotationChange[1].vectorProduct(_contacts->at(i)->relativeContactPosition[0]);
-                    contactPoint += velocityChange[1];
-                    _contacts->at(i)->penetration -= rotationAmount[1] * contactPoint.scalarProduct(_contacts->at(i)->contactNormal);
-                }
-            }
-            
-            if (_contacts->at(i)->body[1]) {
-                if (_contacts->at(i)->body[1] == _contacts->at(index)->body[0]) {
-                    contactPoint = rotationChange[0].vectorProduct(_contacts->at(i)->relativeContactPosition[1]);
-                    contactPoint += velocityChange[0];
-                    _contacts->at(i)->penetration += rotationAmount[0] * contactPoint.scalarProduct(_contacts->at(i)->contactNormal);
-                    
-                } else if (_contacts->at(i)->body[1] == _contacts->at(index)->body[1]) {
-                    contactPoint = rotationChange[1].vectorProduct(_contacts->at(i)->relativeContactPosition[1]);
-                    contactPoint += velocityChange[1];
-                    _contacts->at(i)->penetration += rotationAmount[1] * contactPoint.scalarProduct(_contacts->at(i)->contactNormal);
+        for (unsigned i=0; i<_contacts->size(); i++) {
+
+            // check each body in the contact
+            for (unsigned b = 0; b < 2; b++) {
+                if (_contacts->at(i)->body[b]) {
+                    // check for a match with each body in the newly resolved contact
+                    for (unsigned d = 0; d < 2; d++) {
+                        if (_contacts->at(i)->body[b] == _contacts->at(index)->body[d]) {
+                            contactPoint = velocityChange[d] + rotationChange[d].vectorProduct(_contacts->at(i)->relativeContactPosition[b]);
+                            _contacts->at(i)->penetration += contactPoint.scalarProduct(_contacts->at(i)->contactNormal) * (b ? 1 : -1);
+                        }
+                    }
                 }
             }
         }
-        
+
         this->positionIterationsUsed++;
     }
 }
@@ -118,7 +102,7 @@ void ContactResolver::solverVelocities(std::vector<Contact *> * _contacts, real 
     Vector3 deltaVel;
     
     this->velocityIterationsUsed = 0;
-    this->velocityIterations = _contacts->size();
+    this->velocityIterations = _contacts->size() * 8;
     
     // iteratively handle impacts in order of severity.
     while (this->velocityIterationsUsed < this->velocityIterations) {

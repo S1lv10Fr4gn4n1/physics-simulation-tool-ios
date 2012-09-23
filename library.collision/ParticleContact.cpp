@@ -43,8 +43,7 @@ void ParticleContact::resolveVelocity(real _duration)
     
     // check whether it needs to be resolved.
     if (separatingVelocity > 0) {
-        // the contact is either separating or stationary - there’s
-        // no impulse required.
+        // the contact is either separating or stationary - there’s no impulse required
         return;
     }
     
@@ -52,7 +51,6 @@ void ParticleContact::resolveVelocity(real _duration)
     real newSepVelocity = -separatingVelocity * this->restitution;
 
     // adjustment for RESTING CONTACTS
-    
     // check the velocity build-up due to acceleration only.
     Vector3 accCausedVelocity = this->particle[0]->getAcceleration();
     
@@ -65,14 +63,14 @@ void ParticleContact::resolveVelocity(real _duration)
     // if we’ve got a closing velocity due to acceleration build-up, // remove it from the new separating velocity.
     if (accCausedSepVelocity < 0) {
         newSepVelocity += restitution * accCausedSepVelocity;
-        // Make sure we haven’t removed more than was
-        // there to remove.
+        
+        // make sure we haven’t removed more than was there to remove.
         if (newSepVelocity < 0) {
             newSepVelocity = 0;
         }
     }
+
     //adjustment
-        
     real deltaVelocity = newSepVelocity - separatingVelocity;
     
     // we apply the change in velocity to each object in proportion to

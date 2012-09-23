@@ -3,6 +3,20 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "MatrixMakeLookAt:CommonStructures.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "_matrix[1]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SimulatedObject::initialize():SimulatedObject.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "NDC::update(float, float):NDC.cpp">
+      </ContextState>
+      <ContextState
          contextName = "MainGraphic::draw(World*):MainGraphic.cpp">
       </ContextState>
       <ContextState
@@ -14,10 +28,40 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[SimulationViewController shouldAutorotateToInterfaceOrientation:]:SimulationViewController.mm">
+      </ContextState>
+      <ContextState
          contextName = "SimulatedObject::loadBbox():SimulatedObject.cpp">
       </ContextState>
       <ContextState
-         contextName = "-[SimulationViewController shouldAutorotateToInterfaceOrientation:]:SimulationViewController.mm">
+         contextName = "Controller::createSimulatedObject(TypeObject):Controller.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "QuadTree::getInstance()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "QuadTree::insertObject(QuadTreeNode*, QuadTreeObject*):CoarseCollision.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "index |= (1 &lt;&lt; 2)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "QuadTree::buildQuadTree():CoarseCollision.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MatrixMakePerspective:CommonStructures.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "_matrix[14]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "QuadTree::buildQuadTree(Vector3*, float, int):CoarseCollision.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

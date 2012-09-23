@@ -22,7 +22,6 @@ private:
     SimulatedObject * objectOffset;
     
     static TestController * testController;
-
 public:
     TestController();
     ~TestController();

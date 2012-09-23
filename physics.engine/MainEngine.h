@@ -16,28 +16,26 @@
 
 class MainEngine {
 private:
-    World * world;
-    
-    MainPhysics * mainPhysics;
-    MainCollision * mainCollision;
-    
     bool running;
-    NDC * ndc;
-    
     real eyeX;
     real eyeY;
     real eyeZ;
     real centerX;
     real centerY;
     real centerZ;
+
+    World * world;
     
+    MainPhysics * mainPhysics;
+    MainCollision * mainCollision;
+    NDC * ndc;
+
     std::vector<Vector3> * createSphere(const Vector3 &_origin, real _radius);
     std::vector<Vector3> * createPlan(const Vector3 &_origin);
     std::vector<Vector3> * createBox(const Vector3 &_origin, const Vector3 &_halfSize);
-    std::vector<Vector3> * createTriangleWithTriangularBase();
-    std::vector<Vector3> * createTriangleWithSquareBase();
-    std::vector<Vector3> * createCone();
-    std::vector<Vector3> * paintQuadTree();
+    std::vector<Vector3> * createTriangleWithTriangularBase(const Vector3 &_origin, const Vector3 &_halfSize);
+    std::vector<Vector3> * createTriangleWithSquareBase(const Vector3 &_origin, const Vector3 &_halfSize);
+    std::vector<Vector3> * createCone(const Vector3 &_origin, const Vector3 &_halfSize);
 protected:
 public:
     MainEngine();
@@ -46,6 +44,7 @@ public:
     void start();
     void stop();
     bool isRunning();
+    bool isUpdatedBeforeDraw();
     
     void updateInformation(real _duration);
     

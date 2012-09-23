@@ -13,14 +13,14 @@ using namespace std;
 MainEngine::MainEngine()
 {
     this->running = false;
-    
+
     this->world = new World();
     this->mainPhysics = new MainPhysics();
     this->mainCollision = new MainCollision();
     this->ndc = new NDC();
     
     this->eyeX = 0.0f;
-    this->eyeY = 0.0f;
+    this->eyeY = 1.0f;
     this->eyeZ = 2.0f;
     
     this->centerX = 0.0f;
@@ -54,6 +54,7 @@ void MainEngine::start()
     SimulatedObject * object = NULL;
     for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
         object = this->world->getSimulatedObjects()->at(i);
+        object->integrate(0.02f);
         this->mainCollision->updateObject(object, 0.0f);
     }
     this->running = true;
@@ -75,7 +76,7 @@ void MainEngine::updateInformation(real _duration)
         return;
     }
 
-    if (_duration <= 0.0) {
+    if (_duration <= 0.0f) {
         return;
     }
     
@@ -91,7 +92,6 @@ void MainEngine::updateInformation(real _duration)
         object = this->world->getSimulatedObjects()->at(i);
         
         // updates the physical features
-//        this->mainPhysics->updateFeatures(object, _duration);
         object->integrate(_duration);
 
         // update the object in coarse collision
@@ -101,9 +101,9 @@ void MainEngine::updateInformation(real _duration)
         
         // remove objects that left the scene
         // TODO revise values
-        if (real_abs(object->getPosition().x) >= 6.0f ||
-            real_abs(object->getPosition().y) >= 6.0f ||
-            real_abs(object->getPosition().z) >= 6.0f) {
+        if (real_abs(object->getPosition().x) >= 5.0f ||
+            real_abs(object->getPosition().y) >= 5.0f ||
+            real_abs(object->getPosition().z) >= 5.0f) {
             this->deleteSimulatedObject(object);
         }
     }
@@ -119,9 +119,10 @@ void MainEngine::rotatedScreen(real _width, real _height)
     this->ndc->update(_width, _height);
 
 #if defined (_3D_)
-    
     this->world->setPerspectiveMatrix(MatrixMakePerspective(DEGREES_TO_RADIANS(60.0f), this->ndc->getAspect(), 0.5f, 10.0f));
-    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,this->centerX, this->centerY, this->centerZ, 0.0f, 1.0f, 0.0f));
+    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
+                                                  this->centerX, this->centerY, this->centerZ,
+                                                  0.0f, 1.0f, 0.0f));
 #else
     MatrixOrtho(this->world->getOrthoMatrix(), -this->ndc->getAspect(), this->ndc->getAspect(), -1, 1, -1, 1);
 #endif
@@ -139,7 +140,9 @@ void MainEngine::zoom(real _scale)
 #if defined (_3D_)
     this->eyeZ = _scale;
     
-    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,this->centerX, this->centerY, this->centerZ, 0.0f, 1.0f, 0.0f));
+    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
+                                                  this->centerX, this->centerY, this->centerZ,
+                                                  0.0f, 1.0f, 0.0f));
 #else
     MatrixOrtho(this->world->getOrthoMatrix(),
                 this->ndc->getLeft(),
@@ -163,7 +166,9 @@ void MainEngine::pan(real _scaleX, real _scaleY)
     this->eyeY = _scaleY;
     
 #if defined (_3D_)
-    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,this->centerX, this->centerY, this->centerZ, 0.0f, 1.0f, 0.0f));
+    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
+                                                  this->centerX, this->centerY, this->centerZ,
+                                                  0.0f, 1.0f, 0.0f));
 #else
     MatrixOrtho(this->world->getOrthoMatrix(),
                 this->ndc->getLeft(),
@@ -241,7 +246,7 @@ SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
     simulatedObject->setTypeObject(_typeObject);
     simulatedObject->setLinearDamping(0.99f);
     simulatedObject->setAngularDamping(0.8f);
-    simulatedObject->setCanSleep(false);
+    simulatedObject->setCanSleep(true);
     simulatedObject->setAwake();
     
     ForceRegistry::getInstance()->add(simulatedObject, new Gravity(Vector3(0.0f, -9.8f), false));
@@ -328,60 +333,12 @@ SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
             
             break;
         }
-            
-        case ENGINE:
-            break;
-            
-        case SPRING:
-            break;
-            
-        case SPRINGS:
-            break;
-            
-        case POLYGON_OPEN:
-            break;
-            
-        case POLYGON_CLOSE:
-            break;
-        
+
         case PARTICLE:
             simulatedObject->addVector3(Vector3(0.0f, 0.5f));
             break;
 
         default:
-            simulatedObject->setMode(LINES);
-            simulatedObject->setColorAux(255, 255, 255, 0);
-            simulatedObject->setMass(0.0f); // immovable
-            simulatedObject->addAllVectors(this->paintQuadTree());
-            simulatedObject->setPosition(0.0f, 0.0f);
-            
-            SimulatedObject * s1 = new SimulatedObject();
-            s1->setColorAux(0.0f, 0.0f, 0.0f, 0.0f);
-            s1->setMode(LINES);
-            s1->setTypeObject(NONE);
-            s1->setLinearDamping(0.99f);
-            s1->setAngularDamping(0.8f);
-            s1->setCanSleep(false);
-            s1->setAwake();
-            s1->setMass(0.0f);
-            simulatedObject->setPosition(0.0f, 0.0f);
-
-            //(0, 0)
-            // VERTICAL
-            s1->addVector3(Vector3(0.0f, WIDTH_SCENE));
-            s1->addVector3(Vector3(0.0f, -WIDTH_SCENE));
-            // HORIZONTAL
-            s1->addVector3(Vector3(WIDTH_SCENE, 0.0f));
-            s1->addVector3(Vector3(-WIDTH_SCENE, 0.0f));
-            s1->initialize();
-            this->world->addSimulatedObject(s1);
-
-//            printf("linhas pretas\n");
-//            printf("%f, %f, %f, \n", 0.0f, WIDTH_SCENE, 0.0f);
-//            printf("%f, %f, %f, \n", 0.0f, -WIDTH_SCENE, 0.0f);
-//            printf("%f, %f, %f, \n", WIDTH_SCENE, 0.0f, 0.0f);
-//            printf("%f, %f, %f, \n", -WIDTH_SCENE, 0.0f, 0.0f);
-            
             break;
     }
     
@@ -396,8 +353,8 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
     SimulatedObject * simulatedObject = new SimulatedObject();
     simulatedObject->setTypeObject(_typeObject);
     simulatedObject->setMass(4.0f);
-    simulatedObject->setRestitution(0.4f);
-    simulatedObject->setPosition(0.0f, 0.8f, 0.0f);
+    simulatedObject->setRestitution(0.2f);
+    simulatedObject->setPosition(0.0f, 0.0f, 0.0f);
     simulatedObject->setLinearDamping(0.99f);
     simulatedObject->setAngularDamping(0.8f);
     simulatedObject->setCanSleep(true);
@@ -417,7 +374,6 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
             real coeff = 0.4f*simulatedObject->getMass() * simulatedObject->getRadius()*simulatedObject->getRadius();
             tensor.setInertiaTensorCoeffs(coeff,coeff,coeff);
             simulatedObject->setInertiaTensor(tensor);
-
             
             break;
         }
@@ -425,10 +381,12 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
         {
             simulatedObject->setHalfSize(0.1f, 0.1f, 0.1f);
             simulatedObject->addAllVectors(this->createBox(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
-//            Matrix3 tensor;
-//            tensor.setBlockInertiaTensor(simulatedObject->getHalfSize(), simulatedObject->getMass());
-//            simulatedObject->setInertiaTensor(tensor);
-//            break;
+
+            Matrix3 tensor;
+            tensor.setBlockInertiaTensor(simulatedObject->getHalfSize(), simulatedObject->getMass());
+            simulatedObject->setInertiaTensor(tensor);
+
+            break;
         }
         case PLAN:
         {
@@ -438,18 +396,26 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
             simulatedObject->setFriction(0.9f);
             simulatedObject->setMode(LINES);
             simulatedObject->setColorAux(0, 0, 0, 0);
-            simulatedObject->setHalfSize(3.0f, 0.0f, 3.0f);
+            simulatedObject->setHalfSize(3.0f, 0.1f, 3.0f);
             simulatedObject->addAllVectors(this->createPlan(simulatedObject->getPosition()));
             
             break;
         }
             
         case TRIANGLE_SQUARE_BASE:
-            simulatedObject->addAllVectors(this->createTriangleWithSquareBase());
+            simulatedObject->setHalfSize(0.05f, 0.05f, 0.05f);
+            simulatedObject->addAllVectors(this->createTriangleWithSquareBase(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
             break;
 
         case TRIANGLE_TRIANGULAR_BASE:
-            simulatedObject->addAllVectors(this->createTriangleWithTriangularBase());
+            simulatedObject->setHalfSize(0.1f, 0.1f, 0.1f);
+            simulatedObject->addAllVectors(this->createTriangleWithTriangularBase(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
+            break;
+
+
+        case CONE:
+            simulatedObject->setHalfSize(1.01f, 1.01f, 1.01f);
+            simulatedObject->addAllVectors(this->createCone(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
             break;
             
         default:
@@ -590,7 +556,7 @@ vector<Vector3> * MainEngine::createBox(const Vector3 &_origin, const Vector3 &_
     return vectors;
 }
 
-vector<Vector3> * MainEngine::createTriangleWithTriangularBase()
+vector<Vector3> * MainEngine::createTriangleWithTriangularBase(const Vector3 &_origin, const Vector3 &_halfSize)
 {
     vector<Vector3> * vectors = new vector<Vector3>();
     vectors->push_back(Vector3(0.1f, 0.0f, 0.0f));
@@ -616,8 +582,9 @@ vector<Vector3> * MainEngine::createTriangleWithTriangularBase()
     return vectors;
 }
 
-vector<Vector3> * MainEngine::createTriangleWithSquareBase()
+vector<Vector3> * MainEngine::createTriangleWithSquareBase(const Vector3 &_origin, const Vector3 &_halfSize)
 {
+    // TODO revise: consider _origem and _halfSize
     vector<Vector3> * vectors = new vector<Vector3>();
     vectors->push_back(Vector3(0.05f, 0.0f, -0.05f));
     vectors->push_back(Vector3(0.05f, 0.0f, 0.05f));
@@ -648,44 +615,9 @@ vector<Vector3> * MainEngine::createTriangleWithSquareBase()
     return vectors;
 }
 
-vector<Vector3> * MainEngine::paintQuadTree()
+vector<Vector3> * MainEngine::createCone(const Vector3 &_origin, const Vector3 &_halfSize)
 {
-    vector<Vector3> * vectors = new vector<Vector3>();
-    
-    real increment = 0.25f;//WIDTH_SCENE;
-//    for (int i=0; i<DEPTH_TREE; i++) {
-//        increment = increment*0.5f;
-//    }
-    
-//    //(0, 0)
-//    // VERTICAL
-//    vectors->push_back(Vector3(0.0f, WIDTH_SCENE));
-//    vectors->push_back(Vector3(0.0f, -WIDTH_SCENE));
-//    // HORIZONTAL
-//    vectors->push_back(Vector3(WIDTH_SCENE, 0.0f));
-//    vectors->push_back(Vector3(-WIDTH_SCENE, 0.0f));
-    
-    real accumulator = 0.0f;
-    while (WIDTH_SCENE>accumulator) {
-        accumulator += increment;
-        
-        // VERTICAL
-        vectors->push_back(Vector3( accumulator,  WIDTH_SCENE));
-        vectors->push_back(Vector3( accumulator, -WIDTH_SCENE));
-        vectors->push_back(Vector3(-accumulator,  WIDTH_SCENE));
-        vectors->push_back(Vector3(-accumulator, -WIDTH_SCENE));
-        // HORIZONTAL
-        vectors->push_back(Vector3( WIDTH_SCENE,  accumulator));
-        vectors->push_back(Vector3(-WIDTH_SCENE,  accumulator));
-        vectors->push_back(Vector3( WIDTH_SCENE, -accumulator));
-        vectors->push_back(Vector3(-WIDTH_SCENE, -accumulator));
-    }
-    
-    return vectors;
-}
-
-vector<Vector3> * MainEngine::createCone()
-{
+    // TODO revise: consider _origem and _halfSize
     vector<Vector3> * vectors = new vector<Vector3>();
     vectors->push_back(Vector3(-0.329893f, -0.244687f, -0.965621f));
     vectors->push_back(Vector3(-0.134803f, -0.244687f, -0.946406f));

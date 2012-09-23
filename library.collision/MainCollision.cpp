@@ -12,13 +12,8 @@ using namespace std;
 
 MainCollision::MainCollision()
 {
-    this->tree = new QuadTree();
-    this->tree->buildQuadTree();
-//    this->tree = new Octree();
-//    tree->buildOctree();
-    
+    this->tree = new Octree();
     this->contactResolver = new ContactResolver();
-    
     this->dataContacts = new CollisionData();
 }
 
@@ -53,7 +48,7 @@ void MainCollision::generateContact(RigidBody * _body1, RigidBody * _body2)
 {
     Vector3 normalPlane(0.0f, 1.0f, 0.0f);
     real offset = 0.0f;
-    
+
 #if defined (_3D_)
     if (_body1->getTypeObject() == SPHERE && _body2->getTypeObject() == SPHERE) {
         CollisionSphere * sphere1 = new CollisionSphere(_body1, _body1->getRadius());
@@ -188,18 +183,21 @@ void MainCollision::generateContacts()
     if (listObjects && listObjects->size() > 0) {
         RigidBody * body1 = NULL;
         RigidBody * body2 = NULL;
-        
+
         for (int i=0; i<listObjects->size(); i++) {
             body1 = listObjects->at(i);
             for (int j=0; j<listObjects->size(); j++) {
                 body2 = listObjects->at(j);
-                if (body1 == body2 || body2->isDirty()) {
-                    continue;
-                }
-                
+//
+//                printf("body1: %s, type %s\n", body1->getId(), body1->getTypeObject() == PLAN ? "plan" : body1->getTypeObject() == SPHERE ? "sphere" : "box");
+//                printf("body2: %s, type %s\n", body2->getId(), body2->getTypeObject() == PLAN ? "plan" : body2->getTypeObject() == SPHERE ? "sphere" : "box");
+//                if (body1 == body2 || body2->isDirty()) {
+//                    continue;
+//                }
+
                 this->generateContact(body1, body2);
-                body1->setDirty(true);
-                body2->setDirty(true);
+//                body1->setDirty(true);
+//                body2->setDirty(true);
             }
         }
 

@@ -51,6 +51,8 @@
 		B94B371615864AD7004AAB28 /* PhysicsEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = B94B371315864AD7004AAB28 /* PhysicsEngine.h */; };
 		B9618AF215E6B133006D8734 /* QuadTree.h in Headers */ = {isa = PBXBuildFile; fileRef = B9618AF115E6B132006D8734 /* QuadTree.h */; };
 		B9618AF415E6B145006D8734 /* QuadTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9618AF315E6B145006D8734 /* QuadTree.cpp */; };
+		B9656E28160F2D48002DF1C7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9656E27160F2D48002DF1C7 /* Default-568h@2x.png */; };
+		B9656E66160F312B002DF1C7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9656E27160F2D48002DF1C7 /* Default-568h@2x.png */; };
 		B965BA1E15E99CA700F9B0B6 /* Contact.h in Headers */ = {isa = PBXBuildFile; fileRef = B965BA1D15E99CA700F9B0B6 /* Contact.h */; };
 		B965BA2015E99CB200F9B0B6 /* Contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B965BA1F15E99CB200F9B0B6 /* Contact.cpp */; };
 		B975817E1606173E004FB0A1 /* Octree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B975817C1606173E004FB0A1 /* Octree.cpp */; };
@@ -264,6 +266,7 @@
 		B94B371315864AD7004AAB28 /* PhysicsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEngine.h; sourceTree = "<group>"; };
 		B9618AF115E6B132006D8734 /* QuadTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuadTree.h; sourceTree = "<group>"; };
 		B9618AF315E6B145006D8734 /* QuadTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadTree.cpp; sourceTree = "<group>"; };
+		B9656E27160F2D48002DF1C7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B965BA1D15E99CA700F9B0B6 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
 		B965BA1F15E99CB200F9B0B6 /* Contact.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Contact.cpp; sourceTree = "<group>"; };
 		B975817C1606173E004FB0A1 /* Octree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Octree.cpp; sourceTree = "<group>"; };
@@ -428,6 +431,7 @@
 		B94B36A215864775004AAB28 = {
 			isa = PBXGroup;
 			children = (
+				B9656E27160F2D48002DF1C7 /* Default-568h@2x.png */,
 				B94B36B715864775004AAB28 /* Physical.Simulation.Tool */,
 				B902353015FAA498008ABCCA /* Test.Physical.Simulation.Tool */,
 				B94B36D2158647FE004AAB28 /* physics.engine */,
@@ -503,9 +507,9 @@
 		B94B36D2158647FE004AAB28 /* physics.engine */ = {
 			isa = PBXGroup;
 			children = (
+				B94B371315864AD7004AAB28 /* PhysicsEngine.h */,
 				B9AFACCE15FD1D9400B313D4 /* NDC.cpp */,
 				B9AFACCF15FD1D9400B313D4 /* NDC.h */,
-				B94B371315864AD7004AAB28 /* PhysicsEngine.h */,
 				B94B371215864AD7004AAB28 /* MainEngine.h */,
 				B94B371115864AD7004AAB28 /* MainEngine.cpp */,
 				B93ACE9415A3AC7100CED06E /* Selection.h */,
@@ -851,6 +855,7 @@
 			files = (
 				B902353515FAA498008ABCCA /* InfoPlist.strings in Resources */,
 				B902353E15FAA498008ABCCA /* MainStoryboard.storyboard in Resources */,
+				B9656E28160F2D48002DF1C7 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -873,6 +878,7 @@
 				B9B7913515B789BA00E08A55 /* puzzle.png in Resources */,
 				B9B7913715B78C9200E08A55 /* triangle.png in Resources */,
 				B93704D815D2A9520042B36B /* plane.png in Resources */,
+				B9656E66160F312B002DF1C7 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1079,9 +1085,10 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Test.Physical.Simulation.Tool/Test.Physical.Simulation.Tool-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1096,9 +1103,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Test.Physical.Simulation.Tool/Test.Physical.Simulation.Tool-Prefix.pch";
 				INFOPLIST_FILE = "Test.Physical.Simulation.Tool/Test.Physical.Simulation.Tool-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1159,6 +1167,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Physical.Simulation.Tool/Physical.Simulation.Tool-Prefix.pch";
 				INFOPLIST_FILE = "Physical.Simulation.Tool/Physical.Simulation.Tool-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = Physical.Tool;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1175,6 +1184,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Physical.Simulation.Tool/Physical.Simulation.Tool-Prefix.pch";
 				INFOPLIST_FILE = "Physical.Simulation.Tool/Physical.Simulation.Tool-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = Physical.Tool;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

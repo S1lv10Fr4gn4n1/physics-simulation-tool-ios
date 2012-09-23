@@ -128,7 +128,7 @@ Vector3 Contact::calculateFrictionImpulse(Matrix3 * _inverseInertiaTensor)
     impulseToTorque.setSkewSymmetric(this->relativeContactPosition[0]);
     
     // build the matrix to convert contact impulse to change in velocity in world coordinates.
-    Matrix3 deltaVelWorld;
+    Matrix3 deltaVelWorld = impulseToTorque;
     deltaVelWorld *= _inverseInertiaTensor[0];
     deltaVelWorld *= impulseToTorque;
     deltaVelWorld *= -1;
@@ -216,8 +216,11 @@ void Contact::calculateDesiredDeltaVelocity(real _duration)
     const static real velocityLimit = (real)0.25f;
     
     // calculate the acceleration-induced velocity accumulated this frame.
-    real velocityFromAcc = this->body[0]->getLastFrameAcceleration() * _duration * this->contactNormal;
-    if (this->body[1]) {
+    real velocityFromAcc = 0;
+    if (this->body[0]->isAwake()) {
+        this->body[0]->getLastFrameAcceleration() * _duration * this->contactNormal;
+    }
+    if (this->body[1] && this->body[1]->isAwake()) {
         velocityFromAcc -= this->body[1]->getLastFrameAcceleration() * _duration * this->contactNormal;
     }
     
@@ -273,12 +276,12 @@ Vector3 Contact::calculateLocalVelocity(unsigned _bodyIndex, real _duration)
 void Contact::applyPositionChange(Vector3 _linearChange[2], Vector3 _angularChange[2], real _penetration)
 {
     const real angularLimit = (real)0.2f;
-    real angularMove[2];
-    real linearMove[2];
+    real angularMove[2] = {0.0f, 0.0f};
+    real linearMove[2] = {0.0f, 0.0f};
     
     real totalInertia = 0;
-    real linearInertia[2];
-    real angularInertia[2];
+    real linearInertia[2] = {0.0f, 0.0f};
+    real angularInertia[2] = {0.0f, 0.0f};
     
     // need to work out the inertia of each object in the direction
     // of the contact normal, due to angular inertia only

@@ -41,7 +41,6 @@ public:
     QuadTree();
     ~QuadTree();
     
-    void buildQuadTree();
     void insertObject(RigidBody * _body);
     void updateObject(RigidBody * _body);
     void deleteObject(RigidBody * _body);

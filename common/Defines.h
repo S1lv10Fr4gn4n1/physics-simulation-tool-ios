@@ -37,9 +37,9 @@ typedef float real;
 #define DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0 * M_PI)
 
 // TODO revise: depth of tree and width/height of scene
-// QUADTREE
-#define DEPTH_TREE 5
-#define WIDTH_SCENE 4.0f
+// TREE
+#define DEPTH_TREE 3
+#define WIDTH_SCENE 3.0f
 
 #define CHANNEL_COLOR 4
 #define COUNT_COORD 3

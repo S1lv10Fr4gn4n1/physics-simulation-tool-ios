@@ -109,9 +109,7 @@ void TestController::stopSimulation()
 
 void TestController::startSimulation()
 {
-    
     this->createScene();
-    
     this->mainEngine->start();
 }
 
@@ -342,13 +340,14 @@ void TestController::createScene()
 {
     this->mainEngine->makeSimulatedObject3D(PLAN);
     SimulatedObject *box = this->mainEngine->makeSimulatedObject3D(BOX, false);
-    box->setPosition(0.2f, 0.8f, 0.2f);
-//    box->setRotation(1.0f, 0.0f, 0.0f);
+    box->setPosition(0.5f, 0.8f, 0.0f);
+    box->setRotation(1.0f, 0.0f, 3.0f);
     box->initialize();
 
-//    SimulatedObject * sphere = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
-//    sphere->setVelocity(1.0f, 0.0f, 0.0f);
-//    sphere->initialize();
+    SimulatedObject * sphere = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+    sphere->setPosition(-0.1f, 0.7f, 0.0f);
+    sphere->setVelocity(-0.3f, 0.0f, 0.0f);
+    sphere->initialize();
 
 //    this->mainEngine->makeSimulatedObject3D(BOX);
 //    this->mainEngine->makeSimulatedObject3D(SPHERE);
