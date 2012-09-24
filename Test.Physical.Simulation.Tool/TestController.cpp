@@ -92,7 +92,7 @@ void TestController::resizeScreen(real _width, real _height)
 
 void TestController::updateInformation(real _duration)
 {
-    this->mainEngine->updateInformation(0.02f);
+    this->mainEngine->updateInformation(_duration);
 }
 
 void TestController::draw()
@@ -340,14 +340,30 @@ void TestController::createScene()
 {
     this->mainEngine->makeSimulatedObject3D(PLAN);
     SimulatedObject *box = this->mainEngine->makeSimulatedObject3D(BOX, false);
-    box->setPosition(0.5f, 0.8f, 0.0f);
-    box->setRotation(1.0f, 0.0f, 3.0f);
+    box->setPosition(-0.3f, 0.0f, 0.0f);
+    box->setRotation(0.0f, 0.0f, 0.0f);
     box->initialize();
 
-    SimulatedObject * sphere = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
-    sphere->setPosition(-0.1f, 0.7f, 0.0f);
-    sphere->setVelocity(-0.3f, 0.0f, 0.0f);
-    sphere->initialize();
+    SimulatedObject *box1 = this->mainEngine->makeSimulatedObject3D(BOX, false);
+    box1->setPosition(0.5f, 0.8f, -0.5f);
+    box1->setRotation(1.0f, 0.0f, 1.0f);
+    box1->initialize();
+
+    SimulatedObject *box2 = this->mainEngine->makeSimulatedObject3D(BOX, false);
+    box2->setPosition(-0.5f, 0.8f, -0.5f);
+    box2->setRotation(1.0f, 1.0f, 0.0f);
+    box2->initialize();
+
+//    SimulatedObject * sphere = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+//    sphere->setPosition(0.3f, 0.0f, 0.0f);
+//    sphere->setVelocity(-0.3f, 0.0f, 0.0f);
+//    sphere->initialize();
+
+//    SimulatedObject * sphere1 = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+//    sphere1->setPosition(-0.3f, 0.0f, 0.0f);
+//    sphere1->setVelocity(0.0f, 0.0f,  0.0f);
+//    sphere1->initialize();
+
 
 //    this->mainEngine->makeSimulatedObject3D(BOX);
 //    this->mainEngine->makeSimulatedObject3D(SPHERE);

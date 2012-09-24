@@ -32,7 +32,8 @@ RigidBody::RigidBody()
 
 RigidBody::~RigidBody()
 {
-    // TODO put your code here
+    delete [] this->id;
+    this->id = NULL;
 }
 
 char * RigidBody::getId()
@@ -499,71 +500,4 @@ real RigidBody::getFriction()
 void RigidBody::setFriction(real _friction)
 {
     this->friction = _friction;
-}
-
-void RigidBody::integrate(real _duration)
-{
-    if (!this->hasFiniteMass()) {
-        return;
-    }
-    
-    if (!this->isAwake()) {
-        return;
-    }
-    
-    // calculate linear acceleration from force inputs.
-    this->lastFrameAcceleration = this->acceleration;
-    this->lastFrameAcceleration.addScaledVector(this->forceAccum, this->inverseMass);
-    
-    // calculate angular acceleration from torque inputs.
-    Vector3 angularAcceleration = this->inverseInertiaTensorWorld.transform(this->torqueAccum);
-    
-    // adjust velocities
-    // update linear velocity from both acceleration and impulse.
-    this->velocity.addScaledVector(this->lastFrameAcceleration, _duration);
-    
-    // update angular velocity from both acceleration and impulse.
-    this->rotation.addScaledVector(angularAcceleration, _duration);
-    
-    // impose drag.
-    this->velocity *= real_pow(this->linearDamping, _duration);
-    this->rotation *= real_pow(this->angularDamping, _duration);
-
-    // adjust positions
-    // update linear position.
-    this->position.addScaledVector(this->velocity, _duration);
-    
-    // update angular position.
-    this->orientation.addScaledVector(this->rotation, _duration);
-    
-    // normalize the orientation, and update the matrices with the new position and orientation.
-    this->calculateDerivedData();
-
-//    static int test = 0;
-//    printf("____%u____\n", test++);
-//    printf("info, velocity-> x: %2.6f, y: %2.6f, z: %2.6f \n", this->velocity.x, this->velocity.y,this->velocity.z);
-//    printf("info, rotation-> x: %2.6f, y: %2.6f, z: %2.6f \n", this->rotation.x, this->rotation.y,this->rotation.z);
-//    printf("info, force   -> x: %2.6f, y: %2.6f, z: %2.6f \n", this->forceAccum.x, this->forceAccum.y, this->forceAccum.z);
-//    printf("info, position -> x: %f, y: %f, z: %f\n", this->position.x, this->position.y, this->position.z);
-//    printf("info, torque  -> x: %2.6f, y: %2.6f, z: %2.6f \n", this->torqueAccum.x, this->torqueAccum.y,this->torqueAccum.z);
-
-    // clear accumulators.
-    this->clearAccumulators();
-    
-    // update the kinetic energy store, and possibly put the body to sleep
-    if (this->isCanSleep()) {
-        real currentMotion = this->velocity.scalarProduct(this->velocity) +
-                             this->rotation.scalarProduct(this->rotation);
-        
-        real bias = real_pow(0.5, _duration);
-        this->motion = bias*this->motion + (1-bias)*currentMotion;
-        
-//        printf("sleep, motion: %f, \n", this->getMotion());
-        if (this->motion < SLEEP_EPSILON) {
-            this->setAwake(false);
-        } else if (this->motion > 10.0f * SLEEP_EPSILON) {
-            this->motion = 10.0f * SLEEP_EPSILON;
-        }
-        
-    }
 }

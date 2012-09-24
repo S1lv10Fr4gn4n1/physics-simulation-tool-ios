@@ -48,7 +48,6 @@ public:
     RigidBody();
     ~RigidBody();
     
-    void integrate(real _duration);
     void calculateDerivedData();
     void addForce(const Vector3 &_force, bool _awakeUp=false);
     void addForceAtBodyPoint(const Vector3 &_force, const Vector3 &_point);

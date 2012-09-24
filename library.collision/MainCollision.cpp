@@ -40,7 +40,6 @@ void MainCollision::insertObject(RigidBody * _body)
 
 void MainCollision::updateObject(RigidBody * _body, real _duration)
 {
-    _body->setDirty(false);
     this->tree->insertObject(_body);
 }
 
@@ -188,16 +187,11 @@ void MainCollision::generateContacts()
             body1 = listObjects->at(i);
             for (int j=0; j<listObjects->size(); j++) {
                 body2 = listObjects->at(j);
-//
-//                printf("body1: %s, type %s\n", body1->getId(), body1->getTypeObject() == PLAN ? "plan" : body1->getTypeObject() == SPHERE ? "sphere" : "box");
-//                printf("body2: %s, type %s\n", body2->getId(), body2->getTypeObject() == PLAN ? "plan" : body2->getTypeObject() == SPHERE ? "sphere" : "box");
-//                if (body1 == body2 || body2->isDirty()) {
-//                    continue;
-//                }
+                if (body1 == body2) {
+                    continue;
+                }
 
                 this->generateContact(body1, body2);
-//                body1->setDirty(true);
-//                body2->setDirty(true);
             }
         }
 

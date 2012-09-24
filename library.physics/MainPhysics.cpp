@@ -58,32 +58,41 @@ void MainPhysics::updateFeatures(RigidBody * _body, real _duration)
         return;
     }
     
-    // calculate linear acceleration from force inputs.
-    _body->setLastFrameAcceleration(_body->getAcceleration());
-    _body->getLastFrameAcceleration().addScaledVector(_body->getForceAccum(), _body->getInverseMass());
+    // calculate linear acceleration from force
+    Vector3 lastAcceleration = _body->getAcceleration();
+    lastAcceleration.addScaledVector(_body->getForceAccum(), _body->getInverseMass());
+    _body->setLastFrameAcceleration(lastAcceleration);
     
-    // calculate angular acceleration from torque inputs.
-    Vector3 angularAcceleration = _body->getInverseInertiaTensorWorld().transform(_body->getTorqueAccum());
+    // calculate angular acceleration from torque
+    Matrix3 inverseInertia = _body->getInverseInertiaTensorWorld();
+    Vector3 angularAcceleration = inverseInertia.transform(_body->getTorqueAccum());
     
     // adjust velocities
-    // update linear velocity from both acceleration and impulse.
-    _body->getVelocity().addScaledVector(_body->getLastFrameAcceleration(), _duration);
+    // update linear velocity from both acceleration and impulse
+    Vector3 velocity = _body->getVelocity();
+    velocity.addScaledVector(_body->getLastFrameAcceleration(), _duration);
+    _body->setVelocity(velocity);
     
-    // update angular velocity from both acceleration and impulse.
-    _body->getRotation().addScaledVector(angularAcceleration, _duration);
+    // update angular velocity from both acceleration and impulse
+    Vector3 rotation = _body->getRotation();
+    rotation.addScaledVector(angularAcceleration, _duration);
     
-    // impose drag.
-    _body->getVelocity() *= real_pow(_body->getLinearDamping(), _duration);
-    _body->getRotation() *= real_pow(_body->getAngularDamping(), _duration);
+    // impose drag
+    _body->setVelocity(_body->getVelocity()*real_pow(_body->getLinearDamping(), _duration));
+    _body->setRotation(_body->getRotation()*real_pow(_body->getAngularDamping(), _duration));
     
     // adjust positions
-    // update linear position.
-    _body->getPosition().addScaledVector(_body->getVelocity(), _duration);
+    // update linear position
+    Vector3 position = _body->getPosition();
+    position.addScaledVector(_body->getVelocity(), _duration);
+    _body->setPosition(position);
     
     // update angular position.
-    _body->getOrientation().addScaledVector(_body->getRotation(), _duration);
+    Quaternion orientation = _body->getOrientation();
+    orientation.addScaledVector(_body->getRotation(), _duration);
+    _body->setOrientation(orientation);
     
-    // normalize the orientation, and update the matrices with the new position and orientation.
+    // normalize the orientation, and update the matrices with the new position and orientation
     _body->calculateDerivedData();
 
 //    printf("info, velocity-> x: %2.6f, y: %2.6f, z: %2.6f \n", _body->getVelocity()->x, _body->getVelocity()->y,_body->getVelocity()->z);

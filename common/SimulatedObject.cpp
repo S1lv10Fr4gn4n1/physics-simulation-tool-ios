@@ -8,14 +8,12 @@
 
 #include "SimulatedObject.h"
 
-using namespace std;
-
 SimulatedObject::SimulatedObject()
 {
     this->showBBox = false;
     this->selected = false;
     
-    this->vectorsAux = new vector<Vector3>();
+    this->vectorsAux = new std::vector<Vector3>();
     this->vectors = NULL;
     
     this->colorAux = Color::MakeRandonColor();

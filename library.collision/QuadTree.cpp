@@ -11,110 +11,73 @@
 typedef std::pair<char *, RigidBody *> mapBody;
 typedef std::map<char *, RigidBody *>::iterator mapBodyIter;
 
-bool less(real k1,real k2) {
+#define PLUS true
+#define MINUS false
+
+inline bool less(real k1,real k2) {
     return k1 < k2;
+}
+
+inline bool bigger(real k1,real k2) {
+    return k1 > k2;
+}
+
+bool testQuad(QuadTreeNode * _tree, RigidBody * _body, bool _v1, bool _v2)
+{
+    if (!(_v1 ^ bigger(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x)) &&
+        !(_v2 ^ bigger(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y)))
+        return true;
+
+    if (!(_v1 ^ bigger(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x)) &&
+        !(_v2 ^ bigger(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y)))
+        return true;
+
+    if (!(_v1 ^ bigger(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x)) &&
+        !(_v2 ^ bigger(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y)))
+        return true;
+
+    if (!(_v1 ^ bigger(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x)) &&
+        !(_v2 ^ bigger(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y)))
+        return true;
+
+    return false;
 }
 
 bool inPlusPlus(QuadTreeNode * _tree, RigidBody * _body)
 {
-    if (!less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
-        !less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
-        return true;
-
-    if (!less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
-        !less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
-        return true;
-    
-    if (!less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
-        !less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
-        return true;
-    
-    if (!less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
-        !less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
-        return true;
-
-    return false;
+    return testQuad(_tree, _body, PLUS, PLUS);
 }
 
 bool inPlusMinus(QuadTreeNode * _tree, RigidBody * _body)
 {
-    if (!less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
-         less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
-        return true;
-
-    if (!less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
-         less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
-        return true;
-    
-    if (!less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
-         less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
-        return true;
-    
-    if (!less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
-         less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
-        return true;
-    
-    return false;
+    return testQuad(_tree, _body, PLUS, MINUS);
 }
 
 bool inMinusMinus(QuadTreeNode * _tree, RigidBody * _body)
 {
-    if (less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
-        less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
-        return true;
-    if (less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
-        less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
-        return true;
-
-    if (less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
-        less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
-        return true;
-    
-    if (less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
-        less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
-        return true;
-    
-    return false;
+    return testQuad(_tree, _body, MINUS, MINUS);
 }
 
 bool inMinusPlus(QuadTreeNode * _tree, RigidBody * _body)
 {
-    if ( less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
-        !less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
-        return true;
-
-    if ( less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
-        !less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
-        return true;
-    
-    if ( less(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x) &&
-        !less(_body->getPosition().y - _body->getHalfSize().y, _tree->center.y))
-        return true;
-    
-    if ( less(_body->getPosition().x - _body->getHalfSize().x, _tree->center.x) &&
-        !less(_body->getPosition().y + _body->getHalfSize().y, _tree->center.y))
-        return true;
- 
-    return false;
+    return testQuad(_tree, _body, MINUS, PLUS);
 }
 
 bool radiusReachesObject(QuadTreeNode * _tree, RigidBody * _body)
 {
-    if ((_tree->center.x + _tree->halfWidth >= _body->getPosition().x + _body->getHalfSize().x ||
-         _tree->center.x + _tree->halfWidth >= _body->getPosition().x - _body->getHalfSize().x) &&
-        
-        (_tree->center.x - _tree->halfWidth <= _body->getPosition().x + _body->getHalfSize().x ||
-         _tree->center.x - _tree->halfWidth <= _body->getPosition().x - _body->getHalfSize().x) &&
-        
-        (_tree->center.y + _tree->halfWidth >= _body->getPosition().y + _body->getHalfSize().y ||
-         _tree->center.y + _tree->halfWidth >= _body->getPosition().y - _body->getHalfSize().y) &&
-        
-        (_tree->center.y - _tree->halfWidth <= _body->getPosition().y + _body->getHalfSize().y &&
-         _tree->center.y - _tree->halfWidth <= _body->getPosition().y - _body->getHalfSize().y)) {
-        return true;
+
+    for (unsigned i=0; i<2; i++) {
+        if ((_tree->center[i] + _tree->halfWidth >= _body->getPosition()[i] + _body->getHalfSize()[i] ||
+             _tree->center[i] + _tree->halfWidth >= _body->getPosition()[i] - _body->getHalfSize()[i]) &&
+            (_tree->center[i] - _tree->halfWidth <= _body->getPosition()[i] + _body->getHalfSize()[i] ||
+             _tree->center[i] - _tree->halfWidth <= _body->getPosition()[i] - _body->getHalfSize()[i])) {
+            continue;
+        } else {
+            return false;
+        }
     }
 
-    return false;
+    return true;
 }
 
 QuadTree::QuadTree()

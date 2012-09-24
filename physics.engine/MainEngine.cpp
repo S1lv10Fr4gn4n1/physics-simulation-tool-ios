@@ -54,7 +54,6 @@ void MainEngine::start()
     SimulatedObject * object = NULL;
     for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
         object = this->world->getSimulatedObjects()->at(i);
-        object->integrate(0.02f);
         this->mainCollision->updateObject(object, 0.0f);
     }
     this->running = true;
@@ -92,7 +91,7 @@ void MainEngine::updateInformation(real _duration)
         object = this->world->getSimulatedObjects()->at(i);
         
         // updates the physical features
-        object->integrate(_duration);
+        this->mainPhysics->updateFeatures(object, _duration);
 
         // update the object in coarse collision
         this->mainCollision->updateObject(object, _duration);
@@ -101,9 +100,9 @@ void MainEngine::updateInformation(real _duration)
         
         // remove objects that left the scene
         // TODO revise values
-        if (real_abs(object->getPosition().x) >= 5.0f ||
-            real_abs(object->getPosition().y) >= 5.0f ||
-            real_abs(object->getPosition().z) >= 5.0f) {
+        if (real_abs(object->getPosition().x) >= 3.5f ||
+            real_abs(object->getPosition().y) >= 4.0f ||
+            real_abs(object->getPosition().z) >= 3.5f) {
             this->deleteSimulatedObject(object);
         }
     }
@@ -396,9 +395,8 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
             simulatedObject->setFriction(0.9f);
             simulatedObject->setMode(LINES);
             simulatedObject->setColorAux(0, 0, 0, 0);
-            simulatedObject->setHalfSize(3.0f, 0.1f, 3.0f);
-            simulatedObject->addAllVectors(this->createPlan(simulatedObject->getPosition()));
-            
+            simulatedObject->setHalfSize(3.0f, 0.0f, 3.0f);
+            simulatedObject->addAllVectors(this->createPlan(simulatedObject->getPosition()));            
             break;
         }
             

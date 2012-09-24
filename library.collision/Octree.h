@@ -36,7 +36,7 @@ private:
     void insertObject(OctreeNode * _tree, RigidBody * _body);
     void deleteObject(OctreeNode * _tree, RigidBody * _body);
     void cleanLeaves(OctreeNode * _tree);
-    OctreeNode * buildOctree(const Vector3 &_center, real _halfWidth, int _stopDepth);
+    OctreeNode * buildOctree(const Vector3 &_center, real _halfWidth, int _depth);
 public:
     Octree();
     ~Octree();
