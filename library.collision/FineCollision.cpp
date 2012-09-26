@@ -98,8 +98,7 @@ real penetrationOnAxis(const CollisionBox * _one,
     // project this onto the axis
     real distance = real_abs(_toCentre * _axis);
     
-    // return the overlap (i.e. positive indicates
-    // overlap, negative indicates separation).
+    // return the overlap: positive indicates overlap, negative indicates separation
     return oneProject + twoProject - distance;
 }
 
@@ -129,13 +128,8 @@ bool tryAxis(const CollisionBox * _one, const CollisionBox * _two, Vector3 _axis
 }
 
 void fillPointFaceBoxBox(const CollisionBox * _one, const CollisionBox * _two, const Vector3 &_toCentre,
-                         CollisionData * _data, unsigned _best, real _pen)
+                         CollisionData * _data, unsigned _best, real _penetration)
 {
-    // this method is called when we know that a vertex from
-    // box two is in contact with box one.
-    
-    // know which axis the collision is on (i.e. best),
-    // but we need to work out which of the two faces on this axis.
     Vector3 normal = _one->getAxis(_best);
     
     if (_one->getAxis(_best) * _toCentre > 0.0f) {
@@ -143,7 +137,6 @@ void fillPointFaceBoxBox(const CollisionBox * _one, const CollisionBox * _two, c
     }
     
     // work out which vertex of box two we're colliding with.
-    // using toCentre doesn't work!
     Vector3 vertex = _two->halfSize;
     if (_two->getAxis(0) * normal < 0.0f) {
     	vertex.x = -vertex.x;
@@ -157,15 +150,15 @@ void fillPointFaceBoxBox(const CollisionBox * _one, const CollisionBox * _two, c
     	vertex.z = -vertex.z;
     }
     
-    // create the contact data
     Contact * contact = new Contact();
     contact->contactNormal = normal;
-    contact->penetration = _pen;
+    contact->penetration = _penetration;
     contact->contactPoint = _two->transform * vertex;
     contact->body[0] = _one->body;
     contact->body[1] = _two->body;
-    contact->friction = _one->body->getFriction() + _two->body->getFriction(); //TODO revise
+    contact->friction = _one->body->getFriction() + _two->body->getFriction();
     contact->restitution = _one->body->getRestitution() + _two->body->getRestitution();
+    _data->contacts->push_back(contact);
 }
 
 Vector3 contactPoint(const Vector3 &_pOne, const Vector3 &_dOne, real _oneSize,
@@ -355,7 +348,8 @@ unsigned CollisionDetector::boxAndHalfSpace(const CollisionBox * _box, const Col
     return contactsUsed;
 }
 
-#define CHECK_OVERLAP(axis, index) if (!tryAxis(_one, _two, (axis), toCentre, (index), pen, best)) return 0;
+#define CHECK_OVERLAP(axis, index) \
+if (!tryAxis(_one, _two, (axis), toCentre, (index), pen, best)) return 0;
 
 unsigned CollisionDetector::boxAndBox(const CollisionBox * _one, const CollisionBox * _two, CollisionData * _data)
 {
@@ -363,53 +357,77 @@ unsigned CollisionDetector::boxAndBox(const CollisionBox * _one, const Collision
     Vector3 toCentre = _two->getAxis(3) - _one->getAxis(3);
     
     // start assuming there is no contact
-    real pen = REAL_MAX;
+    real penetration = REAL_MAX;
     unsigned best = 0xffffff;
     
-    
-    // check each axes, returning if it gives us
+
+    // check each axes, returning if it gives us 
     // a separating axis, and keeping track of the axis with
     // the smallest penetration otherwise.
-    CHECK_OVERLAP(_one->getAxis(0), 0);
-    CHECK_OVERLAP(_one->getAxis(1), 1);
-    CHECK_OVERLAP(_one->getAxis(2), 2);
+    if (!tryAxis(_one, _two, _one->getAxis(0), toCentre, 0, penetration, best)) {
+        return 0;
+    }
+    if (!tryAxis(_one, _two, _one->getAxis(1), toCentre, 1, penetration, best)) {
+        return 0;
+    }
+    if (!tryAxis(_one, _two, _one->getAxis(2), toCentre, 2, penetration, best)) {
+        return 0;
+    }
 
-    CHECK_OVERLAP(_two->getAxis(0), 3);
-    CHECK_OVERLAP(_two->getAxis(1), 4);
-    CHECK_OVERLAP(_two->getAxis(2), 5);
-    
-    // Store the best axis-major, in case we run into almost
+    if (!tryAxis(_one, _two, _two->getAxis(0), toCentre, 3, penetration, best)) {
+        return 0;
+    }
+
+    if (!tryAxis(_one, _two, _two->getAxis(1), toCentre, 4, penetration, best)) {
+        return 0;
+    }
+    if (!tryAxis(_one, _two, _two->getAxis(2), toCentre, 5, penetration, best)) {
+        return 0;
+    }
+
+    // store the best axis-major, in case we run into almost
     // parallel edge collisions later
     unsigned bestSingleAxis = best;
     
-    CHECK_OVERLAP(_one->getAxis(0) % _two->getAxis(0), 6);
-    CHECK_OVERLAP(_one->getAxis(0) % _two->getAxis(1), 7);
-    CHECK_OVERLAP(_one->getAxis(0) % _two->getAxis(2), 8);
-    CHECK_OVERLAP(_one->getAxis(1) % _two->getAxis(0), 9);
-    CHECK_OVERLAP(_one->getAxis(1) % _two->getAxis(1), 10);
-    CHECK_OVERLAP(_one->getAxis(1) % _two->getAxis(2), 11);
-    CHECK_OVERLAP(_one->getAxis(2) % _two->getAxis(0), 12);
-    CHECK_OVERLAP(_one->getAxis(2) % _two->getAxis(1), 13);
-    CHECK_OVERLAP(_one->getAxis(2) % _two->getAxis(2), 14);
+    if (!tryAxis(_one, _two, _one->getAxis(0) % _two->getAxis(0), toCentre, 6, penetration, best)) {
+        return 0;
+    }
+    if (!tryAxis(_one, _two, _one->getAxis(0) % _two->getAxis(1), toCentre, 7, penetration, best)) {
+        return 0;
+    }
+    if (!tryAxis(_one, _two, _one->getAxis(0) % _two->getAxis(2), toCentre, 8, penetration, best)) {
+        return 0;
+    }
+    if (!tryAxis(_one, _two, _one->getAxis(1) % _two->getAxis(0), toCentre, 9, penetration, best)) {
+        return 0;
+    }
+    if (!tryAxis(_one, _two, _one->getAxis(1) % _two->getAxis(2), toCentre, 11, penetration, best)) {
+        return 0;
+    }
+    if (!tryAxis(_one, _two, _one->getAxis(2) % _two->getAxis(0), toCentre, 12, penetration, best)) {
+        return 0;
+    }
+    if (!tryAxis(_one, _two, _one->getAxis(2) % _two->getAxis(1), toCentre, 13, penetration, best)) {
+        return 0;
+    }
+    if (!tryAxis(_one, _two, _one->getAxis(2) % _two->getAxis(2), toCentre, 14, penetration, best)) {
+        return 0;
+    }
     
-    // now know there's a collision, and we know which
-    // of the axes gave the smallest penetration. We now
-    // can deal with it in different ways depending on the case.
+    // there collision, and we know which of the axes gave the smallest penetration
+    // we now can deal with it in different ways depending on the case
     if (best < 3) {
-        // we've got a vertex of box two on a face of box one.
-        fillPointFaceBoxBox(_one, _two, toCentre, _data, best, pen);
+        // a vertex of box two on a face of box one.
+        fillPointFaceBoxBox(_one, _two, toCentre, _data, best, penetration);
         return 1;
     
     } else if (best < 6) {
-        // We've got a vertex of box one on a face of box two.
-        // We use the same algorithm as above, but swap around
-        // one and two (and therefore also the vector between their
-        // centres).
-        fillPointFaceBoxBox(_two, _one, toCentre * -1.0f, _data, best-3, pen);
+        // a vertex of box one on a face of box two.
+        fillPointFaceBoxBox(_two, _one, toCentre * -1.0f, _data, best-3, penetration);
         return 1;
         
     } else {
-        // we've got an edge-edge contact. Find out which axes
+        // an edge-edge contact
         best -= 6;
         unsigned oneAxisIndex = best / 3;
         unsigned twoAxisIndex = best % 3;
@@ -423,12 +441,6 @@ unsigned CollisionDetector::boxAndBox(const CollisionBox * _one, const Collision
             axis = axis * -1.0f;
         }
         
-        // we have the axes, but not the edges: each axis has 4 edges parallel
-        // to it, we need to find which of the 4 for each object. We do
-        // that by finding the point in the centre of the edge. We know
-        // its component in the direction of the box's collision axis is zero
-        // (its a mid-point) and we determine which of the extremes in each
-        // of the other axes is closest.
         Vector3 ptOnOneEdge = _one->halfSize;
         Vector3 ptOnTwoEdge = _two->halfSize;
         
@@ -446,29 +458,28 @@ unsigned CollisionDetector::boxAndBox(const CollisionBox * _one, const Collision
             }
         }
         
-        // move them into world coordinates (they are already oriented
-        // correctly, since they have been derived from the axes).
+        // move them into world coordinates
         ptOnOneEdge = _one->transform * ptOnOneEdge;
         ptOnTwoEdge = _two->transform * ptOnTwoEdge;
         
-        // so we have a point and a direction for the colliding edges.
-        // we need to find out point of closest approach of the two line-segments.
+        // find out point of closest approach of the two line-segments.
         Vector3 vertex = contactPoint(ptOnOneEdge, oneAxis, _one->halfSize[oneAxisIndex],
                                       ptOnTwoEdge, twoAxis, _two->halfSize[twoAxisIndex],
                                       bestSingleAxis > 2);
 
         Contact * contact = new Contact();
-        contact->penetration = pen;
+        contact->penetration = penetration;
         contact->contactNormal = axis;
         contact->contactPoint = vertex;
         contact->body[0] = _one->body;
         contact->body[1] = _two->body;
         contact->friction = _one->body->getFriction() + _two->body->getFriction();
         contact->restitution = _one->body->getRestitution() + _two->body->getRestitution();
+        _data->contacts->push_back(contact);
         
         return 1;
     }
-    
+
     return 0;
 }
 
@@ -486,7 +497,7 @@ unsigned CollisionDetector::boxAndSphere(const CollisionBox * _box, const Collis
     }
     
     Vector3 closestPoint;
-    real distance;
+    real distance = 0;
     
     // clamp each coordinate to the box.
     distance = relCenter.x;
@@ -531,7 +542,7 @@ unsigned CollisionDetector::boxAndSphere(const CollisionBox * _box, const Collis
     Vector3 closestPointWorld = _box->transform.transform(closestPoint);
     
     Contact * contact = new Contact();
-    contact->contactNormal = (center - closestPointWorld);
+    contact->contactNormal = (closestPointWorld - center);
     contact->contactNormal.normalize();
     contact->contactPoint = closestPointWorld;
     contact->penetration = _sphere->radius - real_sqrt(distance);

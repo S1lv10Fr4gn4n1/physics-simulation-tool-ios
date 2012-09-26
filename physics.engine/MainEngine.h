@@ -55,16 +55,16 @@ public:
     
     void scaleSimulatedObject(SimulatedObject * _simulatedObject, real _scale);
     void rotateSimulatedObject(SimulatedObject * _simulatedObject, real _radians);
-    void translateSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector);
+    void translateSimulatedObject(SimulatedObject * _simulatedObject, const Vector3 &_vector);
 
-    void updatePositionSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector);
+    void updatePositionSimulatedObject(SimulatedObject * _simulatedObject, const Vector3 &_vector);
     
     void deleteAllSimulatedObjects();
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
     SimulatedObject * makeSimulatedObject2D(TypeObject _typeObject);
     SimulatedObject * makeSimulatedObject3D(TypeObject _typeObject, bool _init=true);
     
-    SimulatedObject * selectedSimulatedObject(Vector3 * _vector);
+    SimulatedObject * selectedSimulatedObject(Vector3 &_vector);
 };
 
 #endif

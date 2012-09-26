@@ -103,8 +103,8 @@ void TestController::draw()
 void TestController::stopSimulation()
 {
     this->mainEngine->stop();
-    scaleZoom = ZOOM_INIT;
-    this->mainEngine->zoom(scaleZoom);
+//    scaleZoom = ZOOM_INIT;
+//    this->mainEngine->zoom(scaleZoom);
 }
 
 void TestController::startSimulation()
@@ -153,7 +153,7 @@ void TestController::touchesCancelled(real _x, real _y)
 
 void TestController::touchesMoved(real _x, real _y, int _countFingers)
 {
-    Vector3 * vector = new Vector3(_x, _y);
+    Vector3 vector(_x, _y);
 
     // move object
     if (_countFingers == 1) {
@@ -198,9 +198,6 @@ void TestController::touchesMoved(real _x, real _y, int _countFingers)
 //        previousVector = new Vector3(vector);
 //    }
 #endif
-    
-    delete vector;
-    vector = NULL;
 }
 
 void TestController::pinchDetected(real _scale, real _velocity, bool _began)
@@ -254,7 +251,7 @@ void TestController::rotationDetected(real _radians, real _velocity, bool _began
 
 void TestController::doubleTapOneFingerDetected(real _x, real _y)
 {
-    Vector3 * vector = new Vector3(_x, _y);
+    Vector3 vector(_x, _y);
     
     this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
     
@@ -266,14 +263,11 @@ void TestController::doubleTapOneFingerDetected(real _x, real _y)
             this->objectEdition->setSelected(true);
         }
     }
-    
-    delete vector;
-    vector = NULL;    
 }
 
 void TestController::longPressDetected(real _x, real _y)
 {
-    Vector3 * vector = new Vector3(_x, _y);
+    Vector3 vector(_x, _y);
     
     this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
 
@@ -339,29 +333,27 @@ void TestController::clearSimularion()
 void TestController::createScene()
 {
     this->mainEngine->makeSimulatedObject3D(PLAN);
-    SimulatedObject *box = this->mainEngine->makeSimulatedObject3D(BOX, false);
-    box->setPosition(-0.3f, 0.0f, 0.0f);
-    box->setRotation(0.0f, 0.0f, 0.0f);
-    box->initialize();
+//    SimulatedObject *box = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    box->setPosition(0.0f, 0.6f, 0.0f);
+//    box->initialize();
 
-    SimulatedObject *box1 = this->mainEngine->makeSimulatedObject3D(BOX, false);
-    box1->setPosition(0.5f, 0.8f, -0.5f);
-    box1->setRotation(1.0f, 0.0f, 1.0f);
-    box1->initialize();
-
+//    SimulatedObject *box1 = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    box1->setPosition(0.4f, 0.8f, 0.0f);
+//    box1->initialize();
+//
     SimulatedObject *box2 = this->mainEngine->makeSimulatedObject3D(BOX, false);
-    box2->setPosition(-0.5f, 0.8f, -0.5f);
-    box2->setRotation(1.0f, 1.0f, 0.0f);
+    box2->setPosition(0.0f, 0.8f, 1.25f);
+    box2->setRotation(0.1f, 0.0f, 0.0f);
     box2->initialize();
 
-//    SimulatedObject * sphere = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
-//    sphere->setPosition(0.3f, 0.0f, 0.0f);
-//    sphere->setVelocity(-0.3f, 0.0f, 0.0f);
-//    sphere->initialize();
+    SimulatedObject * sphere = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+    sphere->setPosition(0.0f, 0.1f, 1.2f);
+    sphere->setVelocity(0.0f, 0.0f, 0.0f);
+    sphere->initialize();
 
 //    SimulatedObject * sphere1 = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
-//    sphere1->setPosition(-0.3f, 0.0f, 0.0f);
-//    sphere1->setVelocity(0.0f, 0.0f,  0.0f);
+//    sphere1->setPosition(-0.3f, 0.1f, 0.0f);
+//    sphere1->setVelocity(0.9f, 0.0f,  0.0f);
 //    sphere1->initialize();
 
 

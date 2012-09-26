@@ -103,6 +103,7 @@ public:
     TypeObject getTypeObject();
     void setTypeObject(TypeObject _typeObject);
     Matrix4 getTransformMatrix();
+    void setTransformMatrixIndex(unsigned _index, real _value);
     Matrix4x4 getGLTransform();
     Vector3 getHalfSize();
     void setHalfSize(const Vector3 &_halfSize);

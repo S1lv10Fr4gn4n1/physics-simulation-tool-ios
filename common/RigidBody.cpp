@@ -379,6 +379,11 @@ Matrix4 RigidBody::getTransformMatrix()
     return this->transformMatrix;
 }
 
+void RigidBody::setTransformMatrixIndex(unsigned _index, real _value)
+{
+    this->transformMatrix.data[_index] = _value;
+}
+
 Matrix4x4 RigidBody::getGLTransform()
 {
     Matrix4x4 matrix;
@@ -473,8 +478,8 @@ void RigidBody::setAwake(bool _awake)
 {
     if (_awake) {
         this->awake = true;
-        // add a bit of motion to avoid it falling asleep immediately.
-        this->motion = SLEEP_EPSILON*2.0f;
+        // add a bit of motion to avoid it falling asleep immediately
+        this->motion = SLEEP_EPSILON*1.5f;
     } else {
         this->awake = false;
         this->velocity.clear();

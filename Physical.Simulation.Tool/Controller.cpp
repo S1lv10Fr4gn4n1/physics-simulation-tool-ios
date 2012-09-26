@@ -152,7 +152,7 @@ void Controller::touchesCancelled(real _x, real _y)
 
 void Controller::touchesMoved(real _x, real _y, int _countFingers)
 {
-    Vector3 * vector = new Vector3(_x, _y);
+    Vector3 vector(_x, _y);
 
     // move object
     if (_countFingers == 1) {
@@ -197,9 +197,6 @@ void Controller::touchesMoved(real _x, real _y, int _countFingers)
 //        previousVector = new Vector3(vector);
 //    }
 #endif
-    
-    delete vector;
-    vector = NULL;
 }
 
 void Controller::pinchDetected(real _scale, real _velocity, bool _began)
@@ -253,7 +250,7 @@ void Controller::rotationDetected(real _radians, real _velocity, bool _began)
 
 void Controller::doubleTapOneFingerDetected(real _x, real _y)
 {
-    Vector3 * vector = new Vector3(_x, _y);
+    Vector3 vector(_x, _y);
     
     this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
     
@@ -265,15 +262,12 @@ void Controller::doubleTapOneFingerDetected(real _x, real _y)
             this->objectEdition->setSelected(true);
         }
     }
-    
-    delete vector;
-    vector = NULL;    
 }
 
 void Controller::longPressDetected(real _x, real _y)
 {
-    Vector3 * vector = new Vector3(_x, _y);
-    
+    Vector3 vector(_x, _y);
+
     this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
 
     if (this->objectEdition) {

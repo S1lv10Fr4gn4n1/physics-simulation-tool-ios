@@ -178,7 +178,7 @@ void MainCollision::generateContacts()
 {
     vector<RigidBody *> * listObjects = this->tree->getPossibleCollisions();
     
-//    printf("collision: %lu\n", listObjects->size());
+    printf("collision: %lu\n", listObjects->size());
     if (listObjects && listObjects->size() > 0) {
         RigidBody * body1 = NULL;
         RigidBody * body2 = NULL;

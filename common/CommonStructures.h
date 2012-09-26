@@ -237,22 +237,6 @@ static inline void MatrixTransformIdentity(real * matrix)
 	*(matrix+0) = *(matrix+5) = *(matrix+10) = *(matrix+15) = 1.0f;
 }
 
-static inline real * MatrixMultiplyRigidBody(real * _matrixLeft, real * _matrixRight)
-{
-	real * matrixResult = new real[12];
-	
-    for (int i = 0; i < 12; i++) {
-        matrixResult[i] = _matrixLeft[i % 4] *        _matrixRight[i / 4 * 4] +
-                          _matrixLeft[(i % 4) + 4]  * _matrixRight[i / 4 * 4 + 1] +
-                          _matrixLeft[(i % 4) + 8]  * _matrixRight[i / 4 * 4 + 2] +
-                          _matrixLeft[(i % 4) + 12] * _matrixRight[i / 4 * 4 + 3];
-    }
-    
-    
-	return matrixResult;
-}
-
-
 static inline real * MatrixMultiply(real * _matrixLeft, real * _matrixRight)
 {
 	real * matrixResult = new real[16];
@@ -268,35 +252,14 @@ static inline real * MatrixMultiply(real * _matrixLeft, real * _matrixRight)
 	return matrixResult;
 }
 
-
-static inline void MatrixTranslate(real * matrix, real _x, real _y, real _z)
+static inline void MatrixTranslate(real * _matrix, real _x, real _y, real _z)
 {
 	// translate (tx, ty, tz)  matrix identity
-	matrix[12] = _x;
-	matrix[13] = _y;
-	matrix[14] = _z;
-	//matrix[15] = _w;
+	_matrix[12] = _x;
+	_matrix[13] = _y;
+	_matrix[14] = _z;
+	//_matrix[15] = _w;
 }
-
-static inline void MatrixTranslateRigidBody(real * matrix, real _x, real _y, real _z)
-{
-	// translate (tx, ty, tz)  matrix rigidbody
-	matrix[3] = _x;
-	matrix[7] = _y;
-	matrix[11] = _z;
-	//matrix[15] = _w;
-}
-
-static inline void MatrixTranslateRigidBody(real * matrix, Vector3 &_vector)
-{
-    MatrixTranslateRigidBody(matrix, _vector.x, _vector.y, _vector.z);
-}
-
-
-//static inline void MatrixTranslate(real * matrix, real _x, real _y)
-//{
-//    MatrixTranslate(matrix, _x, _y, 0.0f);
-//}
 
 static inline void MatrixTranslate(real * matrix, const Vector3 &_vector)
 {
@@ -586,58 +549,4 @@ static inline void transformInertiaTensor(Matrix3 &_iitWorld, const Quaternion &
                          t57*_rotmat.data[9]+
                          t62*_rotmat.data[10];
 }
-
-//static void MakeArrayVector3(Vector3 _array[], unsigned _size)
-//{
-//    for (int i=0; i<_size; i++) {
-//        _array[i] = new Vector3();
-//    }
-//}
-//
-//static void DeleteArrayVector3(Vector3 _array[], unsigned _size)
-//{
-//    for (int i=0; i<_size; i++) {
-//        delete _array[i];
-//        _array[i] = NULL;
-//    }
-//    
-//    _array = NULL;
-//}
-//
-//static inline void MakeArrayMatrix3(Matrix3 * _array[], int _size)
-//{
-//    for (int i=0; i<_size; i++) {
-//        _array[i] = new Matrix3();
-//    }
-//}
-//
-//static inline void DeleteArrayMatrix3(Matrix3 * _array[], int _size)
-//{
-//    for (int i=0; i<_size; i++) {
-//        if (_array[i]) {
-//            delete _array[i];
-//            _array[i] = NULL;
-//        }
-//    }
-//    
-//    _array = NULL;
-//}
-//
-//static inline void MakeArrayMatrix4(Matrix4 * _array[], int _size)
-//{
-//    for (int i=0; i<_size; i++) {
-//        _array[i] = new Matrix4();
-//    }
-//}
-//
-//static inline void DeleteArrayMatrix4(Matrix4 * _array[], int _size)
-//{
-//    for (int i=0; i<_size; i++) {
-//        delete _array[i];
-//        _array[i] = NULL;
-//    }
-//    
-//    _array = NULL;
-//}
-
 #endif

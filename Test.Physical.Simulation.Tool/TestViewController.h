@@ -14,4 +14,7 @@
 
 @interface TestViewController : GLKViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *labelFPS;
+
+- (IBAction)actionRemake:(id)sender;
 @end

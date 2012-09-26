@@ -203,14 +203,17 @@ void MainEngine::rotateSimulatedObject(SimulatedObject * _simulatedObject, real 
     matrix = NULL;
 }
 
-void MainEngine::translateSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)
+void MainEngine::translateSimulatedObject(SimulatedObject * _simulatedObject, const Vector3 &_vector)
 {
-    MatrixTranslate(_simulatedObject->getMatrixTransformation().data, *_vector);
+    //MatrixTranslate(_simulatedObject->getMatrixTransformation().data, _vector);
+    _simulatedObject->setTransformMatrixIndex(3, _vector.x);
+    _simulatedObject->setTransformMatrixIndex(7, _vector.y);
+    _simulatedObject->setTransformMatrixIndex(11, _vector.z);
 }
 
-void MainEngine::updatePositionSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)
+void MainEngine::updatePositionSimulatedObject(SimulatedObject * _simulatedObject, const Vector3 &_vector)
 {
-    _simulatedObject->setPosition(_vector->x, _vector->y, _vector->z);
+    _simulatedObject->setPosition(_vector.x, _vector.y, _vector.z);
 }
 
 World * MainEngine::getWorld()
@@ -218,9 +221,9 @@ World * MainEngine::getWorld()
     return this->world;
 }
 
-SimulatedObject * MainEngine::selectedSimulatedObject(Vector3 * _vector)
+SimulatedObject * MainEngine::selectedSimulatedObject(Vector3 &_vector)
 {
-    this->ndc->calcNDCCoordinates(&_vector->x, &_vector->y);
+    this->ndc->calcNDCCoordinates(&_vector.x, &_vector.y);
     return Selection::selectSimulatedObject(this->world, _vector);
 }
 
@@ -253,9 +256,7 @@ SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
     switch (_typeObject) {
         case CIRCLE:
         {
-            
-            Vector3 * aux = new Vector3(simulatedObject->getPosition());
-            this->translateSimulatedObject(simulatedObject, aux);
+            this->translateSimulatedObject(simulatedObject, simulatedObject->getPosition());
             
             simulatedObject->setRadius(0.052083f);
             simulatedObject->setHalfSize(Vector3(0.052083f, 0.052083f));
@@ -428,7 +429,7 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
     if (_init) {
         simulatedObject->initialize();
     }
-    
+
     this->world->addSimulatedObject(simulatedObject);
     
     return simulatedObject;
@@ -447,27 +448,27 @@ std::vector<Vector3> * MainEngine::createSphere(const Vector3 &_origin, real _ra
     for (real z = 0; z <= 180 - degreeIncrement; z += degreeIncrement) {
         for (real c = 0; c <= 360 - degreeIncrement; c += degreeIncrement) {
             Vector3 vector1;
-            vector1.x = _radius * sinf( (c) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
-            vector1.y = _radius * cosf( (c) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
-            vector1.z = _radius * cosf( (z) * M_PI_Divided_By_180 );
+            vector1.x = _radius * real_sin( (c) * M_PI_Divided_By_180 ) * real_sin( (z) * M_PI_Divided_By_180 );
+            vector1.y = _radius * real_cos( (c) * M_PI_Divided_By_180 ) * real_sin( (z) * M_PI_Divided_By_180 );
+            vector1.z = _radius * real_cos( (z) * M_PI_Divided_By_180 );
             vectors->push_back(vector1);
             
             Vector3 vector2;
-            vector2.x = _radius * sinf( (c) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
-            vector2.y = _radius * cosf( (c) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
-            vector2.z = _radius * cosf( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector2.x = _radius * real_sin( (c) * M_PI_Divided_By_180 ) * real_sin( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector2.y = _radius * real_cos( (c) * M_PI_Divided_By_180 ) * real_sin( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector2.z = _radius * real_cos( (z + degreeIncrement) * M_PI_Divided_By_180 );
             vectors->push_back(vector2);
 
             Vector3 vector3;
-            vector3.x = _radius * sinf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
-            vector3.y = _radius * cosf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z) * M_PI_Divided_By_180 );
-            vector3.z = _radius * cosf( (z) * M_PI_Divided_By_180 );
+            vector3.x = _radius * real_sin( (c + degreeIncrement) * M_PI_Divided_By_180 ) * real_sin( (z) * M_PI_Divided_By_180 );
+            vector3.y = _radius * real_cos( (c + degreeIncrement) * M_PI_Divided_By_180 ) * real_sin( (z) * M_PI_Divided_By_180 );
+            vector3.z = _radius * real_cos( (z) * M_PI_Divided_By_180 );
             vectors->push_back(vector3);
             
             Vector3 vector4;
-            vector4.x = _radius * sinf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
-            vector4.y = _radius * cosf( (c + degreeIncrement) * M_PI_Divided_By_180 ) * sinf( (z + degreeIncrement) * M_PI_Divided_By_180 );
-            vector4.z = _radius * cosf( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector4.x = _radius * real_sin( (c + degreeIncrement) * M_PI_Divided_By_180 ) * real_sin( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector4.y = _radius * real_cos( (c + degreeIncrement) * M_PI_Divided_By_180 ) * real_sin( (z + degreeIncrement) * M_PI_Divided_By_180 );
+            vector4.z = _radius * real_cos( (z + degreeIncrement) * M_PI_Divided_By_180 );
             vectors->push_back(vector4);
         }
     }

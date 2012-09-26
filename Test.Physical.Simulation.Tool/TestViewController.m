@@ -229,6 +229,7 @@ static EAGLContext * context;
 - (void)update
 {
     TestController::getInstance()->updateInformation(self.timeSinceLastDraw);
+    self.labelFPS.text = [[NSString alloc]initWithFormat:@"%u fps", self.framesPerSecond];
 //    NSLog(@"frame: %u, fps: %u, lastDraw: %f", self.framesDisplayed, self.framesPerSecond, self.timeSinceLastDraw);
 }
 
@@ -237,4 +238,10 @@ static EAGLContext * context;
     TestController::getInstance()->draw();
 }
 
+- (IBAction)actionRemake:(id)sender
+{
+    TestController::getInstance()->stopSimulation();
+    TestController::getInstance()->clearSimularion();
+    TestController::getInstance()->startSimulation();
+}
 @end

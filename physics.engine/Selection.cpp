@@ -8,16 +8,16 @@
 
 #include "Selection.h"
 
-bool inBBox(SimulatedObject * _simulatedObject, Vector3 * _vector)
+bool inBBox(SimulatedObject * _simulatedObject, const Vector3 &_vector)
 {
     _simulatedObject->initBBox(_simulatedObject->getMatrixTransformation().data);
 
     bool result = false;
     
-    if (_vector->x < _simulatedObject->getBBox()->max.x &&
-        _vector->x > _simulatedObject->getBBox()->min.x &&
-        _vector->y < _simulatedObject->getBBox()->max.y &&
-        _vector->y > _simulatedObject->getBBox()->min.y) {
+    if (_vector.x < _simulatedObject->getBBox()->max.x &&
+        _vector.x > _simulatedObject->getBBox()->min.x &&
+        _vector.y < _simulatedObject->getBBox()->max.y &&
+        _vector.y > _simulatedObject->getBBox()->min.y) {
         result = true;
     }
     
@@ -53,7 +53,6 @@ bool inSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)
 		if ((ti >= 0.0f && ti <= 1.0f) && xi < _vector->x) {
 			countObjectsRight++;
 		}
-        
     }
     
     // if there is an odd number of lines crossing the scanline to 
@@ -65,7 +64,7 @@ bool inSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)
 	return false;
 }
 
-SimulatedObject * Selection::selectSimulatedObject(World * _world, Vector3 * _vector)
+SimulatedObject * Selection::selectSimulatedObject(World * _world, const Vector3 &_vector)
 {
     SimulatedObject * simulatedObject = NULL;
     
