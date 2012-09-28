@@ -16,7 +16,7 @@ MainEngine::MainEngine()
 
     this->world = new World();
     this->mainPhysics = new MainPhysics();
-    this->mainCollision = new MainCollision();
+    this->mainCollision = new MainCollision(USE_TREE);
     this->ndc = new NDC();
     
     this->eyeX = 0.0f;
@@ -51,10 +51,12 @@ MainEngine::~MainEngine()
 
 void MainEngine::start()
 {
+    this->mainCollision->cleanCollisions();
+
     SimulatedObject * object = NULL;
     for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
         object = this->world->getSimulatedObjects()->at(i);
-        this->mainCollision->updateObject(object, 0.0f);
+        this->mainCollision->insertObject(object);
     }
     this->running = true;
 }
@@ -84,9 +86,6 @@ void MainEngine::updateInformation(real _duration)
     // update all forces in all objects
     ForceRegistry::getInstance()->updateForces(_duration);
     
-    // clean all collisions in quadtree
-    this->mainCollision->cleanCollisions();
-    
     for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
         object = this->world->getSimulatedObjects()->at(i);
         
@@ -95,7 +94,7 @@ void MainEngine::updateInformation(real _duration)
 
         // update the object in coarse collision
         this->mainCollision->updateObject(object, _duration);
-        
+
         object->setMatrixTransformation(object->getGLTransform());
         
         // remove objects that left the scene
@@ -108,7 +107,10 @@ void MainEngine::updateInformation(real _duration)
     }
     
     // update collisions
-    this->mainCollision->updateContacts(_duration);
+    this->mainCollision->updateContacts(this->world->getSimulatedObjects(), _duration);
+
+    // clean all collisions in quadtree
+    this->mainCollision->cleanCollisions();
 
     object = NULL;
 }
@@ -209,11 +211,7 @@ void MainEngine::translateSimulatedObject(SimulatedObject * _simulatedObject, co
     _simulatedObject->setTransformMatrixIndex(3, _vector.x);
     _simulatedObject->setTransformMatrixIndex(7, _vector.y);
     _simulatedObject->setTransformMatrixIndex(11, _vector.z);
-}
-
-void MainEngine::updatePositionSimulatedObject(SimulatedObject * _simulatedObject, const Vector3 &_vector)
-{
-    _simulatedObject->setPosition(_vector.x, _vector.y, _vector.z);
+    _simulatedObject->setAwake();
 }
 
 World * MainEngine::getWorld()
@@ -235,7 +233,7 @@ void MainEngine::deleteAllSimulatedObjects()
 void MainEngine::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
     ForceRegistry::getInstance()->removeObject(_simulatedObject);
-    this->mainCollision->deleteObject(_simulatedObject);
+//    this->mainCollision->deleteObject(_simulatedObject);
     this->world->deleteSimulatedObject(_simulatedObject);
 }
 
@@ -353,8 +351,8 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
     SimulatedObject * simulatedObject = new SimulatedObject();
     simulatedObject->setTypeObject(_typeObject);
     simulatedObject->setMass(4.0f);
-    simulatedObject->setRestitution(0.2f);
-    simulatedObject->setPosition(0.0f, 0.0f, 0.0f);
+    simulatedObject->setRestitution(0.3f);
+    simulatedObject->setPosition(0.0f, 0.1f, 0.0f);
     simulatedObject->setLinearDamping(0.99f);
     simulatedObject->setAngularDamping(0.8f);
     simulatedObject->setCanSleep(true);
@@ -393,7 +391,7 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
             simulatedObject->setSelected(false);
             simulatedObject->setPosition(0.0f, 0.0f, 0.0f);
             simulatedObject->setMass(0.0f);
-            simulatedObject->setFriction(0.9f);
+            simulatedObject->setFriction(1.5f);
             simulatedObject->setMode(LINES);
             simulatedObject->setColorAux(0, 0, 0, 0);
             simulatedObject->setHalfSize(3.0f, 0.0f, 3.0f);

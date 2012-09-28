@@ -217,7 +217,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B902352915FAA498008ABCCA /* Test.Physical.Simulation.Tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.Physical.Simulation.Tool.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B902352915FAA498008ABCCA /* Test.Physical.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.Physical.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B902353215FAA498008ABCCA /* Test.Physical.Simulation.Tool-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test.Physical.Simulation.Tool-Info.plist"; sourceTree = "<group>"; };
 		B902353415FAA498008ABCCA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B902353615FAA498008ABCCA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -453,7 +453,7 @@
 				B9B350B11586BE8C00180CE7 /* library.collision.a */,
 				B9B350C01586BEB200180CE7 /* library.physics.a */,
 				B9D1F857158E923F000337BB /* common.feature.a */,
-				B902352915FAA498008ABCCA /* Test.Physical.Simulation.Tool.app */,
+				B902352915FAA498008ABCCA /* Test.Physical.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -508,8 +508,8 @@
 			isa = PBXGroup;
 			children = (
 				B94B371315864AD7004AAB28 /* PhysicsEngine.h */,
-				B9AFACCE15FD1D9400B313D4 /* NDC.cpp */,
 				B9AFACCF15FD1D9400B313D4 /* NDC.h */,
+				B9AFACCE15FD1D9400B313D4 /* NDC.cpp */,
 				B94B371215864AD7004AAB28 /* MainEngine.h */,
 				B94B371115864AD7004AAB28 /* MainEngine.cpp */,
 				B93ACE9415A3AC7100CED06E /* Selection.h */,
@@ -701,7 +701,7 @@
 			);
 			name = Test.Physical.Simulation.Tool;
 			productName = Test.Physical.Simulation.Tool;
-			productReference = B902352915FAA498008ABCCA /* Test.Physical.Simulation.Tool.app */;
+			productReference = B902352915FAA498008ABCCA /* Test.Physical.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B94B36AC15864775004AAB28 /* Physical.Simulation.Tool */ = {
@@ -1086,7 +1086,7 @@
 				);
 				INFOPLIST_FILE = "Test.Physical.Simulation.Tool/Test.Physical.Simulation.Tool-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Test.Physical;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -1104,7 +1104,7 @@
 				GCC_PREFIX_HEADER = "Test.Physical.Simulation.Tool/Test.Physical.Simulation.Tool-Prefix.pch";
 				INFOPLIST_FILE = "Test.Physical.Simulation.Tool/Test.Physical.Simulation.Tool-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Test.Physical;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

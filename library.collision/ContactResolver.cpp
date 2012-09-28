@@ -3,8 +3,6 @@
 //  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani on 09/09/12.
-//
-//
 
 #include "ContactResolver.h"
 
@@ -20,8 +18,7 @@ void ContactResolver::solverContacts(std::vector<Contact *> * _contacts, real _d
         return;
     }
     
-    if (this->velocityIterations <= 0.0f && this->positionIterations <= 0.0f &&
-        this->positionEpsilon <= 0.0f && this->velocityEpsilon <= 0.0f) {
+    if (this->positionEpsilon <= 0.0f && this->velocityEpsilon <= 0.0f) {
         return;
     }
 
@@ -50,11 +47,11 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
     real max;
     Vector3 contactPoint;
     
-    this->positionIterationsUsed = 0;
-    this->positionIterations = _contacts->size() * 8;
+    unsigned positionIterationsUsed = 0;
+    unsigned positionIterations = _contacts->size() * 20;
     
     // resolve interpenetration in order of severity.
-    while (this->positionIterationsUsed < this->positionIterations) {
+    while (positionIterationsUsed < positionIterations) {
         max = this->positionEpsilon;
         index = _contacts->size();
         
@@ -73,7 +70,6 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
         
         _contacts->at(index)->applyPositionChange(velocityChange, rotationChange, max);
 
-
         // again this action may have changed the penetration of other bodies, so we update contacts
         for (unsigned i=0; i<_contacts->size(); i++) {
 
@@ -91,7 +87,7 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
             }
         }
 
-        this->positionIterationsUsed++;
+        positionIterationsUsed++;
     }
 }
 
@@ -101,11 +97,11 @@ void ContactResolver::solverVelocities(std::vector<Contact *> * _contacts, real 
     Vector3 rotationChange[2];
     Vector3 deltaVel;
     
-    this->velocityIterationsUsed = 0;
-    this->velocityIterations = _contacts->size() * 8;
+    unsigned velocityIterationsUsed = 0;
+    unsigned velocityIterations = _contacts->size() * 20;
     
     // iteratively handle impacts in order of severity.
-    while (this->velocityIterationsUsed < this->velocityIterations) {
+    while (velocityIterationsUsed < velocityIterations) {
         // find contact with maximum magnitude of probable velocity change.
         real max = this->velocityEpsilon;
         unsigned index = _contacts->size();
@@ -147,7 +143,8 @@ void ContactResolver::solverVelocities(std::vector<Contact *> * _contacts, real 
                     }
                 }
             }
-        	this->velocityIterationsUsed++;
+        	//velocityIterationsUsed++;
         }
+        velocityIterationsUsed++;
     }
 }

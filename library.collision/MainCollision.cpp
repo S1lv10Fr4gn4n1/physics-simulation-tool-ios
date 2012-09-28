@@ -10,9 +10,13 @@
 
 using namespace std;
 
-MainCollision::MainCollision()
+MainCollision::MainCollision(bool _useTree)
 {
-    this->tree = new Octree();
+    this->tree = NULL;
+    
+    if (_useTree) {
+        this->tree = new Octree();
+    }
     this->contactResolver = new ContactResolver();
     this->dataContacts = new CollisionData();
 }
@@ -30,17 +34,24 @@ MainCollision::~MainCollision()
 
 void MainCollision::deleteObject(RigidBody * _body)
 {
-    this->tree->deleteObject(_body);
+    if (this->tree) {
+        this->tree->deleteObject(_body);
+    }
 }
 
 void MainCollision::insertObject(RigidBody * _body)
 {
-    this->tree->insertObject(_body);
+    if (this->tree) {
+        this->tree->insertObject(_body);
+    }
 }
 
 void MainCollision::updateObject(RigidBody * _body, real _duration)
 {
-    this->tree->insertObject(_body);
+    if (this->tree) {
+        this->tree->insertObject(_body);
+    //    this->tree->updateObject(_body);
+    }
 }
 
 void MainCollision::generateContact(RigidBody * _body1, RigidBody * _body2)
@@ -178,7 +189,7 @@ void MainCollision::generateContacts()
 {
     vector<RigidBody *> * listObjects = this->tree->getPossibleCollisions();
     
-    printf("collision: %lu\n", listObjects->size());
+//    printf("collision: %lu\n", listObjects->size());
     if (listObjects && listObjects->size() > 0) {
         RigidBody * body1 = NULL;
         RigidBody * body2 = NULL;
@@ -208,10 +219,57 @@ void MainCollision::solverContacts(real _duration)
 void MainCollision::updateContacts(real _duration)
 {
     this->generateContacts();
+//    this->solverContacts(_duration);
+}
+
+void MainCollision::updateContacts(vector<SimulatedObject *> * _listBody, real _duration)
+{
+    if (this->tree) {
+        this->updateContacts(_duration);
+    } else {
+
+        RigidBody * plane = new RigidBody();
+        plane->setTypeObject(PLAN);
+        plane->setFriction(0.9f);
+
+        RigidBody * body1 = NULL;
+        RigidBody * body2 = NULL;
+
+        for (int i=0; i<_listBody->size(); i++) {
+            body1 = _listBody->at(i);
+            if (body1->getTypeObject() == PLAN) {
+                continue;
+            }
+            this->generateContact(body1, plane);
+        }
+
+
+        for (int i=0; i<_listBody->size(); i++) {
+            body1 = _listBody->at(i);
+            
+            if (body1->getTypeObject() == PLAN) {
+                continue;
+            }
+
+            for (int j=0; j<_listBody->size(); j++) {
+                body2 = _listBody->at(j);
+                if (body2->getTypeObject() == PLAN) {
+                    continue;
+                }
+                if (body1 == body2) {
+                    continue;
+                }
+
+                this->generateContact(body1, body2);
+            }
+        }
+    }
     this->solverContacts(_duration);
 }
 
 void MainCollision::cleanCollisions()
 {
-    this->tree->cleanLeaves();
+    if (this->tree) {
+        this->tree->cleanLeaves();
+    }
 }

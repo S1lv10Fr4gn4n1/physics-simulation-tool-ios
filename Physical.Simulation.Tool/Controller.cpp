@@ -92,7 +92,7 @@ void Controller::resizeScreen(real _width, real _height)
 
 void Controller::updateInformation(real _duration)
 {
-    this->mainEngine->updateInformation(_duration);
+    this->mainEngine->updateInformation(USE_LAST_TIME_GLKIT ? _duration : 0.02f);
 }
 
 void Controller::draw()

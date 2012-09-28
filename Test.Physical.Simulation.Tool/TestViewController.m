@@ -9,6 +9,7 @@
 #import "TestViewController.h"
 
 @interface TestViewController ()
+
 - (void)setupGL;
 - (void)tearDownGL;
 - (void)initializeGestureRecognizer:(UIView *)view;
@@ -228,9 +229,10 @@ static EAGLContext * context;
 #pragma mark - GLKView and GLKViewController delegate methods
 - (void)update
 {
+
     TestController::getInstance()->updateInformation(self.timeSinceLastDraw);
-    self.labelFPS.text = [[NSString alloc]initWithFormat:@"%u fps", self.framesPerSecond];
-//    NSLog(@"frame: %u, fps: %u, lastDraw: %f", self.framesDisplayed, self.framesPerSecond, self.timeSinceLastDraw);
+
+//    printf("frame: %u, fps: %f, lastDraw: %f\n", self.framesDisplayed, self.framesPerSecond, self.timeSinceLastDraw);
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect

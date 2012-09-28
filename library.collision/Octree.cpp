@@ -234,9 +234,11 @@ void Octree::deleteObject(OctreeNode * _tree, RigidBody * _body)
     
     RigidBody * body = getBody(_tree, _body);
     if (body) {
+//        if (body->hasFiniteMass()) {
 //        printf("bodies x:%f, y:%f, body: %s -> before delete size: %lu\n", _tree->center.x, _tree->center.y, _body->getId(), _tree->rigidBodies->size());
         _tree->rigidBodies->erase(body->getId());
 //        printf("bodies x:%f, y:%f, body: %s -> after delete size: %lu\n", _tree->center.x, _tree->center.y, _body->getId(), _tree->rigidBodies->size());
+//        }
     }
     
     if (inMinusMinusMinus(_tree, _body)) {
@@ -291,7 +293,6 @@ void Octree::insertObject(OctreeNode * _tree, RigidBody * _body) {
     if (!_tree->child[0]) {
         if (_tree->rigidBodies->size() > 0) {
             mapBodyIter iter;
-            
             for(iter = _tree->rigidBodies->begin(); iter != _tree->rigidBodies->end(); iter++) {
                 this->possibleCollisions->push_back(iter->second);
             }

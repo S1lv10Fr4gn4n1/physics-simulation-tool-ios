@@ -57,8 +57,6 @@ public:
     void rotateSimulatedObject(SimulatedObject * _simulatedObject, real _radians);
     void translateSimulatedObject(SimulatedObject * _simulatedObject, const Vector3 &_vector);
 
-    void updatePositionSimulatedObject(SimulatedObject * _simulatedObject, const Vector3 &_vector);
-    
     void deleteAllSimulatedObjects();
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
     SimulatedObject * makeSimulatedObject2D(TypeObject _typeObject);

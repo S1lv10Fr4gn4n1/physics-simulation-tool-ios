@@ -14,8 +14,31 @@
 // 3D
 #define _3D_
 
-// frame per second
+// FRAME PER SECOND
 #define FRAME_PER_SECOND 60
+
+// USE LAST TIME DRAW OF GLKIT
+// else duration to be 0.02f
+#define USE_LAST_TIME_GLKIT 0
+
+// TREE
+#define USE_TREE 0
+#define DEPTH_TREE 3
+#define WIDTH_SCENE 3.0f
+
+// MINIMUM MOTION
+#define SLEEP_EPSILON 0.01f
+
+// DEFINE CONTROLLER
+#define ZOOM_IN_LIMIT 4.0f
+#define ZOOM_OUT_LIMIT 0.1f
+#define ZOOM_SCALE 0.05f
+#define ZOOM_INIT 1.0f
+#define PAN_SCALE 0.005f
+
+#define CHANNEL_COLOR 4
+#define COUNT_COORD 3
+
 
 
 // DEFINE PRECISION
@@ -36,21 +59,5 @@ typedef float real;
 
 #define DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0 * M_PI)
 
-// TODO revise: depth of tree and width/height of scene
-// TREE
-#define DEPTH_TREE 3
-#define WIDTH_SCENE 3.0f
-
-#define CHANNEL_COLOR 4
-#define COUNT_COORD 3
-
-// DEFINE CONTROLLER
-#define ZOOM_IN_LIMIT 4.0f
-#define ZOOM_OUT_LIMIT 0.1f
-#define ZOOM_SCALE 0.05f
-#define ZOOM_INIT 1.0f
-#define PAN_SCALE 0.005f
-
-#define SLEEP_EPSILON 0.06f
 
 #endif

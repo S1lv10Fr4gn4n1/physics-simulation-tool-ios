@@ -24,14 +24,15 @@ private:
     void generateContact(RigidBody * _body1, RigidBody * _body2);
     void generateContacts();
     void solverContacts(real _duration);
+    void updateContacts(real _duration);
 public:
-    MainCollision();
+    MainCollision(bool _useTree=true);
     ~MainCollision();
     
     void insertObject(RigidBody * _body);
     void deleteObject(RigidBody * _body);
     void updateObject(RigidBody * _body, real _duration);
-    void updateContacts(real _duration);
+    void updateContacts(std::vector<SimulatedObject *> * _listBody, real _duration);
     
     void cleanCollisions();
 };
