@@ -10,6 +10,7 @@
 #define COMMONTRUCTURES_H
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #include "Defines.h"
 
@@ -19,10 +20,11 @@ enum TypeObject {
     
     SPHERE,
     BOX,
-    TRIANGLE_TRIANGULAR_BASE,
-    TRIANGLE_SQUARE_BASE,
+//    TRIANGLE_TRIANGULAR_BASE,
+//    TRIANGLE_SQUARE_BASE,
     CONE,
     CYLINDER,
+    PYRAMID,
 
     CIRCLE,
     SQUARE,
@@ -469,6 +471,7 @@ static inline Matrix4x4 MatrixMakeLookAt(float _eyeX, float _eyeY, float _eyeZ,
                                          float _centerX, float _centerY, float _centerZ,
                                          float _upX, float _upY, float _upZ)
 {
+    printf("eyeX: %f, eyeY: %f, eyeZ: %f, centerX: %f, centerY: %f, centerZ: %f, upX: %f, upY: %f, upZ: %f\n", _eyeX, _eyeY, _eyeZ, _centerX, _centerY, _centerZ, _upX, _upY, _upZ);
     Matrix4x4 matrix;
     MatrixMakeLookAt(matrix, _eyeX, _eyeY, _eyeZ, _centerX, _centerY, _centerZ, _upX, _upY, _upZ);
     return matrix;

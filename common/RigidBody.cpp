@@ -20,8 +20,6 @@ RigidBody::RigidBody()
     this->inverseMass = 0.0f;
     this->angularDamping = 0.0f;
     this->linearDamping = 0.0f;
-    this->volume = 0.0f;
-    this->density = 0.0f;
     this->radius = 0.0f;
     
     this->friction = 0.0f;
@@ -140,26 +138,6 @@ void RigidBody::setMass(real _mass)
         this->inverseMass = ((real)1.0)/_mass; // TODO attention
         this->mass = _mass;
     }
-}
-
-real RigidBody::getVolume()
-{
-    return this->volume;
-}
-
-void RigidBody::setVolume(real _volume)
-{
-    this->volume = _volume;
-}
-
-real RigidBody::getDensity()
-{
-    return this->density;
-}
-
-void RigidBody::setDensity(real _density)
-{
-    this->density = _density;
 }
 
 real RigidBody::getInverseMass()
@@ -505,4 +483,23 @@ real RigidBody::getFriction()
 void RigidBody::setFriction(real _friction)
 {
     this->friction = _friction;
+}
+
+Vector3 RigidBody::getAccelerationGravity()
+{
+    return this->accelerationGravity;
+}
+
+void RigidBody::setAccelerationGravity(const Vector3 &_gravity)
+{
+    this->accelerationGravity.x = _gravity.x;
+    this->accelerationGravity.y = _gravity.y;
+    this->accelerationGravity.z = _gravity.z;
+}
+
+void RigidBody::setAccelerationGravity(real _x, real _y, real _z)
+{
+    this->accelerationGravity.x = _x;
+    this->accelerationGravity.y = _y;
+    this->accelerationGravity.z = _z;
 }

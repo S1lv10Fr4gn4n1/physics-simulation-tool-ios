@@ -29,7 +29,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Academico: Silvio Fragnani da Silva" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="F53-Ge-V2d">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Acadêmico: Silvio Fragnani da Silva" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="F53-Ge-V2d">
                                 <rect key="frame" x="0.0" y="71" width="568" height="15"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -249,6 +249,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                 <relationship kind="action" name="actionCircle:"/>
                 <relationship kind="action" name="actionClearSimulation:"/>
                 <relationship kind="action" name="actionEditSimulation:"/>
+                <relationship kind="action" name="actionSaveSimulation:"/>
                 <relationship kind="action" name="actionSquare:"/>
                 <relationship kind="action" name="actionStartSimulation:"/>
                 <relationship kind="action" name="actionSurfaceScene:"/>
@@ -260,9 +261,6 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
         </class>
         <class className="SimulationViewController" superclassName="GLKViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SimulationViewController.h"/>
-        </class>
-        <class className="TabViewController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TabViewController.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -57,10 +57,14 @@ public:
     void rotateSimulatedObject(SimulatedObject * _simulatedObject, real _radians);
     void translateSimulatedObject(SimulatedObject * _simulatedObject, const Vector3 &_vector);
 
+    void rotateCamera(real _radians);
+    void resetCamera();
+
     void deleteAllSimulatedObjects();
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
     SimulatedObject * makeSimulatedObject2D(TypeObject _typeObject);
-    SimulatedObject * makeSimulatedObject3D(TypeObject _typeObject, bool _init=true);
+    SimulatedObject * makeSimulatedObject3D(TypeObject _typeObject);
+    void addAndInitializeSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity=Vector3(0.0f, 9.8f, 0.0f));
     
     SimulatedObject * selectedSimulatedObject(Vector3 &_vector);
 };

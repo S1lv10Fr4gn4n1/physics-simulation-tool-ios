@@ -9,6 +9,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <ctime>
+
 #include "LibraryGraphic.h"
 #include "PhysicsEngine.h"
 #include "Commons.h"
@@ -20,7 +22,9 @@ private:
     
     SimulatedObject * objectEdition;
     SimulatedObject * objectOffset;
-    
+
+    TypeObject typeNextObject;
+
     static Controller * controller;
 
 public:
@@ -29,6 +33,9 @@ public:
     
     void initializeContextOpenGLES();
     void initializeEngine();
+
+    void loadSceneFromFile(std::string _charContentFile);
+    std::string generateSimulationToCharacter();
 
     void freeObjects();
     void resizeScreen(real _width, real _height);
@@ -44,6 +51,12 @@ public:
     
     void createSimulatedObject2D(TypeObject _typeObject);
     void createSimulatedObject3D(TypeObject _typeObject);
+    void addAndInitSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity);
+    SimulatedObject * makeSimulatedObject3D();
+    SimulatedObject * makeSimulatedObject3D(TypeObject _typeObject);
+
+    void setTypeNextObject(TypeObject _typeObject);
+    TypeObject getTypeNextObject();
     
     void touchesMoved(real _x, real _y, int _countFingers);
     void touchesBegan(real _x, real _y);
@@ -56,7 +69,7 @@ public:
     void oneTapThreeFingerDetected(real _x, real _y);
     void swipeRightDetected(real _x, real _y);
     void swipeLeftDetected(real _x, real _y);
-    
+
     static Controller * getInstance();
 };
 

@@ -26,8 +26,6 @@ private:
     real mass;
     real angularDamping;
     real linearDamping;
-    real volume;
-    real density;
     real inverseMass;
     real radius;
     Vector3 halfSize;
@@ -42,7 +40,8 @@ private:
     Vector3 forceAccum;
     Vector3 torqueAccum;
     Vector3 lastFrameAcceleration;
-    
+    Vector3 accelerationGravity;
+
     TypeObject typeObject;
 public:
     RigidBody();
@@ -62,10 +61,6 @@ public:
 
     real getMass();
     void setMass(real _mass);
-    real getVolume();
-    void setVolume(real _volume);
-    real getDensity();
-    void setDensity(real _density);
     real getInverseMass();
     Vector3 getPosition();
     void setPosition(const Vector3 &_position);
@@ -122,5 +117,8 @@ public:
     void setRestitution(real _restitution);
     real getFriction();
     void setFriction(real _friction);
+    Vector3 getAccelerationGravity();
+    void setAccelerationGravity(const Vector3 &_gravity);
+    void setAccelerationGravity(real _x, real _y, real _z);
 };
 #endif

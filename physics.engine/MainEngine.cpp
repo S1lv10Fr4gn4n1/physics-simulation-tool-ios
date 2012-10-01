@@ -120,6 +120,7 @@ void MainEngine::rotatedScreen(real _width, real _height)
     this->ndc->update(_width, _height);
 
 #if defined (_3D_)
+
     this->world->setPerspectiveMatrix(MatrixMakePerspective(DEGREES_TO_RADIANS(60.0f), this->ndc->getAspect(), 0.5f, 10.0f));
     this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
                                                   this->centerX, this->centerY, this->centerZ,
@@ -127,6 +128,42 @@ void MainEngine::rotatedScreen(real _width, real _height)
 #else
     MatrixOrtho(this->world->getOrthoMatrix(), -this->ndc->getAspect(), this->ndc->getAspect(), -1, 1, -1, 1);
 #endif
+}
+
+void MainEngine::rotateCamera(real _radians)
+{
+    static int ang = 0;
+    const static float radius = 2;
+
+    this->eyeX = (radius * cos(M_PI * ang / 180.0f));
+    this->centerX = -this->eyeX;
+    this->eyeZ = (radius * sin(M_PI * ang / 180.0f));
+    this->centerZ = -this->eyeZ;
+
+    if (_radians < 0) {
+        ang-=1;
+    } else {
+        ang+=1;
+    }
+    
+    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
+                                                  this->centerX, this->centerY, this->centerZ,
+                                                  0.0f, 1.0f, 0.0f));
+}
+
+void MainEngine::resetCamera()
+{
+    this->eyeX = 0.0f;
+    this->eyeY = 1.0f;
+    this->eyeZ = 2.0f;
+
+    this->centerX = 0.0f;
+    this->centerY = 0.0f;
+    this->centerZ = 0.0f;
+
+    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
+                                                  this->centerX, this->centerY, this->centerZ,
+                                                  0.0f, 1.0f, 0.0f));
 }
 
 void MainEngine::zoom(real _scale)
@@ -233,13 +270,14 @@ void MainEngine::deleteAllSimulatedObjects()
 void MainEngine::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
     ForceRegistry::getInstance()->removeObject(_simulatedObject);
-//    this->mainCollision->deleteObject(_simulatedObject);
+#ifdef USE_TREE
+    this->mainCollision->deleteObject(_simulatedObject);
+#endif
     this->world->deleteSimulatedObject(_simulatedObject);
 }
 
 SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
 {
-    // TODO revise: values of initialization
     SimulatedObject * simulatedObject = new SimulatedObject();
     simulatedObject->setPosition(0.0f, 0.0f);
     simulatedObject->setMode(TRIANGLE_FAN);
@@ -346,7 +384,17 @@ SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
     return simulatedObject;
 }
 
-SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool _init)
+void MainEngine::addAndInitializeSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity)
+{
+    ForceRegistry::getInstance()->add(_simulatedObject, new Gravity(_gravity, false));
+
+    _simulatedObject->setAccelerationGravity(_gravity);
+
+    _simulatedObject->initialize();
+    this->world->addSimulatedObject(_simulatedObject);
+}
+
+SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
 {
     SimulatedObject * simulatedObject = new SimulatedObject();
     simulatedObject->setTypeObject(_typeObject);
@@ -359,7 +407,6 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
     simulatedObject->setAwake();
     simulatedObject->setSelected(true);
     
-    ForceRegistry::getInstance()->add(simulatedObject, new Gravity(Vector3(0.0f, -9.8f), false));
     
     switch (_typeObject) {
         case SPHERE:
@@ -372,7 +419,7 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
             real coeff = 0.4f*simulatedObject->getMass() * simulatedObject->getRadius()*simulatedObject->getRadius();
             tensor.setInertiaTensorCoeffs(coeff,coeff,coeff);
             simulatedObject->setInertiaTensor(tensor);
-            
+
             break;
         }
         case BOX:
@@ -391,7 +438,7 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
             simulatedObject->setSelected(false);
             simulatedObject->setPosition(0.0f, 0.0f, 0.0f);
             simulatedObject->setMass(0.0f);
-            simulatedObject->setFriction(1.5f);
+            simulatedObject->setFriction(0.9f);
             simulatedObject->setMode(LINES);
             simulatedObject->setColorAux(0, 0, 0, 0);
             simulatedObject->setHalfSize(3.0f, 0.0f, 3.0f);
@@ -399,15 +446,15 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
             break;
         }
             
-        case TRIANGLE_SQUARE_BASE:
+        case PYRAMID:
             simulatedObject->setHalfSize(0.05f, 0.05f, 0.05f);
             simulatedObject->addAllVectors(this->createTriangleWithSquareBase(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
             break;
 
-        case TRIANGLE_TRIANGULAR_BASE:
-            simulatedObject->setHalfSize(0.1f, 0.1f, 0.1f);
-            simulatedObject->addAllVectors(this->createTriangleWithTriangularBase(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
-            break;
+//        case TRIANGLE_TRIANGULAR_BASE:
+//            simulatedObject->setHalfSize(0.1f, 0.1f, 0.1f);
+//            simulatedObject->addAllVectors(this->createTriangleWithTriangularBase(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
+//            break;
 
 
         case CONE:
@@ -423,13 +470,7 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject, bool
     if (simulatedObject->getMode() == -1) {
         simulatedObject->setMode(TRIANGLES);
     }
-    
-    if (_init) {
-        simulatedObject->initialize();
-    }
 
-    this->world->addSimulatedObject(simulatedObject);
-    
     return simulatedObject;
 }
 

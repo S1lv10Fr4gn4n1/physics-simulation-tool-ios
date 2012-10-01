@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#include "SaveSimulationViewController.h"
+#include "ConfigurationViewController.h"
 #include "Controller.h"
 
 @interface ObjectsViewController : UIViewController
@@ -25,4 +27,7 @@
 - (IBAction)actionClearSimulation:(id)sender;
 
 - (IBAction)actionSurfaceScene:(id)sender;
+
+- (IBAction)actionSaveSimulation:(id)sender;
+
 @end

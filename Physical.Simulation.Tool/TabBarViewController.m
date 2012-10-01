@@ -1,14 +1,14 @@
 //
-//  TabViewController.m
-//  PrototipoGL
+//  TabBarViewController.m
+//  Physical.Simulation.Tool
 //
 //  Created by Silvio Fragnani on 12/07/12.
 //  
 //
 
-#import "TabViewController.h"
+#import "TabBarViewController.h"
 
-@implementation TabViewController
+@implementation TabBarViewController
 
 - (void)viewDidLoad
 {

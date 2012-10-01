@@ -51,29 +51,42 @@
 
 - (IBAction)actionCircle:(id)sender
 {
-#if defined (_3D_)
-    Controller::getInstance()->createSimulatedObject3D(SPHERE);
-#else
-    Controller::getInstance()->createSimulatedObject2D(CIRCLE);
-#endif
+//#if defined (_3D_)
+//    Controller::getInstance()->createSimulatedObject3D(SPHERE);
+//#else
+//    Controller::getInstance()->createSimulatedObject2D(CIRCLE);
+//#endif
+    Controller::getInstance()->setTypeNextObject(SPHERE);
 }
 
 - (IBAction)actionSquare:(id)sender
 {
-#if defined (_3D_)
-    Controller::getInstance()->createSimulatedObject3D(BOX);
-#else
-    Controller::getInstance()->createSimulatedObject2D(SQUARE);
-#endif
+//#if defined (_3D_)
+//    Controller::getInstance()->createSimulatedObject3D(BOX);
+//#else
+//    Controller::getInstance()->createSimulatedObject2D(SQUARE);
+//#endif
+    Controller::getInstance()->setTypeNextObject(BOX);
 }
 
 - (IBAction)actionTriangle:(id)sender
 {
-#if defined (_3D_)
-    Controller::getInstance()->createSimulatedObject3D(TRIANGLE_SQUARE_BASE);
-#else
-    Controller::getInstance()->createSimulatedObject2D(TRIANGLE);
-#endif
+//#if defined (_3D_)
+//    Controller::getInstance()->createSimulatedObject3D(TRIANGLE_SQUARE_BASE);
+//#else
+//    Controller::getInstance()->createSimulatedObject2D(TRIANGLE);
+//#endif
+    Controller::getInstance()->setTypeNextObject(PYRAMID);
+}
+
+- (IBAction)actionSurfaceScene:(id)sender
+{
+//#if defined (_3D_)
+//    Controller::getInstance()->createSimulatedObject3D(PLAN);
+//#else
+//    Controller::getInstance()->createSimulatedObject2D(PLAN);
+//#endif
+    Controller::getInstance()->setTypeNextObject(PLAN);
 }
 
 - (IBAction)actionClearSimulation:(id)sender
@@ -81,13 +94,19 @@
     Controller::getInstance()->clearSimularion();
 }
 
-- (IBAction)actionSurfaceScene:(id)sender
+- (IBAction)actionSaveSimulation:(id)sender
 {
-#if defined (_3D_)
-    Controller::getInstance()->createSimulatedObject3D(PLAN);
-#else
-    Controller::getInstance()->createSimulatedObject2D(NONE); // TODO revise: PLAN
-#endif
+    self.tabBarController.selectedIndex = 2;
+    
+    SaveSimulationViewController * saveController = (SaveSimulationViewController *) self.tabBarController.selectedViewController;
+    std::string strSimulation = Controller::getInstance()->generateSimulationToCharacter();
+
+    if (strSimulation.size() <= 0) {
+        return;
+    }
+
+    NSString * nsSimulation = [NSString stringWithCString:strSimulation.c_str() encoding:NSASCIIStringEncoding];
+    saveController.areaText.text = nsSimulation;
 }
 
 @end
