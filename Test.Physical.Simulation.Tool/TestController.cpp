@@ -331,181 +331,185 @@ void TestController::clearSimularion()
 
 void TestController::createScene()
 {
-    this->mainEngine->makeSimulatedObject3D(PLAN);
+    SimulatedObject * object = this->mainEngine->makeSimulatedObject3D(PLAN);
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    SimulatedObject *object = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+    object = this->mainEngine->makeSimulatedObject3D(SPHERE);
     object->setPosition(0.25f, 0.1f, 0.0f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    object = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+    object = this->mainEngine->makeSimulatedObject3D(SPHERE);
     object->setPosition(0.0f, 0.1f, 0.0f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    object = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+
+    object = this->mainEngine->makeSimulatedObject3D(SPHERE);
     object->setPosition(-0.25f, 0.1f, 0.0f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    object = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+
+    object = this->mainEngine->makeSimulatedObject3D(SPHERE);
     object->setPosition(0.15f, 0.3f, 0.0f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    object = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+
+    object = this->mainEngine->makeSimulatedObject3D(SPHERE);
     object->setPosition(-0.15f, 0.3f, 0.0f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    object = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+    object = this->mainEngine->makeSimulatedObject3D(SPHERE);
     object->setPosition(0.0f, 0.7f, 0.0f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
 
     
 
-    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+    object = this->mainEngine->makeSimulatedObject3D(BOX);
     object->setPosition(0.25f, 0.1f, -0.5f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+    object = this->mainEngine->makeSimulatedObject3D(BOX);
     object->setPosition(0.0f, 0.1f, -0.5f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+    object = this->mainEngine->makeSimulatedObject3D(BOX);
     object->setPosition(-0.25f, 0.1f, -0.5f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+    object = this->mainEngine->makeSimulatedObject3D(BOX);
     object->setPosition(0.15f, 0.3f, -0.5f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+    object = this->mainEngine->makeSimulatedObject3D(BOX);
     object->setPosition(-0.15f, 0.3f, -0.5f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+    object = this->mainEngine->makeSimulatedObject3D(BOX);
     object->setPosition(0.0f, 0.5f, -0.5f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
 
 
-    object = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+    object = this->mainEngine->makeSimulatedObject3D(SPHERE);
     object->setPosition(-0.8f, 0.1f, 0.5f);
     object->setVelocity(1.0f, 0.0f, 0.2f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
-    object = this->mainEngine->makeSimulatedObject3D(SPHERE, false);
+    object = this->mainEngine->makeSimulatedObject3D(SPHERE);
     object->setPosition(0.8f, 0.1f, 0.5f);
     object->setVelocity(-1.5f, 0.0f, 0.0f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
     
 
-    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+    object = this->mainEngine->makeSimulatedObject3D(BOX);
     object->setPosition(0.0f, 0.8f, 1.0f);
     object->setRotation(0.0f, 0.0f, 0.5f);
-    object->initialize();
+    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
 
 
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.25f, 0.1f, -1.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.0f, 0.1f, -1.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(-0.25f, 0.1f, -1.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.15f, 0.3f, -1.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(-0.15f, 0.3f, -1.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.0f, 0.5f, -1.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
 //    
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.25f, 0.1f, -1.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.0f, 0.1f, -1.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(-0.25f, 0.1f, -1.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.15f, 0.3f, -1.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(-0.15f, 0.3f, -1.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.0f, 0.5f, -1.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
 //
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.25f, 0.1f, -2.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.0f, 0.1f, -2.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(-0.25f, 0.1f, -2.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.15f, 0.3f, -2.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(-0.15f, 0.3f, -2.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.0f, 0.5f, -2.0f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
 //    
 //    
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.25f, 0.1f, -2.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.0f, 0.1f, -2.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(-0.25f, 0.1f, -2.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.15f, 0.3f, -2.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(-0.15f, 0.3f, -2.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 //
-//    object = this->mainEngine->makeSimulatedObject3D(BOX, false);
+//    object = this->mainEngine->makeSimulatedObject3D(BOX);
 //    object->setPosition(0.0f, 0.5f, -2.5f);
-//    object->initialize();
+//    this->mainEngine->addAndInitializeSimulatedObject3D(object);
 
 }
