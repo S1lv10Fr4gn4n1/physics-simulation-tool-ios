@@ -13,6 +13,7 @@ using namespace std;
 World::World()
 {
     this->simulatedObjects = new vector<SimulatedObject *>();
+    this->camera = new Camera();
 }
 
 World::~World()
@@ -29,7 +30,12 @@ World::~World()
         
         delete this->simulatedObjects;
     }
-    
+
+    if (this->camera) {
+        delete this->camera;
+    }
+
+    this->camera = NULL;
     this->simulatedObjects = NULL;
 }
 
@@ -68,27 +74,7 @@ std::vector<SimulatedObject *> * World::getSimulatedObjects()
     return this->simulatedObjects;
 }
 
-Matrix4x4 World::getOrthoMatrix()
+Camera * World::getCamera()
 {
-    return this->orthoMatrix;
-}
-
-Matrix4x4 World::getLookAtMatrix()
-{
-    return this->lookAtMatrix;
-}
-
-void World::setLookAtMatrix(Matrix4x4 _matrix)
-{
-    this->lookAtMatrix = _matrix;
-}
-
-Matrix4x4 World::getPerspectiveMatrix()
-{
-    return this->perspectiveMatrix;
-}
-
-void World::setPerspectiveMatrix(Matrix4x4 _matrix)
-{
-    this->perspectiveMatrix = _matrix;
+    return this->camera;
 }

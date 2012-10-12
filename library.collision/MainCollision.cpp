@@ -222,27 +222,21 @@ void MainCollision::updateContacts(real _duration)
 //    this->solverContacts(_duration);
 }
 
-void MainCollision::updateContacts(vector<SimulatedObject *> * _listBody, real _duration)
+void MainCollision::updateContacts(vector<SimulatedObject *> * _listBody, SimulatedObject * _plan, real _duration)
 {
     if (this->tree) {
         this->updateContacts(_duration);
     } else {
-
-        RigidBody * plane = new RigidBody();
-        plane->setTypeObject(PLAN);
-        plane->setFriction(0.9f);
-
         RigidBody * body1 = NULL;
         RigidBody * body2 = NULL;
 
         for (int i=0; i<_listBody->size(); i++) {
             body1 = _listBody->at(i);
-            if (body1->getTypeObject() == PLAN) {
+            if (body1->getTypeObject() == PLAN || !_plan) {
                 continue;
             }
-            this->generateContact(body1, plane);
+            this->generateContact(body1, _plan);
         }
-
 
         for (int i=0; i<_listBody->size(); i++) {
             body1 = _listBody->at(i);

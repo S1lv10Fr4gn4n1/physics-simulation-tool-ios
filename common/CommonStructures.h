@@ -202,6 +202,36 @@ public:
     real data[16];
     Matrix4x4();
     Matrix4x4(real _matrix[16]);
+    Matrix4x4 invert();
+};
+
+
+/***************************** Camera *****************************/
+class Camera {
+public:
+    Matrix4x4 orthoMatrix;
+    Matrix4x4 lookAtMatrix;
+    Matrix4x4 perspectiveMatrix;
+    real eyeX;
+    real eyeY;
+    real eyeZ;
+    real centerX;
+    real centerY;
+    real centerZ;
+    real upX;
+    real upY;
+    real upZ;
+
+    real fovyRadians;
+    real nearZ;
+    real farZ;
+
+    Camera();
+    void resetCamera();
+    void rotateCamera(real _radians);
+    void updatePerspective(real _aspect);
+    void zoom(real _scale, real _value);
+    void pan(real _scaleX, real _scaleY, real _aspect);
 };
 
 /***************************** Matrix Transform *****************************/
@@ -221,7 +251,6 @@ const static real * MatrixIdentity = MatrixMakeIdentity();
 
 static inline void MatrixTransformIdentity(real ** matrix)
 {
-    
     for (int i = 0; i < 16; i++) {
 		*(*matrix+i) = 0.0f;
 	}
@@ -230,8 +259,7 @@ static inline void MatrixTransformIdentity(real ** matrix)
 }
 
 static inline void MatrixTransformIdentity(real * matrix)
-{
-    
+{    
     for (int i = 0; i < 16; i++) {
 		*(matrix+i) = 0.0f;
 	}
@@ -260,12 +288,12 @@ static inline void MatrixTranslate(real * _matrix, real _x, real _y, real _z)
 	_matrix[12] = _x;
 	_matrix[13] = _y;
 	_matrix[14] = _z;
-	//_matrix[15] = _w;
+	_matrix[15] = 1.0f;
 }
 
-static inline void MatrixTranslate(real * matrix, const Vector3 &_vector)
+static inline void MatrixTranslate(real *_matrix, const Vector3 &_vector)
 {
-    MatrixTranslate(matrix, _vector.x, _vector.y, _vector.z);
+    MatrixTranslate(_matrix, _vector.x, _vector.y, _vector.z);
 }
 
 //static inline real * MatrixMakeTranslate(real _x, real _y)
@@ -471,11 +499,20 @@ static inline Matrix4x4 MatrixMakeLookAt(float _eyeX, float _eyeY, float _eyeZ,
                                          float _centerX, float _centerY, float _centerZ,
                                          float _upX, float _upY, float _upZ)
 {
-    printf("eyeX: %f, eyeY: %f, eyeZ: %f, centerX: %f, centerY: %f, centerZ: %f, upX: %f, upY: %f, upZ: %f\n", _eyeX, _eyeY, _eyeZ, _centerX, _centerY, _centerZ, _upX, _upY, _upZ);
     Matrix4x4 matrix;
     MatrixMakeLookAt(matrix, _eyeX, _eyeY, _eyeZ, _centerX, _centerY, _centerZ, _upX, _upY, _upZ);
     return matrix;
 }
+
+
+//static inline Vector3 Matrix4x4MultiplyVector3(const Matrix4x4 _matrixLeft, const Vector3 _vectorRight)
+//{
+//    Vector3 v(_matrixLeft.data[0] * _vectorRight[0] + _matrixLeft.data[4] * _vectorRight[1] + _matrixLeft.data[8] * _vectorRight[2] + _matrixLeft.data[12] * _vectorRight[3],
+//              _matrixLeft.data[1] * _vectorRight[0] + _matrixLeft.data[5] * _vectorRight[1] + _matrixLeft.data[9] * _vectorRight[2] + _matrixLeft.data[13] * _vectorRight[3],
+//              _matrixLeft.data[2] * _vectorRight[0] + _matrixLeft.data[6] * _vectorRight[1] + _matrixLeft.data[10] * _vectorRight[2] + _matrixLeft.data[14] * _vectorRight[3]);
+////        matrixLeft.data[3] * vectorRight[0] + matrixLeft.data[7] * vectorRight[1] + matrixLeft.data[11] * vectorRight[2] + matrixLeft.data[15] * vectorRight[3]);
+//    return v;
+//}
 
 static inline void calculateTransformMatrix(Matrix4 &_transformMatrix, const Vector3 &_position,
                                             const Quaternion &_orientation)

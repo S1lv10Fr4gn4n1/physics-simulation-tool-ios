@@ -117,6 +117,5 @@ void MainPhysics::updateFeatures(RigidBody * _body, real _duration)
         } else if (_body->getMotion() > 10.0f * SLEEP_EPSILON) {
             _body->setMotion(10.0f * SLEEP_EPSILON);
         }
-        
      }
 }

@@ -34,7 +34,10 @@ static EAGLContext * context;
     GLKView *view = (GLKView *)self.view;
     view.context = context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    
+    view.drawableMultisample = GLKViewDrawableMultisample4X;
+    view.drawableColorFormat = GLKViewDrawableColorFormatRGB565;
+    view.drawableStencilFormat = GLKViewDrawableStencilFormat8;
+
     self.preferredFramesPerSecond = FRAME_PER_SECOND;
     
     [self initializeGestureRecognizer: view];

@@ -36,6 +36,21 @@
 
 - (IBAction)actionSaveAdd:(id)sender
 {
+    if (Controller::getInstance()->getTypeNextObject() == PLAN &&
+        Controller::getInstance()->alreadyExistPlan()) {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Atenção"
+                                                        message:@"Já existe um Plano na cena!"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles: nil];
+        [alert show];
+
+        [self dismissViewControllerAnimated:TRUE completion:NULL];
+        
+        return;
+    }
+
+
     SimulatedObject * object = Controller::getInstance()->makeSimulatedObject3D();
     object->setFriction(self.sliderFriction.value);
     object->setRestitution(self.sliderRestitution.value);

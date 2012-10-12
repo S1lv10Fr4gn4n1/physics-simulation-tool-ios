@@ -10,20 +10,21 @@
 
 bool inBBox(SimulatedObject * _simulatedObject, const Vector3 &_vector)
 {
-    _simulatedObject->initBBox(_simulatedObject->getMatrixTransformation().data);
+//    _simulatedObject->initBBox(_simulatedObject->getMatrixTransformation().data);
+//
+//    bool result = false;
+//    
+//    if (_vector.x < _simulatedObject->getBBox()->max.x &&
+//        _vector.x > _simulatedObject->getBBox()->min.x &&
+//        _vector.y < _simulatedObject->getBBox()->max.y &&
+//        _vector.y > _simulatedObject->getBBox()->min.y) {
+//        result = true;
+//    }
+//    
+////    _simulatedObject->initBBox(MatrixMakeIdentity());
 
-    bool result = false;
-    
-    if (_vector.x < _simulatedObject->getBBox()->max.x &&
-        _vector.x > _simulatedObject->getBBox()->min.x &&
-        _vector.y < _simulatedObject->getBBox()->max.y &&
-        _vector.y > _simulatedObject->getBBox()->min.y) {
-        result = true;
-    }
-    
-//    _simulatedObject->initBBox(MatrixMakeIdentity());
-    
-    return result;
+//    return result;
+    return false;
 }
 
 bool inSimulatedObject(SimulatedObject * _simulatedObject, Vector3 * _vector)

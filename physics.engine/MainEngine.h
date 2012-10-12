@@ -17,18 +17,16 @@
 class MainEngine {
 private:
     bool running;
-    real eyeX;
-    real eyeY;
-    real eyeZ;
-    real centerX;
-    real centerY;
-    real centerZ;
 
     World * world;
+
+    SimulatedObject * plan;
     
     MainPhysics * mainPhysics;
     MainCollision * mainCollision;
     NDC * ndc;
+
+    bool checkCollission(Vector3 &winPos, SimulatedObject * object);
 
     std::vector<Vector3> * createSphere(const Vector3 &_origin, real _radius);
     std::vector<Vector3> * createPlan(const Vector3 &_origin);
@@ -67,6 +65,9 @@ public:
     void addAndInitializeSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity=Vector3(0.0f, -9.8f, 0.0f));
     
     SimulatedObject * selectedSimulatedObject(Vector3 &_vector);
+
+    bool alreadyExistsPlan();
+    SimulatedObject * getExistingPlan();
 };
 
 #endif

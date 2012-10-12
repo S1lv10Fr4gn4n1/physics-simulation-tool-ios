@@ -104,8 +104,10 @@ void Controller::draw()
 void Controller::stopSimulation()
 {
     this->mainEngine->stop();
-//    scaleZoom = scaleZoom;
-//    this->mainEngine->zoom(scaleZoom);
+
+    scaleZoom = ZOOM_INIT;
+    this->mainEngine->zoom(scaleZoom);
+    this->mainEngine->resetCamera();
 }
 
 void Controller::startSimulation()
@@ -254,7 +256,7 @@ void Controller::doubleTapOneFingerDetected(real _x, real _y)
     Vector3 vector(_x, _y);
     
     this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
-    
+
     if (this->objectEdition) {
         if (this->objectEdition->isSelected()) {
             this->objectEdition->setSelected(false);
@@ -379,8 +381,6 @@ void Controller::loadSceneFromFile(string _contentFile)
     //    CAD 0.8
     //    AWAKE 1
     //    END
-
-
 
     long posBegin[200];
     unsigned index = 0;
@@ -549,7 +549,7 @@ string Controller::generateSimulationToCharacter()
     struct tm * now = localtime( & t );
 
     char * charTime = new char(16);
-    sprintf(charTime, "%u-%u-%u %u:%u:%u", now->tm_year + 1900, now->tm_mon, now->tm_mday, now->tm_hour, now->tm_min, now->tm_sec);
+    sprintf(charTime, "%u-%02u-%02u %02u:%02u:%02u", now->tm_year + 1900, now->tm_mon, now->tm_mday, now->tm_hour, now->tm_min, now->tm_sec);
 
     str.append("# time: ").append(charTime).append("\n\n");
 
@@ -620,4 +620,14 @@ void Controller::setTypeNextObject(TypeObject _typeObject)
 TypeObject Controller::getTypeNextObject()
 {
     return this->typeNextObject;
+}
+
+bool Controller::alreadyExistPlan()
+{
+    return this->mainEngine->alreadyExistsPlan();
+}
+
+SimulatedObject * Controller::getExistingPlan()
+{
+    return this->mainEngine->getExistingPlan();
 }

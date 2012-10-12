@@ -37,6 +37,8 @@ public:
     void setTop(real _top);
     real getBottom();
     void setBottom(real _bottom);
+
+    Vector3 * getMaxWindow();
 };
 
 #endif

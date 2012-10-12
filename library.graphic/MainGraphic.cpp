@@ -32,6 +32,9 @@ void MainGraphic::initializeShader()
 {
     this->shader = new Shader();
     glEnable(GL_DEPTH_TEST);
+
+    glClearDepthf(1.0f);
+	glDepthFunc(GL_LEQUAL);
 }
 
 Shader * MainGraphic::getShader()
@@ -66,10 +69,10 @@ void MainGraphic::MainGraphic::draw(World * _world)
 
         glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation().data);
     #if defined (_3D_)
-        glUniformMatrix4fv(matrixLookAt, 1, 0, _world->getLookAtMatrix().data);
-        glUniformMatrix4fv(matrixPerspective, 1, 0, _world->getPerspectiveMatrix().data);
+        glUniformMatrix4fv(matrixLookAt, 1, 0, _world->getCamera()->lookAtMatrix.data);
+        glUniformMatrix4fv(matrixPerspective, 1, 0, _world->getCamera()->perspectiveMatrix.data);
     #else
-        glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
+        glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getCamera()->orthoMatrix.data);
     #endif
         glDrawArrays(this->simulatedObjectDrawn->getMode(), 0, this->simulatedObjectDrawn->getVectorsAux()->size());
         
@@ -84,32 +87,12 @@ void MainGraphic::MainGraphic::draw(World * _world)
             
             glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation().data);
         #if defined (_3D_)
-            glUniformMatrix4fv(matrixLookAt, 1, 0, _world->getLookAtMatrix().data);
-            glUniformMatrix4fv(matrixPerspective, 1, 0, _world->getPerspectiveMatrix().data);
+            glUniformMatrix4fv(matrixLookAt, 1, 0, _world->getCamera()->lookAtMatrix.data);
+            glUniformMatrix4fv(matrixPerspective, 1, 0, _world->getCamera()->perspectiveMatrix.data);
         #else
-            glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
+            glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getCamera()->orthoMatrix.data);
         #endif
             glDrawArrays(GL_POINTS, 0, this->simulatedObjectDrawn->getVectorsAux()->size());
-        }
-        
-        if (this->simulatedObjectDrawn->isShowBBox()) {
-            // define color for points
-            glVertexAttribPointer(ATTRIB_COLOR, CHANNEL_COLOR, GL_UNSIGNED_BYTE, 1, 0, this->simulatedObjectDrawn->getBBox()->color);
-            glEnableVertexAttribArray(ATTRIB_COLOR);
-
-            // Update attribute values.
-            glVertexAttribPointer(ATTRIB_VERTEX, COUNT_COORD, GL_FLOAT, 0, 0, this->simulatedObjectDrawn->getBBox()->ptr);
-            glEnableVertexAttribArray(ATTRIB_VERTEX);
-            
-            glUniformMatrix4fv(matrixView, 1, 0, this->simulatedObjectDrawn->getMatrixTransformation().data);
-        #if defined (_3D_)
-            glUniformMatrix4fv(matrixLookAt, 1, 0, _world->getLookAtMatrix().data);
-            glUniformMatrix4fv(matrixPerspective, 1, 0, _world->getPerspectiveMatrix().data);
-        #else
-            glUniformMatrix4fv(matrixOrtho, 1, 0, _world->getOrthoMatrix());
-        #endif
-
-            glDrawArrays(GL_LINE_LOOP, 0, 4);
         }
     }
 }

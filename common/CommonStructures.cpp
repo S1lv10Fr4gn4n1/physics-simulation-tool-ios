@@ -54,7 +54,6 @@ void Vector3::clear()
     this->pad = 0.0f;
 }
 
-
 real Vector3::operator[](unsigned _index) const
 {
     if (_index == 0) {
@@ -759,4 +758,101 @@ void Quaternion::addScaledVector(const Vector3 &_vector, real _scale)
     this->i += quaternion.i * ((real)0.5);
     this->j += quaternion.j * ((real)0.5);
     this->k += quaternion.k * ((real)0.5);
+}
+
+/***************************** Camera *****************************/
+Camera::Camera()
+{
+    this->eyeX = 0.0f;
+    this->eyeY = 1.0f;
+    this->eyeZ = 2.0f;
+
+    this->centerX = 0.0f;
+    this->centerY = 0.0f;
+    this->centerZ = 0.0f;
+
+    this->upX = 0.0f;
+    this->upY = 1.0f;
+    this->upZ = 0.0f;
+
+    this->fovyRadians = DEGREES_TO_RADIANS(60.0f);
+
+    this->nearZ = 0.1f;
+    this->farZ = 10.0f;
+}
+
+void Camera::resetCamera()
+{
+    this->eyeX = 0.0f;
+    this->eyeY = 1.0f;
+    this->eyeZ = 2.0f;
+
+    this->centerX = 0.0f;
+    this->centerY = 0.0f;
+    this->centerZ = 0.0f;
+
+    this->lookAtMatrix = MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
+                                          this->centerX, this->centerY, this->centerZ,
+                                          this->upX, this->upY, this->upZ);
+}
+
+void Camera::rotateCamera(real _radians)
+{
+    static int ang = 0;
+    const static float radius = 3;
+
+    this->eyeX = (radius * cos(M_PI * ang / 180.0f));
+    this->centerX = -this->eyeX;
+    this->eyeZ = (radius * sin(M_PI * ang / 180.0f));
+    this->centerZ = -this->eyeZ;
+
+    if (_radians < 0) {
+        ang-=1;
+    } else {
+        ang+=1;
+    }
+
+    this->lookAtMatrix = MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
+                                          this->centerX, this->centerY, this->centerZ,
+                                          this->upX, this->upY, this->upZ);
+}
+
+void Camera::updatePerspective(real _aspect)
+{
+#if defined (_3D_)
+    this->perspectiveMatrix = MatrixMakePerspective(this->fovyRadians, _aspect, this->nearZ, this->farZ);
+    this->lookAtMatrix = MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
+                                          this->centerX, this->centerY, this->centerZ,
+                                          this->upX, this->upY, this->upZ);
+#else
+    MatrixOrtho(this->orthoMatrix, -_aspect, _aspect, -1, 1, -1, 1);
+#endif
+}
+
+void Camera::zoom(real _scale, real _value)
+{
+#if defined (_3D_)
+    this->eyeZ = _scale;
+
+    this->lookAtMatrix = MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
+                                          this->centerX, this->centerY, this->centerZ,
+                                          this->upX, this->upY, this->upZ);
+#else
+    MatrixOrtho(this->orthoMatrix, -_value, _value, _scale, _scale, -1, 1);
+#endif
+}
+
+void Camera::pan(real _scaleX, real _scaleY, real _aspect)
+{
+    this->eyeX = _scaleX;
+    this->eyeY = _scaleY;
+
+#if defined (_3D_)
+    this->lookAtMatrix = MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
+                                          this->centerX, this->centerY, this->centerZ,
+                                          this->upX, this->upY, this->upZ);
+#else
+    MatrixOrtho(this->orthoMatrix, (-_aspect - _scaleX), (_aspect - _scaleX), (-1 -_scaleY), (1 - _scaleY), -1, 1);
+#endif
+
 }

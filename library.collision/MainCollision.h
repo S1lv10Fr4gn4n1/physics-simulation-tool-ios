@@ -32,7 +32,7 @@ public:
     void insertObject(RigidBody * _body);
     void deleteObject(RigidBody * _body);
     void updateObject(RigidBody * _body, real _duration);
-    void updateContacts(std::vector<SimulatedObject *> * _listBody, real _duration);
+    void updateContacts(std::vector<SimulatedObject *> * _listBody, SimulatedObject * _plan, real _duration);
     
     void cleanCollisions();
 };

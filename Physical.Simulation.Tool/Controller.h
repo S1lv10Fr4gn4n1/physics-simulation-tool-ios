@@ -57,6 +57,9 @@ public:
 
     void setTypeNextObject(TypeObject _typeObject);
     TypeObject getTypeNextObject();
+
+    bool alreadyExistPlan();
+    SimulatedObject * getExistingPlan();
     
     void touchesMoved(real _x, real _y, int _countFingers);
     void touchesBegan(real _x, real _y);

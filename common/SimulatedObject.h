@@ -21,7 +21,7 @@ private:
     unsigned char * colorVectors;
     Color * colorAux;
     unsigned int mode;
-    BBox * bbox;
+//    BBox * bbox;
     Matrix4x4 matrixTransformation;
     
     bool showBBox;
@@ -30,7 +30,7 @@ private:
     void makeVectors();
     void makeColorObject();
     void makeColorVectors();
-    void makeBBox();
+//    void makeBBox();
 protected:
     
 public:
@@ -38,8 +38,8 @@ public:
     ~SimulatedObject();
     
     void initialize();
-    void initBBox(real * _matrix);
-    
+//    void initBBox(real * _matrix);
+
     void addVector3(const Vector3 &_vector);
     void deleteVector3(const Vector3 &_vector);
     void addAllVectors(std::vector<Vector3> * _vectors);
@@ -57,11 +57,11 @@ public:
     void setMode(unsigned int _mode);
     unsigned int getMode();
     
-    BBox * getBBox();
-    
-    bool isShowBBox();
-    void setShowBBox(bool _show);
-    
+//    BBox * getBBox();
+
+//    bool isShowBBox();
+//    void setShowBBox(bool _show);
+
     bool isSelected();
     void setSelected(bool _selected);
     

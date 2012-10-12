@@ -12,6 +12,10 @@
 - (void)setupGL;
 - (void)tearDownGL;
 - (void)initializeGestureRecognizer:(UIView *)view;
+
+@property(nonatomic) BOOL changedPinch;
+@property(nonatomic) BOOL changedRotate;
+
 @end
 
 static EAGLContext * context;
@@ -33,11 +37,17 @@ static EAGLContext * context;
     GLKView *view = (GLKView *)self.view;
     view.context = context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    
+    view.drawableMultisample = GLKViewDrawableMultisample4X;
+    view.drawableColorFormat = GLKViewDrawableColorFormatRGB565;
+    view.drawableStencilFormat = GLKViewDrawableStencilFormat8;
+
     self.preferredFramesPerSecond = FRAME_PER_SECOND;
-    
+
+    self.changedPinch = NO;
+    self.changedRotate = NO;
+
     [self initializeGestureRecognizer: view];
-    
+
     [self setupGL];
 }
 
@@ -199,26 +209,42 @@ static EAGLContext * context;
     Controller::getInstance()->doubleTapOneFingerDetected(cgPoint.x, cgPoint.y);
 }
 
-- (IBAction)pinchDetected:(UIGestureRecognizer *)sender
+- (IBAction)pinchDetected:(UIPinchGestureRecognizer *)pinchRecognizer
 {
-    CGFloat scale = [(UIPinchGestureRecognizer *)sender scale];
-    CGFloat velocity = [(UIPinchGestureRecognizer *)sender velocity];
-    
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        Controller::getInstance()->pinchDetected(scale, velocity, true);
+    if (self.changedRotate) {
+        return;
     }
-    Controller::getInstance()->pinchDetected(scale, velocity, false);
+
+    if (pinchRecognizer.state == UIGestureRecognizerStateBegan ||
+        pinchRecognizer.state == UIGestureRecognizerStateChanged) {
+        self.changedPinch = YES;
+    } else {
+        self.changedPinch = NO;
+    }
+
+    if (pinchRecognizer.state == UIGestureRecognizerStateBegan) {
+        Controller::getInstance()->pinchDetected(pinchRecognizer.scale, pinchRecognizer.velocity, true);
+    }
+    Controller::getInstance()->pinchDetected(pinchRecognizer.scale, pinchRecognizer.velocity, false);
 }
 
-- (IBAction)rotationDetected:(UIGestureRecognizer *)sender
+- (IBAction)rotationDetected:(UIRotationGestureRecognizer *)rotationRecognizer
 {
-    CGFloat radians = [(UIRotationGestureRecognizer *)sender rotation];
-    CGFloat velocity = [(UIRotationGestureRecognizer *)sender velocity];
-    
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        Controller::getInstance()->rotationDetected(radians, velocity, true);
+    if (self.changedPinch) {
+        return;
     }
-    Controller::getInstance()->rotationDetected(radians, velocity, false);
+
+    if (rotationRecognizer.state == UIGestureRecognizerStateBegan ||
+        rotationRecognizer.state == UIGestureRecognizerStateChanged) {
+        self.changedRotate = YES;
+    } else {
+        self.changedRotate = NO;
+    }
+
+    if (rotationRecognizer.state == UIGestureRecognizerStateBegan) {
+        Controller::getInstance()->rotationDetected(rotationRecognizer.rotation, rotationRecognizer.velocity, true);
+    }
+    Controller::getInstance()->rotationDetected(rotationRecognizer.rotation, rotationRecognizer.velocity, false);
 }
 
 #pragma mark - GLKView and GLKViewController delegate methods

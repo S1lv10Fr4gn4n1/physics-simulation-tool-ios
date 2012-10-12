@@ -83,6 +83,7 @@
 		B9B17AAD15E3B156009339CA /* CommonStructures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B17AAC15E3B156009339CA /* CommonStructures.cpp */; };
 		B9B17AAF15E42068009339CA /* ForceGenerators.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B17AAE15E42068009339CA /* ForceGenerators.h */; };
 		B9B17AB115E42071009339CA /* ForceGenerators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B17AB015E42071009339CA /* ForceGenerators.cpp */; };
+		B9B2AED116282E940089A7F5 /* glu.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B2AED016282E940089A7F5 /* glu.h */; };
 		B9B350971586BBB600180CE7 /* LibraryGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350941586BBB600180CE7 /* LibraryGraphic.h */; };
 		B9B350981586BBB600180CE7 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9B350951586BBB600180CE7 /* Shader.cpp */; };
 		B9B350991586BBB600180CE7 /* Shader.h in Headers */ = {isa = PBXBuildFile; fileRef = B9B350961586BBB600180CE7 /* Shader.h */; };
@@ -306,6 +307,7 @@
 		B9B17AAC15E3B156009339CA /* CommonStructures.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonStructures.cpp; sourceTree = "<group>"; };
 		B9B17AAE15E42068009339CA /* ForceGenerators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForceGenerators.h; sourceTree = "<group>"; };
 		B9B17AB015E42071009339CA /* ForceGenerators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ForceGenerators.cpp; sourceTree = "<group>"; };
+		B9B2AED016282E940089A7F5 /* glu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glu.h; sourceTree = "<group>"; };
 		B9B350941586BBB600180CE7 /* LibraryGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryGraphic.h; sourceTree = "<group>"; };
 		B9B350951586BBB600180CE7 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		B9B350961586BBB600180CE7 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 				B94B371115864AD7004AAB28 /* MainEngine.cpp */,
 				B93ACE9415A3AC7100CED06E /* Selection.h */,
 				B93ACE9715A3AC8000CED06E /* Selection.cpp */,
+				B9B2AED016282E940089A7F5 /* glu.h */,
 			);
 			path = physics.engine;
 			sourceTree = "<group>";
@@ -645,6 +648,7 @@
 				B9D1F863158E929E000337BB /* CommonStructures.h in Headers */,
 				B93ACE9515A3AC7100CED06E /* Selection.h in Headers */,
 				B9AFACD115FD1D9400B313D4 /* NDC.h in Headers */,
+				B9B2AED116282E940089A7F5 /* glu.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

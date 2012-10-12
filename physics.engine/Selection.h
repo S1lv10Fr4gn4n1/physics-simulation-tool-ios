@@ -10,6 +10,7 @@
 #define SELECTION_H
 
 #include "Commons.h"
+#include "NDC.h"
 
 class Selection {
 private:

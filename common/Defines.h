@@ -68,8 +68,6 @@ typedef float real;
 #define REAL_MAX FLT_MAX
 #define R_PI 3.14159f
 
-
 #define DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0 * M_PI)
-
 
 #endif

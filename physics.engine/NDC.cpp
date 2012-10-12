@@ -119,3 +119,8 @@ void NDC::setBottom(real _bottom)
 {
     this->minOrtho->y = _bottom;
 }
+
+Vector3 * NDC::getMaxWindow()
+{
+    return this->maxWindow;
+}

@@ -18,14 +18,7 @@ MainEngine::MainEngine()
     this->mainPhysics = new MainPhysics();
     this->mainCollision = new MainCollision(USE_TREE);
     this->ndc = new NDC();
-    
-    this->eyeX = 0.0f;
-    this->eyeY = 1.0f;
-    this->eyeZ = 2.0f;
-    
-    this->centerX = 0.0f;
-    this->centerY = 0.0f;
-    this->centerZ = 0.0f;
+    this->plan = NULL;
 }
 
 MainEngine::~MainEngine()
@@ -58,6 +51,9 @@ void MainEngine::start()
         object = this->world->getSimulatedObjects()->at(i);
         this->mainCollision->insertObject(object);
     }
+
+    this->plan = this->getExistingPlan();
+
     this->running = true;
 }
 
@@ -98,7 +94,6 @@ void MainEngine::updateInformation(real _duration)
         object->setMatrixTransformation(object->getGLTransform());
         
         // remove objects that left the scene
-        // TODO revise values
         if (real_abs(object->getPosition().x) >= 3.5f ||
             real_abs(object->getPosition().y) >= 4.0f ||
             real_abs(object->getPosition().z) >= 3.5f) {
@@ -107,7 +102,7 @@ void MainEngine::updateInformation(real _duration)
     }
     
     // update collisions
-    this->mainCollision->updateContacts(this->world->getSimulatedObjects(), _duration);
+    this->mainCollision->updateContacts(this->world->getSimulatedObjects(), this->plan, _duration);
 
     // clean all collisions in quadtree
     this->mainCollision->cleanCollisions();
@@ -118,52 +113,21 @@ void MainEngine::updateInformation(real _duration)
 void MainEngine::rotatedScreen(real _width, real _height)
 {
     this->ndc->update(_width, _height);
-
-#if defined (_3D_)
-
-    this->world->setPerspectiveMatrix(MatrixMakePerspective(DEGREES_TO_RADIANS(60.0f), this->ndc->getAspect(), 0.5f, 10.0f));
-    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
-                                                  this->centerX, this->centerY, this->centerZ,
-                                                  0.0f, 1.0f, 0.0f));
-#else
-    MatrixOrtho(this->world->getOrthoMatrix(), -this->ndc->getAspect(), this->ndc->getAspect(), -1, 1, -1, 1);
-#endif
+    this->world->getCamera()->updatePerspective(this->ndc->getAspect());
 }
 
 void MainEngine::rotateCamera(real _radians)
 {
-    static int ang = 0;
-    const static float radius = 2;
-
-    this->eyeX = (radius * cos(M_PI * ang / 180.0f));
-    this->centerX = -this->eyeX;
-    this->eyeZ = (radius * sin(M_PI * ang / 180.0f));
-    this->centerZ = -this->eyeZ;
-
-    if (_radians < 0) {
-        ang-=1;
-    } else {
-        ang+=1;
+    if (!this->running) {
+        return;
     }
-    
-    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
-                                                  this->centerX, this->centerY, this->centerZ,
-                                                  0.0f, 1.0f, 0.0f));
+
+    this->world->getCamera()->rotateCamera(_radians);
 }
 
 void MainEngine::resetCamera()
 {
-    this->eyeX = 0.0f;
-    this->eyeY = 1.0f;
-    this->eyeZ = 2.0f;
-
-    this->centerX = 0.0f;
-    this->centerY = 0.0f;
-    this->centerZ = 0.0f;
-
-    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
-                                                  this->centerX, this->centerY, this->centerZ,
-                                                  0.0f, 1.0f, 0.0f));
+    this->world->getCamera()->resetCamera();
 }
 
 void MainEngine::zoom(real _scale)
@@ -174,22 +138,8 @@ void MainEngine::zoom(real _scale)
     this->ndc->setRight(value);
     this->ndc->setBottom(-_scale);
     this->ndc->setTop(_scale);
-    
-#if defined (_3D_)
-    this->eyeZ = _scale;
-    
-    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
-                                                  this->centerX, this->centerY, this->centerZ,
-                                                  0.0f, 1.0f, 0.0f));
-#else
-    MatrixOrtho(this->world->getOrthoMatrix(),
-                this->ndc->getLeft(),
-                this->ndc->getRight(),
-                this->ndc->getBottom(),
-                this->ndc->getTop(),
-                -1,
-                1);
-#endif
+
+    this->world->getCamera()->zoom(_scale, value);
 }
 
 void MainEngine::pan(real _scaleX, real _scaleY)
@@ -199,23 +149,8 @@ void MainEngine::pan(real _scaleX, real _scaleY)
     this->ndc->setRight(this->ndc->getAspect() - _scaleX);
     this->ndc->setBottom(-1 - _scaleY);
     this->ndc->setTop(1 - _scaleY);
-    
-    this->eyeX = _scaleX;
-    this->eyeY = _scaleY;
-    
-#if defined (_3D_)
-    this->world->setLookAtMatrix(MatrixMakeLookAt(this->eyeX, this->eyeY, this->eyeZ,
-                                                  this->centerX, this->centerY, this->centerZ,
-                                                  0.0f, 1.0f, 0.0f));
-#else
-    MatrixOrtho(this->world->getOrthoMatrix(),
-                this->ndc->getLeft(),
-                this->ndc->getRight(),
-                this->ndc->getBottom(),
-                this->ndc->getTop(),
-                -1,
-                1);
-#endif
+
+    this->world->getCamera()->pan(_scaleX, _scaleY, this->ndc->getAspect());
 }
 
 void MainEngine::scaleSimulatedObject(SimulatedObject * _simulatedObject, real _scale)
@@ -244,11 +179,16 @@ void MainEngine::rotateSimulatedObject(SimulatedObject * _simulatedObject, real 
 
 void MainEngine::translateSimulatedObject(SimulatedObject * _simulatedObject, const Vector3 &_vector)
 {
-    //MatrixTranslate(_simulatedObject->getMatrixTransformation().data, _vector);
+    if (this->running) {
+        return;
+    }
+
+    _simulatedObject->setPosition(_vector);
     _simulatedObject->setTransformMatrixIndex(3, _vector.x);
     _simulatedObject->setTransformMatrixIndex(7, _vector.y);
     _simulatedObject->setTransformMatrixIndex(11, _vector.z);
-    _simulatedObject->setAwake();
+//    _simulatedObject->setAwake();
+    _simulatedObject->setMatrixTransformation(_simulatedObject->getGLTransform());
 }
 
 World * MainEngine::getWorld()
@@ -265,6 +205,7 @@ SimulatedObject * MainEngine::selectedSimulatedObject(Vector3 &_vector)
 void MainEngine::deleteAllSimulatedObjects()
 {
     this->world->deleteAllSimulatedObject();
+    this->plan = NULL;
 }
 
 void MainEngine::deleteSimulatedObject(SimulatedObject * _simulatedObject)
@@ -366,7 +307,7 @@ SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
 //            simulatedObject->addVector3(new Vector3( 5.0f, -0.9f));
 //            simulatedObject->addVector3(new Vector3( 5.0f, -7.0f));
             
-            
+
             break;
         }
 
@@ -389,8 +330,8 @@ void MainEngine::addAndInitializeSimulatedObject3D(SimulatedObject * _simulatedO
     ForceRegistry::getInstance()->add(_simulatedObject, new Gravity(_gravity, false));
 
     _simulatedObject->setAccelerationGravity(_gravity);
-
     _simulatedObject->initialize();
+    
     this->world->addSimulatedObject(_simulatedObject);
 }
 
@@ -398,16 +339,15 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
 {
     SimulatedObject * simulatedObject = new SimulatedObject();
     simulatedObject->setTypeObject(_typeObject);
-    simulatedObject->setMass(4.0f);
-    simulatedObject->setRestitution(0.3f);
-    simulatedObject->setPosition(0.0f, 0.1f, 0.0f);
-    simulatedObject->setLinearDamping(0.99f);
-    simulatedObject->setAngularDamping(0.8f);
-    simulatedObject->setCanSleep(true);
+    simulatedObject->setMass(MASS);
+    simulatedObject->setRestitution(COEF_RESTITUTION);
+    simulatedObject->setPosition(POSITION_X, POSITION_Y, POSITION_Z);
+    simulatedObject->setLinearDamping(COEF_LINEAR_DAMPING);
+    simulatedObject->setAngularDamping(COEF_ANGULAR_DAMPING);
+    simulatedObject->setCanSleep(CAN_AWAKE);
     simulatedObject->setAwake();
     simulatedObject->setSelected(true);
-    
-    
+
     switch (_typeObject) {
         case SPHERE:
         {
@@ -438,7 +378,7 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
             simulatedObject->setSelected(false);
             simulatedObject->setPosition(0.0f, 0.0f, 0.0f);
             simulatedObject->setMass(0.0f);
-            simulatedObject->setFriction(0.9f);
+            simulatedObject->setFriction(COEF_FRICTION);
             simulatedObject->setMode(LINES);
             simulatedObject->setColorAux(0, 0, 0, 0);
             simulatedObject->setHalfSize(3.0f, 0.0f, 3.0f);
@@ -472,6 +412,32 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
     }
 
     return simulatedObject;
+}
+
+bool MainEngine::alreadyExistsPlan()
+{
+    this->plan = this->getExistingPlan();
+    if (this->plan) {
+        return true;
+    }
+    return false;
+}
+
+SimulatedObject * MainEngine::getExistingPlan()
+{
+    if (this->plan) {
+        return this->plan;
+    }
+
+    SimulatedObject * object = NULL;
+    for (int i=0; i<this->world->getSimulatedObjects()->size(); i++) {
+        object = this->world->getSimulatedObjects()->at(i);
+        if (object->getTypeObject() == PLAN) {
+            return object;
+        }
+    }
+
+    return NULL;
 }
 
 std::vector<Vector3> * MainEngine::createSphere(const Vector3 &_origin, real _radius)

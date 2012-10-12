@@ -61,7 +61,7 @@
     self.imputFileName.text = NULL;
     self.areaText.text = NULL;
 
-    [self.imputFileName becomeFirstResponder];
+    //[self.imputFileName becomeFirstResponder];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
