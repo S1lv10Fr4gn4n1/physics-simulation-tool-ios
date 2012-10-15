@@ -14,8 +14,7 @@
 class RigidBody {
 private:
     char * id;
-    bool dirty;
-    
+
     real motion;
     bool awake;
     bool canSleep;
@@ -43,9 +42,13 @@ private:
     Vector3 accelerationGravity;
 
     TypeObject typeObject;
+protected:
+    void setId(char * _id);
 public:
     RigidBody();
     ~RigidBody();
+
+    void init();
     
     void calculateDerivedData();
     void addForce(const Vector3 &_force, bool _awakeUp=false);
@@ -105,8 +108,6 @@ public:
     void setHalfSize(real _x, real _y, real _z);
     void setHalfSize(real _x, real _y);
     char * getId();
-    bool isDirty();
-    void setDirty(bool _dirty);
     real getMotion();
     void setMotion(real _motion);
     bool isCanSleep();

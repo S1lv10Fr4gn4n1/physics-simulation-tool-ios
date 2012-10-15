@@ -49,6 +49,12 @@ static EAGLContext * context;
     [self initializeGestureRecognizer: view];
 
     [self setupGL];
+
+    if (Controller::getInstance()->isEditModel()) {
+        self.buttonFind.hidden = false;
+    } else {
+        self.buttonFind.hidden = true;
+    }
 }
 
 - (void)viewDidUnload
@@ -115,7 +121,7 @@ static EAGLContext * context;
 {
     [EAGLContext setCurrentContext:context];
     
-    Controller::getInstance()->freeObjects();
+    delete Controller::getInstance();
 }
 
 - (void)initializeGestureRecognizer:(UIView *)view
@@ -259,4 +265,6 @@ static EAGLContext * context;
     Controller::getInstance()->draw();
 }
 
+- (IBAction)actionFind:(id)sender {
+}
 @end

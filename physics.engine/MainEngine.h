@@ -42,7 +42,6 @@ public:
     void start();
     void stop();
     bool isRunning();
-    bool isUpdatedBeforeDraw();
     
     void updateInformation(real _duration);
     

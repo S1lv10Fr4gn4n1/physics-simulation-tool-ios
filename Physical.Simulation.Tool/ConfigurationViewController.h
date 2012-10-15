@@ -11,6 +11,10 @@
 
 @interface ConfigurationViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollview;
+
+- (void)setSimulatedObject:(SimulatedObject *) _simulatedObject;
+
 - (IBAction)actionSaveAdd:(id)sender;
 - (IBAction)actionDefaultValues:(id)sender;
 - (IBAction)actionGoBack:(id)sender;

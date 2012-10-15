@@ -254,6 +254,26 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                     <glkView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="v1U-24-VUk">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IP2-nt-LMq">
+                                <rect key="frame" x="969" y="20" width="35" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="find.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="actionFind:" destination="rfh-aL-hFg" eventType="touchUpInside" id="SNl-JB-HYk"/>
+                                    <segue destination="ELf-Dd-NJP" kind="popover" popoverAnchorView="IP2-nt-LMq" id="U74-t9-MYK">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
+                        </subviews>
                         <gestureRecognizers/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <connections>
@@ -266,10 +286,46 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="buttonFind" destination="IP2-nt-LMq" id="95J-A1-k2y"/>
+                    </connections>
                 </glkViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ppc-B9-7lM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1889" y="-764"/>
+        </scene>
+        <!--List Object View Controller-->
+        <scene sceneID="byd-Nv-8QX">
+            <objects>
+                <viewController modalPresentationStyle="currentContext" id="rKw-ns-fWE" customClass="ListObjectViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zOf-Fg-bHL">
+                        <rect key="frame" x="0.0" y="44" width="1024" height="724"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="LpB-Jl-NXR">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="724"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="rKw-ns-fWE" id="YdG-ej-ymz"/>
+                                    <outlet property="delegate" destination="rKw-ns-fWE" id="7PG-OB-zhf"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hz7-9p-Azs"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="500"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="tableViewObjects" destination="LpB-Jl-NXR" id="JAL-87-Iy1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FFK-Zm-dP2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4264" y="-771"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="xk8-RX-Kvh">
@@ -385,8 +441,8 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
         <!--Configuration View Controller-->
         <scene sceneID="XEK-Bf-kYk">
             <objects>
-                <viewController id="JDs-Wj-5Jf" customClass="ConfigurationViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="woi-kT-NHB">
+                <viewController storyboardIdentifier="idConfigurationViewController" id="JDs-Wj-5Jf" customClass="ConfigurationViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="woi-kT-NHB" customClass="UIScrollView">
                         <rect key="frame" x="0.0" y="20" width="1024" height="748"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -942,6 +998,9 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                        <connections>
+                            <outlet property="delegate" destination="JDs-Wj-5Jf" id="zSO-aT-wBm"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="labelAccelerationGravity" destination="gry-8q-Tn6" id="ONy-BE-Q6R"/>
@@ -965,6 +1024,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                         <outlet property="labelVelocityX" destination="NE8-wi-P7R" id="aZG-ud-nqu"/>
                         <outlet property="labelVelocityY" destination="LwM-qn-XmE" id="mm1-95-A95"/>
                         <outlet property="labelVelocityZ" destination="F7x-Oj-PFC" id="OTc-5J-XKG"/>
+                        <outlet property="scrollview" destination="woi-kT-NHB" id="V03-c0-NNe"/>
                         <outlet property="sliderAccelerationGravity" destination="8JU-4B-9tF" id="wXY-UQ-O8z"/>
                         <outlet property="sliderAccelerationX" destination="q6A-JG-S4h" id="YxM-GB-5Lp"/>
                         <outlet property="sliderAccelerationY" destination="iaS-uJ-IXf" id="KCg-Vj-CdT"/>
@@ -994,24 +1054,162 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
             </objects>
             <point key="canvasLocation" x="1889" y="303"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fNN-bm-4sy">
+            <objects>
+                <navigationController id="ELf-Dd-NJP" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pcK-rK-4uu">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rKw-ns-fWE" kind="relationship" relationship="rootViewController" id="CqI-uD-vjc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VSk-Pq-uZ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3034" y="-771"/>
+        </scene>
     </scenes>
     <resources>
         <image name="albert.icon.png" width="512" height="512"/>
         <image name="archive.png" width="20" height="26"/>
         <image name="circle.png" width="512" height="521"/>
+        <image name="find.png" width="24" height="24"/>
         <image name="plane.png" width="512" height="512"/>
         <image name="presentation.png" width="30" height="23"/>
         <image name="puzzle.png" width="28" height="25"/>
         <image name="square.png" width="512" height="512"/>
         <image name="triangle.png" width="512" height="512"/>
     </resources>
+    <classes>
+        <class className="ConfigurationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ConfigurationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="actionDefaultValues:"/>
+                <relationship kind="action" name="actionGoBack:"/>
+                <relationship kind="action" name="actionSaveAdd:"/>
+                <relationship kind="action" name="valueChangeAccelerationGravity:"/>
+                <relationship kind="action" name="valueChangeAccelerationX:"/>
+                <relationship kind="action" name="valueChangeAccelerationY:"/>
+                <relationship kind="action" name="valueChangeAccelerationZ:"/>
+                <relationship kind="action" name="valueChangeAngularDamping:"/>
+                <relationship kind="action" name="valueChangeAwakeup:"/>
+                <relationship kind="action" name="valueChangeForceX:"/>
+                <relationship kind="action" name="valueChangeForceY:"/>
+                <relationship kind="action" name="valueChangeForceZ:"/>
+                <relationship kind="action" name="valueChangeFriction:"/>
+                <relationship kind="action" name="valueChangeMass:"/>
+                <relationship kind="action" name="valueChangePositionX:"/>
+                <relationship kind="action" name="valueChangePositionY:"/>
+                <relationship kind="action" name="valueChangePositionZ:"/>
+                <relationship kind="action" name="valueChangeRestitution:"/>
+                <relationship kind="action" name="valueChangeRotationX:"/>
+                <relationship kind="action" name="valueChangeRotationY:"/>
+                <relationship kind="action" name="valueChangeRotationZ:"/>
+                <relationship kind="action" name="valueChangeVelocityX:"/>
+                <relationship kind="action" name="valueChangeVelocityY:"/>
+                <relationship kind="action" name="valueChangeVelocityZ:"/>
+                <relationship kind="action" name="valueChangeaLinearDamping:"/>
+                <relationship kind="outlet" name="labelAccelerationGravity" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelAccelerationX" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelAccelerationY" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelAccelerationZ" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelAngularDamping" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelForceX" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelForceY" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelForceZ" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelFriction" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelLinearDamping" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelMass" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelPositionX" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelPositionY" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelPositionZ" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelRestitution" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelRotationX" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelRotationY" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelRotationZ" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelVelocityX" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelVelocityY" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="labelVelocityZ" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scrollview" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="sliderAccelerationGravity" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderAccelerationX" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderAccelerationY" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderAccelerationZ" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderAngularDamping" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderForceX" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderForceY" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderForceZ" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderFriction" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderLinearDamping" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderMass" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderPositionX" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderPositionY" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderPositionZ" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderRestitution" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderRotationX" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderRotationY" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderRotationZ" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderVelocityX" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderVelocityY" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderVelocityZ" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="switchAwakeup" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="viewMoreConfig" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="ListObjectViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ListObjectViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableViewObjects" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ObjectsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ObjectsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="actionCircle:"/>
+                <relationship kind="action" name="actionClearSimulation:"/>
+                <relationship kind="action" name="actionEditSimulation:"/>
+                <relationship kind="action" name="actionSaveSimulation:"/>
+                <relationship kind="action" name="actionSquare:"/>
+                <relationship kind="action" name="actionStartSimulation:"/>
+                <relationship kind="action" name="actionSurfaceScene:"/>
+                <relationship kind="action" name="actionTriangle:"/>
+            </relationships>
+        </class>
+        <class className="PresentationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PresentationViewController.h"/>
+        </class>
+        <class className="SaveSimulationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SaveSimulationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="actionClean:"/>
+                <relationship kind="action" name="actionSave:"/>
+                <relationship kind="outlet" name="areaText" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="imputFileName" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="SimulationViewController" superclassName="GLKViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SimulationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="actionFind:"/>
+                <relationship kind="outlet" name="buttonFind" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="TabBarViewController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TabBarViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="pJJ-C1-tnJ"/>
-        <segue reference="p9C-HU-LVh"/>
+        <segue reference="6mG-XU-6fp"/>
+        <segue reference="FqV-DL-JXh"/>
     </inferredMetricsTieBreakers>
 </document>

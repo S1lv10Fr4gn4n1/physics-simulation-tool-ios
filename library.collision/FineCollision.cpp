@@ -249,7 +249,7 @@ unsigned CollisionDetector::sphereAndHalfSpace(const CollisionSphere * _sphere, 
     contact->contactPoint = position - _plane->normal * (distance + _sphere->radius);
     contact->body[0] = _sphere->body;
     contact->body[1] = NULL;
-    contact->restitution = _sphere->body->getRestitution() + _plane->body->getRestitution();
+    contact->restitution = _sphere->body->getRestitution();
     contact->friction = _sphere->body->getFriction() + _plane->body->getFriction();
     
     _data->contacts->push_back(contact);
@@ -285,7 +285,7 @@ unsigned CollisionDetector::sphereAndTruePlane(const CollisionSphere * _sphere, 
     contact->contactPoint = position - _plane->normal * centerDistance;
     contact->body[0] = _sphere->body;
     contact->body[1] = NULL;
-    contact->restitution = _sphere->body->getRestitution() + _plane->body->getRestitution();
+    contact->restitution = _sphere->body->getRestitution();
     contact->friction = _sphere->body->getFriction() + _plane->body->getFriction();
     
     _data->contacts->push_back(contact);
@@ -336,7 +336,7 @@ unsigned CollisionDetector::boxAndHalfSpace(const CollisionBox * _box, const Col
             // write the appropriate data
             contact->body[0] = _box->body;
             contact->body[1] = NULL;
-            contact->friction = _box->body->getFriction() + _plane->body->getFriction();
+            contact->friction = _box->body->getFriction();
             contact->restitution = _box->body->getRestitution() + _plane->body->getRestitution();
             _data->contacts->push_back(contact);
             

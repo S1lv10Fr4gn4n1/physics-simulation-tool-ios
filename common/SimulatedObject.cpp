@@ -112,6 +112,13 @@ void SimulatedObject::initialize()
 //    this->initBBox(this->matrixTransformation.data);
     this->calculateDerivedData();
     this->matrixTransformation = this->getGLTransform();
+    RigidBody::init();
+}
+
+void SimulatedObject::updateMatrixTransformation()
+{
+    this->calculateDerivedData();
+    this->matrixTransformation = this->getGLTransform();
 }
 
 void SimulatedObject::addVector3(const Vector3 &_vector3)

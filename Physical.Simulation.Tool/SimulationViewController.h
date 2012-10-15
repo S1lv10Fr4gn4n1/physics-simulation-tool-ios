@@ -13,4 +13,7 @@
 
 @interface SimulationViewController : GLKViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *buttonFind;
+- (IBAction)actionFind:(id)sender;
+
 @end

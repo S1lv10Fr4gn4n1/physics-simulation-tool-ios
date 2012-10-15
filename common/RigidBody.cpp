@@ -12,10 +12,6 @@
 
 RigidBody::RigidBody()
 {
-    static int countBody = 0;
-    this->id = new char[15];
-    sprintf(this->id, "objecto:%d",countBody++);
-    
     this->mass = 0.0f;
     this->inverseMass = 0.0f;
     this->angularDamping = 0.0f;
@@ -34,9 +30,30 @@ RigidBody::~RigidBody()
     this->id = NULL;
 }
 
+void RigidBody::init()
+{
+    static int countBody = 0;
+
+    if (this->typeObject == PLAN) {
+        this->id = new char[8];
+        sprintf(this->id, "plan:%03d",countBody++);
+    } else if (this->typeObject == SPHERE) {
+        this->id = new char[10];
+        sprintf(this->id, "sphere:%03d",countBody++);
+    } else if (this->typeObject == BOX) {
+        this->id = new char[7];
+        sprintf(this->id, "box:%03d",countBody++);
+    }
+}
+
 char * RigidBody::getId()
 {
     return this->id;
+}
+
+void RigidBody::setId(char *_id)
+{
+    this->id = _id;
 }
 
 void RigidBody::calculateDerivedData()
@@ -411,16 +428,6 @@ void RigidBody::setHalfSize(real _x, real _y)
 {
     this->halfSize.x = _x;
     this->halfSize.y = _y;
-}
-
-bool RigidBody::isDirty()
-{
-    return this->dirty;
-}
-
-void RigidBody::setDirty(bool _dirty)
-{
-    this->dirty = _dirty;
 }
 
 real RigidBody::getMotion()

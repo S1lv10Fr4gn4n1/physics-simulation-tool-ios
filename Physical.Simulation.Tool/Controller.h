@@ -25,6 +25,8 @@ private:
 
     TypeObject typeNextObject;
 
+    bool editMode;
+
     static Controller * controller;
 
 public:
@@ -37,7 +39,6 @@ public:
     void loadSceneFromFile(std::string _charContentFile);
     std::string generateSimulationToCharacter();
 
-    void freeObjects();
     void resizeScreen(real _width, real _height);
     
     void updateInformation(real _duration);
@@ -72,6 +73,11 @@ public:
     void oneTapThreeFingerDetected(real _x, real _y);
     void swipeRightDetected(real _x, real _y);
     void swipeLeftDetected(real _x, real _y);
+
+    bool isEditModel();
+    void setEditMode(bool _editMode);
+
+    std::vector<SimulatedObject *> * getSimulatedObjects();
 
     static Controller * getInstance();
 };

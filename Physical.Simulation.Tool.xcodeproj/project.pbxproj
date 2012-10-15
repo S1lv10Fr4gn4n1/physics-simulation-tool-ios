@@ -41,6 +41,8 @@
 		B93ACE9815A3AC8000CED06E /* Selection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B93ACE9715A3AC8000CED06E /* Selection.cpp */; };
 		B9429A1915EA7A7C00DD3126 /* FineCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = B9429A1815EA7A7C00DD3126 /* FineCollision.h */; };
 		B9429A1C15EA7A8600DD3126 /* FineCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9429A1B15EA7A8600DD3126 /* FineCollision.cpp */; };
+		B94328CC1629947E00D2B309 /* find.png in Resources */ = {isa = PBXBuildFile; fileRef = B94328CB1629947E00D2B309 /* find.png */; };
+		B94328D01629991600D2B309 /* ListObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B94328CF1629991600D2B309 /* ListObjectViewController.m */; };
 		B94B36B215864775004AAB28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94B36B115864775004AAB28 /* UIKit.framework */; };
 		B94B36BC15864775004AAB28 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B94B36BA15864775004AAB28 /* InfoPlist.strings */; };
 		B94B36BE15864775004AAB28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B94B36BD15864775004AAB28 /* main.m */; };
@@ -255,6 +257,9 @@
 		B93ACE9715A3AC8000CED06E /* Selection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Selection.cpp; sourceTree = "<group>"; };
 		B9429A1815EA7A7C00DD3126 /* FineCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FineCollision.h; sourceTree = "<group>"; };
 		B9429A1B15EA7A8600DD3126 /* FineCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FineCollision.cpp; sourceTree = "<group>"; };
+		B94328CB1629947E00D2B309 /* find.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = find.png; sourceTree = "<group>"; };
+		B94328CE1629991600D2B309 /* ListObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListObjectViewController.h; sourceTree = "<group>"; };
+		B94328CF1629991600D2B309 /* ListObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListObjectViewController.m; sourceTree = "<group>"; };
 		B94B36AD15864775004AAB28 /* Physical.Tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Physical.Tool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B94B36B115864775004AAB28 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B94B36B315864775004AAB28 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -505,6 +510,8 @@
 				B91CD08D1617AB3600DAFA96 /* ConfigurationViewController.m */,
 				B913AEAF15B1F78D0050B8DB /* TabBarViewController.h */,
 				B913AEB015B1F78D0050B8DB /* TabBarViewController.m */,
+				B94328CE1629991600D2B309 /* ListObjectViewController.h */,
+				B94328CF1629991600D2B309 /* ListObjectViewController.m */,
 				B94B370F15864A94004AAB28 /* MainStoryboard_iPhone.storyboard */,
 				B94B370815864914004AAB28 /* MainStoryboard_iPad.storyboard */,
 				B94B36B815864775004AAB28 /* Supporting Files */,
@@ -595,6 +602,7 @@
 		B9C5324A1599461D0098C0A6 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				B94328CB1629947E00D2B309 /* find.png */,
 				B94CCB7A161750AB005FB2AF /* apple.png */,
 				B94CCB7C161750AB005FB2AF /* button_play.png */,
 				B94CCB7D161750AC005FB2AF /* gear.jpg */,
@@ -909,6 +917,7 @@
 				B94CCB82161750AC005FB2AF /* button_play.png in Resources */,
 				B94CCB83161750AC005FB2AF /* gear.jpg in Resources */,
 				B94CCB84161750AC005FB2AF /* SmallerGear.jpg in Resources */,
+				B94328CC1629947E00D2B309 /* find.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -940,6 +949,7 @@
 				B913AEB415B211830050B8DB /* Utils.cpp in Sources */,
 				B94CCB6916174A3D005FB2AF /* SaveSimulationViewController.m in Sources */,
 				B91CD08E1617AB3600DAFA96 /* ConfigurationViewController.m in Sources */,
+				B94328D01629991600D2B309 /* ListObjectViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

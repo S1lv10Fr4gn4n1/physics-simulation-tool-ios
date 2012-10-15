@@ -27,33 +27,19 @@ Controller::Controller()
     this->mainGraphic = NULL;
     this->objectEdition = NULL;
     this->objectOffset = NULL;
+    this->editMode = false;
 }
 
 Controller::~Controller()
 {
-    this->freeObjects();
-}
-
-Controller * Controller::getInstance()
-{
-    if (!Controller::controller) {
-        Controller::controller = new Controller();
-        Controller::controller->initializeEngine();
-    }
-    
-    return Controller::controller;
-}
-
-void Controller::freeObjects()
-{
     if (this->mainGraphic) {
         delete this->mainGraphic;
     }
-    
+
     if (this->mainEngine) {
         delete this->mainEngine;
     }
-    
+
     if (this->objectEdition) {
         delete this->objectEdition;
     }
@@ -66,6 +52,16 @@ void Controller::freeObjects()
     this->mainEngine = NULL;
     this->objectEdition = NULL;
     this->objectOffset = NULL;
+}
+
+Controller * Controller::getInstance()
+{
+    if (!Controller::controller) {
+        Controller::controller = new Controller();
+        Controller::controller->initializeEngine();
+    }
+    
+    return Controller::controller;
 }
 
 void Controller::initializeContextOpenGLES()
@@ -105,6 +101,8 @@ void Controller::stopSimulation()
 {
     this->mainEngine->stop();
 
+    this->editMode = false;
+
     scaleZoom = ZOOM_INIT;
     this->mainEngine->zoom(scaleZoom);
     this->mainEngine->resetCamera();
@@ -112,12 +110,23 @@ void Controller::stopSimulation()
 
 void Controller::startSimulation()
 {
+    this->editMode = false;
     this->mainEngine->start();
 }
 
 void Controller::editSimulation()
 {
-    // TODO put your code here
+    this->editMode = true;
+}
+
+bool Controller::isEditModel()
+{
+    return this->editMode;
+}
+
+void Controller::setEditMode(bool _editMode)
+{
+    this->editMode = _editMode;
 }
 
 bool Controller::isRunning()
@@ -630,4 +639,9 @@ bool Controller::alreadyExistPlan()
 SimulatedObject * Controller::getExistingPlan()
 {
     return this->mainEngine->getExistingPlan();
+}
+
+std::vector<SimulatedObject *> * Controller::getSimulatedObjects()
+{
+    return this->mainEngine->getWorld()->getSimulatedObjects();
 }

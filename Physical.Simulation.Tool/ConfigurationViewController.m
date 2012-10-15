@@ -9,23 +9,45 @@
 #import "ConfigurationViewController.h"
 
 @interface ConfigurationViewController ()
+{
+    bool inclusion;
+}
 -(void)resetValues;
 -(void)resetValuesLabels;
 -(void)resetValuesComponents;
+
+@property(nonatomic) SimulatedObject * object;
+
 @end
 
 @implementation ConfigurationViewController
 
 - (void)viewDidLoad
 {
+    inclusion = true;
+
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 
-    if (Controller::getInstance()->getTypeNextObject() == PLAN) {
+    if (self.object == NULL && Controller::getInstance()->getTypeNextObject() == PLAN) {
         self.viewMoreConfig.hidden = TRUE;
     }
 
-    [self resetValues];
+    if (self.object != NULL && self.object->getTypeObject() == PLAN) {
+        self.viewMoreConfig.hidden = TRUE;
+    }
+
+    if (self.object != NULL) {
+        inclusion = false;
+
+        [self loadValuesFromObject];
+        [self resetValuesLabels];
+
+        CGSize containerSize = CGSizeMake(1024.0f, 748.0f);
+        self.scrollview.contentSize = containerSize;
+    } else {
+        [self resetValues];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -34,9 +56,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setSimulatedObject:(SimulatedObject *) _simulatedObject
+{
+    self.object = _simulatedObject;
+}
+
 - (IBAction)actionSaveAdd:(id)sender
 {
-    if (Controller::getInstance()->getTypeNextObject() == PLAN &&
+    if (inclusion &&
+        Controller::getInstance()->getTypeNextObject() == PLAN &&
         Controller::getInstance()->alreadyExistPlan()) {
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Atenção"
                                                         message:@"Já existe um Plano na cena!"
@@ -50,28 +78,35 @@
         return;
     }
 
-
-    SimulatedObject * object = Controller::getInstance()->makeSimulatedObject3D();
-    object->setFriction(self.sliderFriction.value);
-    object->setRestitution(self.sliderRestitution.value);
-    object->setLinearDamping(self.sliderLinearDamping.value);
-    object->setAngularDamping(self.sliderAngularDamping.value);
-    object->setMass(self.sliderMass.value);
-    object->setCanSleep(self.switchAwakeup.on);
-    object->setPosition(self.sliderPositionX.value, self.sliderPositionY.value, self.sliderPositionZ.value);
-    object->setVelocity(self.sliderVelocityX.value, self.sliderVelocityY.value, self.sliderVelocityZ.value);
-    object->setRotation(self.sliderRotationX.value, self.sliderRotationY.value, self.sliderRotationZ.value);
-    object->setAcceleration(self.sliderAccelerationX.value, self.sliderAccelerationY.value, self.sliderAccelerationZ.value);
-    object->addForce(Vector3(self.sliderForceX.value, self.sliderForceY.value, self.sliderForceZ.value));
+    if (inclusion) {
+        self.object = Controller::getInstance()->makeSimulatedObject3D();
+    }
+    self.object->setFriction(self.sliderFriction.value);
+    self.object->setRestitution(self.sliderRestitution.value);
+    self.object->setLinearDamping(self.sliderLinearDamping.value);
+    self.object->setAngularDamping(self.sliderAngularDamping.value);
+    self.object->setMass(self.sliderMass.value);
+    self.object->setCanSleep(self.switchAwakeup.on);
+    self.object->setPosition(self.sliderPositionX.value, self.sliderPositionY.value, self.sliderPositionZ.value);
+    self.object->setVelocity(self.sliderVelocityX.value, self.sliderVelocityY.value, self.sliderVelocityZ.value);
+    self.object->setRotation(self.sliderRotationX.value, self.sliderRotationY.value, self.sliderRotationZ.value);
+    self.object->setAcceleration(self.sliderAccelerationX.value, self.sliderAccelerationY.value, self.sliderAccelerationZ.value);
+    self.object->addForce(Vector3(self.sliderForceX.value, self.sliderForceY.value, self.sliderForceZ.value));
     Vector3 gravity(0.0f, -self.sliderAccelerationGravity.value, 0.0f);
 
-    if (Controller::getInstance()->getTypeNextObject() == PLAN) {
-        object->setPosition(0.0f, 0.0f, 0.0f);
-        object->setMass(0.0f);
+    if (inclusion && Controller::getInstance()->getTypeNextObject() == PLAN) {
+        self.object->setPosition(0.0f, 0.0f, 0.0f);
+        self.object->setMass(0.0f);
     }
 
-    Controller::getInstance()->addAndInitSimulatedObject3D(object, gravity);
-    [self dismissViewControllerAnimated:TRUE completion:NULL];
+    if (inclusion) {
+        Controller::getInstance()->addAndInitSimulatedObject3D(self.object, gravity);
+        [self dismissViewControllerAnimated:TRUE completion:NULL];
+    } else {
+        self.object->updateMatrixTransformation();
+        [self.navigationController popToRootViewControllerAnimated:TRUE];
+    }
+
 }
 
 - (IBAction)actionDefaultValues:(id)sender
@@ -81,7 +116,11 @@
 
 - (IBAction)actionGoBack:(id)sender
 {
-    [self dismissViewControllerAnimated:TRUE completion:NULL];
+    if (inclusion) {
+        [self dismissViewControllerAnimated:TRUE completion:NULL];
+    } else {
+        [self.navigationController popToRootViewControllerAnimated:TRUE];
+    }
 }
 
 - (IBAction)valueChangeAccelerationGravity:(id)sender
@@ -195,38 +234,38 @@
 
 -(void)resetValues
 {
-    [self resetValuesLabels];
     [self resetValuesComponents];
+    [self resetValuesLabels];
 }
 
 -(void)resetValuesLabels
 {
-    self.labelAccelerationGravity.text = [NSString stringWithFormat:@"%2.5f", ACCELERATION_GRAVITY];
-    self.labelFriction.text = [NSString stringWithFormat:@"%2.5f", COEF_FRICTION];
-    self.labelRestitution.text = [NSString stringWithFormat:@"%2.5f", COEF_RESTITUTION];
-    self.labelLinearDamping.text = [NSString stringWithFormat:@"%2.5f", COEF_LINEAR_DAMPING];
-    self.labelAngularDamping.text = [NSString stringWithFormat:@"%2.5f", COEF_ANGULAR_DAMPING];
-    self.labelMass.text = [NSString stringWithFormat:@"%2.5f", MASS];
+    self.labelAccelerationGravity.text = [NSString stringWithFormat:@"%2.5f", self.sliderAccelerationGravity.value];
+    self.labelFriction.text = [NSString stringWithFormat:@"%2.5f", self.sliderFriction.value];
+    self.labelRestitution.text = [NSString stringWithFormat:@"%2.5f", self.sliderRestitution.value];
+    self.labelLinearDamping.text = [NSString stringWithFormat:@"%2.5f", self.sliderLinearDamping.value];
+    self.labelAngularDamping.text = [NSString stringWithFormat:@"%2.5f", self.sliderAngularDamping.value];
+    self.labelMass.text = [NSString stringWithFormat:@"%2.5f", self.sliderMass.value];
     
-    self.labelPositionX.text = [NSString stringWithFormat:@"%2.5f", POSITION_X];
-    self.labelPositionY.text = [NSString stringWithFormat:@"%2.5f", POSITION_Y];
-    self.labelPositionZ.text = [NSString stringWithFormat:@"%2.5f", POSITION_Z];
+    self.labelPositionX.text = [NSString stringWithFormat:@"%2.5f", self.sliderPositionX.value];
+    self.labelPositionY.text = [NSString stringWithFormat:@"%2.5f", self.sliderPositionY.value];
+    self.labelPositionZ.text = [NSString stringWithFormat:@"%2.5f", self.sliderPositionZ.value];
 
-    self.labelVelocityX.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
-    self.labelVelocityY.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
-    self.labelVelocityZ.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
+    self.labelVelocityX.text = [NSString stringWithFormat:@"%2.5f", self.sliderVelocityX.value];
+    self.labelVelocityY.text = [NSString stringWithFormat:@"%2.5f", self.sliderVelocityY.value];
+    self.labelVelocityZ.text = [NSString stringWithFormat:@"%2.5f", self.sliderVelocityZ.value];
 
-    self.labelRotationX.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
-    self.labelRotationY.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
-    self.labelRotationZ.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
+    self.labelRotationX.text = [NSString stringWithFormat:@"%2.5f", self.sliderRotationX.value];
+    self.labelRotationY.text = [NSString stringWithFormat:@"%2.5f", self.sliderRotationY.value];
+    self.labelRotationZ.text = [NSString stringWithFormat:@"%2.5f", self.sliderRotationZ.value];
 
-    self.labelAccelerationX.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
-    self.labelAccelerationY.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
-    self.labelAccelerationZ.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
+    self.labelAccelerationX.text = [NSString stringWithFormat:@"%2.5f", self.sliderAccelerationX.value];
+    self.labelAccelerationY.text = [NSString stringWithFormat:@"%2.5f", self.sliderAccelerationY.value];
+    self.labelAccelerationZ.text = [NSString stringWithFormat:@"%2.5f", self.sliderAccelerationZ.value];
 
-    self.labelForceX.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
-    self.labelForceY.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
-    self.labelForceZ.text = [NSString stringWithFormat:@"%2.5f", 0.0f];
+    self.labelForceX.text = [NSString stringWithFormat:@"%2.5f", self.sliderForceX.value];
+    self.labelForceY.text = [NSString stringWithFormat:@"%2.5f", self.sliderForceY.value];
+    self.labelForceZ.text = [NSString stringWithFormat:@"%2.5f", self.sliderForceZ.value];
 }
 
 -(void)resetValuesComponents
@@ -259,6 +298,38 @@
     self.sliderForceX.value = 0.0f;
     self.sliderForceY.value = 0.0f;
     self.sliderForceZ.value = 0.0f;
+}
+
+-(void)loadValuesFromObject
+{
+    self.sliderAccelerationGravity.value = real_abs(self.object->getAccelerationGravity().y);
+    self.sliderFriction.value = self.object->getFriction();
+    self.sliderRestitution.value = self.object->getRestitution();
+    self.sliderLinearDamping.value = self.object->getLinearDamping();
+    self.sliderAngularDamping.value = self.object->getAngularDamping();
+    self.sliderMass.value = self.object->getMass();
+
+    self.switchAwakeup.on = self.object->isCanSleep();
+
+    self.sliderPositionX.value = self.object->getPosition().x;
+    self.sliderPositionY.value = self.object->getPosition().y;
+    self.sliderPositionZ.value = self.object->getPosition().z;
+
+    self.sliderVelocityX.value = self.object->getVelocity().x;
+    self.sliderVelocityY.value = self.object->getVelocity().y;
+    self.sliderVelocityZ.value = self.object->getVelocity().z;
+
+    self.sliderRotationX.value = self.object->getRotation().x;
+    self.sliderRotationY.value = self.object->getRotation().y;
+    self.sliderRotationZ.value = self.object->getRotation().z;
+
+    self.sliderAccelerationX.value = self.object->getAcceleration().x;
+    self.sliderAccelerationY.value = self.object->getAcceleration().y;
+    self.sliderAccelerationZ.value = self.object->getAcceleration().z;
+
+    self.sliderForceX.value = self.object->getForceAccum().x;
+    self.sliderForceY.value = self.object->getForceAccum().y;
+    self.sliderForceZ.value = self.object->getForceAccum().z;
 }
 
 @end

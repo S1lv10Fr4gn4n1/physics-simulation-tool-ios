@@ -34,6 +34,7 @@
 - (IBAction)actionStartSimulation:(id)sender 
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    Controller::getInstance()->setEditMode(false);
 
     // start simulation after 2 seconds
     [NSTimer scheduledTimerWithTimeInterval:2

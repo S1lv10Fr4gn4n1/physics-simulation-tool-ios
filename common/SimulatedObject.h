@@ -67,6 +67,7 @@ public:
     
     Matrix4x4 getMatrixTransformation();
     void setMatrixTransformation(Matrix4x4 _matrix);
+    void updateMatrixTransformation();
 };
 
 #endif
