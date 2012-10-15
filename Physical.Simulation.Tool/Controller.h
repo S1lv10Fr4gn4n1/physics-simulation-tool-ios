@@ -55,6 +55,7 @@ public:
     void addAndInitSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity);
     SimulatedObject * makeSimulatedObject3D();
     SimulatedObject * makeSimulatedObject3D(TypeObject _typeObject);
+    void deleteSimulatedObject(SimulatedObject * _simulatedObject);
 
     void setTypeNextObject(TypeObject _typeObject);
     TypeObject getTypeNextObject();

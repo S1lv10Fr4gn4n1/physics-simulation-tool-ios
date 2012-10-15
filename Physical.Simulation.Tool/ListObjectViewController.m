@@ -31,9 +31,11 @@
 - (void)loadObjects
 {
     std::vector<SimulatedObject *> * objects = Controller::getInstance()->getSimulatedObjects();
+
     NSMutableArray * arrayObjects = [[NSMutableArray alloc]init];
     SimulatedObject * object = NULL;
     NSValue * value = NULL;
+
     for (int i=0; i< objects->size(); i++) {
         object = objects->at(i);
         value = [NSValue valueWithPointer:object];
@@ -41,6 +43,8 @@
     }
 
     self.listData = arrayObjects;
+
+    [self.tableViewObjects reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -56,10 +60,14 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        [self deleteFile: [self.listData objectAtIndex:indexPath.item]];
-//        [self reloadTableView];
-//	}
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSValue * value = [self.listData objectAtIndex: [indexPath item]];
+        SimulatedObject * object = (SimulatedObject*)[value pointerValue];
+
+        Controller::getInstance()->deleteSimulatedObject(object);
+
+        [self loadObjects];
+	}
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

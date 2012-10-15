@@ -645,3 +645,10 @@ std::vector<SimulatedObject *> * Controller::getSimulatedObjects()
 {
     return this->mainEngine->getWorld()->getSimulatedObjects();
 }
+
+void Controller::deleteSimulatedObject(SimulatedObject * _simulatedObject)
+{
+    if (_simulatedObject) {
+        this->mainEngine->deleteSimulatedObject(_simulatedObject);
+    }
+}

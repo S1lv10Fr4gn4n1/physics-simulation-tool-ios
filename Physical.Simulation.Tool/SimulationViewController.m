@@ -136,10 +136,10 @@ static EAGLContext * context;
     oneTapThreeFinger.numberOfTouchesRequired = 3;
     [view addGestureRecognizer:oneTapThreeFinger];
 
-    UITapGestureRecognizer *doubleTapOneFinger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOneFingerDetected:)];
-    doubleTapOneFinger.numberOfTapsRequired = 2;
-    doubleTapOneFinger.numberOfTouchesRequired = 1;
-    [view addGestureRecognizer:doubleTapOneFinger];
+//    UITapGestureRecognizer *doubleTapOneFinger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOneFingerDetected:)];
+//    doubleTapOneFinger.numberOfTapsRequired = 2;
+//    doubleTapOneFinger.numberOfTouchesRequired = 1;
+//    [view addGestureRecognizer:doubleTapOneFinger];
 
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchDetected:)];
     [view addGestureRecognizer:pinchRecognizer];
@@ -147,10 +147,10 @@ static EAGLContext * context;
     UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(rotationDetected:)];
     [view addGestureRecognizer:rotationRecognizer];
     
-    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressDetected:)];
-    longPressRecognizer.minimumPressDuration = 2;
-    longPressRecognizer.numberOfTouchesRequired = 1;
-    [view addGestureRecognizer:longPressRecognizer];
+//    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressDetected:)];
+//    longPressRecognizer.minimumPressDuration = 2;
+//    longPressRecognizer.numberOfTouchesRequired = 1;
+//    [view addGestureRecognizer:longPressRecognizer];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -177,11 +177,11 @@ static EAGLContext * context;
     Controller::getInstance()->touchesMoved(p.x, p.y, [[touches allObjects] count]);
 }
 
-- (IBAction)longPressDetected:(UIGestureRecognizer *)sender
-{
-    CGPoint p = [sender locationInView:sender.view];
-    Controller::getInstance()->longPressDetected(p.x, p.y);
-}
+//- (IBAction)longPressDetected:(UIGestureRecognizer *)sender
+//{
+//    CGPoint p = [sender locationInView:sender.view];
+//    Controller::getInstance()->longPressDetected(p.x, p.y);
+//}
 
 - (IBAction)oneTapThreeFingerDetected:(UIGestureRecognizer *)sender
 {
@@ -209,11 +209,11 @@ static EAGLContext * context;
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 
-- (IBAction)doubleTapOneFingerDetected:(UIGestureRecognizer *)sender
-{
-    CGPoint cgPoint = [sender locationInView:sender.view];    
-    Controller::getInstance()->doubleTapOneFingerDetected(cgPoint.x, cgPoint.y);
-}
+//- (IBAction)doubleTapOneFingerDetected:(UIGestureRecognizer *)sender
+//{
+//    CGPoint cgPoint = [sender locationInView:sender.view];    
+//    Controller::getInstance()->doubleTapOneFingerDetected(cgPoint.x, cgPoint.y);
+//}
 
 - (IBAction)pinchDetected:(UIPinchGestureRecognizer *)pinchRecognizer
 {
