@@ -100,6 +100,7 @@
     self.tabBarController.selectedIndex = 2;
     
     SaveSimulationViewController * saveController = (SaveSimulationViewController *) self.tabBarController.selectedViewController;
+    [saveController actionClean: nil];
     std::string strSimulation = Controller::getInstance()->generateSimulationToCharacter();
 
     if (strSimulation.size() <= 0) {

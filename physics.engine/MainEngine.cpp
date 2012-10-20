@@ -335,6 +335,15 @@ void MainEngine::addAndInitializeSimulatedObject3D(SimulatedObject * _simulatedO
     this->world->addSimulatedObject(_simulatedObject);
 }
 
+void MainEngine::updateSimulatecObject(SimulatedObject * _simulatedObject, const Vector3 &_gravity)
+{
+    ForceRegistry::getInstance()->removeObject(_simulatedObject);
+    ForceRegistry::getInstance()->add(_simulatedObject, new Gravity(_gravity, false));
+
+    _simulatedObject->setAccelerationGravity(_gravity);
+    _simulatedObject->updateMatrixTransformation();
+}
+
 SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
 {
     SimulatedObject * simulatedObject = new SimulatedObject();

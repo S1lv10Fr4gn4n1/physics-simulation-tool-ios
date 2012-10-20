@@ -62,6 +62,7 @@ public:
     SimulatedObject * makeSimulatedObject2D(TypeObject _typeObject);
     SimulatedObject * makeSimulatedObject3D(TypeObject _typeObject);
     void addAndInitializeSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity=Vector3(0.0f, -9.8f, 0.0f));
+    void updateSimulatecObject(SimulatedObject * _simulatedObject, const Vector3 &_gravity=Vector3(0.0f, -9.8f, 0.0f));
     
     SimulatedObject * selectedSimulatedObject(Vector3 &_vector);
 

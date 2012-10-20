@@ -53,6 +53,7 @@ public:
     void createSimulatedObject2D(TypeObject _typeObject);
     void createSimulatedObject3D(TypeObject _typeObject);
     void addAndInitSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity);
+    void updateSimulatecObject(SimulatedObject * _simulatedObject, const Vector3 &_gravity);
     SimulatedObject * makeSimulatedObject3D();
     SimulatedObject * makeSimulatedObject3D(TypeObject _typeObject);
     void deleteSimulatedObject(SimulatedObject * _simulatedObject);
@@ -75,7 +76,7 @@ public:
     void swipeRightDetected(real _x, real _y);
     void swipeLeftDetected(real _x, real _y);
 
-    bool isEditModel();
+    bool isEditMode();
     void setEditMode(bool _editMode);
 
     std::vector<SimulatedObject *> * getSimulatedObjects();

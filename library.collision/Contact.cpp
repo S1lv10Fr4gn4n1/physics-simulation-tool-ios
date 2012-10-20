@@ -25,12 +25,13 @@ void Contact::matchAwakeState()
     
     bool body0awake = body[0]->isAwake();
     bool body1awake = body[1]->isAwake();
-    // wake up only the sleeping one.
+
+    // wake up only the sleeping one
     if (body0awake ^ body1awake) {
         if (body0awake) {
             this->body[1]->setAwake();
         } else {
-            body[0]->setAwake();
+            this->body[0]->setAwake();
         }
     }
 }

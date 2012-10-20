@@ -89,6 +89,10 @@ void Controller::resizeScreen(real _width, real _height)
 
 void Controller::updateInformation(real _duration)
 {
+//    printf("duration: %f\n", _duration);
+    if (!USE_LAST_TIME_GLKIT && _duration > 0.05f) {
+        _duration = 0.01;
+    }
     this->mainEngine->updateInformation(USE_LAST_TIME_GLKIT ? _duration : 0.02f);
 }
 
@@ -119,7 +123,7 @@ void Controller::editSimulation()
     this->editMode = true;
 }
 
-bool Controller::isEditModel()
+bool Controller::isEditMode()
 {
     return this->editMode;
 }
@@ -329,6 +333,11 @@ SimulatedObject * Controller::makeSimulatedObject3D(TypeObject _typeObject)
 void Controller::addAndInitSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity)
 {
     this->mainEngine->addAndInitializeSimulatedObject3D(_simulatedObject, _gravity);
+}
+
+void Controller::updateSimulatecObject(SimulatedObject * _simulatedObject, const Vector3 &_gravity)
+{
+    this->mainEngine->updateSimulatecObject(_simulatedObject, _gravity);
 }
 
 void Controller::createSimulatedObject3D(TypeObject _typeObject)

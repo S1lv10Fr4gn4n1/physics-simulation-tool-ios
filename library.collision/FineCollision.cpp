@@ -215,7 +215,7 @@ unsigned CollisionDetector::sphereAndSphere(const CollisionSphere * _one, const 
         return 0;
     }
     
-    // manually create the normal, because we have the size to hand.
+    // manually create the normal, because have the size to hand
     Vector3 normal = midline * (((real)1.0)/size);
     
     Contact * contact = new Contact();
@@ -336,8 +336,8 @@ unsigned CollisionDetector::boxAndHalfSpace(const CollisionBox * _box, const Col
             // write the appropriate data
             contact->body[0] = _box->body;
             contact->body[1] = NULL;
-            contact->friction = _box->body->getFriction();
-            contact->restitution = _box->body->getRestitution() + _plane->body->getRestitution();
+            contact->friction = _box->body->getFriction() + _plane->body->getFriction();
+            contact->restitution = _box->body->getRestitution();
             _data->contacts->push_back(contact);
             
             // move onto the next contact

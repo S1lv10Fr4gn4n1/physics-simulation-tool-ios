@@ -50,7 +50,7 @@ static EAGLContext * context;
 
     [self setupGL];
 
-    if (Controller::getInstance()->isEditModel()) {
+    if (Controller::getInstance()->isEditMode()) {
         self.buttonFind.hidden = false;
     } else {
         self.buttonFind.hidden = true;
@@ -257,7 +257,7 @@ static EAGLContext * context;
 - (void)update
 {
     Controller::getInstance()->updateInformation(self.timeSinceLastDraw);
-//    NSLog(@"frame: %u, fps: %u, lastDraw: %f", self.framesDisplayed, self.framesPerSecond, self.timeSinceLastDraw);
+//    printf("frame: %u, fps: %u, lastDraw: %f\n", self.framesDisplayed, self.framesPerSecond, self.timeSinceLastDraw);
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect

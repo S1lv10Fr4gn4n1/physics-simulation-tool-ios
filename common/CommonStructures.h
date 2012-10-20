@@ -202,7 +202,6 @@ public:
     real data[16];
     Matrix4x4();
     Matrix4x4(real _matrix[16]);
-    Matrix4x4 invert();
 };
 
 

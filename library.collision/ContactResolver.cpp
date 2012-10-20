@@ -50,7 +50,7 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
     unsigned positionIterationsUsed = 0;
     unsigned positionIterations = _contacts->size() * 20;
     
-    // resolve interpenetration in order of severity.
+    // resolve interpenetration in order of severity
     while (positionIterationsUsed < positionIterations) {
         max = this->positionEpsilon;
         index = _contacts->size();

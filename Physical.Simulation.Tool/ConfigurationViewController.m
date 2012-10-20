@@ -103,7 +103,7 @@
         Controller::getInstance()->addAndInitSimulatedObject3D(self.object, gravity);
         [self dismissViewControllerAnimated:TRUE completion:NULL];
     } else {
-        self.object->updateMatrixTransformation();
+        Controller::getInstance()->updateSimulatecObject(self.object, gravity);
         [self.navigationController popToRootViewControllerAnimated:TRUE];
     }
 
