@@ -106,7 +106,6 @@
         Controller::getInstance()->updateSimulatecObject(self.object, gravity);
         [self.navigationController popToRootViewControllerAnimated:TRUE];
     }
-
 }
 
 - (IBAction)actionDefaultValues:(id)sender

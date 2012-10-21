@@ -273,6 +273,13 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                                     </segue>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Toque 2 vezes a tela com 2 dedos para sair da simulação" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="guC-IQ-0xB">
+                                <rect key="frame" x="20" y="45" width="984" height="67"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <gestureRecognizers/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -288,6 +295,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="buttonFind" destination="IP2-nt-LMq" id="95J-A1-k2y"/>
+                        <outlet property="labelHelp" destination="guC-IQ-0xB" id="gRi-Kx-br2"/>
                     </connections>
                 </glkViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ppc-B9-7lM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1196,7 +1204,12 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SimulationViewController.h"/>
             <relationships>
                 <relationship kind="action" name="actionFind:"/>
+                <relationship kind="action" name="doubleTapTwoFingerDetected:" candidateClass="UIGestureRecognizer"/>
+                <relationship kind="action" name="oneTapThreeFingerDetected:" candidateClass="UIGestureRecognizer"/>
+                <relationship kind="action" name="pinchDetected:" candidateClass="UIPinchGestureRecognizer"/>
+                <relationship kind="action" name="rotationDetected:" candidateClass="UIRotationGestureRecognizer"/>
                 <relationship kind="outlet" name="buttonFind" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="labelHelp" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="TabBarViewController" superclassName="UITabBarController">

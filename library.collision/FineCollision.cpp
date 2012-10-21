@@ -215,11 +215,8 @@ unsigned CollisionDetector::sphereAndSphere(const CollisionSphere * _one, const 
         return 0;
     }
     
-    // manually create the normal, because have the size to hand
-    Vector3 normal = midline * (((real)1.0)/size);
-    
     Contact * contact = new Contact();
-    contact->contactNormal = normal;
+    contact->contactNormal = midline * (((real)1.0)/size);
     contact->contactPoint = positionOne + midline * (real)0.5;
     contact->penetration = _one->radius + _two->radius - size;
     contact->body[0] = _one->body;

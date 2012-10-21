@@ -55,6 +55,8 @@ static EAGLContext * context;
     } else {
         self.buttonFind.hidden = true;
     }
+
+    [self animationLabelHelp];
 }
 
 - (void)viewDidUnload
@@ -122,6 +124,36 @@ static EAGLContext * context;
     [EAGLContext setCurrentContext:context];
     
     delete Controller::getInstance();
+}
+
+-(void)animationLabelHelp
+{
+    [self.labelHelp setAlpha:0.0];
+    [UIView animateWithDuration:1.0
+                          delay:0.5
+                        options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowUserInteraction
+                     animations:^(void)
+     {
+         [self.labelHelp setAlpha:1.0];
+     }
+                     completion:^(BOOL finished)
+     {
+         if (finished) {
+             [UIView animateWithDuration:1.0
+                                   delay:1
+                                 options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowUserInteraction
+                              animations:^(void)
+              {
+                  [self.labelHelp setAlpha:0.0];
+              }
+                              completion:^(BOOL finished)
+              {
+                  if (finished) {
+                      self.labelHelp.hidden = YES;
+                  }
+              }];
+         }
+     }];
 }
 
 - (void)initializeGestureRecognizer:(UIView *)view
