@@ -26,7 +26,7 @@
 
     self.listData = [self listFiles];
 
-    [self.imputFileName becomeFirstResponder];
+//    [self.imputFileName becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning

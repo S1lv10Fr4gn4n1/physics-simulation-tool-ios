@@ -238,7 +238,7 @@ void MainCollision::updateContacts(vector<SimulatedObject *> * _listBody, Simula
             this->generateContact(body1, _plan);
         }
 
-        for (int i=0; i<_listBody->size(); i++) {
+        for (int i=0; i <_listBody->size(); i++) {
             body1 = _listBody->at(i);
             
             if (body1->getTypeObject() == PLAN) {

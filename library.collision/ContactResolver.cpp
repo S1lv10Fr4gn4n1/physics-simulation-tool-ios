@@ -67,7 +67,8 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
         }
         
         _contacts->at(index)->matchAwakeState();
-        
+
+        // resolve the penetration.
         _contacts->at(index)->applyPositionChange(velocityChange, rotationChange, max);
 
         // again this action may have changed the penetration of other bodies, so we update contacts

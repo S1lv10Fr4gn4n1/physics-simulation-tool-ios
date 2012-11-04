@@ -38,6 +38,7 @@ public:
 
     void loadSceneFromFile(std::string _charContentFile);
     std::string generateSimulationToCharacter();
+    void generateRandonSimulation(unsigned _numberObjects);
 
     void resizeScreen(real _width, real _height);
     
@@ -52,7 +53,7 @@ public:
     
     void createSimulatedObject2D(TypeObject _typeObject);
     void createSimulatedObject3D(TypeObject _typeObject);
-    void addAndInitSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity);
+    void addAndInitSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity=Vector3(0.0f, -9.8f, 0.0f));
     void updateSimulatecObject(SimulatedObject * _simulatedObject, const Vector3 &_gravity);
     SimulatedObject * makeSimulatedObject3D();
     SimulatedObject * makeSimulatedObject3D(TypeObject _typeObject);

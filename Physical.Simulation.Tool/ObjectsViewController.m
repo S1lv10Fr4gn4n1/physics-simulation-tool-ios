@@ -111,4 +111,43 @@
     saveController.areaText.text = nsSimulation;
 }
 
+- (IBAction)actionGenerateRandomSimulation:(id)sender
+{
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Simulação Aleatória"
+                                                     message:@"Informe a quantidade de objetos"
+                                                    delegate:self
+                                           cancelButtonTitle:@"Criar objetos"
+                                           otherButtonTitles:nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField * alertTextField = [alert textFieldAtIndex:0];
+    alertTextField.keyboardType = UIKeyboardTypeNumberPad;
+    alertTextField.returnKeyType = UIReturnKeyDone;
+    alertTextField.placeholder = @"inteiro positivo";
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString * strAux = [[alertView  textFieldAtIndex:0] text];
+
+    bool onlyNumber = false;
+
+    if (strAux != NULL && strAux.length > 0) {
+        NSCharacterSet *alphaNums = [NSCharacterSet decimalDigitCharacterSet];
+        NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:strAux];
+        onlyNumber = [alphaNums isSupersetOfSet:inStringSet];
+    }
+
+    if (onlyNumber) {
+        Controller::getInstance()->generateRandonSimulation(strAux.intValue);;
+    } else {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Simulação Aleatória"
+                                                         message:@"Valor informado não é um inteiro válido"
+                                                        delegate:nil
+                                               cancelButtonTitle:@"Ok"
+                                               otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
 @end

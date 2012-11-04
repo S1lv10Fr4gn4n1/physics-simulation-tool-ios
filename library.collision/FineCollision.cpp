@@ -203,8 +203,8 @@ Vector3 contactPoint(const Vector3 &_pOne, const Vector3 &_dOne, real _oneSize,
 unsigned CollisionDetector::sphereAndSphere(const CollisionSphere * _one, const CollisionSphere * _two, CollisionData * _data)
 {
     // sphere positions
-    Vector3 positionOne = _one->getAxis(3);
-    Vector3 positionTwo = _two->getAxis(3);
+    Vector3 positionOne = _one->body->getPosition();// getAxis(3);
+    Vector3 positionTwo = _two->body->getPosition();// getAxis(3);
     
     // find the vector between the objects
     Vector3 midline = positionOne - positionTwo;

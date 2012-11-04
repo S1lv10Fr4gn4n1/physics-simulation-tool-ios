@@ -30,4 +30,5 @@
 
 - (IBAction)actionSaveSimulation:(id)sender;
 
+- (IBAction)actionGenerateRandomSimulation:(id)sender;
 @end

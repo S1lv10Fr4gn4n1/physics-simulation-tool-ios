@@ -368,12 +368,6 @@ void Contact::applyPositionChange(Vector3 _linearChange[2], Vector3 _angularChan
             quaternion.addScaledVector(_angularChange[i], ((real)1.0));
             this->body[i]->setOrientation(quaternion); // TODO how to use pointer, eh not so accurate
             
-            // need to calculate the derived data for any body that is
-            // asleep, so that the changes are reflected in the object's
-            // data. Otherwise the resolution will not change the position
-            // of the object, and the next collision detection round will
-            // have the same penetration.
-            
             if (!this->body[i]->isAwake()) {
                 this->body[i]->calculateDerivedData();
             }

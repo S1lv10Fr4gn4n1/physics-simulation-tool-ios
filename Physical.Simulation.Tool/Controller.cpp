@@ -420,6 +420,7 @@ void Controller::loadSceneFromFile(string _contentFile)
     string str;
     real realValue;
     Vector3 vectorValue;
+    int r=0, g=0, b=0, a=0;
     char x[10], y[10], z[10];
     size_t posAux = string::npos;
 
@@ -550,6 +551,14 @@ void Controller::loadSceneFromFile(string _contentFile)
         realValue = atof(_contentFile.substr(pos, posAux-pos).c_str());
         object->setCanSleep(realValue);
 
+        // color
+        pos = _contentFile.find("@C ", posBegin[i]);
+        posAux = _contentFile.find("\n", pos);
+        pos = pos+3;
+
+        sscanf(_contentFile.substr(pos, posAux-pos).c_str(), "%u %u %u %u", &r, &g, &b, &a);
+        object->setColorAux(r, g, b, a);
+
         this->addAndInitSimulatedObject3D(object, object->getAccelerationGravity());
     }
 }
@@ -623,11 +632,67 @@ string Controller::generateSimulationToCharacter()
         sprintf(buffer, "%2.5f %2.5f %2.5f", object->getForceAccum().x, object->getForceAccum().y, object->getForceAccum().z);
         str.append("@F ").append(buffer).append("\n");
 
+        sprintf(buffer, "%3u %3u %3u %3u", object->getColorAux()->r, object->getColorAux()->g, object->getColorAux()->b, object->getColorAux()->a);
+        str.append("@C ").append(buffer).append("\n");
+
         str.append("END").append("\n");
         str.append("\n");
     }
 
     return str;
+}
+
+
+void Controller::generateRandonSimulation(unsigned _numberObjects)
+{
+    this->mainEngine->deleteAllSimulatedObjects();
+
+    // limite x e z -2.5 a 2.5
+    // limite y 0.1 a 1.5
+
+    real x=0, y=0, z=0;
+
+    SimulatedObject * object = NULL;
+    object = this->makeSimulatedObject3D(PLAN);
+    object->setMass(0.0f);
+    object->setFriction(0.9f);
+    this->addAndInitSimulatedObject3D(object);
+
+    srand(time(NULL));
+
+    for (int i=0; i< _numberObjects; i++) {
+        if (i%2 == 0) {
+            object = this->makeSimulatedObject3D(BOX);
+        } else {
+            object = this->makeSimulatedObject3D(SPHERE);
+        }
+
+        // position
+        x = getRand(-2.0f, 2.0f);
+        y = getRand(0.1f, 1.5f);
+        z = getRand(-2.0f, 2.0f);
+        object->setPosition(x, y, z);
+
+        // velocity
+        x = getRand(-1.0f, 1.0f);
+        y = getRand(-1.0f, 1.0f);
+        z = getRand(-1.0f, 1.0f);
+        object->setVelocity(x, y, z);
+
+        // torque
+        x = getRand(-1.0f, 1.0f);
+        y = getRand(-1.0f, 1.0f);
+        z = getRand(-1.0f, 1.0f);
+        object->setRotation(x, y, z);
+
+        object->setFriction(getRand(0.0f, 1.0f));
+        object->setRestitution(getRand(0.0f, 1.0f));
+        object->setLinearDamping(getRand(0.3f, 1.0f));
+        object->setAngularDamping(getRand(0.3f, 1.0f));
+        object->setMass(getRand(3.0f, 7.0f));
+
+        this->addAndInitSimulatedObject3D(object);
+    }
 }
 
 void Controller::setTypeNextObject(TypeObject _typeObject)
