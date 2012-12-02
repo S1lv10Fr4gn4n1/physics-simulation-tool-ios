@@ -11,8 +11,7 @@
 
 #include "Controller.h"
 
-//!Class controller design simulation.
-//!Containing the openGL context and callback interface for interaction with the simulation.
+//!Class controller design simulation. Containing the openGL context and callback interface for interaction with the simulation.
 @interface SimulationViewController : GLKViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *labelHelp;

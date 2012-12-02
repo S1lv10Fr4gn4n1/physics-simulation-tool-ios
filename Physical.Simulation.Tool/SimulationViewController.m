@@ -90,6 +90,7 @@ static EAGLContext * context;
 }
 
 #ifdef __IPHONE_6_0
+//!method of identifying the support guidelines for iOS 6.x
 -(NSUInteger)supportedInterfaceOrientations
 {
     if (self.view) {
@@ -99,6 +100,7 @@ static EAGLContext * context;
 	return UIInterfaceOrientationMaskLandscape;
 }
 #else
+//!method of identifying the support guidelines for iOS 5.x
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     if (self.view) {
@@ -126,6 +128,7 @@ static EAGLContext * context;
     delete Controller::getInstance();
 }
 
+//!initializes the animation of initial help text
 -(void)animationLabelHelp
 {
     [self.labelHelp setAlpha:0.0];
@@ -156,6 +159,7 @@ static EAGLContext * context;
      }];
 }
 
+//!gestore initializes all the application recognizes
 - (void)initializeGestureRecognizer:(UIView *)view
 {
     UITapGestureRecognizer *doubleTapTwoFinger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapTwoFingerDetected:)];
