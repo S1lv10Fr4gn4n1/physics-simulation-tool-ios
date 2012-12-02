@@ -8,6 +8,7 @@
 
 #include "Shader.h"
 
+//!Vertex shader for 2D object
 const char * vertexShader2D =
                                 "attribute vec4 position;"
                                 "attribute vec4 color;"
@@ -21,6 +22,7 @@ const char * vertexShader2D =
                                 "    colorVarying = color;"
                                 "}";
 
+//!Fragment shader for 2D object
 const char * fragmentShader2D =
                                 "varying lowp vec4 colorVarying;"
                                 "void main()"
@@ -28,7 +30,7 @@ const char * fragmentShader2D =
                                 "    gl_FragColor = colorVarying;"
                                 "}";
 
-
+//!Vertex shader for 3D object
 const char * vertexShader3D =
                                 "attribute vec4 position;"
                                 "attribute vec4 color;"
@@ -43,6 +45,7 @@ const char * vertexShader3D =
                                 "    colorVarying = color;"
                                 "}";
 
+//!Fragment shader for 3D object
 const char * fragmentShader3D =
                                 "varying lowp vec4 colorVarying;"
                                 "void main()"
@@ -80,6 +83,7 @@ Shader::~Shader()
 }
 
 #pragma mark -  OpenGL ES 2 shader compilation
+//!Method responsible for doing the reading / validation / compile / link shader program
 bool Shader::loadShaders()
 {
     GLuint vertShader, fragShader;
@@ -153,6 +157,7 @@ bool Shader::loadShaders()
     return false;
 }
 
+//!Method responsible compile the shader program
 bool Shader::compileShader(GLuint * shader, GLenum type, const char * file)
 {
     GLint status;
@@ -188,6 +193,7 @@ bool Shader::compileShader(GLuint * shader, GLenum type, const char * file)
     return true;
 }
 
+//!Method responsible for shader program link
 bool Shader::linkProgram(GLuint prog)
 {
     GLint status;
@@ -212,6 +218,7 @@ bool Shader::linkProgram(GLuint prog)
     return true;
 }
 
+//!Method responsible for validating the shader program
 bool Shader::validateProgram(GLuint prog)
 {
     GLint logLength, status;

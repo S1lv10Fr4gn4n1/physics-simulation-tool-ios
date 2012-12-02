@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #include "Controller.h"
-
+//!Class responsible for controlling the application states
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

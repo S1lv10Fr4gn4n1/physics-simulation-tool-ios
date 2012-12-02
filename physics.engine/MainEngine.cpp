@@ -42,6 +42,7 @@ MainEngine::~MainEngine()
     this->mainCollision = NULL;
 }
 
+//!Method responsible for starting the simulation, information necessary for starting the app
 void MainEngine::start()
 {
     this->mainCollision->cleanCollisions();
@@ -67,6 +68,7 @@ bool MainEngine::isRunning()
     return this->running;
 }
 
+//!Main method of the class, he is responsible for managing the physical upgrade engine, frame-per-frame
 void MainEngine::updateInformation(real _duration)
 {
     if (!this->running) {
@@ -94,9 +96,9 @@ void MainEngine::updateInformation(real _duration)
         object->setMatrixTransformation(object->getGLTransform());
         
         // remove objects that left the scene
-        if (real_abs(object->getPosition().x) >= 3.5f ||
-            real_abs(object->getPosition().y) >= 4.0f ||
-            real_abs(object->getPosition().z) >= 3.5f) {
+        if (real_abs(object->getPosition().x) >= 6.0f ||
+            real_abs(object->getPosition().y) >= 5.0f ||
+            real_abs(object->getPosition().z) >= 6.0f) {
             this->deleteSimulatedObject(object);
         }
     }
@@ -110,6 +112,7 @@ void MainEngine::updateInformation(real _duration)
     object = NULL;
 }
 
+//!Method responsible for updating the MDC and reconfigure the perspective of the cam
 void MainEngine::rotatedScreen(real _width, real _height)
 {
     this->ndc->update(_width, _height);
@@ -202,9 +205,23 @@ SimulatedObject * MainEngine::selectedSimulatedObject(Vector3 &_vector)
     return Selection::selectSimulatedObject(this->world, _vector);
 }
 
+//!Method responsible for deleting all objects in the simulation contained list of World
 void MainEngine::deleteAllSimulatedObjects()
 {
+    SimulatedObject * object = NULL;
+    for (int i=0; i < this->world->getSimulatedObjects()->size(); i++) {
+        object = this->world->getSimulatedObjects()->at(i);
+
+        // remove object and force of ForceRegistry
+        ForceRegistry::getInstance()->removeObject(object);
+        // if use tree, delete objects in tree
+    #ifdef USE_TREE
+        this->mainCollision->deleteObject(object);
+    #endif
+    }
+
     this->world->deleteAllSimulatedObject();
+    
     this->plan = NULL;
 }
 
@@ -217,6 +234,7 @@ void MainEngine::deleteSimulatedObject(SimulatedObject * _simulatedObject)
     this->world->deleteSimulatedObject(_simulatedObject);
 }
 
+//!Method responsible for make a 2D object by type
 SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
 {
     SimulatedObject * simulatedObject = new SimulatedObject();
@@ -318,23 +336,29 @@ SimulatedObject * MainEngine::makeSimulatedObject2D(TypeObject _typeObject)
         default:
             break;
     }
-    
+
     simulatedObject->initialize();
     this->world->addSimulatedObject(simulatedObject);
     
     return simulatedObject;
 }
 
+//!Method responsible initiate an object and puts it in the object list
 void MainEngine::addAndInitializeSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity)
 {
+    // registry force for object
     ForceRegistry::getInstance()->add(_simulatedObject, new Gravity(_gravity, false));
 
+    // set acceleration gravity
     _simulatedObject->setAccelerationGravity(_gravity);
+    // initialize object
     _simulatedObject->initialize();
-    
+
+    // add in world
     this->world->addSimulatedObject(_simulatedObject);
 }
 
+//!Method responsible to update an SimulatedObject
 void MainEngine::updateSimulatecObject(SimulatedObject * _simulatedObject, const Vector3 &_gravity)
 {
     ForceRegistry::getInstance()->removeObject(_simulatedObject);
@@ -344,6 +368,7 @@ void MainEngine::updateSimulatecObject(SimulatedObject * _simulatedObject, const
     _simulatedObject->updateMatrixTransformation();
 }
 
+//!Method responsible for creating a 3D object by typeObject
 SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
 {
     SimulatedObject * simulatedObject = new SimulatedObject();
@@ -395,22 +420,21 @@ SimulatedObject * MainEngine::makeSimulatedObject3D(TypeObject _typeObject)
             break;
         }
             
-        case PYRAMID:
-            simulatedObject->setHalfSize(0.05f, 0.05f, 0.05f);
-            simulatedObject->addAllVectors(this->createTriangleWithSquareBase(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
-            break;
-
+//        case PYRAMID:
+//            simulatedObject->setHalfSize(0.05f, 0.05f, 0.05f);
+//            simulatedObject->addAllVectors(this->createTriangleWithSquareBase(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
+//            break;
+//
 //        case TRIANGLE_TRIANGULAR_BASE:
 //            simulatedObject->setHalfSize(0.1f, 0.1f, 0.1f);
 //            simulatedObject->addAllVectors(this->createTriangleWithTriangularBase(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
 //            break;
+//
+//        case CONE:
+//            simulatedObject->setHalfSize(1.01f, 1.01f, 1.01f);
+//            simulatedObject->addAllVectors(this->createCone(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
+//            break;
 
-
-        case CONE:
-            simulatedObject->setHalfSize(1.01f, 1.01f, 1.01f);
-            simulatedObject->addAllVectors(this->createCone(simulatedObject->getPosition(), simulatedObject->getHalfSize()));
-            break;
-            
         default:
             break;
 

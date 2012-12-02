@@ -20,6 +20,7 @@ MainPhysics::~MainPhysics()
     // TODO put your code here
 }
 
+//!Static method to get the instance (singleton)
 MainPhysics * MainPhysics::getInstance()
 {
     if (!MainPhysics::mainPhysics) {
@@ -29,6 +30,7 @@ MainPhysics * MainPhysics::getInstance()
     return MainPhysics::mainPhysics;
 }
 
+//!Update features of Particle
 void MainPhysics::updateFeatures(Particle * _particle, real _duration)
 {
     if (_particle->getInverseMass() <= 0.0f) {
@@ -48,6 +50,7 @@ void MainPhysics::updateFeatures(Particle * _particle, real _duration)
     _particle->clearAccumulator();
 }
 
+//!Update features of RigidBody
 void MainPhysics::updateFeatures(RigidBody * _body, real _duration)
 {
     if (!_body->hasFiniteMass()) {

@@ -50,7 +50,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "QuadTree::buildQuadTree(Vector3*, float, int):CoarseCollision.cpp">
+         contextName = "Controller::generateSimulationToCharacter():Controller.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "i">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "QuadTree::buildQuadTree():CoarseCollision.cpp">
       </ContextState>
       <ContextState
          contextName = "MatrixMakePerspective:CommonStructures.h">
@@ -61,7 +69,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "QuadTree::buildQuadTree():CoarseCollision.cpp">
+         contextName = "QuadTree::buildQuadTree(Vector3*, float, int):CoarseCollision.cpp">
       </ContextState>
       <ContextState
          contextName = "-[TestViewController update]:TestViewController.m">

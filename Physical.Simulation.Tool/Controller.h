@@ -15,6 +15,7 @@
 #include "PhysicsEngine.h"
 #include "Commons.h"
 
+//!Class of centralizing all actions coming from the interface
 class Controller {
 private:
     MainEngine * mainEngine;
@@ -26,7 +27,7 @@ private:
     TypeObject typeNextObject;
 
     bool editMode;
-
+    //! static controller (singleton)
     static Controller * controller;
 
 public:

@@ -12,6 +12,7 @@
 #include "ConfigurationViewController.h"
 #include "Controller.h"
 
+//!Class controller interface Objects. Contains calls the actions of buttons
 @interface ObjectsViewController : UIViewController
 
 - (IBAction)actionStartSimulation:(id)sender;

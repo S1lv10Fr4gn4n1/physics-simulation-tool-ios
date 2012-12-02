@@ -32,6 +32,7 @@ MainCollision::~MainCollision()
     this->contactResolver = NULL;
 }
 
+//!Delete rigid body in tree
 void MainCollision::deleteObject(RigidBody * _body)
 {
     if (this->tree) {
@@ -39,6 +40,7 @@ void MainCollision::deleteObject(RigidBody * _body)
     }
 }
 
+//!Insert rigid body in tree
 void MainCollision::insertObject(RigidBody * _body)
 {
     if (this->tree) {
@@ -46,6 +48,7 @@ void MainCollision::insertObject(RigidBody * _body)
     }
 }
 
+//!Update rigid body in tree
 void MainCollision::updateObject(RigidBody * _body, real _duration)
 {
     if (this->tree) {
@@ -54,6 +57,7 @@ void MainCollision::updateObject(RigidBody * _body, real _duration)
     }
 }
 
+//!Identifies and generates contact between two rigidbody
 void MainCollision::generateContact(RigidBody * _body1, RigidBody * _body2)
 {
     Vector3 normalPlane(0.0f, 1.0f, 0.0f);
@@ -185,6 +189,7 @@ void MainCollision::generateContact(RigidBody * _body1, RigidBody * _body2)
 #endif
 }
 
+//!Method responsible for identifying and generating contact between rigid bodies from the list of possible collisions
 void MainCollision::generateContacts()
 {
     vector<RigidBody *> * listObjects = this->tree->getPossibleCollisions();
@@ -210,19 +215,24 @@ void MainCollision::generateContacts()
     }
 }
 
+//!Method responsible solve the contacts generated
 void MainCollision::solverContacts(real _duration)
 {
+    // solver contacts
     this->contactResolver->solverContacts(this->dataContacts->contacts, _duration);
+    // clean contact list
     this->dataContacts->clearContacts();
 }
 
+//!Method responsible to update the system crash
 void MainCollision::updateContacts(real _duration)
 {
     this->generateContacts();
 //    this->solverContacts(_duration);
 }
 
-void MainCollision::updateContacts(vector<SimulatedObject *> * _listBody, SimulatedObject * _plan, real _duration)
+//!Method responsible to update the system crash. If using tree, the method will be executed caught updateContacts, else will face all the objects to see if there are bumps
+void MainCollision::updateContacts(std::vector<SimulatedObject *> * _listBody, SimulatedObject * _plan, real _duration)
 {
     if (this->tree) {
         this->updateContacts(_duration);
@@ -240,7 +250,7 @@ void MainCollision::updateContacts(vector<SimulatedObject *> * _listBody, Simula
 
         for (int i=0; i <_listBody->size(); i++) {
             body1 = _listBody->at(i);
-            
+
             if (body1->getTypeObject() == PLAN) {
                 continue;
             }
@@ -253,7 +263,9 @@ void MainCollision::updateContacts(vector<SimulatedObject *> * _listBody, Simula
                 if (body1 == body2) {
                     continue;
                 }
-
+                if (!body1->hasFiniteMass() && !body2->hasFiniteMass()) {
+                    continue;
+                }
                 this->generateContact(body1, body2);
             }
         }
@@ -261,6 +273,7 @@ void MainCollision::updateContacts(vector<SimulatedObject *> * _listBody, Simula
     this->solverContacts(_duration);
 }
 
+//!Method responsible to clean tree
 void MainCollision::cleanCollisions()
 {
     if (this->tree) {

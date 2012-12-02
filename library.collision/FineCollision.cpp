@@ -21,10 +21,13 @@ CollisionData::~CollisionData()
     this->contacts = NULL;
 }
 
+//!Method responsible to clear the list of bumps
 void CollisionData::clearContacts()
 {
     for (int i=0; i<this->contacts->size(); i++) {
-        delete this->contacts->at(i);
+        if (this->contacts->at(i)) {
+            delete this->contacts->at(i);
+        }
     }
     
     this->contacts->clear();
@@ -35,6 +38,7 @@ Vector3 CollisionPrimitive::getAxis(unsigned _index) const
     return this->transform.getAxisVector(_index);
 }
 
+//!Calcule transform matrix
 void CollisionPrimitive::calculateInternals()
 {
     this->transform = this->body->getTransformMatrix() * this->offset;
@@ -64,7 +68,6 @@ CollisionBox::CollisionBox(RigidBody * _body, const Vector3 &_halfSize) {
 
 real transformToAxis(const CollisionBox * _box, const Vector3 &_axis)
 {
-    
     return _box->halfSize.x * real_abs(_axis * _box->getAxis(0)) +
            _box->halfSize.y * real_abs(_axis * _box->getAxis(1)) +
            _box->halfSize.z * real_abs(_axis * _box->getAxis(2));
@@ -101,7 +104,6 @@ real penetrationOnAxis(const CollisionBox * _one,
     // return the overlap: positive indicates overlap, negative indicates separation
     return oneProject + twoProject - distance;
 }
-
 
 bool tryAxis(const CollisionBox * _one, const CollisionBox * _two, Vector3 _axis, const Vector3 &_toCentre,
              unsigned _index, real &_smallestPenetration, unsigned &_smallestCase)
@@ -200,6 +202,7 @@ Vector3 contactPoint(const Vector3 &_pOne, const Vector3 &_dOne, real _oneSize,
     }
 }
 
+//!Method responsible for identifying collision between two spheres
 unsigned CollisionDetector::sphereAndSphere(const CollisionSphere * _one, const CollisionSphere * _two, CollisionData * _data)
 {
     // sphere positions
@@ -229,6 +232,7 @@ unsigned CollisionDetector::sphereAndSphere(const CollisionSphere * _one, const 
     return 1;
 }
 
+//!Method responsible for identifying collision between plane and sphere
 unsigned CollisionDetector::sphereAndHalfSpace(const CollisionSphere * _sphere, const CollisionPlane * _plane, CollisionData * _data)
 {
     // sphere position
@@ -254,6 +258,7 @@ unsigned CollisionDetector::sphereAndHalfSpace(const CollisionSphere * _sphere, 
     return 1;
 }
 
+//!Method responsible for identifying collision between plane and sphere
 unsigned CollisionDetector::sphereAndTruePlane(const CollisionSphere * _sphere, const CollisionPlane * _plane, CollisionData * _data)
 {
     Vector3 position = _sphere->getAxis(3);
@@ -290,6 +295,7 @@ unsigned CollisionDetector::sphereAndTruePlane(const CollisionSphere * _sphere, 
     return 1;
 }
 
+//!Method responsible for identifying collision between plane and box
 unsigned CollisionDetector::boxAndHalfSpace(const CollisionBox * _box, const CollisionPlane * _plane, CollisionData * _data)
 {
     // work out the projected radius of the box onto the plane direction
@@ -345,9 +351,9 @@ unsigned CollisionDetector::boxAndHalfSpace(const CollisionBox * _box, const Col
     return contactsUsed;
 }
 
-#define CHECK_OVERLAP(axis, index) \
-if (!tryAxis(_one, _two, (axis), toCentre, (index), pen, best)) return 0;
-
+//#define CHECK_OVERLAP(axis, index) \
+//if (!tryAxis(_one, _two, (axis), toCentre, (index), pen, best)) return 0;
+//!Method responsible for identifying collision between two box
 unsigned CollisionDetector::boxAndBox(const CollisionBox * _one, const CollisionBox * _two, CollisionData * _data)
 {
     // find the vector between the two centres
@@ -480,6 +486,7 @@ unsigned CollisionDetector::boxAndBox(const CollisionBox * _one, const Collision
     return 0;
 }
 
+//!Method responsible for identifying collision between box and sphere
 unsigned CollisionDetector::boxAndSphere(const CollisionBox * _box, const CollisionSphere * _sphere, CollisionData * _data)
 {
     // transform the center of the sphere into box coordinates
@@ -553,6 +560,7 @@ unsigned CollisionDetector::boxAndSphere(const CollisionBox * _box, const Collis
     return 1;
 }
 
+//!Method responsible for identifying collision between box and point
 unsigned CollisionDetector::boxAndPoint(const CollisionBox * _box, const Vector3 &_point,  CollisionData * _data)
 {
     // transform the point into box coordinates.

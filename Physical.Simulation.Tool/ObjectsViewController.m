@@ -26,11 +26,6 @@
     // Release any retained subviews of the main view.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
-
 - (IBAction)actionStartSimulation:(id)sender 
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
@@ -103,7 +98,7 @@
     [saveController actionClean: nil];
     std::string strSimulation = Controller::getInstance()->generateSimulationToCharacter();
 
-    if (strSimulation.size() <= 0) {
+    if (strSimulation.empty()) {
         return;
     }
 

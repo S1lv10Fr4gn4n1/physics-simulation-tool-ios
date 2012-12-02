@@ -15,6 +15,7 @@
 #include "Defines.h"
 
 /***************************** Enumations *****************************/
+//!Enumeration with the types of objects available
 enum TypeObject {
     PLAN,
     
@@ -53,6 +54,7 @@ enum GLtype {
 
 
 /***************************** Color *****************************/
+//!Class responsible for maintaining the color information of SimulatedObject
 class Color {
 public:
     unsigned char r, g, b, a;
@@ -62,6 +64,7 @@ public:
 
 
 /***************************** Vector3 *****************************/
+//!Class responsible for keeping information of a vertex. Contains operators to facilitate calculations
 class Vector3 {
 private:
     real pad;
@@ -108,6 +111,7 @@ static const real colorBBox[16] = {
     255, 255, 255, 1,
 };
 
+//!Class responsible for maintaining the information bounding box
 class BBox {
 public:
     Vector3 min;
@@ -121,6 +125,7 @@ public:
 
 
 /***************************** Quaternion *****************************/
+//!Class responsible for maintaining the orientation information of RigidBody
 class Quaternion {
 public:
     union {
@@ -141,6 +146,7 @@ public:
 
 
 /***************************** Matrix3 *****************************/
+//!Class responsible for keeping the information in a 3x3 matrix. Used in inertia tensor
 class Matrix3 {
 public:
     real data[9];
@@ -168,6 +174,7 @@ public:
 
 
 /***************************** Matrix4 *****************************/
+//!Class responsible for keeping the information in a 3x4 matrix. Used to keep the transformations of rigid bodies
 class Matrix4 {
 private:
 public:
@@ -196,7 +203,7 @@ public:
 
 
 /***************************** Matrix 4x4 *****************************/
-
+//!Class responsible for keeping the information in a 4x4 matrix. Matrices used for openGL
 class Matrix4x4 {
 public:
     real data[16];
@@ -206,6 +213,7 @@ public:
 
 
 /***************************** Camera *****************************/
+//!Class responsible for managing the camera simulation
 class Camera {
 public:
     Matrix4x4 orthoMatrix;

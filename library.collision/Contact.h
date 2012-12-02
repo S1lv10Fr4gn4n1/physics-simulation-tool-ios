@@ -11,37 +11,37 @@
 
 #include "Commons.h"
 
+//!Class responsible for managing a contact. Keeps important information and working on them.
 class Contact {
 public:
-    // position of the contact in world coordinates
+    //!position of the contact in world coordinates
     Vector3 contactPoint;
     
-    // direction of the contact in world coordinates
+    //!direction of the contact in world coordinates
     Vector3 contactNormal;
     
-    // depth of penetration at the contact point
+    //!depth of penetration at the contact point
     real penetration;
     
-    // bodies that are involved in the contact.
-    // the second of these can be NULL, for contacts with the scenery.
+    //!bodies that are involved in the contact. The second of these can be NULL, for contacts with the scenery.
     RigidBody * body[2];
     
-    // lateral friction coefficient at the contact.
+    //!lateral friction coefficient at the contact.
     real friction;
     
-    // normal restitution coefficient at the contact.
+    //!normal restitution coefficient at the contact.
     real restitution;
     
-    // matrix orhonormal
+    //!matrix orhonormal
     Matrix3 contactToWorld;
     
-    // closing velocity at the point of contact
+    //!closing velocity at the point of contact
     Vector3 contactVelocity;
     
-    // desired velocity change for contact resolved
+    //!desired velocity change for contact resolved
     real desiredDeltaVelocity;
     
-    // world space position of the contact point relative to centre of each body
+    //!world space position of the contact point relative to centre of each body
     Vector3 relativeContactPosition[2];
     
     Contact();

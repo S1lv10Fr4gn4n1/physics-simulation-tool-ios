@@ -12,6 +12,7 @@ ContactResolver::ContactResolver(real _positionEpsilon, real _velocityEpsilon)
     this->velocityEpsilon = _velocityEpsilon;
 }
 
+//!Method responsible for calling the main methods to solve the contacts
 void ContactResolver::solverContacts(std::vector<Contact *> * _contacts, real _duration)
 {
     if (_contacts->size() == 0) {
@@ -31,6 +32,7 @@ void ContactResolver::solverContacts(std::vector<Contact *> * _contacts, real _d
     this->solverVelocities(_contacts, _duration);
 }
 
+//!Method responsible for preparing the contacts that will be resolved.
 void ContactResolver::prepareContacts(std::vector<Contact *> * _contacts, real _duration)
 {
     // generate contact velocity and axis information.
@@ -39,6 +41,7 @@ void ContactResolver::prepareContacts(std::vector<Contact *> * _contacts, real _
     }
 }
 
+//!Method responsible for resolving the position of the contacts, ie, to solve interpentração contact with another object. This method takes into account the severity of penetration to be settled
 void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _duration)
 {
     unsigned index;
@@ -92,6 +95,7 @@ void ContactResolver::solverPositions(std::vector<Contact *> * _contacts, real _
     }
 }
 
+//!Method responsible for resolving the velocities of contacts. This method takes into account the severity to solve speeds.
 void ContactResolver::solverVelocities(std::vector<Contact *> * _contacts, real _duration)
 {
     Vector3 velocityChange[2];
@@ -101,7 +105,7 @@ void ContactResolver::solverVelocities(std::vector<Contact *> * _contacts, real 
     unsigned velocityIterationsUsed = 0;
     unsigned velocityIterations = _contacts->size() * 20;
     
-    // iteratively handle impacts in order of severity.
+    // iteratively handle impacts in order of severity
     while (velocityIterationsUsed < velocityIterations) {
         // find contact with maximum magnitude of probable velocity change.
         real max = this->velocityEpsilon;

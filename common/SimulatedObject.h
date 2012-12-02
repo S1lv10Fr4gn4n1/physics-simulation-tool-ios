@@ -13,6 +13,7 @@
 #include "CommonStructures.h"
 #include "RigidBody.h"
 
+//!Class inherited from RigidBody, responsible for keeping informations on the shape of the object to be drawn
 class SimulatedObject : public RigidBody {
 private:
     real * vectors;

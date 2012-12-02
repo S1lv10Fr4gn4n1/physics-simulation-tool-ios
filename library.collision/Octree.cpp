@@ -25,6 +25,7 @@ inline bool bigger(real k1,real k2)
     return k1 > k2;
 }
 
+//!Method responsible for identifying the location in which rigid body will be inserted / deleted / found based on your focal point and half-size knot
 bool testOctant(OctreeNode * _tree, RigidBody * _body, bool _v1, bool _v2, bool _v3)
 {
     //    +++
@@ -78,46 +79,55 @@ bool testOctant(OctreeNode * _tree, RigidBody * _body, bool _v1, bool _v2, bool 
     return false;
 }
 
+//!Identifies whether the octant is + + +
 bool inPlusPlusPlus(OctreeNode * _tree, RigidBody * _body)
 {
     return testOctant(_tree, _body, PLUS, PLUS, PLUS);
 }
 
+//!Identifies whether the octant is + + -
 bool inPlusPlusMinus(OctreeNode * _tree, RigidBody * _body)
 {
     return testOctant(_tree, _body, PLUS, PLUS, MINUS);
 }
 
+//!Identifies whether the octant is + - +
 bool inPlusMinusPlus(OctreeNode * _tree, RigidBody * _body)
 {
     return testOctant(_tree, _body, PLUS, MINUS, PLUS);
 }
 
+//!Identifies whether the octant is + - -
 bool inPlusMinusMinus(OctreeNode * _tree, RigidBody * _body)
 {
     return testOctant(_tree, _body, PLUS, MINUS, MINUS);
 }
 
+//!Identifies whether the octant is - - +
 bool inMinusMinusPlus(OctreeNode * _tree, RigidBody * _body)
 {
     return testOctant(_tree, _body, MINUS, MINUS, PLUS);
 }
 
+//!Identifies whether the octant is - - -
 bool inMinusMinusMinus(OctreeNode * _tree, RigidBody * _body)
 {
     return testOctant(_tree, _body, MINUS, MINUS, MINUS);
 }
 
+//!Identifies whether the octant is - + +
 bool inMinusPlusPlus(OctreeNode * _tree, RigidBody * _body)
 {
     return testOctant(_tree, _body, MINUS, PLUS, PLUS);
 }
 
+//!Identifies whether the octant is - + -
 bool inMinusPlusMinus(OctreeNode * _tree, RigidBody * _body)
 {
     return testOctant(_tree, _body, MINUS, PLUS, MINUS);
 }
 
+//!Identify if the rigid body is achieved by node radius
 bool radiusReachesObject(OctreeNode * _tree, RigidBody * _body)
 {
     for (unsigned i=0; i<3; i++) {
@@ -153,6 +163,7 @@ Octree::~Octree()
     this->possibleCollisions = NULL;
 }
 
+//!Method responsible for creating the tree as the size of the desired scene and profunidade
 OctreeNode * Octree::buildOctree(const Vector3 &_center, real _halfWidth, int _depth)
 {
     if (_depth < 0) {
@@ -179,12 +190,14 @@ OctreeNode * Octree::buildOctree(const Vector3 &_center, real _halfWidth, int _d
     }
 }
 
+//!Updates the position of the rigid body in the octree (call recursive method)
 void Octree::updateObject(RigidBody * _body)
 {
     this->deleteObject(_body);
     this->insertObject(_body);
 }
 
+//!Delete rigid body (call recursive method)
 void Octree::deleteObject(RigidBody * _body)
 {
     for (int i=0; i<8; i++) {
@@ -209,6 +222,7 @@ void Octree::cleanLeaves()
     this->cleanLeaves(this->parent);
 }
 
+//!Clear leaves of octree (call recursive method)
 void Octree::cleanLeaves(OctreeNode * _tree)
 {
     if (!_tree) {

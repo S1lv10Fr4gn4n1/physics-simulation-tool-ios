@@ -13,6 +13,7 @@
 #include <map>
 #include "CommonGraphics.h"
 
+//!Class responsible for managing the shaders used in the application
 class Shader {
 private:
     GLuint program;

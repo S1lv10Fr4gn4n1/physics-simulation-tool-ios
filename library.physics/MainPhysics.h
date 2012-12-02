@@ -11,8 +11,10 @@
 
 #include "Commons.h"
 
+//!Class responsible for managing the physical structure of rigid bodies
 class MainPhysics {
 private:
+    //!static mainPhysics (singleton)
     static MainPhysics * mainPhysics;
 public:
     MainPhysics();

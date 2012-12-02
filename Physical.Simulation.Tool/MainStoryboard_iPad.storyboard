@@ -12,11 +12,9 @@
                         <rect key="frame" x="0.0" y="20" width="1024" height="699"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="g9M-Kh-WUv">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="PROTÓTIPO DE UMA FERRAMENTA GRÁFICA PARA CRIAÇÃO DE SIMULAÇÕES NA ÁREA DA FÍSICA EM DISPOSITIVOS MÓVEIS" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="g9M-Kh-WUv">
                                 <rect key="frame" x="20" y="20" width="984" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <string key="text">FERRAMENTA GRÁFICA PARA CRIAÇÃO DE SIMULAÇÕES NA ÁREA
-DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -264,7 +262,7 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
         <!--GLKit View Controller-->
         <scene sceneID="6hq-83-yij">
             <objects>
-                <glkViewController autoresizesArchivedViewToFullSize="NO" wantsFullScreenLayout="YES" preferredFramesPerSecond="70" id="rfh-aL-hFg" customClass="SimulationViewController" sceneMemberID="viewController">
+                <glkViewController storyboardIdentifier="idSimulationViewController" autoresizesArchivedViewToFullSize="NO" wantsFullScreenLayout="YES" preferredFramesPerSecond="70" id="rfh-aL-hFg" customClass="SimulationViewController" sceneMemberID="viewController">
                     <glkView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="v1U-24-VUk">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1106,134 +1104,13 @@ DA FÍSICA EM DISPOSITIVOS MÓVEIS</string>
         <image name="square.png" width="512" height="512"/>
         <image name="triangle.png" width="512" height="512"/>
     </resources>
-    <classes>
-        <class className="ConfigurationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ConfigurationViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="actionDefaultValues:"/>
-                <relationship kind="action" name="actionGoBack:"/>
-                <relationship kind="action" name="actionSaveAdd:"/>
-                <relationship kind="action" name="valueChangeAccelerationGravity:"/>
-                <relationship kind="action" name="valueChangeAccelerationX:"/>
-                <relationship kind="action" name="valueChangeAccelerationY:"/>
-                <relationship kind="action" name="valueChangeAccelerationZ:"/>
-                <relationship kind="action" name="valueChangeAngularDamping:"/>
-                <relationship kind="action" name="valueChangeAwakeup:"/>
-                <relationship kind="action" name="valueChangeForceX:"/>
-                <relationship kind="action" name="valueChangeForceY:"/>
-                <relationship kind="action" name="valueChangeForceZ:"/>
-                <relationship kind="action" name="valueChangeFriction:"/>
-                <relationship kind="action" name="valueChangeMass:"/>
-                <relationship kind="action" name="valueChangePositionX:"/>
-                <relationship kind="action" name="valueChangePositionY:"/>
-                <relationship kind="action" name="valueChangePositionZ:"/>
-                <relationship kind="action" name="valueChangeRestitution:"/>
-                <relationship kind="action" name="valueChangeRotationX:"/>
-                <relationship kind="action" name="valueChangeRotationY:"/>
-                <relationship kind="action" name="valueChangeRotationZ:"/>
-                <relationship kind="action" name="valueChangeVelocityX:"/>
-                <relationship kind="action" name="valueChangeVelocityY:"/>
-                <relationship kind="action" name="valueChangeVelocityZ:"/>
-                <relationship kind="action" name="valueChangeaLinearDamping:"/>
-                <relationship kind="outlet" name="labelAccelerationGravity" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelAccelerationX" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelAccelerationY" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelAccelerationZ" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelAngularDamping" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelForceX" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelForceY" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelForceZ" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelFriction" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelLinearDamping" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelMass" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelPositionX" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelPositionY" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelPositionZ" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelRestitution" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelRotationX" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelRotationY" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelRotationZ" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelVelocityX" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelVelocityY" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="labelVelocityZ" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scrollview" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="sliderAccelerationGravity" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderAccelerationX" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderAccelerationY" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderAccelerationZ" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderAngularDamping" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderForceX" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderForceY" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderForceZ" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderFriction" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderLinearDamping" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderMass" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderPositionX" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderPositionY" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderPositionZ" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderRestitution" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderRotationX" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderRotationY" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderRotationZ" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderVelocityX" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderVelocityY" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sliderVelocityZ" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="switchAwakeup" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="viewMoreConfig" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="ListObjectViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ListObjectViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="tableViewObjects" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="ObjectsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ObjectsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="actionCircle:"/>
-                <relationship kind="action" name="actionClearSimulation:"/>
-                <relationship kind="action" name="actionEditSimulation:"/>
-                <relationship kind="action" name="actionGenerateRandomSimulation:"/>
-                <relationship kind="action" name="actionSaveSimulation:"/>
-                <relationship kind="action" name="actionSquare:"/>
-                <relationship kind="action" name="actionStartSimulation:"/>
-                <relationship kind="action" name="actionSurfaceScene:"/>
-                <relationship kind="action" name="actionTriangle:"/>
-            </relationships>
-        </class>
-        <class className="PresentationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PresentationViewController.h"/>
-        </class>
-        <class className="SaveSimulationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SaveSimulationViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="actionClean:"/>
-                <relationship kind="action" name="actionSave:"/>
-                <relationship kind="outlet" name="areaText" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="imputFileName" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="SimulationViewController" superclassName="GLKViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SimulationViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="actionFind:"/>
-                <relationship kind="outlet" name="buttonFind" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="labelHelp" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="TabBarViewController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TabBarViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="6mG-XU-6fp"/>
+        <segue reference="p9C-HU-LVh"/>
         <segue reference="FqV-DL-JXh"/>
     </inferredMetricsTieBreakers>
 </document>

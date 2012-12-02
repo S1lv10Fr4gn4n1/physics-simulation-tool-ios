@@ -781,6 +781,7 @@ Camera::Camera()
     this->farZ = 10.0f;
 }
 
+//!resets the properties of the camera
 void Camera::resetCamera()
 {
     this->eyeX = 0.0f;
@@ -796,6 +797,7 @@ void Camera::resetCamera()
                                           this->upX, this->upY, this->upZ);
 }
 
+//!the camera is rotating as _radians, adjusting the matrix lookAt
 void Camera::rotateCamera(real _radians)
 {
     static int ang = 0;
@@ -817,6 +819,7 @@ void Camera::rotateCamera(real _radians)
                                           this->upX, this->upY, this->upZ);
 }
 
+//!adjusts the camera's perspective confome _aspect, adjusting matrices perspective and lookAt
 void Camera::updatePerspective(real _aspect)
 {
 #if defined (_3D_)
@@ -829,6 +832,7 @@ void Camera::updatePerspective(real _aspect)
 #endif
 }
 
+//!djusts the camera's zoom and confome _scale _value, adjusting the matrix lookAt
 void Camera::zoom(real _scale, real _value)
 {
 #if defined (_3D_)

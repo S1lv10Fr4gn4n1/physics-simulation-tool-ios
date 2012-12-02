@@ -29,7 +29,6 @@ public:
     Vector3 contactNormal;
 };
 
-
 class ParticleContactResolver {
 protected:
     unsigned iterations;

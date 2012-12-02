@@ -39,11 +39,13 @@ World::~World()
     this->simulatedObjects = NULL;
 }
 
+//!SimulatedObject adds worldwide
 void World::addSimulatedObject(SimulatedObject * _simulatedObject)
 {
     this->simulatedObjects->push_back(_simulatedObject);
 }
 
+//!excludes the world SimulatedObject
 void World::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
     for (int i=0; i < this->simulatedObjects->size(); i++) {
@@ -56,6 +58,7 @@ void World::deleteSimulatedObject(SimulatedObject * _simulatedObject)
     }
 }
 
+//!deletes all the world SimulatedObject
 void World::deleteAllSimulatedObject()
 {
     if (this->simulatedObjects && this->simulatedObjects->size()>0) {

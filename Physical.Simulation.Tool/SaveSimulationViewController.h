@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "Controller.h"
 
+//!Class controller interface "Read and Save file".
 @interface SaveSimulationViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 - (IBAction)actionSave:(id)sender;

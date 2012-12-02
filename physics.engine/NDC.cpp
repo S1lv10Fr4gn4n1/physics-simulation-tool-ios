@@ -47,6 +47,7 @@ void NDC::calcNDCCoordinates(real * _x, real * _y)
     *_y = *_y * ((this->getBottom() - this->getTop()) / this->height) + this->getTop();    
 }
 
+//!Method responsible for updating the content of the NDC, as the size of the screen
 void NDC::update(real _width, real _height)
 {
     this->width = _width;

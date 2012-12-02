@@ -56,6 +56,7 @@ void RigidBody::setId(char *_id)
     this->id = _id;
 }
 
+//!Method responsible for managing data for the transformation matrices and inertia tensor
 void RigidBody::calculateDerivedData()
 {
     this->orientation.normalize();

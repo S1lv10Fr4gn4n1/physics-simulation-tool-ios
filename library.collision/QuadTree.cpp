@@ -14,14 +14,17 @@ typedef std::map<char *, RigidBody *>::iterator mapBodyIter;
 #define PLUS true
 #define MINUS false
 
-inline bool less(real k1,real k2) {
+inline bool less(real k1,real k2)
+{
     return k1 < k2;
 }
 
-inline bool bigger(real k1,real k2) {
+inline bool bigger(real k1,real k2)
+{
     return k1 > k2;
 }
 
+//!Method responsible for identifying the location in which rigid body will be inserted / deleted / found based on your focal point and half-size knot
 bool testQuad(QuadTreeNode * _tree, RigidBody * _body, bool _v1, bool _v2)
 {
     if (!(_v1 ^ bigger(_body->getPosition().x + _body->getHalfSize().x, _tree->center.x)) &&
@@ -43,29 +46,33 @@ bool testQuad(QuadTreeNode * _tree, RigidBody * _body, bool _v1, bool _v2)
     return false;
 }
 
+//!Identifies whether the quadrant is + +
 bool inPlusPlus(QuadTreeNode * _tree, RigidBody * _body)
 {
     return testQuad(_tree, _body, PLUS, PLUS);
 }
 
+//!Identifies whether the quadrant is + -
 bool inPlusMinus(QuadTreeNode * _tree, RigidBody * _body)
 {
     return testQuad(_tree, _body, PLUS, MINUS);
 }
 
+//!Identifies whether the quadrant is - -
 bool inMinusMinus(QuadTreeNode * _tree, RigidBody * _body)
 {
     return testQuad(_tree, _body, MINUS, MINUS);
 }
 
+//!Identifies whether the quadrant is - +
 bool inMinusPlus(QuadTreeNode * _tree, RigidBody * _body)
 {
     return testQuad(_tree, _body, MINUS, PLUS);
 }
 
+//!Identify if the rigid body is achieved by node radius
 bool radiusReachesObject(QuadTreeNode * _tree, RigidBody * _body)
 {
-
     for (unsigned i=0; i<2; i++) {
         if ((_tree->center[i] + _tree->halfWidth >= _body->getPosition()[i] + _body->getHalfSize()[i] ||
              _tree->center[i] + _tree->halfWidth >= _body->getPosition()[i] - _body->getHalfSize()[i]) &&
@@ -79,6 +86,7 @@ bool radiusReachesObject(QuadTreeNode * _tree, RigidBody * _body)
 
     return true;
 }
+
 
 QuadTree::QuadTree()
 {
@@ -99,6 +107,7 @@ QuadTree::~QuadTree()
     this->possibleCollisions = NULL;
 }
 
+//!Method responsible for creating the tree as the size of the desired scene and profunidade
 QuadTreeNode * QuadTree::buildQuadTree(const Vector3 &_center, real _halfWidth, int _stopDepth)
 {
     if (_stopDepth < 0) {
@@ -124,12 +133,14 @@ QuadTreeNode * QuadTree::buildQuadTree(const Vector3 &_center, real _halfWidth, 
     }
 }
 
+//!Updates the position of the rigid body in the quadtree (call recursive method)
 void QuadTree::updateObject(RigidBody * _body)
 {
     this->deleteObject(_body);
     this->insertObject(_body);
 }
 
+//!Delete rigid body (call recursive method)
 void QuadTree::deleteObject(RigidBody * _body)
 {
     for (int i=0; i<4; i++) {
@@ -154,6 +165,7 @@ void QuadTree::cleanLeaves()
     this->cleanLeaves(this->parent);
 }
 
+//!Clear leaves of quadtree (call recursive method)
 void QuadTree::cleanLeaves(QuadTreeNode * _tree)
 {
     if (!_tree) {

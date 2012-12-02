@@ -10,12 +10,13 @@
 #include "CommonStructures.h"
 #include "Contact.h"
 
+//!Class responsible for resolving contacts
 class ContactResolver {
 private:
-    // avoid instability velocities smaller
+    //!avoid instability velocities smaller
     real velocityEpsilon;
     
-    // avoid instability penetrations smaller
+    //!avoid instability penetrations smaller
     real positionEpsilon;
     
     void prepareContacts(std::vector<Contact *> * _contacts, real _duration);

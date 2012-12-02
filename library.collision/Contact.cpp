@@ -10,12 +10,15 @@
 
 Contact::Contact()
 {
+    // TODO put your code here
 }
 
 Contact::~Contact()
 {
+    // TODO put your code here
 }
 
+//!Method responsible for waking a rigid hub asleep
 void Contact::matchAwakeState()
 {
     // collisions with the world never cause a body to wake up.
@@ -36,10 +39,12 @@ void Contact::matchAwakeState()
     }
 }
 
-// orthonormal basis for the contact where each vector is a column
-// The matrix transforms contact space into world space.
+//!Method responsible for identifying the base contact
 void Contact::calculateContactBasis()
 {
+    // orthonormal basis for the contact where each vector is a column
+    // The matrix transforms contact space into world space.
+
     Vector3 contactTangent[2];
     
     // check whether the Z axis is nearer to the X or Y axis
@@ -79,6 +84,7 @@ void Contact::calculateContactBasis()
                                        contactTangent[1]);
 }
 
+//!Method responsible for calculating the impulse frictionless
 Vector3 Contact::calculateFrictionlessImpulse(Matrix3 * _inverseInertiaTensor)
 {
     Vector3 impulseContact;
@@ -117,6 +123,7 @@ Vector3 Contact::calculateFrictionlessImpulse(Matrix3 * _inverseInertiaTensor)
     return impulseContact;
 }
 
+//!Method responsible for calculating the impulse friction
 Vector3 Contact::calculateFrictionImpulse(Matrix3 * _inverseInertiaTensor)
 {
     real inverseMass = this->body[0]->getInverseMass();
@@ -185,6 +192,7 @@ Vector3 Contact::calculateFrictionImpulse(Matrix3 * _inverseInertiaTensor)
     return impulseContact;
 }
 
+//!Method responsible for generating information for the contact, such as velovidade desired relative position and contact
 void Contact::calculateInternals(real _duration)
 {
     // check if the first object is NULL, and swap if it is.
@@ -212,10 +220,11 @@ void Contact::calculateInternals(real _duration)
     this->calculateDesiredDeltaVelocity(_duration);
 }
 
+//!Method responsible to calculate the desired speed from the difference of the accelerations of the rigid bodies
 void Contact::calculateDesiredDeltaVelocity(real _duration)
 {
     const static real velocityLimit = (real)0.25f;
-    
+
     // calculate the acceleration-induced velocity accumulated this frame.
     real velocityFromAcc = 0;
     if (this->body[0]->isAwake()) {
@@ -246,6 +255,7 @@ void Contact::swapBodies()
     this->body[1] = temp;
 }
 
+//!Method responsible to find the relative velocity of the rigid body from point of contact
 Vector3 Contact::calculateLocalVelocity(unsigned _bodyIndex, real _duration)
 {
     RigidBody * body = this->body[_bodyIndex];
@@ -274,6 +284,7 @@ Vector3 Contact::calculateLocalVelocity(unsigned _bodyIndex, real _duration)
     return contactVelocity;
 }
 
+//!Method responsible for resolving the interpenetration of the rigid body
 void Contact::applyPositionChange(Vector3 _linearChange[2], Vector3 _angularChange[2], real _penetration)
 {
     const real angularLimit = (real)0.2f;
@@ -286,7 +297,7 @@ void Contact::applyPositionChange(Vector3 _linearChange[2], Vector3 _angularChan
     
     // need to work out the inertia of each object in the direction
     // of the contact normal, due to angular inertia only
-    for (unsigned i = 0; i < 2; i++)
+    for (unsigned i = 0; i < 2; i++) {
         if (this->body[i]) {
             Matrix3 inverseInertiaTensor = this->body[i]->getInverseInertiaTensorWorld();
             
@@ -305,10 +316,11 @@ void Contact::applyPositionChange(Vector3 _linearChange[2], Vector3 _angularChan
             
             // we break the loop here so that the totalInertia value is
             // completely calculated (by both iterations) before continuing
+        }
     }
-    
+
     // Loop through again calculating and applying the changes
-    for (unsigned i = 0; i < 2; i++)
+    for (unsigned i = 0; i < 2; i++) {
         if (this->body[i]) {
             // the linear and angular movements required are in proportion to the two inverse inertias.
             real sign = (i == 0) ? 1 : -1;
@@ -371,8 +383,11 @@ void Contact::applyPositionChange(Vector3 _linearChange[2], Vector3 _angularChan
             if (!this->body[i]->isAwake()) {
                 this->body[i]->calculateDerivedData();
             }
+        }
     }
 }
+
+//!Method responsible for adjusting the linear and angular velocities
 void Contact::applyVelocityChange(Vector3 _velocityChange[2], Vector3 _rotationChange[2])
 {
     // get hold of the inverse mass and inverse inertia tensor, both in world coordinates.

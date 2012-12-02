@@ -32,6 +32,7 @@ ForceRegistry::~ForceRegistry()
     delete this->registrations;
 }
 
+//!Main method of the class, responsible for updating all the forces for all rigid bodies registered
 void ForceRegistry::updateForces(real _duration)
 {
     ForceRegistration * forceRegistration = NULL;
@@ -42,6 +43,7 @@ void ForceRegistry::updateForces(real _duration)
     forceRegistration = NULL;
 }
 
+//!Method for registering a force (ForceGeneration) to an object (RigidBody)
 void ForceRegistry::add(RigidBody * _body, ForceGenerator * _forceGenerator)
 {
     ForceRegistration * forceRegistration = new ForceRegistration();
@@ -52,6 +54,7 @@ void ForceRegistry::add(RigidBody * _body, ForceGenerator * _forceGenerator)
     forceRegistration = NULL;
 }
 
+//!Method for exlcuir a record of strength
 void ForceRegistry::removeObject(RigidBody * _body)
 {
     ForceRegistration * forceRegistration = NULL;
@@ -67,6 +70,7 @@ void ForceRegistry::removeObject(RigidBody * _body)
     forceRegistration = NULL;
 }
 
+//!Method to delete a strength of a rigid body
 void ForceRegistry::removeForceOfObject(RigidBody * _body, ForceGenerator * _forceGenerator)
 {
     ForceRegistration * forceRegistration = NULL;
@@ -87,6 +91,7 @@ void ForceRegistry::clear()
     this->registrations->clear();
 }
 
+//!Static method to get the instance (singleton)
 ForceRegistry * ForceRegistry::getInstance()
 {
     if (!ForceRegistry::forceRegistry) {
@@ -113,6 +118,7 @@ void Gravity::updateGravity(real _gravity)
     this->gravity.y = _gravity;
 }
 
+//!Method responsible for updating the gravitational force of a rigid body
 void Gravity::updateForce(RigidBody * _body, real _duration)
 {
     if (!_body->hasFiniteMass()) {
@@ -120,13 +126,13 @@ void Gravity::updateForce(RigidBody * _body, real _duration)
     }
     
     // apply the mass-scaled force to the body
-    if (!considerMass) {
+    if (this->considerMass) {
+        _body->addForce(this->gravity * _body->getMass());
+
+    } else {
         _body->addForce(this->gravity);
-        return;
     }
     
-    Vector3 force = this->gravity * _body->getMass();
-    _body->addForce(force);
 }
 
 //Drag::Drag(real _k1, real _k2)

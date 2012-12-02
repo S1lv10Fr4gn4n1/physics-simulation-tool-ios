@@ -11,6 +11,7 @@
 
 #include "CommonStructures.h"
 
+//!Class responsible for standardization of values
 class NDC {
     Vector3 * maxWindow;
     Vector3 * minWindow;

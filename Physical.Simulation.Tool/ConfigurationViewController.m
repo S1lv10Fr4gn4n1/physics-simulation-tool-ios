@@ -43,7 +43,7 @@
         [self loadValuesFromObject];
         [self resetValuesLabels];
 
-        CGSize containerSize = CGSizeMake(1024.0f, 748.0f);
+        CGSize containerSize = CGSizeMake(self.view.frame.size.width, 748.0f);
         self.scrollview.contentSize = containerSize;
     } else {
         [self resetValues];

@@ -28,6 +28,7 @@ MainGraphic::~MainGraphic()
     this->simulatedObjectDrawn = NULL;
 }
 
+//!Method responsible for booting Shader
 void MainGraphic::initializeShader()
 {
     this->shader = new Shader();
@@ -42,6 +43,7 @@ Shader * MainGraphic::getShader()
     return this->shader;
 }
 
+//Main method of the class, which receives the World to be drawn
 void MainGraphic::MainGraphic::draw(World * _world)
 {    
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);

@@ -12,6 +12,7 @@
 #include <vector>
 #include "SimulatedObject.h"
 
+//!Class responsible for keeping informations on the world scene. She holds the camera and the list of objects in the scene
 class World {
 private:
     std::vector<SimulatedObject *> * simulatedObjects;

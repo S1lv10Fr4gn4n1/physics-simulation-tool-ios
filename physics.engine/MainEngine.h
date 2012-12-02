@@ -14,6 +14,7 @@
 #include "Selection.h"
 #include "NDC.h"
 
+//!Class responsible for managing the entire physics engine
 class MainEngine {
 private:
     bool running;

@@ -14,13 +14,15 @@
 #include "Octree.h"
 #include "ContactResolver.h"
 
+//!Class responsible for managing the system crashes. Making use of a tree structure or not. Detects collisions, generates contacts and solves contacts.
 class MainCollision {
 private:
+    //! all contacts generated
     CollisionData * dataContacts;
+    //! resolver dataContacts
     ContactResolver * contactResolver;
-
+    //! tree for coarse collision
     Octree * tree;
-
     void generateContact(RigidBody * _body1, RigidBody * _body2);
     void generateContacts();
     void solverContacts(real _duration);

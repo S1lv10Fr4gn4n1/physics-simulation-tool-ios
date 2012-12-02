@@ -54,6 +54,7 @@ Controller::~Controller()
     this->objectOffset = NULL;
 }
 
+//!Static method to get the instance (singleton)
 Controller * Controller::getInstance()
 {
     if (!Controller::controller) {
@@ -87,20 +88,24 @@ void Controller::resizeScreen(real _width, real _height)
     this->mainEngine->rotatedScreen(_width, _height);
 }
 
+//!Responsible receive the callback method update the OpenGL and send to MainEngine
 void Controller::updateInformation(real _duration)
 {
-//    printf("duration: %f\n", _duration);
+    // use or not use _duration variable and set its value if too high
     if (!USE_LAST_TIME_GLKIT && _duration > 0.05f) {
         _duration = 0.01;
     }
+    // send de MainEngine treat
     this->mainEngine->updateInformation(USE_LAST_TIME_GLKIT ? _duration : 0.02f);
 }
 
+//!Responsible receive the callback method draw the OpenGL and send to MainGraphic
 void Controller::draw()
 {
     this->mainGraphic->draw(this->mainEngine->getWorld());
 }
 
+//!Stop simulation
 void Controller::stopSimulation()
 {
     this->mainEngine->stop();
@@ -112,12 +117,14 @@ void Controller::stopSimulation()
     this->mainEngine->resetCamera();
 }
 
+//!Start simulation
 void Controller::startSimulation()
 {
     this->editMode = false;
     this->mainEngine->start();
 }
 
+//!Start simulation in edit mode
 void Controller::editSimulation()
 {
     this->editMode = true;
@@ -166,6 +173,7 @@ void Controller::touchesCancelled(real _x, real _y)
     // TODO put your code here
 }
 
+//!Method responsible to receive information from touch screen
 void Controller::touchesMoved(real _x, real _y, int _countFingers)
 {
     Vector3 vector(_x, _y);
@@ -214,8 +222,10 @@ void Controller::touchesMoved(real _x, real _y, int _countFingers)
 #endif
 }
 
+//!Method responsible for receiving and manipulating information than pinch gesture
 void Controller::pinchDetected(real _scale, real _velocity, bool _began)
 {
+    // checks whether the object is selected and in order to be able to climb edition of the object
     if (this->objectEdition && this->objectEdition->isSelected() && this->objectEdition->hasFiniteMass()) {
         if (_began) {
             scaleObject = 1.0f;
@@ -230,7 +240,7 @@ void Controller::pinchDetected(real _scale, real _velocity, bool _began)
         this->mainEngine->scaleSimulatedObject(this->objectEdition, scaleObject);
         previousScale = _scale;
     } else {
-        
+        // zooming in the scene
         if ((_scale - previousZoom) < 0.0f) {
             scaleZoom+=ZOOM_SCALE;
         } else {
@@ -251,25 +261,30 @@ void Controller::pinchDetected(real _scale, real _velocity, bool _began)
     }
 }
 
+//!Method responsible for receiving and manipulating information than rotation gesture
 void Controller::rotationDetected(real _radians, real _velocity, bool _began)
 {
     if (_began) {
         previousRadians = 0.0f;
     }
+    // checks whether the object is selected to be able to rotate it
     if (this->objectEdition && this->objectEdition->isSelected()) {
         this->mainEngine->rotateSimulatedObject(this->objectEdition, previousRadians < _radians ? -0.03 : 0.03);
     } else {
+        // else rotates the scene
         this->mainEngine->rotateCamera(previousRadians < _radians ? -1 : 1);
     }
     previousRadians = _radians;
 }
 
+//!Method responsible for receiving and manipulating information than doubleTabOnFinger gesture
 void Controller::doubleTapOneFingerDetected(real _x, real _y)
 {
     Vector3 vector(_x, _y);
-    
+
     this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
 
+    // checks whether the object is selected in order to place edition
     if (this->objectEdition) {
         if (this->objectEdition->isSelected()) {
             this->objectEdition->setSelected(false);
@@ -280,12 +295,14 @@ void Controller::doubleTapOneFingerDetected(real _x, real _y)
     }
 }
 
+//!Method responsible for receiving and manipulating information than longPressDetected gesture
 void Controller::longPressDetected(real _x, real _y)
 {
     Vector3 vector(_x, _y);
 
     this->objectEdition = this->mainEngine->selectedSimulatedObject(vector);
 
+    // checks whether the object is selected to put power to delete it
     if (this->objectEdition) {
         this->mainEngine->deleteSimulatedObject(this->objectEdition);
     }
@@ -293,24 +310,30 @@ void Controller::longPressDetected(real _x, real _y)
     this->objectEdition = NULL;
 }
 
+//!Method responsible for receiving and manipulating information than swipeRight gesture
 void Controller::swipeRightDetected(real _x, real _y)
 {
     // TODO put your code here
 }
+
+//!Method responsible for receiving and manipulating information than swipeLeft gesture
 void Controller::swipeLeftDetected(real _x, real _y)
 {
     // TODO put your code here
 }
 
+//!Method responsible for receiving and manipulating information than oneTapTreeFinger gesture
 void Controller::oneTapThreeFingerDetected(real _x, real _y)
 {
 //    delete previousVector;
 //    previousVector = NULL;
-    
+
+    // reset camera
     scaleZoom = ZOOM_INIT;
     this->mainEngine->resetCamera();
 }
 
+//!Method responsible for creating a 2D object
 void Controller::createSimulatedObject2D(TypeObject _typeObject)
 {    
     if (this->objectEdition) {
@@ -320,32 +343,40 @@ void Controller::createSimulatedObject2D(TypeObject _typeObject)
     this->mainEngine->makeSimulatedObject2D(_typeObject);
 }
 
+//!Method responsible for make a 3D object
 SimulatedObject * Controller::makeSimulatedObject3D()
 {
     return this->mainEngine->makeSimulatedObject3D(this->typeNextObject);
 }
 
+//!Method responsible for make a 3D object by type 
 SimulatedObject * Controller::makeSimulatedObject3D(TypeObject _typeObject)
 {
     return this->mainEngine->makeSimulatedObject3D(_typeObject);
 }
 
+//!Method responsible initiate an object and puts it in the object list
 void Controller::addAndInitSimulatedObject3D(SimulatedObject * _simulatedObject, const Vector3 &_gravity)
 {
     this->mainEngine->addAndInitializeSimulatedObject3D(_simulatedObject, _gravity);
 }
 
+//!Method responsible to update an object
 void Controller::updateSimulatecObject(SimulatedObject * _simulatedObject, const Vector3 &_gravity)
 {
     this->mainEngine->updateSimulatecObject(_simulatedObject, _gravity);
 }
 
+//!Method responsible for creating a 3D object by typeObject
 void Controller::createSimulatedObject3D(TypeObject _typeObject)
 {
+    // make object 3D
     SimulatedObject * simulatedObject = this->mainEngine->makeSimulatedObject3D(_typeObject);
+    // add and initialize
     this->mainEngine->addAndInitializeSimulatedObject3D(simulatedObject);
 }
 
+//!Method responsible for cleaning the simulation, excluding all objects and freeing memory
 void Controller::clearSimularion()
 {
     this->mainEngine->deleteAllSimulatedObjects();
@@ -362,45 +393,10 @@ void Controller::clearSimularion()
     this->objectOffset = NULL;
 }
 
+//!Method responsible for reading through a simulation of a file
 void Controller::loadSceneFromFile(string _contentFile)
 {
-    //# # comment
-    //# BEGIN init of object
-    //# T type object (PLAN, SPHERE, BOX, TRINAGLE)
-    //# M mass
-    //# P position
-    //# V velocity
-    //# R rotation
-    //# A acceleration
-    //# F force
-    //# AG acceleration gravity
-    //# CF coefficient friction
-    //# CR coefficient restitution
-    //# CLD coefficient linear damping
-    //# CAD coefficient angular damping
-    //# AWAKE can awake
-    //# END ended object
-    //
-    //    BEGIN
-    //    T PLAN
-    //    M 0.0 # no move
-    //    P 0.0 0.0 0.0
-    //    CF 0.9
-    //    END
-    //
-    //    BEGIN
-    //    T SPHERE
-    //    M 4.0
-    //    P 0.0 0.1 0.1
-    //    AG 9.8
-    //    CF 0.9
-    //    CR 0.4
-    //    CLD 0.99
-    //    CAD 0.8
-    //    AWAKE 1
-    //    END
-
-    long posBegin[200];
+    long posBegin[4000];
     unsigned index = 0;
 
     size_t pos = _contentFile.find("BEGIN");
@@ -556,6 +552,7 @@ void Controller::loadSceneFromFile(string _contentFile)
         posAux = _contentFile.find("\n", pos);
         pos = pos+3;
 
+        r=0, g=0, b=0, a=0;
         sscanf(_contentFile.substr(pos, posAux-pos).c_str(), "%u %u %u %u", &r, &g, &b, &a);
         object->setColorAux(r, g, b, a);
 
@@ -563,17 +560,19 @@ void Controller::loadSceneFromFile(string _contentFile)
     }
 }
 
+//!Method responsible to generate a file with the current simulation
 string Controller::generateSimulationToCharacter()
 {
     vector<SimulatedObject *> * objects = this->mainEngine->getWorld()->getSimulatedObjects();
 
+    string str;
+
     if (objects && objects->size() == 0) {
-        return "";
+        return str;
     }
 
-    string str;
     time_t t = time(0);
-    struct tm * now = localtime( & t );
+    struct tm * now = localtime(&t);
 
     char * charTime = new char(16);
     sprintf(charTime, "%u-%02u-%02u %02u:%02u:%02u", now->tm_year + 1900, now->tm_mon, now->tm_mday, now->tm_hour, now->tm_min, now->tm_sec);
@@ -581,7 +580,7 @@ string Controller::generateSimulationToCharacter()
     str.append("# time: ").append(charTime).append("\n\n");
 
     SimulatedObject * object = NULL;
-    for (int i=0; i<objects->size(); i++) {
+    for (unsigned i=0; i<objects->size(); i++) {
         object = objects->at(i);
 
         str.append("BEGIN").append("\n");
@@ -595,46 +594,60 @@ string Controller::generateSimulationToCharacter()
             str.append("@T ").append("PYRAMID").append("\n");
         }
 
-        char buffer [25];
+        char buffer [50];
+        // mass
         gcvt(object->getMass(), 7, buffer);
         str.append("@M ").append(buffer).append("\n");
 
+        // coefficient friction
         gcvt(object->getFriction(), 7, buffer);
         str.append("@CF ").append(buffer).append("\n");
 
+        // coefficient restitution
         gcvt(object->getRestitution(), 7, buffer);
         str.append("@CR ").append(buffer).append("\n");
 
+        // coefficient linear damping
         gcvt(object->getLinearDamping(), 7, buffer);
         str.append("@CLD ").append(buffer).append("\n");
 
+        // coefficient angular damping
         gcvt(object->getAngularDamping(), 7, buffer);
         str.append("@CAD ").append(buffer).append("\n");
 
+        // can awake
         gcvt(object->isCanSleep(), 1, buffer);
         str.append("@AWAKE ").append(buffer).append("\n");
 
-        sprintf(buffer, "%2.5f %2.5f %2.5f", object->getAccelerationGravity().x, object->getAccelerationGravity().y, object->getAccelerationGravity().z);
+        // acceleration gravity
+        sprintf(buffer, "%f %f %f", object->getAccelerationGravity().x, object->getAccelerationGravity().y, object->getAccelerationGravity().z);
         str.append("@AG ").append(buffer).append("\n");
 
-        sprintf(buffer, "%2.5f %2.5f %2.5f", object->getPosition().x, object->getPosition().y, object->getPosition().z);
+        // position
+        sprintf(buffer, "%f %f %f", object->getPosition().x, object->getPosition().y, object->getPosition().z);
         str.append("@P ").append(buffer).append("\n");
 
-        sprintf(buffer, "%2.5f %2.5f %2.5f", object->getVelocity().x, object->getVelocity().y, object->getVelocity().z);
+        // velocity
+        sprintf(buffer, "%f %f %f", object->getVelocity().x, object->getVelocity().y, object->getVelocity().z);
         str.append("@V ").append(buffer).append("\n");
 
-        sprintf(buffer, "%2.5f %2.5f %2.5f", object->getRotation().x, object->getRotation().y, object->getRotation().z);
+        // rotation
+        sprintf(buffer, "%f %f %f", object->getRotation().x, object->getRotation().y, object->getRotation().z);
         str.append("@R ").append(buffer).append("\n");
 
-        sprintf(buffer, "%2.5f %2.5f %2.5f", object->getAcceleration().x, object->getAcceleration().y, object->getAcceleration().z);
+        // acceleration
+        sprintf(buffer, "%f %f %f", object->getAcceleration().x, object->getAcceleration().y, object->getAcceleration().z);
         str.append("@A ").append(buffer).append("\n");
 
-        sprintf(buffer, "%2.5f %2.5f %2.5f", object->getForceAccum().x, object->getForceAccum().y, object->getForceAccum().z);
+        // force
+        sprintf(buffer, "%f %f %f", object->getForceAccum().x, object->getForceAccum().y, object->getForceAccum().z);
         str.append("@F ").append(buffer).append("\n");
 
-        sprintf(buffer, "%3u %3u %3u %3u", object->getColorAux()->r, object->getColorAux()->g, object->getColorAux()->b, object->getColorAux()->a);
+        // color
+        sprintf(buffer, "%u %u %u %u", object->getColorAux()->r, object->getColorAux()->g, object->getColorAux()->b, object->getColorAux()->a);
         str.append("@C ").append(buffer).append("\n");
 
+        // end of object
         str.append("END").append("\n");
         str.append("\n");
     }
@@ -642,14 +655,13 @@ string Controller::generateSimulationToCharacter()
     return str;
 }
 
-
+//!Responsible method to generate a simulation with random values ​​for objects
 void Controller::generateRandonSimulation(unsigned _numberObjects)
 {
     this->mainEngine->deleteAllSimulatedObjects();
 
-    // limite x e z -2.5 a 2.5
-    // limite y 0.1 a 1.5
-
+    // limit x and z -2.5 a 2.5
+    // limit y 0.1 a 1.5
     real x=0, y=0, z=0;
 
     SimulatedObject * object = NULL;
@@ -680,16 +692,16 @@ void Controller::generateRandonSimulation(unsigned _numberObjects)
         object->setVelocity(x, y, z);
 
         // torque
-        x = getRand(-1.0f, 1.0f);
-        y = getRand(-1.0f, 1.0f);
-        z = getRand(-1.0f, 1.0f);
+        x = getRand(-0.5f, 0.5f);
+        y = getRand(-0.5f, 0.5f);
+        z = getRand(-0.5f, 0.5f);
         object->setRotation(x, y, z);
-
-        object->setFriction(getRand(0.0f, 1.0f));
-        object->setRestitution(getRand(0.0f, 1.0f));
-        object->setLinearDamping(getRand(0.3f, 1.0f));
-        object->setAngularDamping(getRand(0.3f, 1.0f));
-        object->setMass(getRand(3.0f, 7.0f));
+        
+        object->setFriction(getRand(0.1f, 0.6f));
+        object->setRestitution(getRand(0.1f, 0.6f));
+        object->setLinearDamping(getRand(0.5f, 0.9f));
+        object->setAngularDamping(getRand(0.5f, 0.9f));
+        object->setMass(getRand(3.0f, 10.0f));
 
         this->addAndInitSimulatedObject3D(object);
     }
@@ -720,6 +732,7 @@ std::vector<SimulatedObject *> * Controller::getSimulatedObjects()
     return this->mainEngine->getWorld()->getSimulatedObjects();
 }
 
+//!Method responsible for deleting an object
 void Controller::deleteSimulatedObject(SimulatedObject * _simulatedObject)
 {
     if (_simulatedObject) {

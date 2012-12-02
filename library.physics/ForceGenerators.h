@@ -12,22 +12,24 @@
 #include <vector>
 #include "RigidBody.h"
 
-
+//!Interface for generating forces
 class ForceGenerator {
 public:
     virtual ~ForceGenerator();
     virtual void updateForce(RigidBody * _body, real _duration) = 0;
 };
 
-
+//!Class responsible for registering forces for rigid bodies
 class ForceRegistry {
 protected:
+    //!struct registration
     struct ForceRegistration {
         RigidBody * rigidBody;
         ForceGenerator * forceGenerator;
     };
+    //!registration list
     std::vector<ForceRegistration *> * registrations;
-    
+    //! static var of ForceRegistry (singleton)
     static ForceRegistry * forceRegistry;
 public:
     ForceRegistry();
@@ -41,8 +43,9 @@ public:
     static ForceRegistry * getInstance();
 };
 
-
+//!Class inherited from ForceGenerator, responsible for updating the gravitational force of a rigid body
 class Gravity : public ForceGenerator {
+    //!vector of gravity
     Vector3 gravity;
     bool considerMass;
 public:

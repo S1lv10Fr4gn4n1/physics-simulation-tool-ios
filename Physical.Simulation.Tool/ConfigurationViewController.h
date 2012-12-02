@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #include "Controller.h"
 
+//!Class controller interface Settings. It contains several components that handle the information of physical objects.
 @interface ConfigurationViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollview;

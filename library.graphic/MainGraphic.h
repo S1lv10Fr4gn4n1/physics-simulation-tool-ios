@@ -14,6 +14,7 @@
 #include "Shader.h"
 #include "Commons.h"
 
+//!Class responsible for drawing the SimulatedObject in simulation
 class MainGraphic {
     Shader * shader;
     SimulatedObject * simulatedObjectDrawn;

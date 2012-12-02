@@ -11,22 +11,32 @@
 
 #include "CommonStructures.h"
 
+//!Class responsible for keeping information of a rigid body
 class RigidBody {
 private:
+    //!unique identifier of the object
     char * id;
-
+    //!keeps the amount of kinetic energy
     real motion;
+    //!check if object is awake
     bool awake;
+    //!indicates that the object can sleep
     bool canSleep;
-    
+    //!coefficient of restitution
     real restitution;
+    //!coefficient of friction
     real friction;
-
+    //!mass of the object
     real mass;
-    real angularDamping;
-    real linearDamping;
+    //!inverse of the mass of the object
     real inverseMass;
+    //!drag coefficient angular
+    real angularDamping;
+    //!drag coefficient linear
+    real linearDamping;
+    //!radius of the object
     real radius;
+    //!information on the thickness of the object
     Vector3 halfSize;
     Vector3 position;
     Quaternion orientation;
@@ -36,7 +46,9 @@ private:
     Matrix4 transformMatrix;
     Matrix3 inverseInertiaTensor;
     Matrix3 inverseInertiaTensorWorld;
+    //!forces accumulated by the principle of D'Alembert
     Vector3 forceAccum;
+    //!torque accumulated by the principle of D'Alembert
     Vector3 torqueAccum;
     Vector3 lastFrameAcceleration;
     Vector3 accelerationGravity;
