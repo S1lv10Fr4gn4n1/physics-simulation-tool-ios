@@ -1,7 +1,9 @@
 About Physical.Simulation.Tool
 ==============================
 
-    Graphical tool for creating simulations in the area the physics in mobile devices (Apple iOS).
+**PS: This is a old project, there is a big chance is not working anymore.**
+
+Graphical tool for creating simulations in the area the physics in mobile devices (Apple iOS).
 
 This project is the work of completing bachelor degree in computer science from the University of Blumenau Regional - FURB.
 
